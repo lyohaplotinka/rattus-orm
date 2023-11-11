@@ -5,9 +5,36 @@
     "test": "vitest run",
     "lint": "yarn workspaces foreach -A run lint",
     "typecheck": "yarn workspaces foreach -A run typecheck",
-    "build": "yarn workspaces foreach -A run build"
+    "build": "yarn workspaces foreach -A run build",
+    "prepare": "npx simple-git-hooks"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.2.0",
+    "@typescript-eslint/parser": "^6.2.0",
+    "eslint": "^8.46.0",
+    "eslint-config-prettier": "^8.9.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "jsdom": "^22.1.0",
+    "lint-staged": "^15.0.2",
+    "prettier": "^3.0.0",
+    "simple-git-hooks": "^2.8.1",
+    "tslib": "^2.6.2",
+    "tsup": "^7.2.0",
+    "typescript": "^5.2.2",
+    "vitest": "^0.34.6"
   },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "lint-staged": {
+    "*.ts": [
+      "yarn typecheck",
+      "yarn lint",
+      "yarn test -- --passWithNoTests"
+    ]
+  },
+  "simple-git-hooks": {
+    "pre-commit": "./node_modules/.bin/lint-staged"
+  }
 }

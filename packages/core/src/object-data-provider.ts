@@ -1,1 +1,1 @@
-export { ObjectDataProvider } from "@/data/object-data-provider";
+export { ObjectDataProvider } from '@/data/object-data-provider'
