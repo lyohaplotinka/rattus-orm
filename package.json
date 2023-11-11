@@ -1,0 +1,7 @@
+{
+  "name": "attempt-3",
+  "packageManager": "yarn@4.0.1",
+  "workspaces": [
+    "packages/*"
+  ]
+}
