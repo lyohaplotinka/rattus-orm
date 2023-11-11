@@ -31,8 +31,6 @@
     "url": "https://github.com/lyohaplotinka/rattus-orm-new/issues"
   },
   "dependencies": {
-    "@types/uuid": "^9.0.7",
-    "normalizr": "^3.6.2",
-    "uuid": "^9.0.1"
+    "normalizr": "^3.6.2"
   }
 }

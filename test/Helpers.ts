@@ -1,5 +1,3 @@
-import { v1 as uuid } from 'uuid'
-
 import type { Collection, Element, Elements, Model, RootState } from '@/index'
 import { Database, Repository } from '@/index'
 import { ObjectDataProvider } from '@/data/object-data-provider'
@@ -98,5 +96,5 @@ export function assertInstanceOf(collection: Collection<any>, model: typeof Mode
 }
 
 export function mockUid(ids: any[]): void {
-  ids.forEach((id) => (uuid as any).mockImplementationOnce(() => id))
+  ids.forEach((id) => (window.crypto.randomUUID as any).mockImplementationOnce(() => id))
 }

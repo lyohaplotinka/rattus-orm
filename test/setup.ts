@@ -2,9 +2,7 @@ import { vi } from 'vitest'
 
 import { Model } from '@/index'
 
-vi.mock('uuid', () => ({
-  v1: vi.fn(),
-}))
+window.crypto.randomUUID = vi.fn()
 
 beforeEach(() => {
   Model.clearBootedModels()
