@@ -12,29 +12,29 @@ export class Database {
   /**
    * The store instance.
    */
-  public store!: DataProvider
+  protected dataProvider: DataProvider
 
   /**
    * The name of storage namespace. ORM will create objects from
    * the registered models, and modules, and define them under this namespace.
    */
-  public connection!: string
+  protected connection!: string
 
   /**
    * The list of registered models.
    */
-  public models: Record<string, Model> = {}
+  protected models: Record<string, Model> = {}
 
   /**
    * The schema definition for the registered models.
    */
-  public schemas: Schemas = {}
+  protected schemas: Schemas = {}
 
   /**
    * Whether the database has already been installed or not.
    * The model registration procedure depends on this flag.
    */
-  public started: boolean = false
+  protected started: boolean = false
 
   public getRepository<M extends Model>(model: ModelConstructor<M>): Repository<M> {
     const repo = new Repository<M>(this).initialize(model)
@@ -45,10 +45,13 @@ export class Database {
   /**
    * Set the store.
    */
-  public setStore(store: DataProvider): this {
-    this.store = store
-
+  public setDataProvider(store: DataProvider): this {
+    this.dataProvider = store
     return this
+  }
+
+  public getDataProvider() {
+    return this.dataProvider
   }
 
   /**
@@ -56,8 +59,11 @@ export class Database {
    */
   public setConnection(connection: string): this {
     this.connection = connection
-
     return this
+  }
+
+  public getConnection(): string {
+    return this.connection
   }
 
   /**
@@ -103,7 +109,7 @@ export class Database {
   /**
    * Register all related models.
    */
-  private registerRelatedModels<M extends Model>(model: M): void {
+  protected registerRelatedModels<M extends Model>(model: M): void {
     const fields = model.$fields()
 
     for (const name in fields) {
@@ -120,23 +126,23 @@ export class Database {
   /**
    * Create root module.
    */
-  private createRootModule(): void {
-    this.store.registerModule(this.connection)
+  protected createRootModule(): void {
+    this.dataProvider.registerModule(this.connection)
   }
 
   /**
    * Create sub module.
    */
-  private createModule<M extends Model>(model: M): void {
+  protected createModule<M extends Model>(model: M): void {
     const entity = model.$entity()
 
-    this.store.registerModule([this.connection, entity], this.createState())
+    this.dataProvider.registerModule([this.connection, entity], this.createState())
   }
 
   /**
    * Create sub state.
    */
-  private createState(): State {
+  protected createState(): State {
     return {
       data: {},
     }
@@ -145,7 +151,7 @@ export class Database {
   /**
    * Create schema from the given model.
    */
-  private createSchema<M extends Model>(model: M): Normalizr.Entity {
+  protected createSchema<M extends Model>(model: M): Normalizr.Entity {
     return (this.schemas[model.$entity()] = new Schema(model).one())
   }
 }

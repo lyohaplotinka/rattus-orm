@@ -9,31 +9,21 @@ export interface ConnectionNamespace {
 
 export class Connection {
   /**
-   * The database instance.
-   */
-  public database: Database
-
-  /**
-   * The entity name.
-   */
-  public model: Model
-
-  /**
    * Create a new connection instance.
    */
-  constructor(database: Database, model: Model) {
-    this.database = database
-    this.model = model
-  }
+  constructor(
+    protected readonly database: Database,
+    protected readonly model: Model,
+  ) {}
 
   /**
    * Get all existing records.
    */
   public get(): Elements {
-    const connection = this.database.connection
+    const connection = this.getDatabaseConnection()
     const entity = this.model.$entity()
 
-    return this.getStore().getState([connection, entity]).data
+    return this.getDataProvider().getState([connection, entity]).data
   }
 
   /**
@@ -47,42 +37,42 @@ export class Connection {
    * Commit `save` mutation to the store.
    */
   public save(elements: Elements): void {
-    this.getStore().save([this.database.connection, this.model.$entity()], elements)
+    this.getDataProvider().save([this.getDatabaseConnection(), this.model.$entity()], elements)
   }
 
   /**
    * Commit `insert` mutation to the store.
    */
   public insert(records: Elements): void {
-    this.getStore().insert([this.database.connection, this.model.$entity()], records)
+    this.getDataProvider().insert([this.getDatabaseConnection(), this.model.$entity()], records)
   }
 
   /**
    * Commit `fresh` mutation to the store.
    */
   public fresh(records: Elements): void {
-    this.getStore().fresh([this.database.connection, this.model.$entity()], records)
+    this.getDataProvider().fresh([this.getDatabaseConnection(), this.model.$entity()], records)
   }
 
   /**
    * Commit `update` mutation to the store.
    */
   public update(records: Elements): void {
-    this.getStore().update([this.database.connection, this.model.$entity()], records)
+    this.getDataProvider().update([this.getDatabaseConnection(), this.model.$entity()], records)
   }
 
   /**
    * Commit `destroy` mutation to the store.
    */
   public destroy(ids: string[]): void {
-    this.getStore().destroy([this.database.connection, this.model.$entity()], ids)
+    this.getDataProvider().destroy([this.getDatabaseConnection(), this.model.$entity()], ids)
   }
 
   /**
    * Commit `delete` mutation to the store.
    */
   public delete(ids: string[]): void {
-    this.getStore().delete([this.database.connection, this.model.$entity()], ids)
+    this.getDataProvider().delete([this.getDatabaseConnection(), this.model.$entity()], ids)
   }
 
   /**
@@ -97,12 +87,16 @@ export class Connection {
       deleted.push(id)
     }
 
-    this.getStore().flush([this.database.connection, this.model.$entity()])
+    this.getDataProvider().flush([this.getDatabaseConnection(), this.model.$entity()])
 
     return deleted
   }
 
-  protected getStore() {
-    return this.database.store
+  protected getDataProvider() {
+    return this.database.getDataProvider()
+  }
+
+  protected getDatabaseConnection() {
+    return this.database.getConnection()
   }
 }

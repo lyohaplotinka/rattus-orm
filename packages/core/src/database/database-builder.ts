@@ -25,7 +25,7 @@ export class DatabaseBuilder {
 
   public run() {
     const database = new Database()
-    database.setStore(this.getDataProvider())
+    database.setDataProvider(this.getDataProvider())
     database.setConnection(this.connectionName)
     database.start()
 

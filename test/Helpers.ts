@@ -7,7 +7,7 @@ interface Entities {
 }
 
 class TestStore {
-  public $database = new Database().setStore(new ObjectDataProvider()).setConnection('entities')
+  public $database = new Database().setDataProvider(new ObjectDataProvider()).setConnection('entities')
   public $databases: Record<string, Database> = {
     entities: this.$database,
   }
@@ -18,7 +18,7 @@ class TestStore {
 
   public get state() {
     return {
-      entities: this.$database.store.getState('entities'),
+      entities: this.$database.getDataProvider().getState('entities'),
     }
   }
 
@@ -27,7 +27,7 @@ class TestStore {
 
     if (connection) {
       if (!(connection in this.$databases)) {
-        database = new Database().setStore(new ObjectDataProvider()).setConnection(connection)
+        database = new Database().setDataProvider(new ObjectDataProvider()).setConnection(connection)
         database.start()
       } else {
         database = this.$databases[connection]
