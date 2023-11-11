@@ -1,0 +1,52 @@
+{
+  "compilerOptions": {
+    "target": "es2018",
+    "module": "esnext",
+    "strict": true,
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "baseUrl": ".",
+    "rootDir": ".",
+    "outDir": "dist",
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+    "removeComments": false,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "ignoreDeprecations": "5.0",
+    "skipLibCheck": true,
+    "strictPropertyInitialization": false,
+    "lib": [
+      "esnext",
+      "dom"
+    ],
+
+    "paths": {
+      "@/*": ["./packages/core/src/*"],
+      "test/*": ["test/*"]
+    },
+
+    "types": [
+      "node",
+      "vitest/globals"
+    ]
+  },
+
+  "include": [
+    "src",
+    "test"
+  ],
+
+  "exclude": [
+    "node_modules"
+  ]
+}
