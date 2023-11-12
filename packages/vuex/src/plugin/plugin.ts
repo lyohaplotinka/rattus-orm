@@ -1,7 +1,6 @@
 import '../types/vuex'
 
-import type { Database } from '@rattus-orm/core'
-import { DatabaseBuilder, Repository } from '@rattus-orm/core'
+import { Database, Repository } from '@rattus-orm/core'
 import type { Plugin, Store } from 'vuex'
 
 import { VuexDataProvider } from '../data-provider/vuex-data-provider'
@@ -15,7 +14,7 @@ type FilledInstallOptions = Required<InstallOptions>
 /**
  * Install Vuex ORM to the store.
  */
-export function install(options?: InstallOptions): Plugin<any> {
+export function installRattusORM(options?: InstallOptions): Plugin<any> {
   return (store) => {
     mixin(store, createOptions(options))
   }
@@ -45,7 +44,8 @@ function mixin(store: Store<any>, options: FilledInstallOptions): void {
  * Create a new database and connect to the store.
  */
 function createDatabase(store: Store<any>, options: FilledInstallOptions): Database {
-  const database = new DatabaseBuilder().dataProvider(VuexDataProvider).connection(options.namespace).run()
+  const database = new Database().setDataProvider(new VuexDataProvider(store)).setConnection(options.namespace)
+  database.start()
 
   store.$database = database
 

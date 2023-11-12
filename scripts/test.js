@@ -49,13 +49,15 @@ async function run() {
     }
   }
 
-  for (const packageName of packagesOption) {
-    log(`Running for package ${packageName}`)
-    try {
-      await runFunctionalTest(packageName)
-      results.Succeed.push(packageName)
-    } catch (e) {
-      results.Failed.push(packageName)
+  if (!args.onlyLocal) {
+    for (const packageName of packagesOption) {
+      log(`Running for package ${packageName}`)
+      try {
+        await runFunctionalTest(packageName)
+        results.Succeed.push(packageName)
+      } catch (e) {
+        results.Failed.push(packageName)
+      }
     }
   }
 

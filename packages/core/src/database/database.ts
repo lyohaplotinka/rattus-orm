@@ -36,6 +36,10 @@ export class Database {
    */
   protected started: boolean = false
 
+  public isStarted() {
+    return this.started
+  }
+
   public getRepository<M extends Model>(model: ModelConstructor<M>): Repository<M> {
     const repo = new Repository<M>(this).initialize(model)
     this.register(repo.getModel())
