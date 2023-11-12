@@ -4,7 +4,7 @@
     "module": "esnext",
     "strict": true,
     "importHelpers": true,
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
@@ -26,6 +26,7 @@
     "skipLibCheck": true,
     "strictPropertyInitialization": false,
     "useDefineForClassFields": false,
+    "resolveJsonModule": true,
     "lib": [
       "esnext",
       "dom"

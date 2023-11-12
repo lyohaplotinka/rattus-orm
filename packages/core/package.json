@@ -2,10 +2,16 @@
   "name": "@rattus-orm/core",
   "version": "0.0.1",
   "description": "Data-source agnostic ORM for TypeScript",
-  "main": "dist/rattus-orm-core.js",
-  "browser": "dist/rattus-orm-core.mjs",
-  "module": "dist/rattus-orm-core.mjs",
-  "typings": "dist/src/rattus-orm-core.d.ts",
+  "main": "./dist/rattus-orm-core.js",
+  "module": "./dist/rattus-orm-core.mjs",
+  "types": "./dist/rattus-orm-core.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/rattus-orm-core.mjs",
+      "require": "./dist/rattus-orm-core.js",
+      "types": "./dist/rattus-orm-core.d.ts"
+    }
+  },
   "files": [
     "dist"
   ],

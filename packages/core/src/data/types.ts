@@ -15,11 +15,10 @@ export type Item<M extends Model = Model> = M | null
 export type Collection<M extends Model = Model> = M[]
 export type ModulePath = string | string[]
 
-export interface DataProvider<StorageType extends Record<string, any> = DataProviderStorage> {
+export interface DataProvider {
   // basics
   registerModule(path: ModulePath, initialState?: State): void
   getState(module: ModulePath): State
-  fill(data: StorageType): void
 
   // mutations
   save(module: ModulePath, records: Elements): void

@@ -7,10 +7,13 @@ let packagesOption = (args.packages ?? '').split(',')
 
 if (packagesOption.length === 1 && packagesOption[0].trim() === '') {
   packagesOption = configuredProvidersKeys
-  console.log('Running all')
 }
 if (!packagesOption.every((packageName) => configuredProvidersKeys.includes(packageName.trim()))) {
   throw new Error('Unknown package passed')
+}
+
+function log(...messages) {
+  console.log(':: ', ...messages, ' ::')
 }
 
 async function asyncSpawn(command, args, env) {
@@ -36,7 +39,18 @@ async function runFunctionalTest(packageName) {
 async function run() {
   const results = { Succeed: [], Failed: [] }
 
+  if (!args.skipLocal) {
+    log('Running local tests')
+    try {
+      await asyncSpawn('yarn', ['workspaces', 'foreach', '-A', 'run', 'test', '--passWithNoTests'])
+      results.Succeed.push('<<Local tests>>')
+    } catch (e) {
+      results.Failed.push('<<Local tests>>')
+    }
+  }
+
   for (const packageName of packagesOption) {
+    log(`Running for package ${packageName}`)
     try {
       await runFunctionalTest(packageName)
       results.Succeed.push(packageName)

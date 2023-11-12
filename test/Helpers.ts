@@ -1,13 +1,12 @@
 import type { Collection, Element, Elements, Model, RootState } from '@/index'
 import { TestingStore } from 'test/utils/types'
-import { TestStore } from 'test/utils/test-store'
 
 interface Entities {
   [name: string]: Elements
 }
 
 export function createStore(): TestingStore {
-  return new TestStore(new globalThis.TestingDataProviderConstructor())
+  return globalThis.testingStoreFactory()
 }
 
 export function createState(entities: Entities): RootState {

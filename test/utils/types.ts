@@ -8,3 +8,5 @@ export interface TestingStore {
   state: Record<string, State>
   $repo(modelOrRepository: any, connection?: string): Repository<any>
 }
+
+export type TestingStoreFactory = () => TestingStore

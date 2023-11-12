@@ -1,12 +1,12 @@
 import { vi } from 'vitest'
 
-import { DataProvider, Model } from '@/index'
+import { Model } from '@/index'
 import testedProviders from './tested-providers.json'
 import { loadProvider } from 'test/utils/load-provider'
-import { Constructor } from '@/types'
+import { TestingStoreFactory } from 'test/utils/types'
 
 declare global {
-  var TestingDataProviderConstructor: Constructor<DataProvider>
+  var testingStoreFactory: TestingStoreFactory
 
   interface ImportMeta {
     env: {
@@ -20,7 +20,7 @@ if (!(packageName in testedProviders)) {
   throw new Error(`Unknown package "${packageName}"`)
 }
 const provider = testedProviders[packageName]
-globalThis.TestingDataProviderConstructor = await loadProvider(provider.path, provider.exportName)
+globalThis.testingStoreFactory = await loadProvider(provider.path, provider.exportName)
 
 window.crypto.randomUUID = vi.fn()
 

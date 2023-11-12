@@ -1,5 +1,4 @@
 import { Database } from '@/database/database'
-import { ObjectDataProvider } from '@/data/object-data-provider'
 import { Repository } from '@/repository/repository'
 import { DataProvider } from '@/data/types'
 import { TestingStore } from 'test/utils/types'
@@ -24,7 +23,7 @@ export class TestStore implements TestingStore {
 
     if (connection) {
       if (!(connection in this.$databases)) {
-        database = new Database().setDataProvider(new ObjectDataProvider()).setConnection(connection)
+        database = new Database().setDataProvider(this.dataProvider).setConnection(connection)
         database.start()
       } else {
         database = this.$databases[connection]
