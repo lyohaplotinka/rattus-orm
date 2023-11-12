@@ -4,7 +4,7 @@
     "exportName": "dataProviderFactory"
   },
   "vuex": {
-    "path": "packages/vuex-provider/test/provider-factory.ts",
+    "path": "packages/vuex/test/provider-factory.ts",
     "exportName": "dataProviderFactory"
   }
 }

@@ -34,6 +34,7 @@ export * from './query/query'
 export * from './query/types'
 export * from './repository/repository'
 export * from './schema/schema'
+export * from './types/index'
 export { DatabaseBuilder } from '@/database/database-builder'
 
 import { Connection } from './connection/connection'

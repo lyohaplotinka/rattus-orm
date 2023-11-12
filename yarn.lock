@@ -564,9 +564,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@rattus-orm/vuex-provider@workspace:packages/vuex-provider":
+"@rattus-orm/vuex@workspace:packages/vuex":
   version: 0.0.0-use.local
-  resolution: "@rattus-orm/vuex-provider@workspace:packages/vuex-provider"
+  resolution: "@rattus-orm/vuex@workspace:packages/vuex"
   dependencies:
     "@rattus-orm/core": "npm:^0.0.1"
     vue: "npm:^3.0.0"
