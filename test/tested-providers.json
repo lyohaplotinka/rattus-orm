@@ -1,0 +1,6 @@
+{
+  "core": {
+    "path": "packages/core/src/data/object-data-provider.ts",
+    "exportName": "ObjectDataProvider"
+  }
+}

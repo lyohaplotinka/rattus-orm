@@ -23,7 +23,7 @@ describe('feature/repository_custom/custom_repository', () => {
 
     const userRepo = store.$repo(UserRepository)
 
-    expect(userRepo.custom()).toBe(1)
+    expect((userRepo as UserRepository).custom()).toBe(1)
   })
 
   it('can define an abstract custom repository', async () => {
@@ -37,7 +37,7 @@ describe('feature/repository_custom/custom_repository', () => {
 
     const userRepo = store.$repo(ARepository)
 
-    expect(userRepo.custom()).toBe(1)
+    expect((userRepo as ARepository).custom()).toBe(1)
   })
 
   it('throws if the user tries to access the model in abstract custom repository', async () => {
@@ -52,7 +52,7 @@ describe('feature/repository_custom/custom_repository', () => {
     const userRepo = store.$repo(ARepository)
 
     expect(() => {
-      userRepo.custom()
+      ;(userRepo as ARepository).custom()
     }).toThrow()
   })
 })

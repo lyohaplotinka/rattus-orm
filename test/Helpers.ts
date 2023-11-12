@@ -1,56 +1,13 @@
 import type { Collection, Element, Elements, Model, RootState } from '@/index'
-import { Database, Repository } from '@/index'
-import { ObjectDataProvider } from '@/data/object-data-provider'
+import { TestingStore } from 'test/utils/types'
+import { TestStore } from 'test/utils/test-store'
 
 interface Entities {
   [name: string]: Elements
 }
 
-class TestStore {
-  public $database = new Database().setDataProvider(new ObjectDataProvider()).setConnection('entities')
-  public $databases: Record<string, Database> = {
-    entities: this.$database,
-  }
-
-  constructor() {
-    this.$database.start()
-  }
-
-  public get state() {
-    return {
-      entities: this.$database.getDataProvider().getState('entities'),
-    }
-  }
-
-  public $repo(modelOrRepository: any, connection?: string): any {
-    let database: Database
-
-    if (connection) {
-      if (!(connection in this.$databases)) {
-        database = new Database().setDataProvider(new ObjectDataProvider()).setConnection(connection)
-        database.start()
-      } else {
-        database = this.$databases[connection]
-      }
-    } else {
-      database = this.$database
-    }
-
-    const repository = modelOrRepository._isRepository
-      ? new modelOrRepository(database).initialize()
-      : new Repository(database).initialize(modelOrRepository)
-
-    try {
-      database.register(repository.getModel())
-    } catch (e) {
-    } finally {
-      return repository
-    }
-  }
-}
-
-export function createStore(): TestStore {
-  return new TestStore()
+export function createStore(): TestingStore {
+  return new TestStore(new globalThis.TestingDataProviderConstructor())
 }
 
 export function createState(entities: Entities): RootState {
@@ -65,7 +22,7 @@ export function createState(entities: Entities): RootState {
   return state
 }
 
-export function fillState(store: TestStore, entities: Entities): void {
+export function fillState(store: TestingStore, entities: Entities): void {
   for (const entity in entities) {
     if (!store.state.entities[entity]) {
       store.state.entities[entity] = { data: {} }
@@ -75,7 +32,7 @@ export function fillState(store: TestStore, entities: Entities): void {
   }
 }
 
-export function assertState(store: TestStore, entities: Entities): void {
+export function assertState(store: TestingStore, entities: Entities): void {
   expect(store.state.entities).toEqual(createState(entities))
 }
 

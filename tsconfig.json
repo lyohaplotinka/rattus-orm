@@ -25,6 +25,7 @@
     "ignoreDeprecations": "5.0",
     "skipLibCheck": true,
     "strictPropertyInitialization": false,
+    "useDefineForClassFields": false,
     "lib": [
       "esnext",
       "dom"
