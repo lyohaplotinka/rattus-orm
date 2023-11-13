@@ -1,4 +1,4 @@
-# Rattus ORM: core
+# Rattus ORM: vuex
 
 Status: alpha  
 Docs: coming soon
