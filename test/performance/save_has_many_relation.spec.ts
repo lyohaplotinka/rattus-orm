@@ -1,4 +1,4 @@
-import { createStore } from 'test/Helpers'
+import { createStore } from 'test/utils/Helpers'
 
 import { HasMany, Model, Num, Str } from '@/index'
 

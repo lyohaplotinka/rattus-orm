@@ -1,4 +1,4 @@
-import { createStore } from 'test/Helpers'
+import { createStore } from 'test/utils/Helpers'
 
 import { HasMany } from '@/model/decorators/attributes/relations/HasMany'
 import { Num } from '@/model/decorators/attributes/types/Num'

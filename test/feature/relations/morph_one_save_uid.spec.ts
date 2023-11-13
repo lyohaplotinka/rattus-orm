@@ -1,4 +1,4 @@
-import { assertState, createStore, mockUid } from 'test/Helpers'
+import { assertState, createStore, mockUid } from 'test/utils/Helpers'
 
 import { Model, MorphOne, Num, Str, Uid } from '@/index'
 

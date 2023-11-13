@@ -1,4 +1,4 @@
-import { createStore, fillState } from 'test/Helpers'
+import { createStore, fillState } from 'test/utils/Helpers'
 
 import type { Query } from '@/index'
 import { Attr, HasOne, Model, Str } from '@/index'

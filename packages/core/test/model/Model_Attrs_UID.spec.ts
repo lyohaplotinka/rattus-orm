@@ -1,4 +1,4 @@
-import { mockUid } from 'test/Helpers'
+import { mockUid } from '../../../../test/utils/Helpers'
 
 import { Uid } from '@/model/decorators/attributes/types/Uid'
 import { Model } from '@/model/Model'

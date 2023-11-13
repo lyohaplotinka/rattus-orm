@@ -1,4 +1,4 @@
-import { createStore, fillState } from 'test/Helpers'
+import { createStore, fillState } from 'test/utils/Helpers'
 
 import { Attr, BelongsTo, HasMany, Model } from '@/index'
 
