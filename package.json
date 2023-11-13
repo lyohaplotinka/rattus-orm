@@ -2,15 +2,18 @@
   "name": "rattus-orm",
   "packageManager": "yarn@4.0.1",
   "scripts": {
-    "test": "node ./scripts/test.js",
+    "test": "node scripts/test.mjs",
     "lint": "yarn workspaces foreach -A run lint",
     "typecheck": "yarn workspaces foreach -A run typecheck",
     "build": "yarn workspaces foreach -A run build",
+    "release": "node ./scripts/releaser/releaser.mjs",
     "prepare": "npx simple-git-hooks"
   },
   "devDependencies": {
+    "@types/semver": "^7",
     "@typescript-eslint/eslint-plugin": "^6.2.0",
     "@typescript-eslint/parser": "^6.2.0",
+    "enquirer": "^2.4.1",
     "eslint": "^8.46.0",
     "eslint-config-prettier": "^8.9.0",
     "eslint-plugin-prettier": "^5.0.0",
@@ -18,6 +21,7 @@
     "jsdom": "^22.1.0",
     "lint-staged": "^15.0.2",
     "prettier": "^3.0.0",
+    "semver": "^7.5.4",
     "simple-git-hooks": "^2.8.1",
     "tslib": "^2.6.2",
     "tsup": "^7.2.0",
