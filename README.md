@@ -1,6 +1,6 @@
 # Rattus ORM
 
-#### Data-source agnostic ORM for JavaScript
+**Data-source agnostic ORM for JavaScript**
 
 Status: alpha  
 Docs: coming soon
