@@ -45,7 +45,6 @@ function mixin(store: Store<any>, options: FilledInstallOptions): void {
  */
 function createDatabase(store: Store<any>, options: FilledInstallOptions): Database {
   const database = new Database().setDataProvider(new VuexDataProvider(store)).setConnection(options.namespace)
-  database.start()
 
   store.$database = database
 

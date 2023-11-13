@@ -4,12 +4,11 @@ import { DataProvider } from '@/data/types'
 import { TestingStore } from 'test/utils/types'
 
 export class TestStore implements TestingStore {
-  public $database
+  public $database: Database
   public $databases: Record<string, Database> = {}
 
   constructor(protected readonly dataProvider: DataProvider) {
-    this.$database = new Database().setDataProvider(dataProvider).setConnection('entities')
-    this.$database.start()
+    this.createDatabase('entities', true)
   }
 
   public get state() {
@@ -23,8 +22,7 @@ export class TestStore implements TestingStore {
 
     if (connection) {
       if (!(connection in this.$databases)) {
-        database = new Database().setDataProvider(this.dataProvider).setConnection(connection)
-        database.start()
+        database = this.createDatabase(connection)
       } else {
         database = this.$databases[connection]
       }
@@ -42,5 +40,16 @@ export class TestStore implements TestingStore {
     } finally {
       return repository
     }
+  }
+
+  protected createDatabase(connection: string, setToThis = false) {
+    const db = new Database().setDataProvider(this.dataProvider).setConnection(connection)
+    db.start()
+    this.$databases[connection] = db
+    if (setToThis) {
+      this.$database = db
+    }
+
+    return db
   }
 }
