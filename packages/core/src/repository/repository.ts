@@ -10,8 +10,7 @@ import type {
   WherePrimaryClosure,
   WhereSecondaryClosure,
 } from '../query/types'
-import { assert, isRepositoryConstructor } from '../support/utils'
-import type { Constructor } from '../types'
+import { assert } from '../support/utils'
 
 export class Repository<M extends Model = Model> {
   /**
@@ -59,7 +58,7 @@ export class Repository<M extends Model = Model> {
     // In this case, we'll check if the user has set model to the `use`
     // property and instantiate that.
     if (this.use) {
-      this.model = this.use.newRawInstance() as M
+      this.model = (this.use as ModelConstructor<any>).newRawInstance() as M
 
       return this
     }
@@ -86,13 +85,8 @@ export class Repository<M extends Model = Model> {
   /**
    * Create a new repository with the given model.
    */
-  public repo<M extends Model>(model: Constructor<M>): Repository<M>
-  public repo<M extends Model>(repository: Constructor<Repository<M>>): Repository<M>
-  public repo<M extends Model>(modelOrRepository: ModelConstructor<M> | Constructor<Repository<M>>): Repository<M> {
-    if (isRepositoryConstructor(modelOrRepository)) {
-      return new modelOrRepository(this.database).initialize()
-    }
-    return this.database.getRepository(modelOrRepository)
+  public repo<M extends typeof Model>(model: M): Repository<InstanceType<M>> {
+    return this.database.getRepository(model)
   }
 
   /**

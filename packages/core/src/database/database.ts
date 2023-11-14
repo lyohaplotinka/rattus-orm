@@ -40,10 +40,10 @@ export class Database {
     return this.started
   }
 
-  public getRepository<M extends Model>(model: ModelConstructor<M>): Repository<M> {
-    const repo = new Repository<M>(this).initialize(model)
+  public getRepository<M extends typeof Model>(model: M): Repository<InstanceType<M>> {
+    const repo = new Repository<ModelConstructor<any>>(this).initialize(model)
     this.register(repo.getModel())
-    return repo
+    return repo as Repository<InstanceType<M>>
   }
 
   /**

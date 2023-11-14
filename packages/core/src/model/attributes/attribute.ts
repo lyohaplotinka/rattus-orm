@@ -1,3 +1,5 @@
+import type { ModelConstructor } from '@/model/types'
+
 import type { Model } from '../Model'
 
 export abstract class Attribute {
@@ -9,7 +11,7 @@ export abstract class Attribute {
   /**
    * Create a new Attribute instance.
    */
-  constructor(model: Model) {
+  constructor(model: ModelConstructor<any>) {
     this.model = model
   }
 

@@ -1,10 +1,16 @@
-import type { Model } from '../../../Model'
+import type { ModelConstructor } from '@/model/types'
+
 import type { PropertyDecorator } from '../../Contracts'
 
 /**
  * Create a morph-one attribute property decorator.
  */
-export function MorphOne(related: () => typeof Model, id: string, type: string, localKey?: string): PropertyDecorator {
+export function MorphOne(
+  related: () => ModelConstructor<any>,
+  id: string,
+  type: string,
+  localKey?: string,
+): PropertyDecorator {
   return (target, propertyKey) => {
     const self = target.$self()
 

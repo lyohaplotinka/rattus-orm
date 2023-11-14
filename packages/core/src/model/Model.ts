@@ -1,3 +1,5 @@
+import type { ModelConstructor } from '@/model/types'
+
 import type { Collection, Element, Item } from '../data/types'
 import { assert, isArray, isNullish } from '../support/utils'
 import type { Attribute } from './attributes/attribute'
@@ -110,108 +112,112 @@ export class Model {
    * - Registering model to a component (eg. Repository, Query, etc.)
    * - Registering model to attributes (String, Has Many, etc.)
    */
-  public static newRawInstance<M extends typeof Model>(this: M): InstanceType<M> {
-    return new this(undefined, { fill: false }) as InstanceType<M>
+  public static newRawInstance<M extends Model>(this: ModelConstructor<M>): M {
+    return new this(undefined, { fill: false }) as M
   }
 
   /**
    * Create a new Attr attribute instance.
    */
   public static attr(value: any): Attr {
-    return new Attr(this.newRawInstance(), value)
+    return new Attr(this.thisAsModelConstructor().newRawInstance(), value)
   }
 
   /**
    * Create a new String attribute instance.
    */
   public static string(value: string | null): Str {
-    return new Str(this.newRawInstance(), value)
+    return new Str(this.thisAsModelConstructor().newRawInstance(), value)
   }
 
   /**
    * Create a new Number attribute instance.
    */
   public static number(value: number | null): Num {
-    return new Num(this.newRawInstance(), value)
+    return new Num(this.thisAsModelConstructor().newRawInstance(), value)
   }
 
   /**
    * Create a new Boolean attribute instance.
    */
   public static boolean(value: boolean | null): Bool {
-    return new Bool(this.newRawInstance(), value)
+    return new Bool(this.thisAsModelConstructor().newRawInstance(), value)
   }
 
   /**
    * Create a new Uid attribute instance.
    */
   public static uid(): Uid {
-    return new Uid(this.newRawInstance())
+    return new Uid(this.thisAsModelConstructor().newRawInstance())
   }
 
   /**
    * Create a new HasOne relation instance.
    */
-  public static hasOne(related: typeof Model, foreignKey: string, localKey?: string): HasOne {
-    const model = this.newRawInstance()
+  public static hasOne(related: ModelConstructor<any>, foreignKey: string, localKey?: string): HasOne {
+    const model = this.thisAsModelConstructor().newRawInstance()
 
     localKey = localKey ?? model.$getLocalKey()
 
-    return new HasOne(model, related.newRawInstance(), foreignKey, localKey)
+    return new HasOne(model, related.newRawInstance(), foreignKey, localKey as string)
   }
 
   /**
    * Create a new BelongsTo relation instance.
    */
-  public static belongsTo(related: typeof Model, foreignKey: string, ownerKey?: string): BelongsTo {
+  public static belongsTo(related: ModelConstructor<any>, foreignKey: string, ownerKey?: string): BelongsTo {
     const instance = related.newRawInstance()
 
     ownerKey = ownerKey ?? instance.$getLocalKey()
 
-    return new BelongsTo(this.newRawInstance(), instance, foreignKey, ownerKey)
+    return new BelongsTo(this.thisAsModelConstructor().newRawInstance(), instance, foreignKey, ownerKey as string)
   }
 
   /**
    * Create a new HasMany relation instance.
    */
-  public static hasMany(related: typeof Model, foreignKey: string, localKey?: string): HasMany {
-    const model = this.newRawInstance()
+  public static hasMany(related: ModelConstructor<any>, foreignKey: string, localKey?: string): HasMany {
+    const model = this.thisAsModelConstructor().newRawInstance()
 
     localKey = localKey ?? model.$getLocalKey()
 
-    return new HasMany(model, related.newRawInstance(), foreignKey, localKey)
+    return new HasMany(model, related.newRawInstance(), foreignKey, localKey as string)
   }
 
   /**
    * Create a new HasManyBy relation instance.
    */
-  public static hasManyBy(related: typeof Model, foreignKey: string, ownerKey?: string): HasManyBy {
+  public static hasManyBy(related: ModelConstructor<Model>, foreignKey: string, ownerKey?: string): HasManyBy {
     const instance = related.newRawInstance()
 
     ownerKey = ownerKey ?? instance.$getLocalKey()
 
-    return new HasManyBy(this.newRawInstance(), instance, foreignKey, ownerKey)
+    return new HasManyBy(this.thisAsModelConstructor().newRawInstance(), instance, foreignKey, ownerKey)
   }
 
   /**
    * Create a new MorphOne relation instance.
    */
-  public static morphOne(related: typeof Model, id: string, type: string, localKey?: string): MorphOne {
-    const model = this.newRawInstance()
+  public static morphOne(related: ModelConstructor<Model>, id: string, type: string, localKey?: string): MorphOne {
+    const model = this.thisAsModelConstructor().newRawInstance()
 
     localKey = localKey ?? model.$getLocalKey()
 
-    return new MorphOne(model, related.newRawInstance(), id, type, localKey)
+    return new MorphOne(model, related.newRawInstance(), id, type, localKey as string)
   }
 
   /**
    * Create a new MorphTo relation instance.
    */
-  public static morphTo(related: (typeof Model)[], id: string, type: string, ownerKey: string = ''): MorphTo {
-    const instance = this.newRawInstance()
+  public static morphTo(related: ModelConstructor<any>[], id: string, type: string, ownerKey: string = ''): MorphTo {
+    const instance = this.thisAsModelConstructor().newRawInstance()
     const relatedModels = related.map((model) => model.newRawInstance())
 
     return new MorphTo(instance, relatedModels, id, type, ownerKey)
+  }
+
+  protected static thisAsModelConstructor() {
+    return this as ModelConstructor<any>
   }
 
   /**

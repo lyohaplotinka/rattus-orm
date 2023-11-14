@@ -1,14 +1,14 @@
 import { beforeEach, describe, expect } from 'vitest'
 import { Component, ComponentOptions, computed, nextTick } from 'vue'
 import { mount } from '@vue/test-utils'
-import { Model, Num, Str } from '@rattus-orm/core'
+import { Model, Num, Uid } from '@rattus-orm/core'
 import { createStore, Store } from 'vuex'
 import { getRepository, installRattusORM } from '../src'
 
 class User extends Model {
   public static entity = 'user'
 
-  @Str('')
+  @Uid()
   public id: string
 
   @Num(0)

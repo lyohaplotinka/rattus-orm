@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "build": "tsup",
-    "clean": "rm -rf dist temp .nyc_output .tmp",
+    "clean": "rm -rf dist",
     "lint": "eslint 'src/**/*.ts' --quiet --fix",
     "test": "vitest run",
     "typecheck": "bash -c 'tsc -p tsconfig.json --noEmit'"

@@ -1,6 +1,6 @@
 import { assertModel, createStore } from 'test/utils/Helpers'
 
-import { Attr, Model, Repository, Str } from '@/index'
+import { Attr, Model, Str } from '@/index'
 
 describe('unit/repository/Repository', () => {
   class User extends Model {
@@ -58,20 +58,6 @@ describe('unit/repository/Repository', () => {
     const userRepo = store.$repo(User)
 
     const postRepo = userRepo.repo(Post)
-
-    expect(postRepo.getModel()).toBeInstanceOf(Post)
-  })
-
-  it('can create a new repository from the custom repository', () => {
-    class PostRepository extends Repository<Post> {
-      use = Post
-    }
-
-    const store = createStore()
-
-    const userRepo = store.$repo(User)
-
-    const postRepo = userRepo.repo(PostRepository)
 
     expect(postRepo.getModel()).toBeInstanceOf(Post)
   })
