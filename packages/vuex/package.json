@@ -35,6 +35,7 @@
   },
   "devDependencies": {
     "@rattus-orm/core": "^0.0.1",
+    "@vue/test-utils": "^2.4.1",
     "vue": "^3.0.0",
     "vuex": "^4.1.0"
   },
