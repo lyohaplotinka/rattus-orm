@@ -1,9 +1,9 @@
-import { beforeEach, describe, expect } from 'vitest'
+import { beforeEach, describe, expect, vi } from 'vitest'
 import { Component, ComponentOptions, computed, nextTick } from 'vue'
 import { mount } from '@vue/test-utils'
-import { Model, Num, Uid } from '@rattus-orm/core'
+import { Model, Num, Repository, Uid } from '@rattus-orm/core'
 import { createStore, Store } from 'vuex'
-import { getRepository, installRattusORM } from '../src'
+import { installRattusORM, useRepository, useRepositoryComputed } from '../src'
 
 class User extends Model {
   public static entity = 'user'
@@ -41,21 +41,63 @@ describe('composable', () => {
     return mount(component, { global: { plugins: [store] } })
   }
 
-  it('works', () => {
-    const wrapper = mountSetup(() => {
-      const repo = getRepository(User)
-      return repo.find('1')
+  const withSetup = <T extends () => any>(hook: T) => {
+    let result: ReturnType<T>
+
+    mount(
+      {
+        template: '<div />',
+        setup() {
+          result = hook()
+        },
+      },
+      { global: { plugins: [store] } },
+    )
+
+    // @ts-ignore
+    return result as ReturnType<T>
+  }
+
+  describe('useRepository returns correctly bound methods', () => {
+    store = createStore({
+      plugins: [installRattusORM()],
     })
-    expect(wrapper.text()).toStrictEqual('Age: 23')
+
+    const mocked = vi.spyOn(Function.prototype, 'bind').mockImplementation(function (
+      this: any,
+      thisArg: any,
+      ...args: any[]
+    ) {
+      const func = this
+      const boundFunction = function (...newArgs: any[]): any {
+        return func.apply(thisArg, args.concat(newArgs))
+      }
+      boundFunction.boundTo = thisArg
+      return boundFunction
+    })
+
+    const result = withSetup(() => {
+      return useRepository(User)
+    })
+
+    it.each(Object.keys(result))('%s has correct context', (methodName) => {
+      expect(result[methodName].boundTo).toBeInstanceOf(Repository)
+    })
+
+    mocked.mockRestore()
   })
 
-  it('data is reactive', async () => {
+  it('useRepositoryComputed: returns reactive data', async () => {
     const repo = store.$database.getRepository(User)
     const wrapper = mountSetup(() => {
-      const user = computed(() => repo.find('1'))
+      const { find, query } = useRepositoryComputed(User)
+      const user = find('1')
+
+      const b = query().findIn(['1'])
+      console.log(b)
 
       return {
-        age: computed(() => (user.value as any).age),
+        age: computed(() => user.value?.age),
       }
     })
     expect(wrapper.text()).toStrictEqual('Age: 23')
