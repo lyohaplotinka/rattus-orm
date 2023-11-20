@@ -10,7 +10,6 @@ export const pullRepositoryKeys = [
   'fresh',
   'destroy',
   'flush',
-  'query',
   ...pullRepositoryGettersKeys,
 ] satisfies Array<keyof Repository>
 
@@ -49,3 +48,7 @@ export type RepositoryCustomKeys<R extends Repository<InstanceType<any>> = Repos
   keyof R,
   RepositoryPullKeys
 >
+
+export interface ComputedRefExtended<T = any> extends ComputedRef<T> {
+  filter(...args: Parameters<typeof Array.prototype.filter>): ReturnType<typeof Array.prototype.filter>
+}

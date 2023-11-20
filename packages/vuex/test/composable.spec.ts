@@ -4,6 +4,7 @@ import { mount } from '@vue/test-utils'
 import { Model, Num, Repository, Uid } from '@rattus-orm/core'
 import { createStore, Store } from 'vuex'
 import { installRattusORM, useRepository, useRepositoryComputed } from '../src'
+import { pullRepositoryKeys } from '../src/composable/types'
 
 class User extends Model {
   public static entity = 'user'
@@ -80,21 +81,29 @@ describe('composable', () => {
       return useRepository(User)
     })
 
-    it.each(Object.keys(result))('%s has correct context', (methodName) => {
-      expect(result[methodName].boundTo).toBeInstanceOf(Repository)
+    it.each(pullRepositoryKeys)('%s has correct context', (methodName) => {
+      expect((result[methodName] as any).boundTo).toBeInstanceOf(Repository)
     })
 
     mocked.mockRestore()
   })
 
+  it('useRepositoryComputed: methods are not ruined', () => {
+    const { insert, fresh, destroy, find, save, all, flush } = withSetup(() => useRepositoryComputed(User))
+    expect(() => insert({ id: '2', age: 22 })).not.toThrowError()
+    expect(() => fresh([{ id: '1', age: 11 }])).not.toThrowError()
+    expect(() => destroy('1')).not.toThrowError()
+    expect(() => find('1')).not.toThrowError()
+    expect(() => save({ id: '2', age: 22 })).not.toThrowError()
+    expect(() => all()).not.toThrowError()
+    expect(() => flush()).not.toThrowError()
+  })
+
   it('useRepositoryComputed: returns reactive data', async () => {
     const repo = store.$database.getRepository(User)
     const wrapper = mountSetup(() => {
-      const { find, query } = useRepositoryComputed(User)
+      const { find } = useRepositoryComputed(User)
       const user = find('1')
-
-      const b = query().findIn(['1'])
-      console.log(b)
 
       return {
         age: computed(() => user.value?.age),

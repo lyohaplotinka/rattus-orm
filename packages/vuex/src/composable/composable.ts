@@ -2,13 +2,31 @@ import '../types/vuex'
 
 import type { Model, Repository } from '@rattus-orm/core'
 import { isUnknownRecord } from '@rattus-orm/core'
+import type { ComputedGetter, DebuggerOptions } from '@vue/reactivity'
 import type { InjectionKey } from 'vue'
 import { computed } from 'vue'
 import type { Store } from 'vuex'
 import { useStore } from 'vuex'
 
-import type { ComputedPickedRepository, PickedRepository, RepositoryCustomKeys } from './types'
+import type { ComputedPickedRepository, ComputedRefExtended, PickedRepository, RepositoryCustomKeys } from './types'
 import { pullRepositoryGettersKeys, pullRepositoryKeys } from './types'
+
+function extendedComputed<T = any>(getter: ComputedGetter<T>, debugOptions?: DebuggerOptions): ComputedRefExtended<T> {
+  const ref = computed<T>(getter, debugOptions)
+
+  Object.defineProperties(ref, {
+    filter: {
+      value: (...args: Parameters<typeof Array.prototype.filter>) => {
+        if (!Array.isArray(ref.value)) {
+          throw new TypeError('[extendedComputed] Unable to filter by computed value: it is not an array')
+        }
+        return ref.value.filter(...args)
+      },
+    },
+  })
+
+  return ref as ComputedRefExtended<T>
+}
 
 function pickFromClass<T, K extends keyof T>(instance: T, keys: K[]): Pick<T, K> {
   return keys.reduce<Pick<T, K>>(
@@ -26,12 +44,12 @@ function pickFromClass<T, K extends keyof T>(instance: T, keys: K[]): Pick<T, K>
   )
 }
 
-function computedProxify<T extends Record<any, any>>(object: T, keysToProxify: string[]) {
+function computedProxify<T extends Record<any, any>>(object: T, keysToProxify: string[]): T {
   return new Proxy(object, {
     get: (target: any, p: string): any => {
       if (keysToProxify.includes(p)) {
         return (...args: any[]) => {
-          return computed(() => target[p](...args))
+          return extendedComputed(() => object[p](...args))
         }
       }
 
@@ -58,16 +76,8 @@ export function useRepositoryComputed<
   CK extends RepositoryCustomKeys<R>,
   R extends Repository<InstanceType<T>> = Repository<InstanceType<T>>,
 >(model: T, pullCustomKeys: CK[] = [], injectKey?: InjectionKey<Store<any>>): ComputedPickedRepository<T, R, CK> {
-  const picked = useRepository<T, CK, R>(model, pullCustomKeys, injectKey)
-  const query = function (): ReturnType<typeof picked.query> {
-    const result = picked.query()
-    return result as any
-    // const result = picked.query()
-    // return computedProxify(result, pullRepositoryGettersKeys)
-  }
-
-  return {
-    ...computedProxify(picked, pullRepositoryGettersKeys),
-    query,
-  }
+  return computedProxify(
+    useRepository<T, CK, R>(model, pullCustomKeys, injectKey),
+    pullRepositoryGettersKeys,
+  ) as unknown as ComputedPickedRepository<T, R, CK>
 }
