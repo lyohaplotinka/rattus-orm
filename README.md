@@ -1,4 +1,11 @@
-# Rattus ORM
+<div style="display: flex; flex-direction: row; align-items: center;">
+    <div>
+        <img alt="rattus orm logo" src="./assets/logo.svg" style="width: 70px">
+    </div>
+    <div style="margin-left: 20px">
+        <h1 style="margin: 0; padding: 0; border-bottom: none">Rattus ORM</h1>
+    </div>
+</div>
 
 > **Note**: Rattus ORM is currently in its early stages of development. We welcome feedback and contributions to help improve and evolve the package.
 
@@ -17,10 +24,11 @@ Rattus ORM is a versatile JavaScript/TypeScript package that offers an Object-Re
 * [@rattus-orm/vuex](./packages/vuex): vuex data provider
 
 ### Documentation
-For more detailed usage and API documentation, please visit Rattus ORM Documentation.
+For more detailed usage and API documentation, please visit Rattus ORM Documentation (coming soon)
 
 ### Contributing
-Contributions are welcome! Please read our Contributing Guide for details on our code of conduct, and the process for submitting pull requests.
+Contributions are welcome! Please read our Contributing Guide for details 
+on our code of conduct, and the process for submitting pull requests (coming soon).
 
 ### License
 Rattus ORM is open-sourced software licensed under the [MIT License](./LICENSE).
