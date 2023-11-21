@@ -10,6 +10,11 @@
       "import": "./dist/rattus-orm-core.mjs",
       "require": "./dist/rattus-orm-core.js",
       "types": "./dist/rattus-orm-core.d.ts"
+    },
+    "./object-data-provider": {
+      "import": "./dist/object-data-provider.mjs",
+      "require": "./dist/object-data-provider.js",
+      "types": "./dist/object-data-provider.d.ts"
     }
   },
   "files": [
