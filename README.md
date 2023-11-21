@@ -1,11 +1,8 @@
-<div style="display: flex; flex-direction: row; align-items: center;">
-    <div>
-        <img alt="rattus orm logo" src="./assets/logo.svg" style="width: 70px">
-    </div>
-    <div style="margin-left: 20px">
-        <h1 style="margin: 0; padding: 0; border-bottom: none">Rattus ORM</h1>
-    </div>
-</div>
+<p align="center">
+  <img style="margin-right: -15px" width="192px" src="./assets/logo.svg" alt="Vuex ORM">
+</p>
+
+<h1 align="center">Rattus ORM</h1>
 
 > **Note**: Rattus ORM is currently in its early stages of development. We welcome feedback and contributions to help improve and evolve the package.
 
