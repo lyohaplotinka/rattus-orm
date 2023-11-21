@@ -1,5 +1,5 @@
 <p align="center">
-  <img style="margin-right: -15px" width="192px" src="./assets/logo.svg" alt="Vuex ORM">
+  <img style="margin-right: -15px" width="192px" src="./assets/logo.svg" alt="Rattus ORM">
 </p>
 
 <h1 align="center">Rattus ORM</h1>

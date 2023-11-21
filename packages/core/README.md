@@ -1,5 +1,5 @@
 <p align="center">
-  <img style="margin-right: -15px" width="192px" src="https://raw.githubusercontent.com/lyohaplotinka/rattus-orm-new/main/assets/logo.svg" alt="Vuex ORM">
+  <img style="margin-right: -15px" width="192px" src="https://raw.githubusercontent.com/lyohaplotinka/rattus-orm-new/main/assets/logo.svg" alt="Rattus ORM">
 </p>
 
 <h1 align="center">Rattus ORM – Core</h1>
@@ -11,7 +11,7 @@
 ### Installation
 Use your favorite package manager. For example, yarn: 
 ```bash
-npm i @rattus-orm/core
+yarn add @rattus-orm/core
 ```
 ### Basic usage
 
