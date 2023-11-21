@@ -1,8 +1,14 @@
-# Rattus ORM
+---
+sidebar_position: 1
+---
 
-> **Note**: Rattus ORM is currently in its early stages of development. We welcome feedback and contributions to help improve and evolve the package.
+# Intro
 
 Rattus ORM is a versatile JavaScript/TypeScript package that offers an Object-Relational Mapping (ORM) like experience for JS/TS applications. It is developed based on the source code of "vuex-orm-next", ensuring compatibility with its API while broadening its applicability beyond specific state managers.
+
+:::warning 
+Rattus ORM is currently in its early stages of development. We welcome feedback and contributions to help improve and evolve the package.
+:::
 
 ### Features
 
@@ -12,15 +18,17 @@ Rattus ORM is a versatile JavaScript/TypeScript package that offers an Object-Re
 - **TypeScript Support**: Offers full TypeScript support for type safety and an enhanced development experience.
 - **Efficient Data Management**: Optimized for front-end data operations, ensuring efficient and reactive state management.
 
+### Before start
+
+If you're new or need help with the basics, check out the ["vuex-orm-next"](https://next.vuex-orm.org/) documentation. It's got everything you need to start - simple explanations and examples that show you how to use it. This guide is great for beginners and anyone who wants to learn more about how it works. It's easy to follow and will help you get the hang of things quickly.
+
 ### Packages:
 * [@rattus-orm/core](./packages/core): core of Rattus ORM
 * [@rattus-orm/vuex](./packages/vuex): vuex data provider
-
-### Documentation
-For more detailed usage and API documentation, please visit Rattus ORM Documentation.
 
 ### Contributing
 Contributions are welcome! Please read our Contributing Guide for details on our code of conduct, and the process for submitting pull requests.
 
 ### License
 Rattus ORM is open-sourced software licensed under the [MIT License](./LICENSE).
+
