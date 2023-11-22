@@ -26,6 +26,9 @@ jobs:
           path: node_modules
           key: ${{ runner.os }}-test-${{ hashFiles('**/yarn.lock') }}
 
+      - name: Install deps
+        run: yarn install --frozen-lockfile
+
       - name: Build
         if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: yarn workspace docs run build
