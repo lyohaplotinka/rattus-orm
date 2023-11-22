@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -35,7 +35,6 @@ jobs:
         run: yarn install --immutable
 
       - name: Build
-        if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: yarn workspace docs run build
 
       - name: Upload artifact
