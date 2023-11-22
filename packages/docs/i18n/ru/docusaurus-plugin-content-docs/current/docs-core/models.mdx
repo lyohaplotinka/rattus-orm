@@ -1,0 +1,160 @@
+---
+sidebar_position: 4
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Модель
+
+### Основное
+
+:::info[Инфо]
+Эта часть документации написана по следам `vuex-orm-next`.
+Однако, Rattus ORM более ориентирован на работу с 
+TypeScript и декораторами.
+:::
+
+Модели — это определение схемы данных, которая будет 
+обрабатываться Rattus ORM. Вы можете определить любое 
+количество моделей в зависимости от ваших потребностей.
+
+Чтобы определить модель, создайте класс, наследующий 
+класс `Model`:
+
+<Tabs>
+    <TabItem value={'ts'} label={'TypeScript'}>
+        ```typescript title="src/data/User.ts"
+        import { Model, Str, Num, Uid } from '@rattus-orm/core'
+
+        export class User extends Model {
+            public static entity = 'user'
+
+            @Uid()
+            public id: string
+
+            @Str('')
+            public name: string
+
+            @Num(0)
+            public age: number
+        }
+        ```
+    </TabItem>
+    <TabItem value={'js'} label={'JavaScript'}>
+        ```javascript title="src/data/User.js"
+        import { Model } from '@rattus-orm/core'
+
+        export class User extends Model {
+            static entity = 'user'
+
+            static fields () {
+                return {
+                    id: this.uid(),
+                    name: this.string(''),
+                    age: this.number(0)
+                }
+            }
+        }
+        ```
+    </TabItem>
+</Tabs>
+
+Статическое свойство `entity` является именем "таблицы" в
+нашей базе данных. Все модули в хранилище будут созданы
+базой данных и дата-провайдером автоматически.
+
+### Типы полей
+
+#### Общий тип
+
+Используйте декоратор `@Attr(value)` (или метод `this.attr()`) для определения наиболее
+общего поля. Аргументом является значение поля по
+умолчанию, которое будет использоваться при создании
+новых данных, если поле отсутствует.
+
+```typescript
+export class User extends Model {
+    public static entity = 'user'
+
+    @Attr(null)
+    public anyField: any
+}
+```
+
+#### Примитивные типы
+Вы можете использовать атрибуты примитивного типа:
+`@Str('')`, `@Num(0)` или `@Bool(false)`
+(для JS - `this.string()`, `this.number()` и `this.boolean()`).
+Эти атрибуты обеспечивают приведение, которое
+преобразует данное значение в указанный тип.
+Например, `'0'` преобразуется в `0`, а `1`, в `true`.
+Как и в случае с `this.attr()`, аргументом является
+значение по умолчанию.
+
+```typescript
+export class User extends Model {
+    public static entity = 'user'
+
+    @Str('')
+    public name: string
+
+    @Num(0)
+    public age: number
+
+    @Bool(true)
+    public isAwesome: boolean
+}
+```
+
+:::warning[Внимание]
+Rattus ORM не будет **валидировать** значения, попадающие
+в поля. Вместо этого будет выполнено **приведение** типов.
+Строка `John Doe`, попавшая в поле Boolean, преобразуется
+в `true`.
+:::
+
+#### UID тип
+`@Uid()`  (или `this.uid()` в JS) генерирует уникальный
+идентификатор, если значение для этого поля отсутствует.
+
+```typescript
+export class User extends Model {
+    public static entity = 'user'
+
+    @Uid()
+    public id: string
+}
+```
+По умолчанию будет создан UUID v4. Если вам нужен другой
+алгоритм, вы можете передать коллбэк, который сгененрирует
+ID:
+
+```typescript
+export class User extends Model {
+    public static entity = 'user'
+
+    @Uid(() => myIdGenerator())
+    public id: string
+}
+```
+
+### Primary key
+Rattus ORM предполагает, что у каждой сущности есть
+первичный ключ `id`. Если он отличается, вы можете
+указать, на какой ключ стоит обращать внимание:
+```typescript
+export class User extends Model {
+    public static entity = 'user'
+    public static primaryKey = 'myId'
+
+    // Также можно указать массив
+    public static primaryKey = ['myId', 'otherId']
+
+    @Uid(() => myIdGenerator())
+    public myId: string
+}
+```
+
+Если в переданных данных не будет ключа, Rattus ORM
+сгенерирует его автоматически при вставке данных.
+

@@ -1,0 +1,158 @@
+---
+sidebar_position: 4
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Model
+
+### Basics
+
+:::info
+This part of the documentation is written following `vuex-orm-next`.
+However, Rattus ORM is more oriented towards working with
+TypeScript and decorators.
+:::
+
+Models are definitions of data schemas that will be
+processed by Rattus ORM. You can define any number
+of models as per your needs.
+
+To define a model, create a class that inherits
+from the `Model` class:
+
+<Tabs>
+    <TabItem value={'ts'} label={'TypeScript'}>
+        ```typescript title="src/data/User.ts"
+        import { Model, Str, Num, Uid } from '@rattus-orm/core'
+
+        export class User extends Model {
+        public static entity = 'user'
+
+        @Uid()
+        public id: string
+
+        @Str('')
+        public name: string
+
+        @Num(0)
+        public age: number
+    }
+        ```
+    </TabItem>
+    <TabItem value={'js'} label={'JavaScript'}>
+        ```javascript title="src/data/User.js"
+        import { Model } from '@rattus-orm/core'
+
+        export class User extends Model {
+        static entity = 'user'
+
+        static fields () {
+        return {
+        id: this.uid(),
+        name: this.string(''),
+        age: this.number(0)
+    }
+    }
+    }
+        ```
+    </TabItem>
+</Tabs>
+
+The static property `entity` is the name of the "table" in
+our database. All modules in the store will be created
+automatically by the database and data provider.
+
+### Field Types
+
+#### General Type
+
+Use the decorator `@Attr(value)` (or the method `this.attr()`) to define the most
+general field. The argument is the default value of the field,
+which will be used when creating new data if the field is missing.
+
+```typescript
+export class User extends Model {
+    public static entity = 'user'
+
+    @Attr(null)
+    public anyField: any
+}
+```
+
+#### Primitive Types
+You can use primitive type attributes:
+`@Str('')`, `@Num(0)`, or `@Bool(false)`
+(for JS - `this.string()`, `this.number()`, and `this.boolean()`).
+These attributes ensure casting, which
+converts the given value to the specified type.
+For example, `'0'` is converted to `0`, and `1` to `true`.
+As with `this.attr()`, the argument is the
+default value.
+
+```typescript
+export class User extends Model {
+    public static entity = 'user'
+
+    @Str('')
+    public name: string
+
+    @Num(0)
+    public age: number
+
+    @Bool(true)
+    public isAwesome: boolean
+}
+```
+
+:::warning
+Rattus ORM will not **validate** the values that
+go into the fields. Instead, **type casting** will be performed.
+The string `John Doe` going into a Boolean field will be
+converted to `true`.
+:::
+
+#### UID Type
+`@Uid()`  (or `this.uid()` in JS) generates a unique
+identifier if the value for this field is missing.
+
+```typescript
+export class User extends Model {
+    public static entity = 'user'
+
+    @Uid()
+    public id: string
+}
+```
+By default, a UUID v4 will be created. If you need a different
+algorithm, you can pass a callback that will generate
+the ID:
+
+```typescript
+export class User extends Model {
+    public static entity = 'user'
+
+    @Uid(() => myIdGenerator())
+    public id: string
+}
+```
+
+### Primary Key
+Rattus ORM assumes that every entity has a
+primary key `id`. If it's different, you can
+indicate which key to pay attention to:
+```typescript
+export class User extends Model {
+    public static entity = 'user'
+    public static primaryKey = 'myId'
+
+    // You can also specify an array
+    public static primaryKey = ['myId', 'otherId']
+
+    @Uid(() => myIdGenerator())
+    public myId: string
+}
+```
+
+If the given data does not have the key, Rattus ORM
+will generate it automatically when inserting data.
