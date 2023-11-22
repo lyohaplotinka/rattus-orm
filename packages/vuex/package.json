@@ -1,6 +1,6 @@
 {
   "name": "@rattus-orm/vuex",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "Vuex data provider for Rattus ORM",
   "main": "dist/rattus-orm-vuex-provider.js",
   "browser": "dist/rattus-orm-vuex-provider.mjs",

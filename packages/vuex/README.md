@@ -1,5 +1,5 @@
 <p align="center">
-  <img style="margin-right: -15px" width="192px" src="https://raw.githubusercontent.com/lyohaplotinka/rattus-orm-new/main/assets/logo.svg" alt="Rattus ORM">
+  <img style="margin-right: -15px" width="192px" src="https://raw.githubusercontent.com/lyohaplotinka/rattus-orm/main/assets/logo.svg" alt="Rattus ORM">
 </p>
 
 <h1 align="center">Rattus ORM – Vuex</h1>

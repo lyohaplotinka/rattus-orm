@@ -1,6 +1,6 @@
 {
   "name": "@rattus-orm/core",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "Data-source agnostic ORM for TypeScript",
   "main": "./dist/rattus-orm-core.js",
   "module": "./dist/rattus-orm-core.mjs",
