@@ -2926,7 +2926,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rattus-orm/core@npm:^0.0.1, @rattus-orm/core@workspace:packages/core":
+"@rattus-orm/core@npm:^0.0.0, @rattus-orm/core@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "@rattus-orm/core@workspace:packages/core"
   dependencies:
@@ -2938,7 +2938,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@rattus-orm/vuex@workspace:packages/vuex"
   dependencies:
-    "@rattus-orm/core": "npm:^0.0.1"
+    "@rattus-orm/core": "npm:^0.0.0"
     "@vue/test-utils": "npm:^2.4.1"
     vue: "npm:^3.0.0"
     vuex: "npm:^4.1.0"

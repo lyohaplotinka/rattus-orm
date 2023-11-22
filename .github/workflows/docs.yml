@@ -27,7 +27,7 @@ jobs:
           key: ${{ runner.os }}-test-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install deps
-        run: yarn install --frozen-lockfile
+        run: yarn install --immutable
 
       - name: Build
         if: steps.yarn-cache.outputs.cache-hit != 'true'
