@@ -1,6 +1,18 @@
 {
   "name": "rattus-orm",
+  "description": "ORM for your JS/TS apps",
+  "homepage": "https://lyohaplotinka.github.io/rattus-orm/",
+  "author": "Lyoha Plotinka",
+  "license": "MIT",
   "packageManager": "yarn@4.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lyohaplotinka/rattus-orm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lyohaplotinka/rattus-orm/issues"
+  },
+  "keywords": ["orm", "rattus", "vuex", "typescript", "javascript"],
   "scripts": {
     "test": "node scripts/test.mjs",
     "lint": "yarn workspaces foreach -A run lint",

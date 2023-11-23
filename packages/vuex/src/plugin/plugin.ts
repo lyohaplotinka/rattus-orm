@@ -1,6 +1,7 @@
 import '../types/vuex'
 
-import { Database, Repository } from '@rattus-orm/core'
+import type { Model, Repository } from '@rattus-orm/core'
+import { Database } from '@rattus-orm/core'
 import type { Plugin, Store } from 'vuex'
 
 import { VuexDataProvider } from '../data-provider/vuex-data-provider'
@@ -11,27 +12,18 @@ export interface InstallOptions {
 
 type FilledInstallOptions = Required<InstallOptions>
 
-/**
- * Install Vuex ORM to the store.
- */
 export function installRattusORM(options?: InstallOptions): Plugin<any> {
   return (store) => {
     mixin(store, createOptions(options))
   }
 }
 
-/**
- * Create options by merging the given user-provided options.
- */
 function createOptions(options: InstallOptions = {}): FilledInstallOptions {
   return {
     namespace: options.namespace ?? 'entities',
   }
 }
 
-/**
- * Mixin Vuex ORM feature to the store.
- */
 function mixin(store: Store<any>, options: FilledInstallOptions): void {
   createDatabase(store, options)
 
@@ -40,9 +32,6 @@ function mixin(store: Store<any>, options: FilledInstallOptions): void {
   startDatabase(store)
 }
 
-/**
- * Create a new database and connect to the store.
- */
 function createDatabase(store: Store<any>, options: FilledInstallOptions): Database {
   const database = new Database().setDataProvider(new VuexDataProvider(store)).setConnection(options.namespace)
 
@@ -57,18 +46,18 @@ function createDatabase(store: Store<any>, options: FilledInstallOptions): Datab
   return database
 }
 
-/**
- * Start the database.
- */
 function startDatabase(store: Store<any>): void {
   store.$database.start()
 }
 
-/**
- * Mixin repo function to the store.
- */
 function mixinRepoFunction(store: Store<any>): void {
-  store.$repo = function (modelOrRepository: any, connection?: string): any {
+  const storedRepos = new Map<string, Repository<any>>()
+
+  store.$repo = function <T extends typeof Model>(model: T, connection?: string): Repository<InstanceType<T>> {
+    if (storedRepos.has(model.entity)) {
+      return storedRepos.get(model.entity) as Repository<InstanceType<T>>
+    }
+
     let database: Database
 
     if (connection) {
@@ -82,15 +71,9 @@ function mixinRepoFunction(store: Store<any>): void {
       database = store.$database
     }
 
-    const repository = modelOrRepository._isRepository
-      ? new modelOrRepository(database).initialize()
-      : new Repository(database).initialize(modelOrRepository)
+    const repo = database.getRepository(model)
+    storedRepos.set(model.entity, repo)
 
-    try {
-      database.register(repository.getModel())
-    } catch (e) {
-    } finally {
-      return repository
-    }
+    return repo
   }
 }

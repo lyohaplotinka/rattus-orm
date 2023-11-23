@@ -24,7 +24,7 @@ export interface DataProvider {
 К примеру, когда в ORM попадает сущность User, создаётся новый модуль - "User". 
 
 Остальные методы имеют интуитивно понятное название. Если что-либо остаётся неясно – посмотрите 
-исходный код [ObjectDataProvider](https://github.com/lyohaplotinka/rattus-orm-new/blob/main/packages/core/src/data/object-data-provider.ts). 
+исходный код [ObjectDataProvider](https://github.com/lyohaplotinka/rattus-orm/blob/main/packages/core/src/data/object-data-provider.ts). 
 
 Data provider связывается с базой данных при создании:
 

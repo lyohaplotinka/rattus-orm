@@ -1,7 +1,18 @@
 import { App, createApp } from 'vue'
 import { createStore } from 'vuex'
 import { installRattusORM } from '../src'
-import { beforeEach } from 'vitest'
+import { beforeEach, expect, vi } from 'vitest'
+import { Model, Num, Uid } from '@rattus-orm/core'
+
+class User extends Model {
+  public static entity = 'user'
+
+  @Uid()
+  public id: string
+
+  @Num(0)
+  public age: number
+}
 
 describe('unit/VuexORM', () => {
   let app: App
@@ -20,8 +31,13 @@ describe('unit/VuexORM', () => {
       entities: {},
     }
 
+    const spyRepo = vi.spyOn(store.$database, 'getRepository')
+
     expect(store.state).toEqual(expected)
     expect(store.$database.isStarted()).toBe(true)
+    expect(store.$repo(User).database.getConnection()).toEqual('entities')
+    expect(store.$repo(User).getModel()).toBeInstanceOf(User)
+    expect(spyRepo).toHaveBeenCalledOnce()
   })
 
   it('can customize the namespace', () => {

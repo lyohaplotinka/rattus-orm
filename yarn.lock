@@ -2943,7 +2943,7 @@ __metadata:
     vue: "npm:^3.0.0"
     vuex: "npm:^4.1.0"
   peerDependencies:
-    "@rattus-orm/core": ^0.0.1
+    "@rattus-orm/core": ^0.0.0
     vue: ^3.0.0
     vuex: ^4.1.0
   languageName: unknown

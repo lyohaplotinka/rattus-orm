@@ -74,7 +74,7 @@ export default defineComponent({
 ```
 
 ### Documentation
-For detailed docs please read documentation website (coming soon)
+For detailed docs please read [documentation website](https://lyohaplotinka.github.io/rattus-orm/docs/category/vuex-integration).
 
 ### Contributing
-Contributions are welcome! Please read our Contributing Guide for details on our code of conduct, and the process for submitting pull requests (coming soon).
+Contributions are welcome! Please read our [Contributing Guide](../../CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests.

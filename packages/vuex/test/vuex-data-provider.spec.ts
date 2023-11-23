@@ -13,7 +13,7 @@ const insertableData = (id: string) => ({
   [id]: { id, name: 'Alex' },
 })
 
-const expectableData = (id: string) => ({
+const expectedData = (id: string) => ({
   entities: {
     user: {
       data: {
@@ -53,9 +53,9 @@ describe('vuex-data-provider', () => {
   })
 
   it.each([
-    ['insert', insertableData('1'), expectableData('1')],
-    ['save', insertableData('2'), expectableData('2')],
-    ['update', insertableData('3'), expectableData('3')],
+    ['insert', insertableData('1'), expectedData('1')],
+    ['save', insertableData('2'), expectedData('2')],
+    ['update', insertableData('3'), expectedData('3')],
   ])('method "%s" works correctly', (method, data, expceted) => {
     createEntity()
     dataProvider[method]('entities/user', data)
@@ -74,7 +74,7 @@ describe('vuex-data-provider', () => {
     dataProvider.insert('entities/user', insertableData('3'))
 
     dataProvider[methodName]('entities/user', ['1'])
-    expect(getState()).toStrictEqual(expectableData('3'))
+    expect(getState()).toStrictEqual(expectedData('3'))
   })
 
   it('flush', () => {

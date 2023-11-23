@@ -21,11 +21,11 @@ Rattus ORM is a versatile JavaScript/TypeScript package that offers an Object-Re
 * [@rattus-orm/vuex](./packages/vuex): vuex data provider
 
 ### Documentation
-For more detailed usage and API documentation, please visit Rattus ORM Documentation (coming soon)
+For more detailed usage and API documentation, please visit [Rattus ORM Documentation](https://lyohaplotinka.github.io/rattus-orm/).
 
 ### Contributing
-Contributions are welcome! Please read our Contributing Guide for details 
-on our code of conduct, and the process for submitting pull requests (coming soon).
+Contributions are welcome! Please read our [Contributing Guide](./CONTRIBUTING.md) for details 
+on our code of conduct, and the process for submitting pull requests.
 
 ### License
 Rattus ORM is open-sourced software licensed under the [MIT License](./LICENSE).

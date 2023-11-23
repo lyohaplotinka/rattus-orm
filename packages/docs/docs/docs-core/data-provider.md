@@ -21,7 +21,7 @@ export interface DataProvider {
 
 In the terms of Rattus ORM (and Vuex ORM, which it is based on), a module is a "table" for a specific entity. For instance, when a User entity is introduced to the ORM, a new module - "User" is created.
 
-The other methods have intuitively understandable names. If anything remains unclear, you can refer to the source code of [ObjectDataProvider](https://github.com/lyohaplotinka/rattus-orm-new/blob/main/packages/core/src/data/object-data-provider.ts).
+The other methods have intuitively understandable names. If anything remains unclear, you can refer to the source code of [ObjectDataProvider](https://github.com/lyohaplotinka/rattus-orm/blob/main/packages/core/src/data/object-data-provider.ts).
 
 The Data Provider is linked to the database upon creation:
 

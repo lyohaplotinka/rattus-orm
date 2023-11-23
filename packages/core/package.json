@@ -1,7 +1,19 @@
 {
   "name": "@rattus-orm/core",
+  "description": "ORM for your JS/TS apps: core package",
+  "homepage": "https://lyohaplotinka.github.io/rattus-orm/",
+  "author": "Lyoha Plotinka",
+  "license": "MIT",
+  "packageManager": "yarn@4.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lyohaplotinka/rattus-orm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lyohaplotinka/rattus-orm/issues"
+  },
+  "keywords": ["orm", "rattus", "vuex", "typescript", "javascript"],
   "version": "0.0.0",
-  "description": "Data-source agnostic ORM for TypeScript",
   "main": "./dist/rattus-orm-core.js",
   "module": "./dist/rattus-orm-core.mjs",
   "types": "./dist/rattus-orm-core.d.ts",
@@ -26,20 +38,6 @@
     "lint": "eslint 'src/**/*.ts' --quiet --fix",
     "test": "vitest run",
     "typecheck": "bash -c 'tsc -p tsconfig.json --noEmit'"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/lyohaplotinka/rattus-orm-new.git"
-  },
-  "keywords": [
-    "ratus",
-    "agnostic",
-    "orm"
-  ],
-  "author": "Lyoha Plotinka",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/lyohaplotinka/rattus-orm-new/issues"
   },
   "dependencies": {
     "normalizr": "^3.6.2"

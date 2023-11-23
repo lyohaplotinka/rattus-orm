@@ -23,11 +23,11 @@ Rattus ORM is currently in its early stages of development. We welcome feedback 
 If you're new or need help with the basics, check out the ["vuex-orm-next"](https://next.vuex-orm.org/) documentation. It's got everything you need to start - simple explanations and examples that show you how to use it. This guide is great for beginners and anyone who wants to learn more about how it works. It's easy to follow and will help you get the hang of things quickly.
 
 ### Packages:
-* [@rattus-orm/core](#): core of Rattus ORM
-* [@rattus-orm/vuex](#): vuex data provider
+* [@rattus-orm/core](/docs/category/core-package): core of Rattus ORM
+* [@rattus-orm/vuex](/docs/category/vuex-integration): vuex data provider
 
 ### Contributing
-Contributions are welcome! Please read our Contributing Guide for details on our code of conduct, and the process for submitting pull requests.
+Contributions are welcome! Please read our [Contributing Guide](https://github.com/lyohaplotinka/rattus-orm/blob/main/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests.
 
 ### License
 Rattus ORM is open-sourced software licensed under the MIT License.
