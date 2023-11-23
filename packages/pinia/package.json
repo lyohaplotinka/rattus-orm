@@ -42,11 +42,9 @@
     "typecheck": "bash -c 'tsc -p tsconfig.json --noEmit'"
   },
   "devDependencies": {
-    "@rattus-orm/core": "^0.0.7",
-    "pinia": "^2.1.7"
+    "@rattus-orm/core": "^0.0.7"
   },
   "peerDependencies": {
-    "@rattus-orm/core": "^0.0.7",
-    "pinia": "^2.0.0"
+    "@rattus-orm/core": "^0.0.7"
   }
 }
