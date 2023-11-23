@@ -75,11 +75,11 @@ export async function runForPackage(packageName) {
     await asyncSpawn('yarn', ['workspace', `@rattus-orm/${packageName}`, 'run', 'build'])
 
     console.log('\nCommitting changes...')
-    /* await asyncSpawn */console.log('git', ['add', '-A'])
-    /* await asyncSpawn */console.log('git', ['commit', '-m', `release: v${targetVersion}`])
+    await asyncSpawn('git', ['add', '-A'])
+    await asyncSpawn('git', ['commit', '-m', `release: v${targetVersion}`])
 
     console.log('\nPublishing the package...')
-    /* await asyncSpawn */console.log('yarn', [
+    await asyncSpawn('yarn', [
         'publish',
         '--new-version',
         targetVersion,
@@ -89,7 +89,7 @@ export async function runForPackage(packageName) {
 
     // Push to GitHub.
     console.log('\nPushing to GitHub...')
-    /* await asyncSpawn */console.log('git', ['tag', `v${targetVersion}`])
-    /* await asyncSpawn */console.log('git', ['push', 'origin', `refs/tags/v${targetVersion}`])
-    /* await asyncSpawn */console.log('git', ['push'])
+    await asyncSpawn('git', ['tag', `v${targetVersion}`])
+    await asyncSpawn('git', ['push', 'origin', `refs/tags/v${targetVersion}`])
+    await asyncSpawn('git', ['push'])
 }
