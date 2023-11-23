@@ -76,7 +76,7 @@ export async function runForPackage(packageName) {
 
     console.log('\nCommitting changes...')
     await asyncSpawn('git', ['add', '-A'])
-    await asyncSpawn('git', ['commit', '-m', `release: v${targetVersion}`])
+    await asyncSpawn('git', ['commit', '-m', `release(${packageName}): v${targetVersion}`])
 
     console.log('\nPublishing the package...')
     await asyncSpawn('yarn', [
