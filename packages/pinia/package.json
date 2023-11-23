@@ -1,6 +1,6 @@
 {
-  "name": "@rattus-orm/{{ PACKAGE }}",
-  "description": "ORM for your JS/TS apps: {{ PACKAGE }} bindings",
+  "name": "@rattus-orm/pinia",
+  "description": "ORM for your JS/TS apps: Pinia bindings",
   "homepage": "https://lyohaplotinka.github.io/rattus-orm/",
   "author": "Lyoha Plotinka",
   "license": "MIT",
@@ -15,20 +15,20 @@
   "keywords": [
     "orm",
     "rattus",
-    "{{ PACKAGE }}",
+    "pinia",
     "typescript",
     "javascript"
   ],
   "version": "0.0.0",
-  "main": "./dist/rattus-orm-{{ PACKAGE }}-provider.js",
-  "browser": "./dist/rattus-orm-{{ PACKAGE }}-provider.mjs",
-  "module": "./dist/rattus-orm-{{ PACKAGE }}-provider.mjs",
-  "types": "./dist/rattus-orm-{{ PACKAGE }}-provider.d.ts",
+  "main": "./dist/rattus-orm-pinia-provider.js",
+  "browser": "./dist/rattus-orm-pinia-provider.mjs",
+  "module": "./dist/rattus-orm-pinia-provider.mjs",
+  "types": "./dist/rattus-orm-pinia-provider.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/rattus-orm-{{ PACKAGE }}-provider.mjs",
-      "require": "./dist/rattus-orm-{{ PACKAGE }}-provider.js",
-      "types": "./dist/rattus-orm-{{ PACKAGE }}-provider.d.ts"
+      "import": "./dist/rattus-orm-pinia-provider.mjs",
+      "require": "./dist/rattus-orm-pinia-provider.js",
+      "types": "./dist/rattus-orm-pinia-provider.d.ts"
     }
   },
   "files": [
@@ -42,9 +42,9 @@
     "typecheck": "bash -c 'tsc -p tsconfig.json --noEmit'"
   },
   "devDependencies": {
-    "@rattus-orm/core": "^{{ CORE_VERSION }}"
+    "@rattus-orm/core": "^0.0.7"
   },
   "peerDependencies": {
-    "@rattus-orm/core": "^{{ CORE_VERSION }}"
+    "@rattus-orm/core": "^0.0.7"
   }
 }
