@@ -90,7 +90,7 @@ export async function runForPackage(packageName) {
 
     // Push to GitHub.
     console.log('\nPushing to GitHub...')
-    await asyncSpawn('git', ['tag', `v${targetVersion}`])
-    await asyncSpawn('git', ['push', 'origin', `refs/tags/v${targetVersion}`])
+    await asyncSpawn('git', ['tag', `${packageName}-v${targetVersion}`])
+    await asyncSpawn('git', ['push', 'origin', `refs/tags/${packageName}-v${targetVersion}`])
     await asyncSpawn('git', ['push'])
 }
