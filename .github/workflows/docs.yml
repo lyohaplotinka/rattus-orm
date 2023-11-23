@@ -32,6 +32,7 @@ jobs:
           key: ${{ runner.os }}-test-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install deps
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: yarn install --immutable
 
       - name: Build

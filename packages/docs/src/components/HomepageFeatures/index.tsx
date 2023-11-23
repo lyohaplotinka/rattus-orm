@@ -1,6 +1,8 @@
-import UndrawDocusaurusMountain from '@site/static/img/undraw_docusaurus_mountain.svg'
-import UndrawDocusaurusReact from '@site/static/img/undraw_docusaurus_react.svg'
-import UndrawDocusaurusTree from '@site/static/img/undraw_docusaurus_tree.svg'
+import Link from '@docusaurus/Link'
+import Translate, { translate } from '@docusaurus/Translate'
+import FrameworkAgnostic from '@site/static/img/framework-agnostic.svg'
+import OrganizedStorage from '@site/static/img/organized-storage.svg'
+import VuexOrmBased from '@site/static/img/vuex-orm-based.svg'
 import Heading from '@theme/Heading'
 import clsx from 'clsx'
 
@@ -14,34 +16,29 @@ type FeatureItem = {
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Easy to Use',
-    Svg: UndrawDocusaurusMountain,
+    title: translate({ message: 'Framework-agnostic' }),
+    Svg: FrameworkAgnostic,
+    description: (
+      <Translate>
+        Get ORM-like experience with any frontend framework or library: just use correct Data provider.
+      </Translate>
+    ),
+  },
+  {
+    title: translate({ message: 'Community experience' }),
+    Svg: VuexOrmBased,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and used to get your website up and running
-        quickly.
+        {translate({ message: 'Based on the ' })}
+        <Link to={'https://next.vuex-orm.org/'}>Vuex ORM Next</Link>
+        {translate({ message: ' codebase, taking into account the experience of the entire community.' })}
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
-    Svg: UndrawDocusaurusTree,
-    description: (
-      <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go ahead and move your docs into the{' '}
-        <code>docs</code> directory.
-      </>
-    ),
-  },
-  {
-    title: 'Powered by React',
-    Svg: UndrawDocusaurusReact,
-    description: (
-      <>
-        Extend or customize your website layout by reusing React. Docusaurus can be extended while reusing the same
-        header and footer.
-      </>
-    ),
+    title: translate({ message: 'Organized storage' }),
+    Svg: OrganizedStorage,
+    description: <Translate>Your data is organized, you have convenient access to it at any time</Translate>,
   },
 ]
 

@@ -8,12 +8,33 @@
   text-align: center;
   position: relative;
   overflow: hidden;
-  --ifm-hero-background-color: var(--ifm-color-primary-darkest)
+  background-image: linear-gradient(to left top, #9f6ef3, #845acb, #6946a5, #503481, #38225e);
+}
+
+.titleBlock {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.heroTitle {
+  margin: 0;
+}
+
+.logo {
+  width: 100px;
+  height: 120px;
 }
 
 @media screen and (max-width: 996px) {
   .heroBanner {
     padding: 2rem;
+  }
+
+  .titleBlock {
+    flex-direction: column;
   }
 }
 

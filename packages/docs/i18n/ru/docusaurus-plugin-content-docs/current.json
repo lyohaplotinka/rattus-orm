@@ -1,0 +1,22 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.tutorialSidebar.category.Core package": {
+    "message": "Основной пакет",
+    "description": "The label for category Core package in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Core package.link.generated-index.description": {
+    "message": "Основной пакет Rattus ORM, предоставляющий базу данных, репозитории, query и модели.",
+    "description": "The generated-index page description for category Core package in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Vuex integration": {
+    "message": "Использование с Vuex",
+    "description": "The label for category Vuex integration in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Vuex integration.link.generated-index.description": {
+    "message": "Data provider для Vuex и утилиты для удобного использования",
+    "description": "The generated-index page description for category Vuex integration in sidebar tutorialSidebar"
+  }
+}

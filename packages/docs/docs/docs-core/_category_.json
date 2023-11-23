@@ -1,5 +1,5 @@
 {
-  "label": "@rattus-orm/core",
+  "label": "Core package",
   "position": 2,
   "link": {
     "type": "generated-index",

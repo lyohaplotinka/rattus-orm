@@ -1,6 +1,8 @@
 import Link from '@docusaurus/Link'
+import Translate, { translate } from '@docusaurus/Translate'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 import HomepageFeatures from '@site/src/components/HomepageFeatures'
+import Logo from '@site/static/img/logo.svg'
 import Heading from '@theme/Heading'
 import Layout from '@theme/Layout'
 import clsx from 'clsx'
@@ -12,13 +14,18 @@ function HomepageHeader() {
   return (
     <header className={clsx('hero hero--primary', styles.heroBanner)}>
       <div className="container">
-        <Heading as="h1" className="hero__title">
-          {siteConfig.title}
-        </Heading>
-        <p className="hero__subtitle">{siteConfig.tagline}</p>
+        <div className={styles.titleBlock}>
+          <Logo className={styles.logo} />
+          <Heading as="h1" className={clsx('hero__title', styles.heroTitle)}>
+            {siteConfig.title}
+          </Heading>
+        </div>
+        <p className="hero__subtitle">
+          <Translate>ORM for your JS/TS apps</Translate>
+        </p>
         <div className={styles.buttons}>
           <Link className="button button--secondary button--lg" to="/docs/intro">
-            Read documentation
+            <Translate>Read documentation</Translate>
           </Link>
         </div>
       </div>
@@ -31,7 +38,7 @@ export default function Home(): JSX.Element {
   return (
     <Layout
       title={`Hello from ${siteConfig.title}`}
-      description="Object-Relational Mapping (ORM) like experience for JS/TS applications"
+      description={translate({ message: 'Object-Relational Mapping (ORM) like experience for JS/TS applications' })}
     >
       <HomepageHeader />
       <main>
