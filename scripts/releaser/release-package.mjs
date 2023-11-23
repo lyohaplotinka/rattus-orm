@@ -80,8 +80,12 @@ export async function runForPackage(packageName) {
 
     console.log('\nPublishing the package...')
     await asyncSpawn('yarn', [
+        'workspace',
+        `@rattus-orm/${packageName}`,
         'npm',
         'publish',
+        '--access',
+        'public'
     ])
 
     // Push to GitHub.
