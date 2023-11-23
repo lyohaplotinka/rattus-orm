@@ -2,6 +2,8 @@ import { createRequire } from 'node:module'
 import yargs from "yargs/yargs";
 import { spawn } from "node:child_process";
 import { fileURLToPath } from 'node:url'
+import { resolve } from "node:path";
+import { readdir } from "node:fs/promises";
 
 const args = yargs(process.argv).argv
 
@@ -42,3 +44,15 @@ export async function asyncSpawn(command, args = [], env = {}) {
 }
 
 export const dirname = (importMetaUrl) => fileURLToPath(new URL('.', importMetaUrl))
+
+export async function* getFiles(dir) {
+  const dirents = await readdir(dir, { withFileTypes: true });
+  for (const dirent of dirents) {
+    const res = resolve(dir, dirent.name);
+    if (dirent.isDirectory()) {
+      yield* getFiles(res);
+    } else {
+      yield res;
+    }
+  }
+}

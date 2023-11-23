@@ -20,7 +20,8 @@
     "build": "yarn workspaces foreach -A run build",
     "clean": "yarn workspaces foreach -A run clean",
     "release": "node ./scripts/releaser/releaser.mjs",
-    "prepare": "npx simple-git-hooks"
+    "prepare": "npx simple-git-hooks",
+    "create-package": "node ./scripts/package/createPackage.mjs"
   },
   "devDependencies": {
     "@types/semver": "^7",

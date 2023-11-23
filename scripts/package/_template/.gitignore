@@ -1,0 +1,8 @@
+/.nyc_output
+/.tmp
+/dist
+/node_modules
+/temp
+.idea/*
+.vscode/*
+yarn-error.log
