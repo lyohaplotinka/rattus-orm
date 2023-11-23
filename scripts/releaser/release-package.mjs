@@ -82,10 +82,6 @@ export async function runForPackage(packageName) {
     await asyncSpawn('yarn', [
         'npm',
         'publish',
-        '--new-version',
-        targetVersion,
-        '--no-commit-hooks',
-        '--no-git-tag-version',
     ])
 
     // Push to GitHub.
