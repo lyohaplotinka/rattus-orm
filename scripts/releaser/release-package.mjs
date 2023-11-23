@@ -80,6 +80,7 @@ export async function runForPackage(packageName) {
 
     console.log('\nPublishing the package...')
     await asyncSpawn('yarn', [
+        'npm',
         'publish',
         '--new-version',
         targetVersion,
