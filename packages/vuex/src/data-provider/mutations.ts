@@ -6,7 +6,6 @@ export interface Mutations<S extends State> extends MutationTree<S> {
   insert(state: S, records: Elements): void
   update(state: S, records: Elements): void
   fresh(state: S, records: Elements): void
-  destroy(state: S, ids: string[]): void
   delete(state: S, ids: string[]): void
   flush(state: S): void
 }

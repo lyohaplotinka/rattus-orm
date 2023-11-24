@@ -14,33 +14,34 @@ export interface NormalizedData {
 export type Item<M extends Model = Model> = M | null
 
 export type Collection<M extends Model = Model> = M[]
-export type ModulePath = string | string[]
+export type ModulePath = [connection: string, module: string]
 
 export interface DataProvider {
   // basics
-  registerModule(path: ModulePath, initialState?: State): void
-  getState(module: ModulePath): State
+  registerConnection(name: string): void
+  dump(): SerializedStorage
+  restore(data: SerializedStorage): void
 
-  // mutations
+  // modules
+  registerModule(path: ModulePath, initialState?: State): void
+  getModuleState(module: ModulePath): State
+  hasModule(module: ModulePath): boolean
+
+  // data operations
   save(module: ModulePath, records: Elements): void
   insert(module: ModulePath, records: Elements): void
-  fresh(module: ModulePath, records: Elements): void
+  replace(module: ModulePath, records: Elements): void
   update(module: ModulePath, records: Elements): void
-  destroy(module: ModulePath, ids: string[]): void
   delete(module: ModulePath, ids: string[]): void
   flush(module: ModulePath): void
 }
 
-export type DataProviderStorage = {
-  [connection: string]: RootState
+export type SerializedStorage = {
+  [connection: string]: Record<string, State>
 }
 
 export type State = {
   data: Elements
-}
-
-export type RootState = {
-  [entity: string]: State
 }
 
 export type RawModel<

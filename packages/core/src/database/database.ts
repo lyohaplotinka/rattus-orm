@@ -103,10 +103,6 @@ export class Database {
     return this.models[name] as M
   }
 
-  public getEntityNames(): string[] {
-    return Object.keys(this.models)
-  }
-
   /**
    * Get schema by the specified entity name.
    */
@@ -135,7 +131,7 @@ export class Database {
    * Create root module.
    */
   protected createRootModule(): void {
-    this.dataProvider.registerModule(this.connection)
+    this.dataProvider.registerConnection(this.connection)
   }
 
   /**
