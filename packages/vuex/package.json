@@ -36,11 +36,11 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup",
+    "build": "run -T tsup",
     "clean": "rm -rf dist",
-    "lint": "eslint 'src/**/*.ts' --quiet --fix",
-    "test": "vitest run",
-    "typecheck": "bash -c 'tsc -p tsconfig.json --noEmit'"
+    "lint": "run -T eslint 'src/**/*.ts' --quiet --fix",
+    "test": "run -T vitest run",
+    "typecheck": "bash -c 'run -T tsc -p tsconfig.json --noEmit'"
   },
   "devDependencies": {
     "@rattus-orm/core": "^0.0.7",

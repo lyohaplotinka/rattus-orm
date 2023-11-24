@@ -23,16 +23,12 @@ export function createState(entities: Entities): RootState {
 
 export function fillState(store: TestingStore, entities: Entities): void {
   for (const entity in entities) {
-    if (!store.state.entities[entity]) {
-      store.state.entities[entity] = { data: {} }
-    }
-
-    store.state.entities[entity].data = entities[entity]
+    store.writeModule(['entities', entity], entities[entity])
   }
 }
 
 export function assertState(store: TestingStore, entities: Entities): void {
-  expect(store.state.entities).toEqual(createState(entities))
+  expect(store.getRootState()).toEqual(createState(entities))
 }
 
 export function assertModel<M extends Model>(model: M, record: Element): void {

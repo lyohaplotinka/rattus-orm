@@ -6,6 +6,8 @@ import type { Mutations } from './mutations'
 import { destroy, flush, fresh, save } from './mutations'
 
 export class VuexDataProvider implements DataProvider {
+  protected readonly registeredModules = new Set<string>()
+
   constructor(protected readonly store: Store<RootState>) {}
 
   public delete(module: ModulePath, ids: string[]): void {
@@ -33,12 +35,16 @@ export class VuexDataProvider implements DataProvider {
   }
 
   public registerModule(path: ModulePath, initialState: State = { data: {} }): void {
+    if (this.registeredModules.has(JSON.stringify(path))) {
+      return
+    }
     if (typeof path === 'string') {
       this.store.registerModule(path, {
         namespaced: true,
         state: {},
         getters: this.createGetters<RootState>(),
       })
+      this.registeredModules.add(JSON.stringify(path))
       return
     }
 
@@ -54,6 +60,7 @@ export class VuexDataProvider implements DataProvider {
         preserveState: this.moduleDataExists(path),
       },
     )
+    this.registeredModules.add(JSON.stringify(path))
   }
 
   public save(module: ModulePath, records: Elements): void {
