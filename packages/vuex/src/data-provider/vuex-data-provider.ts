@@ -1,32 +1,28 @@
-import type { DataProvider } from '@rattus-orm/core'
-import type { Elements, ModulePath, RootState, State } from '@rattus-orm/core'
+import type { DataProvider, Elements, ModulePath, SerializedStorage, State } from '@rattus-orm/core'
+import { DataProviderHelpers } from '@rattus-orm/core'
 import type { GetterTree, Store } from 'vuex'
 
 import type { Mutations } from './mutations'
 import { destroy, flush, fresh, save } from './mutations'
 
-export class VuexDataProvider implements DataProvider {
-  protected readonly registeredModules = new Set<string>()
-
-  constructor(protected readonly store: Store<RootState>) {}
+export class VuexDataProvider extends DataProviderHelpers implements DataProvider {
+  constructor(protected readonly store: Store<SerializedStorage>) {
+    super()
+  }
 
   public delete(module: ModulePath, ids: string[]): void {
     this.commit(module, 'delete', ids)
-  }
-
-  public destroy(module: ModulePath, ids: string[]): void {
-    this.commit(module, 'destroy', ids)
   }
 
   public flush(module: ModulePath): void {
     this.commit(module, 'flush')
   }
 
-  public fresh(module: ModulePath, records: Elements): void {
+  public replace(module: ModulePath, records: Elements): void {
     this.commit(module, 'fresh', records)
   }
 
-  public getState(module: ModulePath): State {
+  public getModuleState(module: ModulePath): State {
     return this.store.getters[this.getModulePathString(module) + '/getData']
   }
 
@@ -34,17 +30,21 @@ export class VuexDataProvider implements DataProvider {
     this.commit(module, 'insert', records)
   }
 
-  public registerModule(path: ModulePath, initialState: State = { data: {} }): void {
-    if (this.registeredModules.has(JSON.stringify(path))) {
+  public registerConnection(name: string) {
+    if (this.isModuleRegistered([name, ''])) {
       return
     }
-    if (typeof path === 'string') {
-      this.store.registerModule(path, {
-        namespaced: true,
-        state: {},
-        getters: this.createGetters<RootState>(),
-      })
-      this.registeredModules.add(JSON.stringify(path))
+    this.store.registerModule(name, {
+      namespaced: true,
+      state: {},
+      getters: this.createGetters<SerializedStorage>(),
+    })
+
+    this.markModuleAsRegistered([name, ''])
+  }
+
+  public registerModule(path: ModulePath, initialState: State = { data: {} }): void {
+    if (this.isModuleRegistered(path)) {
       return
     }
 
@@ -60,7 +60,7 @@ export class VuexDataProvider implements DataProvider {
         preserveState: this.moduleDataExists(path),
       },
     )
-    this.registeredModules.add(JSON.stringify(path))
+    this.markModuleAsRegistered(path)
   }
 
   public save(module: ModulePath, records: Elements): void {
@@ -71,6 +71,18 @@ export class VuexDataProvider implements DataProvider {
     this.commit(module, 'update', records)
   }
 
+  public hasModule(module: ModulePath): boolean {
+    return this.isModuleRegistered(module)
+  }
+
+  public dump(): SerializedStorage {
+    return JSON.parse(JSON.stringify(this.store.state))
+  }
+
+  public restore(data: SerializedStorage) {
+    this.store.replaceState(data)
+  }
+
   protected getModulePathString(modulePath: ModulePath): string {
     return typeof modulePath === 'string' ? modulePath : modulePath.join('/')
   }
@@ -79,15 +91,14 @@ export class VuexDataProvider implements DataProvider {
     return {
       save,
       fresh,
-      destroy,
+      delete: destroy,
       flush,
       insert: save,
       update: save,
-      delete: destroy,
     }
   }
 
-  protected createGetters<T>(): GetterTree<T, RootState> {
+  protected createGetters<T>(): GetterTree<T, SerializedStorage> {
     return {
       getData: (state) => state,
     }
@@ -98,13 +109,7 @@ export class VuexDataProvider implements DataProvider {
     this.store.commit(type, payload)
   }
 
-  protected moduleDataExists(module: ModulePath): boolean {
-    const moduleData = ([] as string[]).concat(module).reduce<Record<string, any>>((result, key) => {
-      if (!(key in result)) {
-        return {}
-      }
-      return result[key]
-    }, this.store.state)
-    return Object.keys(moduleData).length > 0
+  protected moduleDataExists([connection, moduleName]: ModulePath): boolean {
+    return !!this.store.state[connection]?.[moduleName]
   }
 }
