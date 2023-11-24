@@ -23,7 +23,7 @@ export class Connection {
     const connection = this.getDatabaseConnection()
     const entity = this.model.$entity()
 
-    return this.getDataProvider().getState([connection, entity]).data
+    return this.getDataProvider().getModuleState([connection, entity]).data
   }
 
   /**
@@ -51,7 +51,7 @@ export class Connection {
    * Commit `fresh` mutation to the store.
    */
   public fresh(records: Elements): void {
-    this.getDataProvider().fresh([this.getDatabaseConnection(), this.model.$entity()], records)
+    this.getDataProvider().replace([this.getDatabaseConnection(), this.model.$entity()], records)
   }
 
   /**
@@ -65,7 +65,7 @@ export class Connection {
    * Commit `destroy` mutation to the store.
    */
   public destroy(ids: string[]): void {
-    this.getDataProvider().destroy([this.getDatabaseConnection(), this.model.$entity()], ids)
+    this.getDataProvider().delete([this.getDatabaseConnection(), this.model.$entity()], ids)
   }
 
   /**

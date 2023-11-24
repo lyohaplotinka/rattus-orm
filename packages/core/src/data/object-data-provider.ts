@@ -1,7 +1,10 @@
-import type { DataProvider, DataProviderStorage, Elements, ModulePath, State } from '@/data/types'
+import type { DataProvider, Elements, ModulePath, SerializedStorage, State } from '@/data/types'
 
-export class ObjectDataProvider implements DataProvider {
-  protected storage: DataProviderStorage = {}
+import { isUnknownRecord } from '../support/utils'
+import { DataProviderHelpers } from './data-provider-helpers'
+
+export class ObjectDataProvider extends DataProviderHelpers implements DataProvider {
+  protected storage: SerializedStorage = {}
 
   public delete(module: ModulePath, ids: string[]): void {
     const moduleStore = this.getModuleByPath(module)
@@ -10,21 +13,17 @@ export class ObjectDataProvider implements DataProvider {
     }
   }
 
-  public destroy(module: ModulePath, ids: string[]): void {
-    return this.delete(module, ids)
-  }
-
   public flush(module: ModulePath): void {
     const moduleStore = this.getModuleByPath(module)
     moduleStore.data = {}
   }
 
-  public fresh(module: ModulePath, records: Elements): void {
+  public replace(module: ModulePath, records: Elements): void {
     const moduleStore = this.getModuleByPath(module)
     moduleStore.data = records
   }
 
-  public getState(module: ModulePath): State {
+  public getModuleState(module: ModulePath): State {
     return this.getModuleByPath(module)
   }
 
@@ -36,21 +35,25 @@ export class ObjectDataProvider implements DataProvider {
     }
   }
 
-  public registerModule(path: ModulePath, initialState: State = { data: {} }): void {
-    if (typeof path === 'string') {
-      if (this.storage[path]) {
-        return
-      }
-      this.storage[path] = {}
+  public registerConnection(name: string) {
+    if (isUnknownRecord(this.storage[name])) {
       return
     }
-    const lastSlug = path.pop() as string
+    this.storage[name] = {}
+  }
 
-    const module = this.getModuleByPath(path)
-    if (module[lastSlug]) {
+  public registerModule(path: ModulePath, initialState: State = { data: {} }): void {
+    if (this.hasModule(path)) {
       return
     }
-    module[lastSlug] = initialState
+
+    const [connection, moduleName] = path
+    this.storage[connection][moduleName] = initialState
+    this.markModuleAsRegistered(path)
+  }
+
+  public hasModule(module: ModulePath): boolean {
+    return this.isModuleRegistered(module)
   }
 
   public save(module: ModulePath, records: Elements): void {
@@ -61,12 +64,16 @@ export class ObjectDataProvider implements DataProvider {
     return this.insert(module, records)
   }
 
-  protected getModuleByPath(path: ModulePath): State {
-    return ([] as string[]).concat(path).reduce<Record<string, any>>((result, key) => {
-      if (!(key in result)) {
-        return {}
-      }
-      return result[key]
-    }, this.storage) as State
+  public dump(): SerializedStorage {
+    return JSON.parse(JSON.stringify(this.storage))
+  }
+
+  public restore(data: SerializedStorage) {
+    this.storage = JSON.parse(JSON.stringify(data))
+  }
+
+  protected getModuleByPath([connection, module]: ModulePath): State {
+    const connectionState = this.storage[connection]
+    return connectionState[module] ?? { data: {} }
   }
 }

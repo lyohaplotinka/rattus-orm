@@ -12,37 +12,22 @@ export class TestStore implements TestingStore {
   }
 
   public getRootState(connection = 'entities') {
-    const db = this.$databases[connection]
-    const entityNames = db.getEntityNames()
-    const result: Record<string, any> = {}
-
-    for (const entityName of entityNames) {
-      if (entityName === connection) {
-        continue
-      }
-      result[entityName] = this.getModuleData([connection, entityName])
-    }
-
-    return result
+    return this.dataProvider.dump()[connection]
   }
 
   public writeModule(path: ModulePath, data: Entities) {
     if (!this.hasModule(path)) {
       return this.dataProvider.registerModule(path, { data })
     }
-    this.dataProvider.fresh(path, data)
+    this.dataProvider.replace(path, data)
   }
 
   public hasModule(path: ModulePath): boolean {
-    const data = this.dataProvider.getState(path)
-    if (!data) {
-      return false
-    }
-    return Object.keys(data).length > 0
+    return this.dataProvider.hasModule(path)
   }
 
   public getModuleData(path: ModulePath): State {
-    return this.dataProvider.getState(path)
+    return this.dataProvider.getModuleState(path)
   }
 
   public $repo(model: any, connection?: string): Repository<any> {

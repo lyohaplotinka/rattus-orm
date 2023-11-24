@@ -1,4 +1,4 @@
-import type { Collection, Element, Elements, Model, RootState } from '@/index'
+import type { Collection, Element, Elements, Model, State } from '@/index'
 import { TestingStore } from 'test/utils/types'
 
 interface Entities {
@@ -9,8 +9,8 @@ export function createStore(): TestingStore {
   return globalThis.testingStoreFactory()
 }
 
-export function createState(entities: Entities): RootState {
-  const state = {} as RootState
+export function createState(entities: Entities): State {
+  const state = {} as State
 
   for (const entity in entities) {
     state[entity] = { data: {} }
