@@ -1,4 +1,4 @@
-import type { DataProvider, Elements, ModulePath, State } from '@rattus-orm/core'
+import type { DataProvider, Elements, ModulePath, SerializedStorage, State } from '@rattus-orm/core'
 import { defineStore, type Pinia } from 'pinia'
 
 import type { OrmActionsTree, OrmGettersTree, OrmStoreDefinition } from './types'
@@ -12,19 +12,15 @@ export class PiniaDataProvider implements DataProvider {
     this.commit(module, 'destroy', ids)
   }
 
-  public destroy(module: ModulePath, ids: string[]): void {
-    this.commit(module, 'destroy', ids)
-  }
-
   public flush(module: ModulePath): void {
     this.commit(module, 'flush')
   }
 
-  public fresh(module: ModulePath, records: Elements): void {
+  public replace(module: ModulePath, records: Elements): void {
     this.commit(module, 'fresh', records)
   }
 
-  public getState(module: ModulePath): State {
+  public getModuleState(module: ModulePath): State {
     return {
       data: this.useModuleStore(module).data,
     }
@@ -34,13 +30,18 @@ export class PiniaDataProvider implements DataProvider {
     this.commit(module, 'save', records)
   }
 
+  public registerConnection() {
+    // no need to register connection
+  }
+
   public registerModule(path: ModulePath, initialState?: State): void {
     const storeId = this.getModulePathAsString(path)
-    const newStore = this.createPiniaStore(storeId, initialState)
 
     if (this.storesMap.has(storeId)) {
       return
     }
+
+    const newStore = this.createPiniaStore(storeId, initialState)
     this.storesMap.set(storeId, newStore)
   }
 
@@ -50,6 +51,43 @@ export class PiniaDataProvider implements DataProvider {
 
   public update(module: ModulePath, records: Elements): void {
     this.commit(module, 'save', records)
+  }
+
+  public hasModule(module: ModulePath): boolean {
+    const storeId = this.getModulePathAsString(module)
+    return this.storesMap.has(storeId)
+  }
+
+  public dump(): SerializedStorage {
+    const result: SerializedStorage = {}
+
+    for (const storeId of this.storesMap.keys()) {
+      const modulePath = storeId.split('/') as ModulePath
+      const [connection, moduleName] = modulePath
+      if (!result[connection]) {
+        result[connection] = {
+          [moduleName]: this.getModuleState(modulePath),
+        }
+        continue
+      }
+      result[connection][moduleName] = this.getModuleState(modulePath)
+    }
+
+    return result
+  }
+
+  public restore(data: SerializedStorage) {
+    for (const connectionName in data) {
+      const connectionData = data[connectionName]
+      for (const entityName in connectionData) {
+        const modulePath: ModulePath = [connectionName, entityName]
+        if (!this.hasModule(modulePath)) {
+          this.registerModule(modulePath, connectionData[entityName])
+          continue
+        }
+        this.replace(modulePath, connectionData[entityName])
+      }
+    }
   }
 
   protected getModulePathAsString(modulePath: ModulePath) {
