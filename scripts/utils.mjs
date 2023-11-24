@@ -17,9 +17,11 @@ export function parsePackages(commaSeparatedString) {
   }
 
   const packagesOption = commaSeparatedString.split(',')
-  if (!packagesOption.every((packageName) => configuredProvidersKeys.includes(packageName.trim()))) {
-    throw new Error('Unknown package passed')
-  }
+  packagesOption.forEach((packageName) => {
+    if (!configuredProvidersKeys.includes(packageName)) {
+      throw new Error(`Unknown package passed: "${packageName}"`)
+    }
+  })
 
   return packagesOption
 }

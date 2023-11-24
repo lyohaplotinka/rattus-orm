@@ -17,12 +17,13 @@ export class TestStore implements TestingStore {
     }
   }
 
-  public $repo(modelOrRepository: any, connection?: string): Repository<any> {
+  public $repo(model: any, connection?: string): Repository<any> {
     let database: Database
 
     if (connection) {
       if (!(connection in this.$databases)) {
         database = this.createDatabase(connection)
+        database.start()
       } else {
         database = this.$databases[connection]
       }
@@ -30,16 +31,7 @@ export class TestStore implements TestingStore {
       database = this.$database
     }
 
-    const repository = modelOrRepository._isRepository
-      ? new modelOrRepository(database).initialize()
-      : new Repository(database).initialize(modelOrRepository)
-
-    try {
-      database.register(repository.getModel())
-    } catch (e) {
-    } finally {
-      return repository
-    }
+    return database.getRepository(model)
   }
 
   protected createDatabase(connection: string, setToThis = false) {

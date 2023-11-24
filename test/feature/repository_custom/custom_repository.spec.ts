@@ -21,7 +21,7 @@ describe('feature/repository_custom/custom_repository', () => {
 
     const store = createStore()
 
-    const userRepo = store.$repo(UserRepository)
+    const userRepo = new UserRepository(store.$database)
 
     expect((userRepo as UserRepository).custom()).toBe(1)
   })
@@ -35,7 +35,7 @@ describe('feature/repository_custom/custom_repository', () => {
 
     const store = createStore()
 
-    const userRepo = store.$repo(ARepository)
+    const userRepo = new ARepository(store.$database)
 
     expect((userRepo as ARepository).custom()).toBe(1)
   })
@@ -49,7 +49,7 @@ describe('feature/repository_custom/custom_repository', () => {
 
     const store = createStore()
 
-    const userRepo = store.$repo(ARepository)
+    const userRepo = new ARepository(store.$database)
 
     expect(() => {
       ;(userRepo as ARepository).custom()
