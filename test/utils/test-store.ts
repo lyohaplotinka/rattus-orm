@@ -1,7 +1,7 @@
 import { Database } from '@/database/database'
 import { Repository } from '@/repository/repository'
-import { DataProvider } from '@/data/types'
-import { TestingStore } from 'test/utils/types'
+import { DataProvider, ModulePath, State } from '@/data/types'
+import { Entities, TestingStore } from 'test/utils/types'
 
 export class TestStore implements TestingStore {
   public $database: Database
@@ -11,10 +11,38 @@ export class TestStore implements TestingStore {
     this.createDatabase('entities', true)
   }
 
-  public get state() {
-    return {
-      [this.$database.getConnection()]: this.$database.getDataProvider().getState('entities'),
+  public getRootState(connection = 'entities') {
+    const db = this.$databases[connection]
+    const entityNames = db.getEntityNames()
+    const result: Record<string, any> = {}
+
+    for (const entityName of entityNames) {
+      if (entityName === connection) {
+        continue
+      }
+      result[entityName] = this.getModuleData([connection, entityName])
     }
+
+    return result
+  }
+
+  public writeModule(path: ModulePath, data: Entities) {
+    if (!this.hasModule(path)) {
+      return this.dataProvider.registerModule(path, { data })
+    }
+    this.dataProvider.fresh(path, data)
+  }
+
+  public hasModule(path: ModulePath): boolean {
+    const data = this.dataProvider.getState(path)
+    if (!data) {
+      return false
+    }
+    return Object.keys(data).length > 0
+  }
+
+  public getModuleData(path: ModulePath): State {
+    return this.dataProvider.getState(path)
   }
 
   public $repo(model: any, connection?: string): Repository<any> {

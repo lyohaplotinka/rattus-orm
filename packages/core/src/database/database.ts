@@ -103,6 +103,10 @@ export class Database {
     return this.models[name] as M
   }
 
+  public getEntityNames(): string[] {
+    return Object.keys(this.models)
+  }
+
   /**
    * Get schema by the specified entity name.
    */
