@@ -12,14 +12,20 @@
   "bugs": {
     "url": "https://github.com/lyohaplotinka/rattus-orm/issues"
   },
-  "keywords": ["orm", "rattus", "vuex", "typescript", "javascript"],
+  "keywords": [
+    "orm",
+    "rattus",
+    "vuex",
+    "typescript",
+    "javascript"
+  ],
   "scripts": {
     "test": "node scripts/test.mjs",
     "lint": "yarn workspaces foreach -A run lint",
     "typecheck": "yarn workspaces foreach -A run typecheck",
     "build": "yarn workspaces foreach -A run build",
     "clean": "yarn workspaces foreach -A run clean",
-    "release": "node ./scripts/releaser/releaser.mjs",
+    "release": "node ./scripts/releaser/releaser.mjs release",
     "prepare": "npx simple-git-hooks",
     "create-package": "node ./scripts/package/createPackage.mjs"
   },
@@ -27,6 +33,7 @@
     "@types/semver": "^7",
     "@typescript-eslint/eslint-plugin": "^6.2.0",
     "@typescript-eslint/parser": "^6.2.0",
+    "commander": "^11.1.0",
     "enquirer": "^2.4.1",
     "eslint": "^8.46.0",
     "eslint-config-prettier": "^8.9.0",
@@ -40,8 +47,7 @@
     "tslib": "^2.6.2",
     "tsup": "^7.2.0",
     "typescript": "^5.2.2",
-    "vitest": "^0.34.6",
-    "yargs": "^17.7.2"
+    "vitest": "^0.34.6"
   },
   "workspaces": [
     "packages/*"
