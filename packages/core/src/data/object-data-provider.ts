@@ -69,7 +69,7 @@ export class ObjectDataProvider extends DataProviderHelpers implements DataProvi
   }
 
   public restore(data: SerializedStorage) {
-    this.storage = JSON.parse(JSON.stringify(data))
+    super.restore(data)
   }
 
   protected getModuleByPath([connection, module]: ModulePath): State {

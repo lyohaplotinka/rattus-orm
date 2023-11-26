@@ -1,0 +1,52 @@
+{
+  "name": "@rattus-orm/utils",
+  "description": "ORM for your JS/TS apps: utils",
+  "homepage": "https://lyohaplotinka.github.io/rattus-orm/",
+  "author": "Lyoha Plotinka",
+  "license": "MIT",
+  "packageManager": "yarn@4.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lyohaplotinka/rattus-orm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lyohaplotinka/rattus-orm/issues"
+  },
+  "keywords": [
+    "orm",
+    "rattus",
+    "utils",
+    "typescript",
+    "javascript"
+  ],
+  "version": "0.0.0",
+  "main": "./dist/all.js",
+  "browser": "./dist/all.mjs",
+  "module": "./dist/all.mjs",
+  "types": "./dist/all.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/all.mjs",
+      "require": "./dist/all.js",
+      "types": "./dist/all.d.ts"
+    },
+    "./createBasicProviderTest": {
+      "import": "./dist/createBasicProviderTest.mjs",
+      "require": "./dist/createBasicProviderTest.js",
+      "types": "./dist/createBasicProviderTest.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "clean": "rm -rf dist",
+    "lint": "eslint 'src/**/*.ts' --quiet --fix",
+    "typecheck": "bash -c 'tsc -p tsconfig.json --noEmit'"
+  },
+  "dependencies": {
+    "@rattus-orm/core": "latest",
+    "vitest": "^0.34.6"
+  }
+}

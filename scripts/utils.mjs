@@ -8,12 +8,12 @@ export function require(path) {
   return createRequire(import.meta.url)(path)
 }
 
-export function parsePackages(commaSeparatedString) {
-  const configuredProviders = require('../test/tested-providers.json')
+export function parsePackages(commaSeparatedString, filter = null) {
+  const configuredProviders = require('./packagesMeta.json')
   const configuredProvidersKeys = Object.keys(configuredProviders)
 
   if (!commaSeparatedString || commaSeparatedString.trim() === 'all') {
-    return configuredProvidersKeys
+    return filter ? configuredProvidersKeys.filter((pkg) => filter(configuredProviders[pkg])) : configuredProvidersKeys
   }
 
   const packagesOption = commaSeparatedString.split(',')
@@ -23,7 +23,7 @@ export function parsePackages(commaSeparatedString) {
     }
   })
 
-  return packagesOption
+  return filter ? packagesOption.filter((pkg) => filter(configuredProviders[pkg])) : packagesOption
 }
 
 export async function asyncSpawn(command, args = [], env = {}, cwd = undefined) {

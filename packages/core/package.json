@@ -47,5 +47,8 @@
   },
   "dependencies": {
     "normalizr": "^3.6.2"
+  },
+  "devDependencies": {
+    "@rattus-orm/utils": "workspace:^"
   }
 }

@@ -1,6 +1,7 @@
+import type { Options } from 'tsup'
 import { defineConfig } from 'tsup'
 
-export default function createTsupConfig(entries: Record<string, string>) {
+export default function createTsupConfig(entries: Record<string, string>, mixinOptions: Partial<Options> = {}) {
   return defineConfig({
     entry: entries,
     format: ['esm', 'cjs'],
@@ -10,5 +11,6 @@ export default function createTsupConfig(entries: Record<string, string>) {
     dts: {
       entry: entries,
     },
+    ...mixinOptions,
   })
 }
