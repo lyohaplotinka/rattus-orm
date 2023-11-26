@@ -1,12 +1,15 @@
 import type { DataProvider, Elements, ModulePath, SerializedStorage, State } from '@rattus-orm/core'
+import { DataProviderHelpers } from '@rattus-orm/core'
 import { defineStore, type Pinia } from 'pinia'
 
 import type { OrmActionsTree, OrmGettersTree, OrmStoreDefinition } from './types'
 
-export class PiniaDataProvider implements DataProvider {
+export class PiniaDataProvider extends DataProviderHelpers implements DataProvider {
   protected readonly storesMap = new Map<string, OrmStoreDefinition>()
 
-  constructor(protected readonly piniaInstance: Pinia) {}
+  constructor(protected readonly piniaInstance: Pinia) {
+    super()
+  }
 
   public delete(module: ModulePath, ids: string[]): void {
     this.commit(module, 'destroy', ids)
@@ -77,17 +80,7 @@ export class PiniaDataProvider implements DataProvider {
   }
 
   public restore(data: SerializedStorage) {
-    for (const connectionName in data) {
-      const connectionData = data[connectionName]
-      for (const entityName in connectionData) {
-        const modulePath: ModulePath = [connectionName, entityName]
-        if (!this.hasModule(modulePath)) {
-          this.registerModule(modulePath, connectionData[entityName])
-          continue
-        }
-        this.replace(modulePath, connectionData[entityName])
-      }
-    }
+    super.restore(data)
   }
 
   protected getModulePathAsString(modulePath: ModulePath) {

@@ -99,7 +99,7 @@ describe('composable', () => {
     expect(() => flush()).not.toThrowError()
   })
 
-  it.only('useRepositoryComputed: returns reactive data', async () => {
+  it('useRepositoryComputed: returns reactive data', async () => {
     const wrapper = mountSetup(() => {
       const { find } = useRepositoryComputed(User)
       const user = find('1')

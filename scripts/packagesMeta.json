@@ -9,6 +9,11 @@
     "exportName": "dataProviderFactory",
     "runFunctional": true
   },
+  "pinia": {
+    "path": "packages/pinia/test/provider-factory.ts",
+    "exportName": "dataProviderFactory",
+    "runFunctional": true
+  },
   "utils": {
     "runFunctional": false
   }

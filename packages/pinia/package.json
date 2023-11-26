@@ -41,14 +41,18 @@
     "test": "vitest run",
     "typecheck": "bash -c 'tsc -p tsconfig.json --noEmit'"
   },
+  "dependencies": {
+    "@rattus-orm/utils": "latest"
+  },
   "devDependencies": {
-    "@rattus-orm/core": "^0.0.8",
+    "@rattus-orm/core": "workspace:^",
+    "@rattus-orm/utils": "workspace:^",
     "@vue/test-utils": "^2.4.2",
     "pinia": "^2.1.7",
-    "vue": "^3.3.9"
+    "vue": "^3.0.0"
   },
   "peerDependencies": {
-    "@rattus-orm/core": "^0.0.7",
+    "@rattus-orm/core": "^0.0.9",
     "pinia": "^2.0.0",
     "vue": "^3.0.0"
   }
