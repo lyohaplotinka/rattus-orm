@@ -2926,15 +2926,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rattus-orm/core@npm:latest":
-  version: 0.0.8
-  resolution: "@rattus-orm/core@npm:0.0.8"
-  dependencies:
-    normalizr: "npm:^3.6.2"
-  checksum: f62fec95d6f91dfdef8203f44e13c557af627ac8746b378e96c20550ef104f0b3a4e4b87fbac985de17514f666f316a6a25a72a93a76781c9c95a1e223789d2e
-  languageName: node
-  linkType: hard
-
 "@rattus-orm/core@workspace:^, @rattus-orm/core@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "@rattus-orm/core@workspace:packages/core"
@@ -2948,8 +2939,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@rattus-orm/utils@workspace:packages/utils"
   dependencies:
-    "@rattus-orm/core": "npm:latest"
+    "@rattus-orm/core": "workspace:^"
     vitest: "npm:^0.34.6"
+    vue: "npm:^3.0.0"
+  peerDependencies:
+    vue: ^3.0.0
   languageName: unknown
   linkType: soft
 

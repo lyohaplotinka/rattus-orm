@@ -1,8 +1,4 @@
-<p align="center">
-  <img style="margin-right: -15px" width="192px" src="https://raw.githubusercontent.com/lyohaplotinka/rattus-orm/main/assets/logo.svg" alt="Rattus ORM">
-</p>
-
-<h1 align="center">Rattus ORM – utils</h1>
+# Rattus ORM - utils
 
 **Utils and helpers for other packages**
 

@@ -34,6 +34,21 @@
       "import": "./dist/createBasicProviderTest.mjs",
       "require": "./dist/createBasicProviderTest.js",
       "types": "./dist/createBasicProviderTest.d.ts"
+    },
+    "./isUnknownRecord": {
+      "import": "./dist/isUnknownRecord.mjs",
+      "require": "./dist/isUnknownRecord.js",
+      "types": "./dist/isUnknownRecord.d.ts"
+    },
+    "./pickFromClass": {
+      "import": "./dist/pickFromClass.mjs",
+      "require": "./dist/pickFromClass.js",
+      "types": "./dist/pickFromClass.d.ts"
+    },
+    "./vueComputedUtils": {
+      "import": "./dist/vueComputedUtils.mjs",
+      "require": "./dist/vueComputedUtils.js",
+      "types": "./dist/vueComputedUtils.d.ts"
     }
   },
   "files": [
@@ -48,5 +63,12 @@
   "dependencies": {
     "@rattus-orm/core": "latest",
     "vitest": "^0.34.6"
+  },
+  "devDependencies": {
+    "@rattus-orm/core": "workspace:^",
+    "vue": "^3.0.0"
+  },
+  "peerDependencies": {
+    "vue": "^3.0.0"
   }
 }

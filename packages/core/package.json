@@ -46,6 +46,7 @@
     "typecheck": "bash -c 'run -T tsc -p tsconfig.json --noEmit'"
   },
   "dependencies": {
+    "@rattus-orm/utils": "^0.0.1",
     "normalizr": "^3.6.2"
   },
   "devDependencies": {

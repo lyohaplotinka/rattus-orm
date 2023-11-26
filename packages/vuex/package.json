@@ -42,6 +42,9 @@
     "test": "run -T vitest run",
     "typecheck": "bash -c 'run -T tsc -p tsconfig.json --noEmit'"
   },
+  "dependencies": {
+    "@rattus-orm/utils": "^0.0.1"
+  },
   "devDependencies": {
     "@rattus-orm/core": "workspace:^",
     "@rattus-orm/utils": "workspace:^",

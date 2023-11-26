@@ -1,6 +1,7 @@
+import { isUnknownRecord } from '@rattus-orm/utils'
+
 import type { DataProvider, Elements, ModulePath, SerializedStorage, State } from '@/data/types'
 
-import { isUnknownRecord } from '../support/utils'
 import { DataProviderHelpers } from './data-provider-helpers'
 
 export class ObjectDataProvider extends DataProviderHelpers implements DataProvider {

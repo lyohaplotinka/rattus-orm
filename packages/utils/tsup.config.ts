@@ -8,6 +8,9 @@ export const dirname = fileURLToPath(new URL('.', import.meta.url))
 
 const utilsList: Record<string, string> = {
   createBasicProviderTest: './src/createBasicProviderTest.ts',
+  isUnknownRecord: './src/isUnknownRecord.ts',
+  pickFromClass: './src/pickFromClass.ts',
+  vueComputedUtils: './src/vueComputedUtils.ts',
 }
 
 const createExportsBlock = (name: string) => ({
@@ -43,6 +46,6 @@ export default createTsupConfig(
 
       await writeFile(packageJsonPath, JSON.stringify(pkg, null, 2), 'utf-8')
     },
-    treeshake: 'recommended',
+    external: ['vue'],
   },
 )
