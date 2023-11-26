@@ -14,7 +14,7 @@ class User extends Model {
   public age: number
 }
 
-describe('unit/VuexORM', () => {
+describe('vuex-orm plugin', () => {
   let app: App
 
   beforeEach(() => {
