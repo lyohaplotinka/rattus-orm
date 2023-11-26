@@ -1,5 +1,4 @@
-import type { Repository } from '@/repository/repository'
-import type { Constructor } from '@/types'
+import { isUnknownRecord } from '@rattus-orm/utils'
 
 interface SortableArray<T> {
   criteria: any[]
@@ -163,10 +162,6 @@ export function groupBy<T>(collection: T[], iteratee: (record: T) => string): { 
   }, {})
 }
 
-export const isUnknownRecord = (value: unknown): value is Record<string, unknown> => {
-  return value !== null && typeof value === 'object'
-}
-
 /**
  * Deep clone the given target object.
  */
@@ -198,8 +193,4 @@ export function assert(condition: boolean, message: string[]): asserts condition
   if (!condition) {
     throw new Error(['[Rattus ORM]'].concat(message).join(' '))
   }
-}
-
-export function isRepositoryConstructor(value: unknown): value is Constructor<Repository> {
-  return isFunction(value) && '_isRepository' in value
 }

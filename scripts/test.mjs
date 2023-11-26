@@ -1,5 +1,6 @@
 import { asyncSpawn, parsePackages } from "./utils.mjs";
 import { program } from "commander";
+import chalk from "chalk";
 
 async function runLocalTests(packageName, pattern) {
   return asyncSpawn('yarn', ['workspace', `@rattus-orm/${packageName}`, 'run' ,'test', pattern, '--passWithNoTests'])
@@ -22,7 +23,9 @@ program.command('run-tests')
   .option('-lp, --local-pattern <pattern>', 'tests pattern for local tests', '')
   .option('-fp, --functional-pattern <pattern>', 'tests pattern for functional tests', '')
   .action(async (str, { skipLocal, skipFunctional, localPattern, functionalPattern }) => {
-    const packagesNames = parsePackages(str)
+    const packagesNames = parsePackages(str, (pkg) => {
+      return !!pkg.runFunctional
+    })
     const results = { Succeed: [], Failed: [] }
 
     if (!skipLocal) {
@@ -54,10 +57,15 @@ program.command('run-tests')
     }
 
     const hasFailed = results.Failed.length > 0
-    results.Succeed = results.Succeed.join(', ')
-    results.Failed = results.Failed.join(', ')
 
-    console.table(results)
+    if (results.Succeed.length > 0) {
+      console.log(chalk.bgGreenBright.bold('\nSucceed tests:\n'))
+      console.log(chalk.greenBright(results.Succeed.join('\n')))
+    }
+    if (results.Failed.length > 0) {
+      console.log(chalk.bgRedBright.bold('\nFailed tests:\n'))
+      console.log(chalk.redBright(results.Failed.join('\n')))
+    }
 
     process.exit(hasFailed ? 1 : 0)
   })

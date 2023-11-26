@@ -1,7 +1,7 @@
 import { vi } from 'vitest'
 
 import { Model } from '@/index'
-import testedProviders from './tested-providers.json'
+import testedProviders from '../scripts/packagesMeta.json'
 import { loadProvider } from 'test/utils/load-provider'
 import { TestingStoreFactory } from 'test/utils/types'
 

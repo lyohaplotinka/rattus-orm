@@ -1,6 +1,7 @@
+import { isUnknownRecord } from '@rattus-orm/utils'
+
 import type { DataProvider, Elements, ModulePath, SerializedStorage, State } from '@/data/types'
 
-import { isUnknownRecord } from '../support/utils'
 import { DataProviderHelpers } from './data-provider-helpers'
 
 export class ObjectDataProvider extends DataProviderHelpers implements DataProvider {
@@ -69,7 +70,7 @@ export class ObjectDataProvider extends DataProviderHelpers implements DataProvi
   }
 
   public restore(data: SerializedStorage) {
-    this.storage = JSON.parse(JSON.stringify(data))
+    super.restore(data)
   }
 
   protected getModuleByPath([connection, module]: ModulePath): State {

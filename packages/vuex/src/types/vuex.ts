@@ -1,8 +1,6 @@
 import type { Constructor, Database, Model, Repository } from '@rattus-orm/core'
 
-// eslint-disable-next-line
-// @ts-ignore
-declare module 'vuex/types/index' {
+declare module 'vuex' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface Store<S> {
     /**

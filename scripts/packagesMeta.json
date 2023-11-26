@@ -1,0 +1,15 @@
+{
+  "core": {
+    "path": "packages/core/test/provider-factory.ts",
+    "exportName": "dataProviderFactory",
+    "runFunctional": true
+  },
+  "vuex": {
+    "path": "packages/vuex/test/provider-factory.ts",
+    "exportName": "dataProviderFactory",
+    "runFunctional": true
+  },
+  "utils": {
+    "runFunctional": false
+  }
+}

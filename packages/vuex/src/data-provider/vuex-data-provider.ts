@@ -80,7 +80,7 @@ export class VuexDataProvider extends DataProviderHelpers implements DataProvide
   }
 
   public restore(data: SerializedStorage) {
-    this.store.replaceState(data)
+    super.restore(data)
   }
 
   protected getModulePathString(modulePath: ModulePath): string {
