@@ -4,11 +4,16 @@ import { program } from 'commander'
 import { asyncSpawn, parsePackages } from './utils.mjs'
 
 async function runLocalTests(packageName, pattern) {
-  return asyncSpawn('yarn', ['workspace', `@rattus-orm/${packageName}`, 'run', 'test', pattern, '--passWithNoTests'])
+  return asyncSpawn('yarn', ['workspace', `@rattus-orm/${packageName}`, 'run', 'test', pattern, '--passWithNoTests'], {
+    stdio: ['pipe', 'pipe', process.stderr],
+  })
 }
 
 async function runFunctionalTests(packageName, pattern) {
-  return asyncSpawn('./node_modules/.bin/vitest', ['run', pattern], { PACKAGE_NAME: packageName })
+  return asyncSpawn('./node_modules/.bin/vitest', ['run', pattern], {
+    env: { PACKAGE_NAME: packageName },
+    stdio: ['pipe', 'pipe', process.stderr],
+  })
 }
 
 program.name('test.mjs').description('Test orchestrator for Rattus ORM').version('0.0.1')
@@ -25,11 +30,12 @@ program
     const packagesNames = parsePackages(str, (pkg) => {
       return !!pkg.runFunctional
     })
+    const testsPromisesArray = []
     const results = { Succeed: [], Failed: [] }
 
     if (!skipLocal) {
       console.log('Running local tests')
-      for (const pkg of packagesNames) {
+      const localTestsPromise = packagesNames.map(async (pkg) => {
         const resultIndicator = `${pkg} (local)`
         try {
           await runLocalTests(pkg, localPattern)
@@ -38,11 +44,12 @@ program
           console.log(e)
           results.Failed.push(resultIndicator)
         }
-      }
+      })
+      testsPromisesArray.push(...localTestsPromise)
     }
 
     if (!skipFunctional) {
-      for (const pkg of packagesNames) {
+      const funcTestsPromise = packagesNames.map(async (pkg) => {
         const resultIndicator = `${pkg} (functional)`
         console.log(`Running functional for package ${pkg}`)
         try {
@@ -52,8 +59,11 @@ program
           console.log(e)
           results.Failed.push(resultIndicator)
         }
-      }
+      })
+      testsPromisesArray.push(...funcTestsPromise)
     }
+
+    await Promise.all(testsPromisesArray)
 
     const hasFailed = results.Failed.length > 0
 
