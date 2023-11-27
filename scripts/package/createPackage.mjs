@@ -1,7 +1,9 @@
-import { program } from "commander";
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
-import { resolve, join, dirname as pathDirname } from 'node:path'
-import { dirname, getFiles, require } from "../utils.mjs";
+import { dirname as pathDirname, join, resolve } from 'node:path'
+
+import { program } from 'commander'
+
+import { dirname, getFiles, require } from '../utils.mjs'
 
 const currentPath = dirname(import.meta.url)
 const corePackageVersion = require(resolve(currentPath, '../../packages/core/package.json')).version
@@ -21,7 +23,10 @@ program
       const toSaveFile = join(newPackagePath, fileRelativeToTemplates)
       await mkdir(pathDirname(toSaveFile), { recursive: true })
       const content = await readFile(filePath, 'utf8')
-      const fixedContent = content.replaceAll('{{ PACKAGE }}', packageName).replaceAll('{{ CORE_VERSION }}', corePackageVersion)
+      const fixedContent = content
+        .replaceAll('{{ PACKAGE }}', packageName)
+        .replaceAll('{{ CORE_VERSION }}', corePackageVersion)
+        .replaceAll('// @ts-ignore', '')
       writeFile(toSaveFile, fixedContent, 'utf8')
     }
   })

@@ -22,6 +22,7 @@
   "scripts": {
     "test": "node scripts/test.mjs run-tests",
     "lint": "yarn workspaces foreach -A run lint",
+    "lint:scripts": "eslint -c ./scripts/.eslintrc.js ./scripts/**/*.{js,mjs} --fix",
     "typecheck": "yarn workspaces foreach -A run typecheck",
     "build": "yarn workspaces foreach -A --topological-dev run build",
     "clean": "yarn workspaces foreach -A run clean",
@@ -56,10 +57,13 @@
     "packages/*"
   ],
   "lint-staged": {
-    "*.ts": [
+    "./{src,test}/*/**.ts": [
       "yarn typecheck",
       "yarn lint",
       "yarn test all"
+    ],
+    "./scripts/*/**.{js,mjs}": [
+      "yarn lint:scripts"
     ]
   },
   "simple-git-hooks": {

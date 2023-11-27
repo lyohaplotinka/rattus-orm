@@ -1,21 +1,20 @@
-import { asyncSpawn, parsePackages } from "./utils.mjs";
-import { program } from "commander";
-import chalk from "chalk";
+import chalk from 'chalk'
+import { program } from 'commander'
+
+import { asyncSpawn, parsePackages } from './utils.mjs'
 
 async function runLocalTests(packageName, pattern) {
-  return asyncSpawn('yarn', ['workspace', `@rattus-orm/${packageName}`, 'run' ,'test', pattern, '--passWithNoTests'])
+  return asyncSpawn('yarn', ['workspace', `@rattus-orm/${packageName}`, 'run', 'test', pattern, '--passWithNoTests'])
 }
 
 async function runFunctionalTests(packageName, pattern) {
   return asyncSpawn('./node_modules/.bin/vitest', ['run', pattern], { PACKAGE_NAME: packageName })
 }
 
-program
-  .name('test.mjs')
-  .description('Test orchestrator for Rattus ORM')
-  .version('0.0.1')
+program.name('test.mjs').description('Test orchestrator for Rattus ORM').version('0.0.1')
 
-program.command('run-tests')
+program
+  .command('run-tests')
   .description('Run tests')
   .argument('[package]', 'for which packages we should run tests, comma-separated', 'all')
   .option('-sl, --skip-local', 'skip local tests (inside packages/<package> dir)', false)
@@ -71,4 +70,3 @@ program.command('run-tests')
   })
 
 program.parse()
-

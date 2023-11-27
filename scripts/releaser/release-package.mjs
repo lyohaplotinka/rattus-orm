@@ -1,8 +1,10 @@
+import { resolve } from 'node:path'
+
+import enquirer from 'enquirer'
 import fs from 'fs'
 import semver from 'semver'
-import enquirer from 'enquirer'
-import {resolve} from 'node:path'
-import {asyncSpawn, dirname, require} from "../utils.mjs";
+
+import { asyncSpawn, dirname, require } from '../utils.mjs'
 
 const versionIncrements = ['patch', 'minor', 'major']
 
@@ -30,7 +32,7 @@ export async function runForPackage(packageName) {
   const currentVersion = require(packageJsonPath).version
   let targetVersion
 
-  const {release} = await enquirer.prompt({
+  const { release } = await enquirer.prompt({
     type: 'select',
     name: 'release',
     message: 'Select release type',
@@ -54,7 +56,7 @@ export async function runForPackage(packageName) {
     throw new Error(`Invalid target version: ${targetVersion}`)
   }
 
-  const {yes: versionOk} = await enquirer.prompt({
+  const { yes: versionOk } = await enquirer.prompt({
     type: 'confirm',
     name: 'yes',
     message: `Releasing v${targetVersion}. Confirm?`,
@@ -81,14 +83,7 @@ export async function runForPackage(packageName) {
   await asyncSpawn('git', ['commit', '-m', `release(${packageName}): v${targetVersion}`])
 
   console.log('\nPublishing the package...')
-  await asyncSpawn('yarn', [
-    'workspace',
-    `@rattus-orm/${packageName}`,
-    'npm',
-    'publish',
-    '--access',
-    'public'
-  ])
+  await asyncSpawn('yarn', ['workspace', `@rattus-orm/${packageName}`, 'npm', 'publish', '--access', 'public'])
 
   // Push to GitHub.
   console.log('\nPushing to GitHub...')

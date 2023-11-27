@@ -1,8 +1,8 @@
+import { spawn } from 'node:child_process'
+import { readdir } from 'node:fs/promises'
 import { createRequire } from 'node:module'
-import { spawn } from "node:child_process";
+import { resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { resolve } from "node:path";
-import { readdir } from "node:fs/promises";
 
 export function require(path) {
   return createRequire(import.meta.url)(path)
@@ -27,31 +27,31 @@ export function parsePackages(commaSeparatedString, filter = null) {
 }
 
 export async function asyncSpawn(command, args = [], env = {}, cwd = undefined) {
-    return new Promise((resolve, reject) => {
-        const spawnedProcess = spawn(command, args, { stdio: 'inherit', env: { ...process.env, ...env }, cwd })
-        spawnedProcess.on('error', (error) => {
-            reject(error)
-        })
-        spawnedProcess.on('close', (code) => {
-            if (code === 0) {
-                resolve()
-            } else {
-                reject(`Process finished with exit code ${code}`)
-            }
-        })
+  return new Promise((resolve, reject) => {
+    const spawnedProcess = spawn(command, args, { stdio: 'inherit', env: { ...process.env, ...env }, cwd })
+    spawnedProcess.on('error', (error) => {
+      reject(error)
     })
+    spawnedProcess.on('close', (code) => {
+      if (code === 0) {
+        resolve()
+      } else {
+        reject(`Process finished with exit code ${code}`)
+      }
+    })
+  })
 }
 
 export const dirname = (importMetaUrl) => fileURLToPath(new URL('.', importMetaUrl))
 
 export async function* getFiles(dir) {
-  const dirents = await readdir(dir, { withFileTypes: true });
+  const dirents = await readdir(dir, { withFileTypes: true })
   for (const dirent of dirents) {
-    const res = resolve(dir, dirent.name);
+    const res = resolve(dir, dirent.name)
     if (dirent.isDirectory()) {
-      yield* getFiles(res);
+      yield* getFiles(res)
     } else {
-      yield res;
+      yield res
     }
   }
 }
