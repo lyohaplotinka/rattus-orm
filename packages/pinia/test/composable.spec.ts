@@ -31,7 +31,7 @@ const attachSetup = (setup: ComponentOptions['setup']): Component => ({
   },
 })
 
-describe('composable', () => {
+describe('composable: pinia', () => {
   const pinia = createPinia()
 
   const mountSetup = (setup: ComponentOptions['setup']) => {

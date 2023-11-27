@@ -15,7 +15,7 @@ class User extends Model {
   public age: number
 }
 
-describe('pinia-orm plugin', () => {
+describe('plugin: pinia', () => {
   let app: App
 
   const initPinia = () => {

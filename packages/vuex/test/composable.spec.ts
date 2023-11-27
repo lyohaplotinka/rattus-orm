@@ -25,7 +25,7 @@ const attachSetup = (setup: ComponentOptions['setup']): Component => ({
   setup,
 })
 
-describe('composable', () => {
+describe('composable: vuex', () => {
   let store: Store<any>
 
   beforeEach(() => {
