@@ -1,11 +1,14 @@
-import { Connection } from '../connection/connection'
-import type { Collection, Element, Elements, Item } from '../data/types'
-import type { Database } from '../database/database'
-import { Interpreter } from '../interpreter/interpreter'
-import { MorphTo } from '../model/attributes/relations/morph-to'
-import { Relation } from '../model/attributes/relations/relation'
-import type { Model } from '../model/Model'
-import { assert, groupBy, isArray, isEmpty, isFunction, orderBy } from '../support/utils'
+import type { Element, Elements } from '@rattus-orm/utils'
+
+import { Connection } from '@/connection/connection'
+import type { Collection, Item } from '@/data/types'
+import type { Database } from '@/database/database'
+import { Interpreter } from '@/interpreter/interpreter'
+import { MorphTo } from '@/model/attributes/relations/morph-to'
+import { Relation } from '@/model/attributes/relations/relation'
+import type { Model } from '@/model/Model'
+import { assert, groupBy, isArray, isEmpty, isFunction, orderBy } from '@/support/utils'
+
 import type {
   EagerLoad,
   EagerLoadConstraint,

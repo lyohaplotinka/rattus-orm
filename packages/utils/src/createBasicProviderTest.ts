@@ -1,6 +1,7 @@
-import type { DataProvider } from '@rattus-orm/core'
-import type { Elements, SerializedStorage } from '@rattus-orm/core'
 import { beforeEach, describe, expect, it } from 'vitest'
+
+import type { Elements, SerializedStorage } from './types'
+import type { DataProvider } from './types'
 
 type CreateBasicProviderTestParams<StoreType> = {
   name: string

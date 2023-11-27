@@ -1,5 +1,3 @@
-import '@vue/runtime-core'
-
 import type { Database } from '@rattus-orm/core'
 import type { Model, Repository } from '@rattus-orm/core'
 import type { Pinia, Store } from 'pinia'

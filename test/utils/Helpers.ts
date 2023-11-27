@@ -1,5 +1,6 @@
-import type { Collection, Element, Elements, Model, State } from '@/index'
+import type { Collection, Model } from '@/index'
 import { TestingStore } from 'test/utils/types'
+import { Element, Elements, State } from '@rattus-orm/utils'
 
 interface Entities {
   [name: string]: Elements

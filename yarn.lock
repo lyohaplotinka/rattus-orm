@@ -2942,7 +2942,7 @@ __metadata:
     "@rattus-orm/core": "workspace:^"
     "@rattus-orm/utils": "workspace:^"
     "@vue/test-utils": "npm:^2.4.2"
-    pinia: "npm:^2.1.7"
+    pinia: "npm:^2.0.0"
     vue: "npm:^3.0.0"
   peerDependencies:
     "@rattus-orm/core": ^0.0.9
@@ -2955,7 +2955,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@rattus-orm/utils@workspace:packages/utils"
   dependencies:
-    "@rattus-orm/core": "workspace:^"
     vitest: "npm:^0.34.6"
     vue: "npm:^3.0.0"
   peerDependencies:
@@ -3522,6 +3521,22 @@ __metadata:
   version: 7.0.15
   resolution: "@types/json-schema@npm:7.0.15"
   checksum: a996a745e6c5d60292f36731dd41341339d4eeed8180bb09226e5c8d23759067692b1d88e5d91d72ee83dfc00d3aca8e7bd43ea120516c17922cbcb7c3e252db
+  languageName: node
+  linkType: hard
+
+"@types/lodash-es@npm:^4.17.12":
+  version: 4.17.12
+  resolution: "@types/lodash-es@npm:4.17.12"
+  dependencies:
+    "@types/lodash": "npm:*"
+  checksum: 5d12d2cede07f07ab067541371ed1b838a33edb3c35cb81b73284e93c6fd0c4bbeaefee984e69294bffb53f62d7272c5d679fdba8e595ff71e11d00f2601dde0
+  languageName: node
+  linkType: hard
+
+"@types/lodash@npm:*":
+  version: 4.14.202
+  resolution: "@types/lodash@npm:4.14.202"
+  checksum: 6064d43c8f454170841bd67c8266cc9069d9e570a72ca63f06bceb484cb4a3ee60c9c1f305c1b9e3a87826049fd41124b8ef265c4dd08b00f6766609c7fe9973
   languageName: node
   linkType: hard
 
@@ -9166,6 +9181,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash-es@npm:^4.17.21":
+  version: 4.17.21
+  resolution: "lodash-es@npm:4.17.21"
+  checksum: fb407355f7e6cd523a9383e76e6b455321f0f153a6c9625e21a8827d10c54c2a2341bd2ae8d034358b60e07325e1330c14c224ff582d04612a46a4f0479ff2f2
+  languageName: node
+  linkType: hard
+
 "lodash.curry@npm:^4.0.1":
   version: 4.1.1
   resolution: "lodash.curry@npm:4.1.1"
@@ -11104,7 +11126,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pinia@npm:^2.1.7":
+"pinia@npm:^2.0.0":
   version: 2.1.7
   resolution: "pinia@npm:2.1.7"
   dependencies:
@@ -11882,6 +11904,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "rattus-orm@workspace:."
   dependencies:
+    "@types/lodash-es": "npm:^4.17.12"
     "@types/semver": "npm:^7"
     "@typescript-eslint/eslint-plugin": "npm:^6.2.0"
     "@typescript-eslint/parser": "npm:^6.2.0"
@@ -11894,6 +11917,7 @@ __metadata:
     eslint-plugin-simple-import-sort: "npm:^10.0.0"
     jsdom: "npm:^22.1.0"
     lint-staged: "npm:^15.0.2"
+    lodash-es: "npm:^4.17.21"
     prettier: "npm:^3.0.0"
     semver: "npm:^7.5.4"
     simple-git-hooks: "npm:^2.8.1"

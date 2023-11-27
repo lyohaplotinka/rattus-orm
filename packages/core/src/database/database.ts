@@ -1,6 +1,6 @@
+import type { DataProvider, State } from '@rattus-orm/utils'
 import type { schema as Normalizr } from 'normalizr'
 
-import type { DataProvider, State } from '@/data/types'
 import { Relation } from '@/model/attributes/relations/relation'
 import type { Model } from '@/model/Model'
 import type { ModelConstructor } from '@/model/types'

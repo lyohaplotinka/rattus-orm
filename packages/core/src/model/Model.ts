@@ -1,7 +1,9 @@
-import type { ModelConstructor } from '@/model/types'
+import type { Element } from '@rattus-orm/utils'
 
-import type { Collection, Element, Item } from '../data/types'
-import { assert, isArray, isNullish } from '../support/utils'
+import type { Collection, Item } from '@/data/types'
+import type { ModelConstructor } from '@/model/types'
+import { assert, isArray, isNullish } from '@/support/utils'
+
 import type { Attribute } from './attributes/attribute'
 import { BelongsTo } from './attributes/relations/belongs-to'
 import { HasMany } from './attributes/relations/has-many'

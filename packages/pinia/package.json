@@ -35,11 +35,11 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup",
-    "clean": "rm -rf dist",
-    "lint": "eslint 'src/**/*.ts' --quiet --fix",
-    "test": "vitest run",
-    "typecheck": "bash -c 'tsc -p tsconfig.json --noEmit'"
+    "build": "run -T tsup",
+    "clean": "rm -rf dist && rm -rf node_modules",
+    "lint": "run -T eslint 'src/**/*.ts' --quiet --fix",
+    "test": "run -T vitest run",
+    "typecheck": "bash -c 'run -T tsc -p tsconfig.json --noEmit'"
   },
   "dependencies": {
     "@rattus-orm/utils": "latest"
@@ -48,7 +48,7 @@
     "@rattus-orm/core": "workspace:^",
     "@rattus-orm/utils": "workspace:^",
     "@vue/test-utils": "^2.4.2",
-    "pinia": "^2.1.7",
+    "pinia": "^2.0.0",
     "vue": "^3.0.0"
   },
   "peerDependencies": {

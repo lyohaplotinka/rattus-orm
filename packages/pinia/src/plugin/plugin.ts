@@ -1,5 +1,6 @@
-import type { DataProvider, Model, Repository } from '@rattus-orm/core'
+import type { Model, Repository } from '@rattus-orm/core'
 import { Database } from '@rattus-orm/core'
+import type { DataProvider } from '@rattus-orm/utils'
 import type { Pinia } from 'pinia'
 import type { Plugin } from 'vue'
 

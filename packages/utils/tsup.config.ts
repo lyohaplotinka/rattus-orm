@@ -11,6 +11,7 @@ const utilsList: Record<string, string> = {
   isUnknownRecord: './src/isUnknownRecord.ts',
   pickFromClass: './src/pickFromClass.ts',
   vueComputedUtils: './src/vueComputedUtils.ts',
+  sharedTypes: './src/types.ts',
 }
 
 const createExportsBlock = (name: string) => ({
@@ -46,6 +47,6 @@ export default createTsupConfig(
 
       await writeFile(packageJsonPath, JSON.stringify(pkg, null, 2), 'utf-8')
     },
-    external: ['vue'],
+    splitting: true,
   },
 )
