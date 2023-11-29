@@ -1,5 +1,5 @@
 # 2023/11/29
-### Utils (0.0.1)
+### Utils (0.0.2)
 * basic types moved to Utils package;
 * enable code-split for bundle.
 
