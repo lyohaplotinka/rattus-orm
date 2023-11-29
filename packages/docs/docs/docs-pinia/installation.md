@@ -41,13 +41,13 @@ import { Model, Uid, Str } from '@rattus-orm/core'
 import { useRepositoryComputed } from '@rattus-orm/pinia'
 
 class User extends Model {
-public static entity = 'user'
-
-@Uid()
-public id: string
-
-@Str()
-public email: string
+    public static entity = 'user'
+    
+    @Uid()
+    public id: string
+    
+    @Str()
+    public email: string
 }
 
 export default defineComponent({

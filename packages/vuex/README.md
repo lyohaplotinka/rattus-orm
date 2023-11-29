@@ -43,13 +43,13 @@ import { Model, Uid, Str } from '@rattus-orm/core'
 import { useRepositoryComputed } from '@rattus-orm/vuex'
 
 class User extends Model {
-public static entity = 'user'
-
-@Uid()
-public id: string
-
-@Str()
-public email: string
+    public static entity = 'user'
+    
+    @Uid()
+    public id: string
+    
+    @Str()
+    public email: string
 }
 
 export default defineComponent({
@@ -74,7 +74,7 @@ export default defineComponent({
 ```
 
 ### Documentation
-For detailed docs please read [documentation website](https://lyohaplotinka.github.io/rattus-orm/docs/category/vuex-integration).
+For detailed docs please read [documentation website](https://lyohaplotinka.github.io/rattus-orm/docs/category/vuex-integration-vue).
 
 ### Contributing
 Contributions are welcome! Please read our [Contributing Guide](../../CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests.
