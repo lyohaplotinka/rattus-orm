@@ -1,6 +1,7 @@
+import type { Element } from '@rattus-orm/utils'
 import type { Schema as NormalizrSchema } from 'normalizr'
 
-import type { Collection, Element } from '@/data/types'
+import type { Collection } from '@/data/types'
 import type { Query } from '@/query/query'
 import type { Schema } from '@/schema/schema'
 

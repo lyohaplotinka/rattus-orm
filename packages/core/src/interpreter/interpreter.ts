@@ -1,7 +1,8 @@
+import type { Element } from '@rattus-orm/utils'
 import type { schema as Normalizr } from 'normalizr'
 import { normalize } from 'normalizr'
 
-import type { Element, NormalizedData } from '@/data/types'
+import type { NormalizedData } from '@/data/types'
 import type { Database } from '@/database/database'
 import type { Model } from '@/model/Model'
 import { isArray } from '@/support/utils'

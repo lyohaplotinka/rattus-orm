@@ -18,5 +18,21 @@
   "sidebar.tutorialSidebar.category.Vuex integration.link.generated-index.description": {
     "message": "Data provider для Vuex и утилиты для удобного использования",
     "description": "The generated-index page description for category Vuex integration in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Vuex integration (Vue)": {
+    "message": "Интеграция с Vuex (Vue)",
+    "description": "The label for category Vuex integration (Vue) in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Vuex integration (Vue).link.generated-index.description": {
+    "message": "Data provider и хелперы для Vuex",
+    "description": "The generated-index page description for category Vuex integration (Vue) in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Pinia integration (Vue)": {
+    "message": "Интеграция с Pinia (Vue)",
+    "description": "The label for category Pinia integration (Vue) in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Pinia integration (Vue).link.generated-index.description": {
+    "message": "Data provider и хелперы для Pinia",
+    "description": "The generated-index page description for category Pinia integration (Vue) in sidebar tutorialSidebar"
   }
 }

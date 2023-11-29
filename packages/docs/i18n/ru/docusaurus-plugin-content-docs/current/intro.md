@@ -31,7 +31,8 @@ Rattus ORM в настоящее время находится на раннем
 
 ### Пакеты:
 * [@rattus-orm/core](/docs/category/core-package): ядро Rattus ORM
-* [@rattus-orm/vuex](/docs/category/vuex-integration): провадйер данных для Vuex
+* [@rattus-orm/vuex](/docs/category/vuex-integration-vue): провадйер данных для Vuex
+* [@rattus-orm/pinia](/docs/category/pinia-integration-vue): провадйер данных для Vuex
 
 ### Помощь
 Ваш вклад приветствуется! Пожалуйста, ознакомьтесь с нашим Руководством для Участников, где указаны наш кодекс поведения и процесс отправки запросов на включение изменений.

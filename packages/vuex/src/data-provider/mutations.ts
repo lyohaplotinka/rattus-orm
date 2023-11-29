@@ -1,4 +1,4 @@
-import type { Elements, State } from '@rattus-orm/core'
+import type { Elements, State } from '@rattus-orm/utils'
 import type { MutationTree } from 'vuex'
 
 export interface Mutations<S extends State> extends MutationTree<S> {

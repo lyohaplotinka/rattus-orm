@@ -1,13 +1,12 @@
-import { runForPackage } from "./release-package.mjs";
-import { parsePackages } from "../utils.mjs";
-import { program } from "commander";
+import { program } from 'commander'
+
+import { parsePackages } from '../utils.mjs'
+import { runForPackage } from './release-package.mjs'
+
+program.name('releaser.mjs').description('Release script for Rattus ORM').version('0.0.1')
 
 program
-  .name('releaser.mjs')
-  .description('Release script for Rattus ORM')
-  .version('0.0.1')
-
-program.command('release')
+  .command('release')
   .description('Release a new version to NPM and GitHub')
   .argument('<packages>', 'packages to release, comma-separated')
   .action(async (packages) => {

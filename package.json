@@ -22,14 +22,16 @@
   "scripts": {
     "test": "node scripts/test.mjs run-tests",
     "lint": "yarn workspaces foreach -A run lint",
+    "lint:scripts": "eslint -c ./scripts/.eslintrc.js ./scripts/**/*.{js,mjs} --fix",
     "typecheck": "yarn workspaces foreach -A run typecheck",
-    "build": "yarn workspaces foreach -A run build",
+    "build": "yarn workspaces foreach -Ap --topological-dev run build",
     "clean": "yarn workspaces foreach -A run clean",
     "release": "node ./scripts/releaser/releaser.mjs release",
     "prepare": "npx simple-git-hooks",
     "create-package": "node ./scripts/package/createPackage.mjs"
   },
   "devDependencies": {
+    "@types/lodash-es": "^4.17.12",
     "@types/semver": "^7",
     "@typescript-eslint/eslint-plugin": "^6.2.0",
     "@typescript-eslint/parser": "^6.2.0",
@@ -42,6 +44,7 @@
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "jsdom": "^22.1.0",
     "lint-staged": "^15.0.2",
+    "lodash-es": "^4.17.21",
     "prettier": "^3.0.0",
     "semver": "^7.5.4",
     "simple-git-hooks": "^2.8.1",
@@ -54,10 +57,13 @@
     "packages/*"
   ],
   "lint-staged": {
-    "*.ts": [
+    "./{src,test}/*/**.ts": [
       "yarn typecheck",
       "yarn lint",
       "yarn test all"
+    ],
+    "./scripts/*/**.{js,mjs}": [
+      "yarn lint:scripts"
     ]
   },
   "simple-git-hooks": {

@@ -1,0 +1,59 @@
+{
+  "name": "@rattus-orm/pinia",
+  "description": "ORM for your JS/TS apps: Pinia bindings",
+  "homepage": "https://lyohaplotinka.github.io/rattus-orm/",
+  "author": "Lyoha Plotinka",
+  "license": "MIT",
+  "packageManager": "yarn@4.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lyohaplotinka/rattus-orm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lyohaplotinka/rattus-orm/issues"
+  },
+  "keywords": [
+    "orm",
+    "rattus",
+    "pinia",
+    "typescript",
+    "javascript"
+  ],
+  "version": "0.0.0",
+  "main": "./dist/rattus-orm-pinia-provider.js",
+  "browser": "./dist/rattus-orm-pinia-provider.mjs",
+  "module": "./dist/rattus-orm-pinia-provider.mjs",
+  "types": "./dist/rattus-orm-pinia-provider.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/rattus-orm-pinia-provider.mjs",
+      "require": "./dist/rattus-orm-pinia-provider.js",
+      "types": "./dist/rattus-orm-pinia-provider.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "run -T tsup",
+    "clean": "rm -rf dist && rm -rf node_modules",
+    "lint": "run -T eslint 'src/**/*.ts' --quiet --fix",
+    "test": "run -T vitest run",
+    "typecheck": "bash -c 'run -T tsc -p tsconfig.json --noEmit'"
+  },
+  "dependencies": {
+    "@rattus-orm/utils": "latest"
+  },
+  "devDependencies": {
+    "@rattus-orm/core": "workspace:^",
+    "@rattus-orm/utils": "workspace:^",
+    "@vue/test-utils": "^2.4.2",
+    "pinia": "^2.0.0",
+    "vue": "^3.0.0"
+  },
+  "peerDependencies": {
+    "@rattus-orm/core": "^0.0.9",
+    "pinia": "^2.0.0",
+    "vue": "^3.0.0"
+  }
+}

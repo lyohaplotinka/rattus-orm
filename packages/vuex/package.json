@@ -37,13 +37,13 @@
   ],
   "scripts": {
     "build": "run -T tsup",
-    "clean": "rm -rf dist",
+    "clean": "rm -rf dist && rm -rf node_modules",
     "lint": "run -T eslint 'src/**/*.ts' --quiet --fix",
     "test": "run -T vitest run",
     "typecheck": "bash -c 'run -T tsc -p tsconfig.json --noEmit'"
   },
   "dependencies": {
-    "@rattus-orm/utils": "^0.0.1"
+    "@rattus-orm/utils": "latest"
   },
   "devDependencies": {
     "@rattus-orm/core": "workspace:^",

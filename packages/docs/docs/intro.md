@@ -24,7 +24,8 @@ If you're new or need help with the basics, check out the ["vuex-orm-next"](http
 
 ### Packages:
 * [@rattus-orm/core](/docs/category/core-package): core of Rattus ORM
-* [@rattus-orm/vuex](/docs/category/vuex-integration): vuex data provider
+* [@rattus-orm/vuex](/docs/category/vuex-integration-vue): Vuex data provider
+* [@rattus-orm/pinia](/docs/category/pinia-integration-vue): Pinia data provider
 
 ### Contributing
 Contributions are welcome! Please read our [Contributing Guide](https://github.com/lyohaplotinka/rattus-orm/blob/main/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests.

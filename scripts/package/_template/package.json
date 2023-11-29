@@ -45,6 +45,6 @@
     "@rattus-orm/core": "^{{ CORE_VERSION }}"
   },
   "peerDependencies": {
-    "@rattus-orm/core": "^${{ CORE_VERSION }}"
+    "@rattus-orm/core": "^{{ CORE_VERSION }}"
   }
 }

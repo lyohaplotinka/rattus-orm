@@ -49,6 +49,11 @@
       "import": "./dist/vueComputedUtils.mjs",
       "require": "./dist/vueComputedUtils.js",
       "types": "./dist/vueComputedUtils.d.ts"
+    },
+    "./sharedTypes": {
+      "import": "./dist/sharedTypes.mjs",
+      "require": "./dist/sharedTypes.js",
+      "types": "./dist/sharedTypes.d.ts"
     }
   },
   "files": [
@@ -56,16 +61,14 @@
   ],
   "scripts": {
     "build": "tsup",
-    "clean": "rm -rf dist",
+    "clean": "rm -rf dist && rm -rf node_modules",
     "lint": "eslint 'src/**/*.ts' --quiet --fix",
     "typecheck": "bash -c 'tsc -p tsconfig.json --noEmit'"
   },
   "dependencies": {
-    "@rattus-orm/core": "latest",
     "vitest": "^0.34.6"
   },
   "devDependencies": {
-    "@rattus-orm/core": "workspace:^",
     "vue": "^3.0.0"
   },
   "peerDependencies": {

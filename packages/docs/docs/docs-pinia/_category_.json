@@ -1,0 +1,8 @@
+{
+  "label": "Pinia integration (Vue)",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "description": "Pinia data provider and helpers"
+  }
+}

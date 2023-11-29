@@ -1,16 +1,18 @@
-import type { Collection, Element, Item } from '../data/types'
-import type { Database } from '../database/database'
-import type { Model } from '../model/Model'
-import type { ModelConstructor } from '../model/types'
-import { Query } from '../query/query'
+import type { Element } from '@rattus-orm/utils'
+
+import type { Collection, Item } from '@/data/types'
+import type { Database } from '@/database/database'
+import type { Model } from '@/model/Model'
+import type { ModelConstructor } from '@/model/types'
+import { Query } from '@/query/query'
 import type {
   EagerLoadConstraint,
   OrderBy,
   OrderDirection,
   WherePrimaryClosure,
   WhereSecondaryClosure,
-} from '../query/types'
-import { assert } from '../support/utils'
+} from '@/query/types'
+import { assert } from '@/support/utils'
 
 export class Repository<M extends Model = Model> {
   /**
