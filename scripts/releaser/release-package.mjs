@@ -4,7 +4,7 @@ import enquirer from 'enquirer'
 import fs from 'fs'
 import semver from 'semver'
 
-import { asyncSpawn, dirname, require } from '../utils.mjs'
+import { asyncSpawn, dirname, getPackageMeta, require } from '../utils.mjs'
 
 const versionIncrements = ['patch', 'minor', 'major']
 
@@ -19,6 +19,50 @@ function updatePackage(packageJsonPath, version) {
   pkg.version = version
 
   fs.writeFileSync(packageJsonPath, JSON.stringify(pkg, null, 2) + '\n')
+}
+
+async function bumpDependents(packageName, newVersion, exclude = ['docs']) {
+  const bumpingDep = `@rattus-orm/${packageName}`
+  const yarnWsListOutput = await asyncSpawn('yarn', ['workspaces', 'list', '--json'], { stdio: 'pipe' })
+  const allPackagesData = []
+
+  for (const line of yarnWsListOutput) {
+    try {
+      const parsed = JSON.parse(line)
+      if (
+        parsed.location === '.' ||
+        parsed.location.endsWith(packageName) ||
+        exclude.some((excl) => parsed.location.endsWith(excl))
+      ) {
+        continue
+      }
+
+      allPackagesData.push(parsed)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  for (const packageData of allPackagesData) {
+    const packageJsonPath = resolve(dirname(import.meta.url), `../../${packageData.location}/package.json`)
+    const pkg = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'))
+
+    for (const dep of ['dependencies', 'devDependencies', 'peerDependencies']) {
+      if (!(dep in pkg) || Object.keys(pkg[dep]).length === 0) {
+        continue
+      }
+      const deps = pkg[dep]
+      for (const [depName, depVer] of Object.entries(deps)) {
+        if (depName !== bumpingDep || depVer === 'workspace:^') {
+          continue
+        }
+
+        pkg[dep][depName] = `^${newVersion}`
+      }
+    }
+
+    fs.writeFileSync(packageJsonPath, JSON.stringify(pkg, null, 2) + '\n', 'utf8')
+  }
 }
 
 export async function runForPackage(packageName) {
@@ -64,6 +108,12 @@ export async function runForPackage(packageName) {
 
   if (!versionOk) {
     return
+  }
+
+  const packageMeta = getPackageMeta(packageName)
+  if (packageMeta.autoBump) {
+    console.log('\nAuto-bump for dependents detected, bumping...')
+    await bumpDependents(packageName, targetVersion)
   }
 
   console.log('\nRunning tests...')

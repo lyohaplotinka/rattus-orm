@@ -1,3 +1,19 @@
+# 2023/11/29
+### Utils (0.0.1)
+* basic types moved to Utils package;
+* enable code-split for bundle.
+
+### Core (0.0.10)
+* types adjust for Utils package;
+* package.json reviewed.
+
+### Vuex (0.0.9)
+* types adjust for Utils package;
+* package.json reviewed.
+
+### Pinia (0.0.1)
+* introducing Pinia integration.
+
 # 2023/11/26
 ### Utils (0.0.1)
 * introduce utils package

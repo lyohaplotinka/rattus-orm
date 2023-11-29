@@ -2,7 +2,9 @@
   "core": {
     "path": "packages/core/test/provider-factory.ts",
     "exportName": "dataProviderFactory",
-    "runFunctional": true
+    "runFunctional": true,
+    "autoBump": true,
+    "order": 1
   },
   "vuex": {
     "path": "packages/vuex/test/provider-factory.ts",
@@ -15,6 +17,8 @@
     "runFunctional": true
   },
   "utils": {
+    "autoBump": true,
+    "order": 0,
     "runFunctional": false
   }
 }

@@ -8,8 +8,16 @@ export function require(path) {
   return createRequire(import.meta.url)(path)
 }
 
+export function loadPackagesMeta() {
+  return require('./packagesMeta.json')
+}
+
+export function getPackageMeta(pkg) {
+  return loadPackagesMeta()[pkg]
+}
+
 export function parsePackages(commaSeparatedString, filter = null) {
-  const configuredProviders = require('./packagesMeta.json')
+  const configuredProviders = loadPackagesMeta()
   const configuredProvidersKeys = Object.keys(configuredProviders)
 
   if (!commaSeparatedString || commaSeparatedString.trim() === 'all') {
@@ -23,7 +31,28 @@ export function parsePackages(commaSeparatedString, filter = null) {
     }
   })
 
-  return filter ? packagesOption.filter((pkg) => filter(configuredProviders[pkg])) : packagesOption
+  const sorted = packagesOption.sort((a, b) => {
+    const pkgA = configuredProviders[a]
+    const pkgB = configuredProviders[b]
+
+    if (pkgA.autoBump === true && pkgB.autoBump !== true) {
+      return -1
+    }
+
+    if (pkgA.autoBump !== false && pkgB.autoBump === true) {
+      return 1
+    }
+
+    if (pkgA.autoBump === true && pkgB.autoBump === true) {
+      if (typeof pkgA.order === 'number' && typeof pkgB.order === 'number') {
+        return pkgB.order - pkgA.order
+      }
+    }
+
+    return 0
+  })
+
+  return filter ? sorted.filter((pkg) => filter(configuredProviders[pkg])) : sorted
 }
 
 /**
@@ -41,16 +70,24 @@ export async function asyncSpawn(command, args = [], options) {
 
   return new Promise((resolve, reject) => {
     const spawnedProcess = spawn(command, args, { stdio, env: { ...process.env, ...env }, cwd })
+    const result = []
+
     spawnedProcess.on('error', (error) => {
       reject(error)
     })
     spawnedProcess.on('close', (code) => {
       if (code === 0) {
-        resolve()
+        resolve(result)
       } else {
         reject(`Process finished with exit code ${code}`)
       }
     })
+
+    if (spawnedProcess.stdout) {
+      spawnedProcess.stdout.on('data', (msg) => {
+        result.push(...msg.toString().trim().split('\n'))
+      })
+    }
   })
 }
 
