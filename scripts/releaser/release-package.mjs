@@ -112,8 +112,16 @@ export async function runForPackage(packageName) {
 
   const packageMeta = getPackageMeta(packageName)
   if (packageMeta.autoBump) {
-    console.log('\nAuto-bump for dependents detected, bumping...')
-    await bumpDependents(packageName, targetVersion)
+    const { doAutoBump } = await enquirer.prompt({
+      type: 'confirm',
+      name: 'doAutoBump',
+      message: "This package has dependents, maybe you should bump it's version in them too. Do bumping?",
+    })
+
+    if (doAutoBump) {
+      console.log('\nAuto-bump for dependents detected, bumping...')
+      await bumpDependents(packageName, targetVersion)
+    }
   }
 
   console.log('\nRunning tests...')
