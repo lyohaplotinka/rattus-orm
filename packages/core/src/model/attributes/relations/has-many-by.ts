@@ -1,10 +1,10 @@
 import type { Element } from '@rattus-orm/utils/sharedTypes'
-import type { Schema as NormalizrSchema } from 'normalizr'
 
 import type { Collection } from '@/data/types'
 import type { Model } from '@/model/Model'
 import type { Query } from '@/query/query'
 import type { Schema } from '@/schema/schema'
+import type { NormalizedSchema } from '@/schema/types'
 
 import { Relation } from './relation'
 
@@ -31,7 +31,7 @@ export class HasManyBy extends Relation {
   /**
    * Define the normalizr schema for the relation.
    */
-  public define(schema: Schema): NormalizrSchema {
+  public define(schema: Schema): NormalizedSchema {
     return schema.many(this.child, this.parent)
   }
 

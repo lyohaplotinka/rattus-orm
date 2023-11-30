@@ -1,10 +1,10 @@
 import type { Element } from '@rattus-orm/utils/sharedTypes'
-import type { Schema as NormalizrSchema } from 'normalizr'
 
 import type { Collection } from '@/data/types'
 import type { Model } from '@/model/Model'
 import type { Query } from '@/query/query'
 import type { Schema } from '@/schema/schema'
+import type { NormalizedSchema } from '@/schema/types'
 import { assert } from '@/support/utils'
 
 import { Relation } from './relation'
@@ -52,7 +52,7 @@ export class MorphTo extends Relation {
   /**
    * Define the normalizr schema for the relation.
    */
-  public define(schema: Schema): NormalizrSchema {
+  public define(schema: Schema): NormalizedSchema {
     return schema.union(this.relatedModels, (value, parent) => {
       // Assign missing parent id since the child model is not related back
       // and `attach` will not be called.

@@ -1,9 +1,9 @@
-import type { Schema as NormalizrSchema } from 'normalizr'
 import { schema as Normalizr } from 'normalizr'
 
 import { Relation } from '@/model/attributes/relations/relation'
 import { Uid } from '@/model/attributes/types/Uid'
 import type { Model } from '@/model/Model'
+import type { NormalizedSchema } from '@/schema/types'
 import { isArray, isNullish } from '@/support/utils'
 
 export type Schemas = Record<string, Normalizr.Entity>
@@ -152,9 +152,9 @@ export class Schema {
   /**
    * Create a definition for the given model.
    */
-  private definition(model: Model): NormalizrSchema {
+  private definition(model: Model): NormalizedSchema {
     const fields = model.$fields()
-    const definition: NormalizrSchema = {}
+    const definition: NormalizedSchema = {}
 
     for (const key in fields) {
       const field = fields[key]

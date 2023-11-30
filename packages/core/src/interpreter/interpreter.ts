@@ -1,10 +1,10 @@
 import type { Element } from '@rattus-orm/utils/sharedTypes'
-import type { schema as Normalizr } from 'normalizr'
 import { normalize } from 'normalizr'
 
 import type { NormalizedData } from '@/data/types'
 import type { Database } from '@/database/database'
 import type { Model } from '@/model/Model'
+import type { NormalizedSchema } from '@/schema/types'
 import { isArray } from '@/support/utils'
 
 export class Interpreter {
@@ -37,7 +37,7 @@ export class Interpreter {
   /**
    * Get the schema from the database.
    */
-  protected getSchema(): Normalizr.Entity {
+  protected getSchema(): NormalizedSchema {
     return this.database.getSchema(this.model.$entity())
   }
 }
