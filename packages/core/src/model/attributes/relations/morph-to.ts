@@ -17,42 +17,22 @@ interface DictionaryByEntities {
 
 export class MorphTo extends Relation {
   /**
-   * The related models.
-   */
-  protected relatedModels: Model[]
-
-  /**
    * The related model dictionary.
    */
   protected relatedTypes: Record<string, Model>
 
   /**
-   * The field name that contains id of the parent model.
-   */
-  protected morphId: string
-
-  /**
-   * The field name that contains type of the parent model.
-   */
-  protected morphType: string
-
-  /**
-   * The associated key of the child model.
-   */
-  protected ownerKey: string
-
-  /**
    * Create a new morph-to relation instance.
    */
-  constructor(parent: Model, relatedModels: Model[], morphId: string, morphType: string, ownerKey: string) {
+  constructor(
+    parent: Model,
+    protected readonly relatedModels: Model[],
+    protected readonly morphId: string,
+    protected readonly morphType: string,
+    protected readonly ownerKey: string,
+  ) {
     super(parent, parent)
-
-    this.relatedModels = relatedModels
     this.relatedTypes = this.createRelatedTypes(relatedModels)
-
-    this.morphId = morphId
-    this.morphType = morphType
-    this.ownerKey = ownerKey
   }
 
   /**

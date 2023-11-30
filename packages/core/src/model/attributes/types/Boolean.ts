@@ -22,12 +22,10 @@ export class Boolean extends Type {
     }
 
     if (typeof value === 'string') {
-      if (value.length === 0) {
+      if (!value.length) {
         return false
       }
-
       const int = parseInt(value, 0)
-
       return isNaN(int) ? true : !!int
     }
 

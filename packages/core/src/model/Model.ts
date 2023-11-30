@@ -275,9 +275,7 @@ export class Model {
    */
   public $newInstance(attributes?: Element, options?: ModelOptions): this {
     const self = this.$self()
-    const model = new self(attributes, options) as this
-
-    return model
+    return new self(attributes, options) as this
   }
 
   /**

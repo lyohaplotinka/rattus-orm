@@ -11,22 +11,15 @@ import { Relation } from './relation'
 
 export class HasOne extends Relation {
   /**
-   * The foreign key of the parent model.
-   */
-  protected foreignKey: string
-
-  /**
-   * The local key of the parent model.
-   */
-  protected localKey: string
-
-  /**
    * Create a new has-one relation instance.
    */
-  constructor(parent: Model, related: Model, foreignKey: string, localKey: string) {
+  constructor(
+    parent: Model,
+    related: Model,
+    protected readonly foreignKey: string,
+    protected readonly localKey: string,
+  ) {
     super(parent, related)
-    this.foreignKey = foreignKey
-    this.localKey = localKey
   }
 
   /**

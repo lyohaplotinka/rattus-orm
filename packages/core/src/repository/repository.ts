@@ -23,11 +23,6 @@ export class Repository<M extends Model = Model> {
   public static _isRepository: boolean = true
 
   /**
-   * The database instance.
-   */
-  public database: Database
-
-  /**
    * The model object to be used for the custom repository.
    */
   public use?: typeof Model
@@ -40,9 +35,7 @@ export class Repository<M extends Model = Model> {
   /**
    * Create a new Repository instance.
    */
-  constructor(database: Database) {
-    this.database = database
-  }
+  constructor(public database: Database) {}
 
   /**
    * Initialize the repository by setting the model instance.

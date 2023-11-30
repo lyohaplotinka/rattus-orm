@@ -1,4 +1,4 @@
-import type { Constructor, Database, Model, Repository } from '@rattus-orm/core'
+import type { Database, Model, Repository } from '@rattus-orm/core'
 
 declare module 'vuex' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -16,8 +16,6 @@ declare module 'vuex' {
     /**
      * Get a new Repository instance for the given model.
      */
-    $repo<M extends Model>(model: Constructor<M>, connection?: string): Repository<M>
-
-    $repo<R extends Repository>(repository: Constructor<R>, connection?: string): R
+    $repo<M extends typeof Model>(model: M, connection?: string): Repository<InstanceType<M>>
   }
 }

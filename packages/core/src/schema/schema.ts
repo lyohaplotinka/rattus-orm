@@ -1,10 +1,10 @@
 import type { Schema as NormalizrSchema } from 'normalizr'
 import { schema as Normalizr } from 'normalizr'
 
-import { Relation } from '../model/attributes/relations/relation'
-import { Uid } from '../model/attributes/types/Uid'
-import type { Model } from '../model/Model'
-import { isArray, isNullish } from '../support/utils'
+import { Relation } from '@/model/attributes/relations/relation'
+import { Uid } from '@/model/attributes/types/Uid'
+import type { Model } from '@/model/Model'
+import { isArray, isNullish } from '@/support/utils'
 
 export type Schemas = Record<string, Normalizr.Entity>
 
@@ -12,19 +12,12 @@ export class Schema {
   /**
    * The list of generated schemas.
    */
-  private schemas: Schemas = {}
-
-  /**
-   * The model instance.
-   */
-  private model: Model
+  protected readonly schemas: Schemas = {}
 
   /**
    * Create a new Schema instance.
    */
-  constructor(model: Model) {
-    this.model = model
-  }
+  constructor(protected readonly model: Model) {}
 
   /**
    * Create a single schema.

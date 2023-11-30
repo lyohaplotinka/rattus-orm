@@ -18,7 +18,7 @@ export class Database {
    * The name of storage namespace. ORM will create objects from
    * the registered models, and modules, and define them under this namespace.
    */
-  protected connection!: string
+  protected connection: string
 
   /**
    * The list of registered models.
@@ -75,7 +75,6 @@ export class Database {
    */
   public start(): void {
     this.createRootModule()
-
     this.started = true
   }
 
@@ -87,11 +86,8 @@ export class Database {
 
     if (!this.models[entity]) {
       this.models[entity] = model
-
       this.createModule(model)
-
       this.createSchema(model)
-
       this.registerRelatedModels(model)
     }
   }
@@ -118,7 +114,6 @@ export class Database {
 
     for (const name in fields) {
       const attr = fields[name]
-
       if (attr instanceof Relation) {
         attr.getRelateds().forEach((m) => {
           this.register(m)
@@ -139,7 +134,6 @@ export class Database {
    */
   protected createModule<M extends Model>(model: M): void {
     const entity = model.$entity()
-
     this.dataProvider.registerModule([this.connection, entity], this.createState())
   }
 

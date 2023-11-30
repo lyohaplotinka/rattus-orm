@@ -7,7 +7,7 @@ import { Interpreter } from '@/interpreter/interpreter'
 import { MorphTo } from '@/model/attributes/relations/morph-to'
 import { Relation } from '@/model/attributes/relations/relation'
 import type { Model } from '@/model/Model'
-import { assert, groupBy, isArray, isEmpty, isFunction, orderBy } from '@/support/utils'
+import { assert, groupBy, isArray, isEmpty, isFunction, isNumber, isString } from '@/support/utils'
 
 import type {
   EagerLoad,
@@ -26,16 +26,6 @@ export interface CollectionPromises {
 }
 
 export class Query<M extends Model = Model> {
-  /**
-   * The database instance.
-   */
-  public database: Database
-
-  /**
-   * The model object.
-   */
-  protected model: M
-
   /**
    * The where constraints for the query.
    */
@@ -64,10 +54,10 @@ export class Query<M extends Model = Model> {
   /**
    * Create a new query instance.
    */
-  constructor(database: Database, model: M) {
-    this.database = database
-    this.model = model
-  }
+  constructor(
+    protected readonly database: Database,
+    protected readonly model: M,
+  ) {}
 
   /**
    * Create a new query instance for the given model.
@@ -527,14 +517,34 @@ export class Query<M extends Model = Model> {
    * Filter the given collection by the registered order conditions.
    */
   protected filterOrder(models: Collection<M>): Collection<M> {
-    if (this.orders.length === 0) {
+    if (!this.orders.length) {
       return models
     }
 
-    const fields = this.orders.map((order) => order.field)
-    const directions = this.orders.map((order) => order.direction)
+    return models.sort((elemA, elemB) => {
+      for (const order of this.orders) {
+        const isAsc = order.direction === 'asc'
+        const aValue: unknown = isFunction(order.field) ? order.field(elemA) : elemA[order.field]
+        const bValue: unknown = isFunction(order.field) ? order.field(elemB) : elemB[order.field]
 
-    return orderBy(models, fields, directions)
+        if (isString(aValue) && isString(bValue)) {
+          const result = (isAsc ? aValue : bValue).localeCompare(isAsc ? bValue : aValue, undefined, { numeric: true })
+
+          if (result) {
+            return result
+          }
+        }
+
+        if (isNumber(aValue) && isNumber(bValue)) {
+          const result = isAsc ? aValue - bValue : bValue - aValue
+          if (result) {
+            return result
+          }
+        }
+      }
+
+      return 0
+    })
   }
 
   /**

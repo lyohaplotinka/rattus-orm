@@ -14,22 +14,13 @@ export interface Dictionary {
 
 export abstract class Relation extends Attribute {
   /**
-   * The parent model.
-   */
-  protected parent: Model
-
-  /**
-   * The related model.
-   */
-  protected related: Model
-
-  /**
    * Create a new relation instance.
    */
-  constructor(parent: Model, related: Model) {
+  constructor(
+    protected readonly parent: Model,
+    protected readonly related: Model,
+  ) {
     super(parent)
-    this.parent = parent
-    this.related = related
   }
 
   /**

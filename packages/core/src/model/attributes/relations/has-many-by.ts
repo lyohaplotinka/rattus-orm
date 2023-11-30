@@ -10,32 +10,15 @@ import { Relation } from './relation'
 
 export class HasManyBy extends Relation {
   /**
-   * The child model instance of the relation.
-   */
-  protected child: Model
-
-  /**
-   * The foreign key of the parent model.
-   */
-  protected foreignKey: string
-
-  /**
-   * The owner key of the parent model.
-   */
-  protected ownerKey: string
-
-  /**
    * Create a new has-many-by relation instance.
    */
-  constructor(parent: Model, child: Model, foreignKey: string, ownerKey: string) {
+  constructor(
+    parent: Model,
+    protected readonly child: Model,
+    protected readonly foreignKey: string,
+    protected readonly ownerKey: string,
+  ) {
     super(parent, child)
-    this.foreignKey = foreignKey
-    this.ownerKey = ownerKey
-
-    // In the underlying base relation class, this property is referred to as
-    // the "parent" as most relations are not inversed. But, since this
-    // one is, we will create a "child" property for improved readability.
-    this.child = child
   }
 
   /**
