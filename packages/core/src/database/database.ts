@@ -1,4 +1,4 @@
-import type { DataProvider, State } from '@rattus-orm/utils'
+import type { DataProvider, State } from '@rattus-orm/utils/sharedTypes'
 import type { schema as Normalizr } from 'normalizr'
 
 import { Relation } from '@/model/attributes/relations/relation'

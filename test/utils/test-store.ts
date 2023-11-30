@@ -1,6 +1,6 @@
 import { Database } from '@/database/database'
 import { Repository } from '@/repository/repository'
-import { DataProvider, ModulePath, State } from '@rattus-orm/utils'
+import type { DataProvider, ModulePath, State } from '@rattus-orm/utils/sharedTypes'
 import { Entities, TestingStore } from 'test/utils/types'
 
 export class TestStore implements TestingStore {

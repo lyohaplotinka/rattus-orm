@@ -1,7 +1,7 @@
 import { describe } from 'vitest'
 import { createStore, Store } from 'vuex'
 import { VuexDataProvider } from '../src'
-import { SerializedStorage } from '@rattus-orm/utils'
+import { SerializedStorage } from '@rattus-orm/utils/sharedTypes'
 import { createBasicProviderTest } from '@rattus-orm/utils/createBasicProviderTest'
 
 describe('vuex-data-provider', () => {

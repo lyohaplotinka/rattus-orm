@@ -1,5 +1,5 @@
-import type { DataProvider, Elements, ModulePath, SerializedStorage, State } from '@rattus-orm/utils'
-import { isUnknownRecord } from '@rattus-orm/utils'
+import { isUnknownRecord } from '@rattus-orm/utils/isUnknownRecord'
+import type { DataProvider, Elements, ModulePath, SerializedStorage, State } from '@rattus-orm/utils/sharedTypes'
 
 import { DataProviderHelpers } from './data-provider-helpers'
 

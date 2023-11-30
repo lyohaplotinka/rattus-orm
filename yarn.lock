@@ -2945,7 +2945,7 @@ __metadata:
     pinia: "npm:^2.0.0"
     vue: "npm:^3.0.0"
   peerDependencies:
-    "@rattus-orm/core": ^0.0.9
+    "@rattus-orm/core": ^0.0.10
     pinia: ^2.0.0
     vue: ^3.0.0
   languageName: unknown
@@ -2973,7 +2973,7 @@ __metadata:
     vue: "npm:^3.0.0"
     vuex: "patch:vuex@npm%3A4.1.0#~/.yarn/patches/vuex-npm-4.1.0-c1d51099be.patch"
   peerDependencies:
-    "@rattus-orm/core": ^0.0.8
+    "@rattus-orm/core": ^0.0.10
     vue: ^3.0.0
     vuex: ^4.1.0
   languageName: unknown
@@ -3104,6 +3104,22 @@ __metadata:
   version: 6.1.0
   resolution: "@sindresorhus/is@npm:6.1.0"
   checksum: ad112bc026e45663ff7bf2ddf00627da5ac223b5d8fc95bfbf323b460ff06af762ab722e5ce79ec42b6eb075975a3b13e71e7c09bcb7b5554e0279bcdd569d29
+  languageName: node
+  linkType: hard
+
+"@sindresorhus/merge-streams@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@sindresorhus/merge-streams@npm:1.0.0"
+  checksum: 43d077170845dc621002e9730aea567e6e126e84b3bbff01b8575266efdb2c81d223939d3bec24020e53960c154b4640bef7746aeb245abd94c5d32972dd6854
+  languageName: node
+  linkType: hard
+
+"@size-limit/file@npm:^11.0.0":
+  version: 11.0.0
+  resolution: "@size-limit/file@npm:11.0.0"
+  peerDependencies:
+    size-limit: 11.0.0
+  checksum: 466b8b3b5038f62948fbedc8547a2a22418040f35d99a0d4b682078abeaff37598cf4206183b3c2fd298d2fd3cc35c28f3c2a5094d17292d1fdb9057d5fcbe26
   languageName: node
   linkType: hard
 
@@ -4938,6 +4954,13 @@ __metadata:
   peerDependencies:
     esbuild: ">=0.17"
   checksum: 984735cfcb1c61931e9325220ef8f9684c7d6905be1b45373a7ff42893910121c655f907cc96192a589da66d79a7d6fc8ddf11144628ee1593208a88bbd3929d
+  languageName: node
+  linkType: hard
+
+"bytes-iec@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "bytes-iec@npm:3.1.1"
+  checksum: cb553a214d49afe2efb4f9f6f03c0a76dbf2b0db8fe176c1d9943f74b79fb36767938e5f0a60991d870309c96f21e440904dd4f92b54c9c316c88486e6eef025
   languageName: node
   linkType: hard
 
@@ -7080,7 +7103,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-glob@npm:^3.2.11, fast-glob@npm:^3.2.9, fast-glob@npm:^3.3.0":
+"fast-glob@npm:^3.2.11, fast-glob@npm:^3.2.9, fast-glob@npm:^3.3.0, fast-glob@npm:^3.3.2":
   version: 3.3.2
   resolution: "fast-glob@npm:3.3.2"
   dependencies:
@@ -7695,6 +7718,20 @@ __metadata:
     merge2: "npm:^1.4.1"
     slash: "npm:^4.0.0"
   checksum: a8d7cc7cbe5e1b2d0f81d467bbc5bc2eac35f74eaded3a6c85fc26d7acc8e6de22d396159db8a2fc340b8a342e74cac58de8f4aee74146d3d146921a76062664
+  languageName: node
+  linkType: hard
+
+"globby@npm:^14.0.0":
+  version: 14.0.0
+  resolution: "globby@npm:14.0.0"
+  dependencies:
+    "@sindresorhus/merge-streams": "npm:^1.0.0"
+    fast-glob: "npm:^3.3.2"
+    ignore: "npm:^5.2.4"
+    path-type: "npm:^5.0.0"
+    slash: "npm:^5.1.0"
+    unicorn-magic: "npm:^0.1.0"
+  checksum: 6d98738a419f948ef23da019275b15ca5c65bb7e354ecea52a3015f4dae6b28a713fcf73bf3aab1c04039f4f62da71cff191a7ececc37c0e4c9b4320a047505f
   languageName: node
   linkType: hard
 
@@ -9067,7 +9104,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lilconfig@npm:2.1.0, lilconfig@npm:^2.0.3, lilconfig@npm:^2.0.5":
+"lilconfig@npm:2.1.0, lilconfig@npm:^2.0.3, lilconfig@npm:^2.0.5, lilconfig@npm:^2.1.0":
   version: 2.1.0
   resolution: "lilconfig@npm:2.1.0"
   checksum: 64645641aa8d274c99338e130554abd6a0190533c0d9eb2ce7ebfaf2e05c7d9961f3ffe2bfa39efd3b60c521ba3dd24fa236fe2775fc38501bf82bf49d4678b8
@@ -10476,6 +10513,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"nanospinner@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "nanospinner@npm:1.1.0"
+  dependencies:
+    picocolors: "npm:^1.0.0"
+  checksum: 2f89e48bfb1452b5f3afd8034753bbc45040a6830fec913ec228d7a8a8eab1e2c8193bd41e2203806a1f454907641ffa035b14f3a8462cf374e874eb29fd57f1
+  languageName: node
+  linkType: hard
+
 "natural-compare@npm:^1.4.0":
   version: 1.4.0
   resolution: "natural-compare@npm:1.4.0"
@@ -11076,6 +11122,13 @@ __metadata:
   version: 4.0.0
   resolution: "path-type@npm:4.0.0"
   checksum: 666f6973f332f27581371efaf303fd6c272cc43c2057b37aa99e3643158c7e4b2626549555d88626e99ea9e046f82f32e41bbde5f1508547e9a11b149b52387c
+  languageName: node
+  linkType: hard
+
+"path-type@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "path-type@npm:5.0.0"
+  checksum: e8f4b15111bf483900c75609e5e74e3fcb79f2ddb73e41470028fcd3e4b5162ec65da9907be077ee5012c18801ff7fffb35f9f37a077f3f81d85a0b7d6578efd
   languageName: node
   linkType: hard
 
@@ -11905,6 +11958,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "rattus-orm@workspace:."
   dependencies:
+    "@size-limit/file": "npm:^11.0.0"
     "@types/lodash-es": "npm:^4.17.12"
     "@types/semver": "npm:^7"
     "@typescript-eslint/eslint-plugin": "npm:^6.2.0"
@@ -11922,6 +11976,7 @@ __metadata:
     prettier: "npm:^3.0.0"
     semver: "npm:^7.5.4"
     simple-git-hooks: "npm:^2.8.1"
+    size-limit: "npm:^11.0.0"
     tslib: "npm:^2.6.2"
     tsup: "npm:^7.2.0"
     typescript: "npm:^5.2.2"
@@ -13026,6 +13081,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"size-limit@npm:^11.0.0":
+  version: 11.0.0
+  resolution: "size-limit@npm:11.0.0"
+  dependencies:
+    bytes-iec: "npm:^3.1.1"
+    chokidar: "npm:^3.5.3"
+    globby: "npm:^14.0.0"
+    lilconfig: "npm:^2.1.0"
+    nanospinner: "npm:^1.1.0"
+    picocolors: "npm:^1.0.0"
+  bin:
+    size-limit: bin.js
+  checksum: 529ab5386dda4518631456d9b52b2f4ca1a35dd5f7ac71780abea63fe439d0e645413ade70607014de8c23152007a87ea9d0df31253e39cc8fcc304fb0d93b0a
+  languageName: node
+  linkType: hard
+
 "skin-tone@npm:^2.0.0":
   version: 2.0.0
   resolution: "skin-tone@npm:2.0.0"
@@ -13046,6 +13117,13 @@ __metadata:
   version: 4.0.0
   resolution: "slash@npm:4.0.0"
   checksum: b522ca75d80d107fd30d29df0549a7b2537c83c4c4ecd12cd7d4ea6c8aaca2ab17ada002e7a1d78a9d736a0261509f26ea5b489082ee443a3a810586ef8eff18
+  languageName: node
+  linkType: hard
+
+"slash@npm:^5.1.0":
+  version: 5.1.0
+  resolution: "slash@npm:5.1.0"
+  checksum: eb48b815caf0bdc390d0519d41b9e0556a14380f6799c72ba35caf03544d501d18befdeeef074bc9c052acf69654bc9e0d79d7f1de0866284137a40805299eb3
   languageName: node
   linkType: hard
 
@@ -13907,6 +13985,13 @@ __metadata:
   version: 2.1.0
   resolution: "unicode-property-aliases-ecmascript@npm:2.1.0"
   checksum: 50ded3f8c963c7785e48c510a3b7c6bc4e08a579551489aa0349680a35b1ceceec122e33b2b6c1b579d0be2250f34bb163ac35f5f8695fe10bbc67fb757f0af8
+  languageName: node
+  linkType: hard
+
+"unicorn-magic@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "unicorn-magic@npm:0.1.0"
+  checksum: e4ed0de05b0a05e735c7d8a2930881e5efcfc3ec897204d5d33e7e6247f4c31eac92e383a15d9a6bccb7319b4271ee4bea946e211bf14951fec6ff2cbbb66a92
   languageName: node
   linkType: hard
 

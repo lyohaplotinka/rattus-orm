@@ -1,4 +1,4 @@
-import type { Elements } from '@rattus-orm/utils'
+import type { Elements } from '@rattus-orm/utils/sharedTypes'
 
 import type { Model } from '@/model/Model'
 import type { RecordKeysByValueType } from '@/types'

@@ -1,4 +1,4 @@
-import type { Element } from '@rattus-orm/utils'
+import type { Element } from '@rattus-orm/utils/sharedTypes'
 import type { Schema as NormalizrSchema } from 'normalizr'
 
 import type { Collection } from '@/data/types'

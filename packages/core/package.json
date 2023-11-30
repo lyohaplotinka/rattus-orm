@@ -43,7 +43,8 @@
     "clean": "rm -rf dist && rm -rf node_modules",
     "lint": "run -T eslint 'src/**/*.ts' --quiet --fix",
     "test": "run -T vitest run",
-    "typecheck": "bash -c 'run -T tsc -p tsconfig.json --noEmit'"
+    "typecheck": "bash -c 'run -T tsc -p tsconfig.json --noEmit'",
+    "size": "run -T size-limit"
   },
   "dependencies": {
     "@rattus-orm/utils": "^0.0.2",
@@ -51,5 +52,23 @@
   },
   "devDependencies": {
     "@rattus-orm/utils": "workspace:^"
-  }
+  },
+  "size-limit": [
+    {
+      "name": "ESM core",
+      "path": "./dist/rattus-orm-core.mjs"
+    },
+    {
+      "name": "ESM provider",
+      "path": "./dist/object-data-provider.mjs"
+    },
+    {
+      "name": "CJS core",
+      "path": "./dist/rattus-orm-core.js"
+    },
+    {
+      "name": "CJS provider",
+      "path": "./dist/object-data-provider.js"
+    }
+  ]
 }

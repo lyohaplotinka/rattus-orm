@@ -1,4 +1,4 @@
-import { isUnknownRecord } from '@rattus-orm/utils'
+import { isUnknownRecord } from '@rattus-orm/utils/isUnknownRecord'
 
 interface SortableArray<T> {
   criteria: any[]
