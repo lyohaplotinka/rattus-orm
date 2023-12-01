@@ -1,9 +1,9 @@
 import type { Element } from '@rattus-orm/utils/sharedTypes'
-import { normalize } from 'normalizr'
 
 import type { NormalizedData } from '@/data/types'
 import type { Database } from '@/database/database'
 import type { Model } from '@/model/Model'
+import { Normalizer } from '@/normalization/normalizer'
 import type { NormalizedSchema } from '@/schema/types'
 import { isArray } from '@/support/utils'
 
@@ -31,7 +31,7 @@ export class Interpreter {
    */
   protected normalize(data: Element | Element[]): NormalizedData {
     const schema = isArray(data) ? [this.getSchema()] : this.getSchema()
-    return normalize(data, schema).entities as NormalizedData
+    return new Normalizer().normalize(data, schema).entities
   }
 
   /**

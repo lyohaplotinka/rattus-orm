@@ -4,9 +4,8 @@ import { Relation } from '@/model/attributes/relations/relation'
 import type { Model } from '@/model/Model'
 import type { ModelConstructor } from '@/model/types'
 import { Repository } from '@/repository/repository'
-import type { Schemas } from '@/schema/schema'
 import { Schema } from '@/schema/schema'
-import type { EntitySchema } from '@/schema/types'
+import type { EntitySchema, Schemas } from '@/schema/types'
 
 export class Database {
   /**

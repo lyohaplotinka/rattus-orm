@@ -36,6 +36,7 @@ export * from './query/types'
 export * from './repository/repository'
 export * from './schema/schema'
 export * from './types/index'
+export { Schemas } from '@/schema/types'
 
 import { Connection } from './connection/connection'
 import { Database } from './database/database'

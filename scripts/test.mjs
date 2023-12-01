@@ -3,16 +3,16 @@ import { program } from 'commander'
 
 import { asyncSpawn, parsePackages } from './utils.mjs'
 
-async function runLocalTests(packageName, pattern) {
+async function runLocalTests(packageName, pattern, verbose) {
   return asyncSpawn('yarn', ['workspace', `@rattus-orm/${packageName}`, 'run', 'test', pattern, '--passWithNoTests'], {
-    stdio: ['pipe', 'pipe', process.stderr],
+    stdio: ['pipe', verbose ? process.stdout : 'pipe', process.stderr],
   })
 }
 
-async function runFunctionalTests(packageName, pattern) {
+async function runFunctionalTests(packageName, pattern, verbose) {
   return asyncSpawn('./node_modules/.bin/vitest', ['run', pattern], {
     env: { PACKAGE_NAME: packageName },
-    stdio: ['pipe', 'pipe', process.stderr],
+    stdio: ['pipe', verbose ? process.stdout : 'pipe', process.stderr],
   })
 }
 
@@ -24,9 +24,10 @@ program
   .argument('[package]', 'for which packages we should run tests, comma-separated', 'all')
   .option('-sl, --skip-local', 'skip local tests (inside packages/<package> dir)', false)
   .option('-sf, --skip-functional', 'skip functional tests (inside ./tests)', false)
+  .option('-v, --verbose', 'show test logs', false)
   .option('-lp, --local-pattern <pattern>', 'tests pattern for local tests', '')
   .option('-fp, --functional-pattern <pattern>', 'tests pattern for functional tests', '')
-  .action(async (str, { skipLocal, skipFunctional, localPattern, functionalPattern }) => {
+  .action(async (str, { skipLocal, skipFunctional, localPattern, functionalPattern, verbose }) => {
     const packagesNames = parsePackages(str, (pkg) => {
       return !!pkg.runFunctional
     })
@@ -38,7 +39,7 @@ program
       const localTestsPromise = packagesNames.map(async (pkg) => {
         const resultIndicator = `${pkg} (local)`
         try {
-          await runLocalTests(pkg, localPattern)
+          await runLocalTests(pkg, localPattern, verbose)
           results.Succeed.push(resultIndicator)
         } catch (e) {
           console.log(e)
@@ -53,7 +54,7 @@ program
         const resultIndicator = `${pkg} (functional)`
         console.log(`Running functional for package ${pkg}`)
         try {
-          await runFunctionalTests(pkg, functionalPattern)
+          await runFunctionalTests(pkg, functionalPattern, verbose)
           results.Succeed.push(resultIndicator)
         } catch (e) {
           console.log(e)

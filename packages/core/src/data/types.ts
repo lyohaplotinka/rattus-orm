@@ -26,3 +26,5 @@ export type RawModelWithRelations<
     ? RawModelWithRelations<RawModel<T, PK, PKV>[key], PK, PKV>
     : RawModel<T, PK, PKV>[key]
 }
+
+export type Entities = Record<string, Elements>

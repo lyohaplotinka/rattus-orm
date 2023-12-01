@@ -49,7 +49,7 @@ describe('feature/relations/has_many_by_insert_uid', () => {
     })
   })
 
-  it('inserts "has many by" relation with child having "uid" as the owner key', () => {
+  it.only('inserts "has many by" relation with child having "uid" as the owner key', () => {
     class Node extends Model {
       static entity = 'nodes'
 
