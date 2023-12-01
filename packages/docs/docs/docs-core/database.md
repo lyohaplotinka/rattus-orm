@@ -7,7 +7,7 @@ sidebar_position: 3
 
 As mentioned earlier, the database is an object that connects all parts of the ORM together. It provides the link between the data provider, repositories, queries, and models.
 
-For managing connections in models, Normalizr.js is used (as in Vuex ORM). Upon registering models, the database creates an entity schema based on the model configuration and prepares modules in the data provider.
+For managing connections in models, normalization service is used (as Normalizr.js in Vuex ORM). Upon registering models, the database creates an entity schema based on the model configuration and prepares modules in the data provider.
 
 ### Creating a Database
 
