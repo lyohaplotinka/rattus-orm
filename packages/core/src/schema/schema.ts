@@ -1,35 +1,29 @@
-import type { Schema as NormalizrSchema } from 'normalizr'
-import { schema as Normalizr } from 'normalizr'
-
-import { Relation } from '../model/attributes/relations/relation'
-import { Uid } from '../model/attributes/types/Uid'
-import type { Model } from '../model/Model'
-import { isArray, isNullish } from '../support/utils'
-
-export type Schemas = Record<string, Normalizr.Entity>
+import { Relation } from '@/model/attributes/relations/relation'
+import { Uid } from '@/model/attributes/types/Uid'
+import type { Model } from '@/model/Model'
+import { ArrayNormalizationSchema } from '@/normalization/schemas/array-normalization-schema'
+import { EntityNormalizationSchema } from '@/normalization/schemas/entity-normalization-schema'
+import type { NormalizationSchema, SchemaAttributeGetter, SchemaDefinition } from '@/normalization/schemas/types'
+import type { IdentifierGetter } from '@/normalization/schemas/types'
+import { UnionNormalizationSchema } from '@/normalization/schemas/union-normalization-schema'
+import type { Schemas } from '@/schema/types'
+import { isArray, isNullish } from '@/support/utils'
 
 export class Schema {
   /**
    * The list of generated schemas.
    */
-  private schemas: Schemas = {}
-
-  /**
-   * The model instance.
-   */
-  private model: Model
+  protected readonly schemas: Schemas = {}
 
   /**
    * Create a new Schema instance.
    */
-  constructor(model: Model) {
-    this.model = model
-  }
+  constructor(protected readonly model: Model) {}
 
   /**
    * Create a single schema.
    */
-  public one(model?: Model, parent?: Model): Normalizr.Entity {
+  public one(model?: Model, parent?: Model): NormalizationSchema<any> {
     model = model || this.model
     parent = parent || this.model
 
@@ -53,31 +47,31 @@ export class Schema {
   /**
    * Create an array schema for the given model.
    */
-  public many(model: Model, parent?: Model): Normalizr.Array {
-    return new Normalizr.Array(this.one(model, parent))
+  public many(model: Model, parent?: Model): NormalizationSchema<any> {
+    return new ArrayNormalizationSchema(this.one(model, parent))
   }
 
   /**
    * Create an union schema for the given models.
    */
-  public union(models: Model[], callback: Normalizr.SchemaFunction): Normalizr.Union {
+  public union(models: Model[], callback: SchemaAttributeGetter): NormalizationSchema<any> {
     const schemas = models.reduce<Schemas>((schemas, model) => {
       schemas[model.$entity()] = this.one(model)
 
       return schemas
     }, {})
 
-    return new Normalizr.Union(schemas, callback)
+    return new UnionNormalizationSchema(schemas, callback)
   }
 
   /**
    * Create a new normalizr entity.
    */
-  private newEntity(model: Model, parent: Model): Normalizr.Entity {
+  private newEntity(model: Model, parent: Model): NormalizationSchema<any> {
     const entity = model.$entity()
     const idAttribute = this.idAttribute(model, parent)
 
-    return new Normalizr.Entity(entity, {}, { idAttribute })
+    return new EntityNormalizationSchema(entity, {}, idAttribute)
   }
 
   /**
@@ -102,14 +96,14 @@ export class Schema {
    * are trying to "update" records or "inserting" new records at this stage.
    * Something to consider for future revisions.
    */
-  private idAttribute(model: Model, parent: Model): Normalizr.StrategyFunction<string> {
+  private idAttribute(model: Model, parent: Model): IdentifierGetter {
     // We'll first check if the model contains any uid attributes. If so, we
     // generate the uids during the normalization process, so we'll keep that
     // check result here. This way, we can use this result while processing each
     // record, instead of looping through the model fields each time.
     const uidFields = this.getUidPrimaryKeyPairs(model)
 
-    return (record, parentRecord, key) => {
+    return (record: any, parentRecord: any, key: any) => {
       // If the `key` is not `null`, that means this record is a nested
       // relationship of the parent model. In this case, we'll attach any
       // missing foreign keys to the record first.
@@ -159,9 +153,9 @@ export class Schema {
   /**
    * Create a definition for the given model.
    */
-  private definition(model: Model): NormalizrSchema {
+  private definition(model: Model): SchemaDefinition {
     const fields = model.$fields()
-    const definition: NormalizrSchema = {}
+    const definition: SchemaDefinition = {}
 
     for (const key in fields) {
       const field = fields[key]

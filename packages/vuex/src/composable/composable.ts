@@ -1,7 +1,8 @@
 import '../types/vuex'
 
 import type { Model, Repository } from '@rattus-orm/core'
-import { computedProxify, pickFromClass } from '@rattus-orm/utils'
+import { pickFromClass } from '@rattus-orm/utils/pickFromClass'
+import { computedProxify } from '@rattus-orm/utils/vueComputedUtils'
 import type { InjectionKey } from 'vue'
 import { type Store, useStore } from 'vuex'
 

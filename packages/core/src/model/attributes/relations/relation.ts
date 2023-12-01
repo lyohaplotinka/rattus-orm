@@ -1,10 +1,10 @@
-import type { Element } from '@rattus-orm/utils'
-import type { Schema as NormalizrSchema } from 'normalizr'
+import type { Element } from '@rattus-orm/utils/sharedTypes'
 
 import type { Collection } from '@/data/types'
 import type { Model } from '@/model/Model'
 import type { Query } from '@/query/query'
 import type { Schema } from '@/schema/schema'
+import type { NormalizedSchema } from '@/schema/types'
 
 import { Attribute } from '../attribute'
 
@@ -14,22 +14,13 @@ export interface Dictionary {
 
 export abstract class Relation extends Attribute {
   /**
-   * The parent model.
-   */
-  protected parent: Model
-
-  /**
-   * The related model.
-   */
-  protected related: Model
-
-  /**
    * Create a new relation instance.
    */
-  constructor(parent: Model, related: Model) {
+  constructor(
+    protected readonly parent: Model,
+    protected readonly related: Model,
+  ) {
     super(parent)
-    this.parent = parent
-    this.related = related
   }
 
   /**
@@ -71,7 +62,7 @@ export abstract class Relation extends Attribute {
   /**
    * Define the normalizr schema for the relation.
    */
-  public abstract define(schema: Schema): NormalizrSchema
+  public abstract define(schema: Schema): NormalizedSchema
 
   /**
    * Attach the relational key to the given relation.

@@ -1,6 +1,6 @@
 import type { Collection, Model } from '@/index'
 import { TestingStore } from 'test/utils/types'
-import { Element, Elements, State } from '@rattus-orm/utils'
+import type { Element, Elements, State } from '@rattus-orm/utils/sharedTypes'
 
 interface Entities {
   [name: string]: Elements

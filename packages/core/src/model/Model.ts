@@ -1,4 +1,4 @@
-import type { Element } from '@rattus-orm/utils'
+import type { Element } from '@rattus-orm/utils/sharedTypes'
 
 import type { Collection, Item } from '@/data/types'
 import type { ModelConstructor } from '@/model/types'
@@ -275,9 +275,7 @@ export class Model {
    */
   public $newInstance(attributes?: Element, options?: ModelOptions): this {
     const self = this.$self()
-    const model = new self(attributes, options) as this
-
-    return model
+    return new self(attributes, options) as this
   }
 
   /**

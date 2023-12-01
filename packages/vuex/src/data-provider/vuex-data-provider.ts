@@ -1,5 +1,5 @@
 import { DataProviderHelpers } from '@rattus-orm/core'
-import type { DataProvider, Elements, ModulePath, SerializedStorage, State } from '@rattus-orm/utils'
+import type { DataProvider, Elements, ModulePath, SerializedStorage, State } from '@rattus-orm/utils/sharedTypes'
 import type { GetterTree, Store } from 'vuex'
 
 import type { Mutations } from './mutations'

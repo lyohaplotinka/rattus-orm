@@ -20,16 +20,7 @@
     "javascript"
   ],
   "version": "0.0.2",
-  "main": "./dist/all.js",
-  "browser": "./dist/all.mjs",
-  "module": "./dist/all.mjs",
-  "types": "./dist/all.d.ts",
   "exports": {
-    ".": {
-      "import": "./dist/all.mjs",
-      "require": "./dist/all.js",
-      "types": "./dist/all.d.ts"
-    },
     "./createBasicProviderTest": {
       "import": "./dist/createBasicProviderTest.mjs",
       "require": "./dist/createBasicProviderTest.js",
@@ -60,9 +51,9 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup",
+    "build": "run -T tsup",
     "clean": "rm -rf dist && rm -rf node_modules",
-    "lint": "eslint 'src/**/*.ts' --quiet --fix",
+    "lint": "run -T eslint 'src/**/*.ts' --quiet --fix",
     "typecheck": "bash -c 'tsc -p tsconfig.json --noEmit'"
   },
   "devDependencies": {

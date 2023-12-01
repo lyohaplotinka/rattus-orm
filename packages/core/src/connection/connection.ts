@@ -1,12 +1,7 @@
-import type { Element, Elements } from '@rattus-orm/utils'
+import type { Element, Elements, ModulePath } from '@rattus-orm/utils/sharedTypes'
 
 import type { Database } from '@/database/database'
 import type { Model } from '@/model/Model'
-
-export interface ConnectionNamespace {
-  connection: string
-  entity: string
-}
 
 export class Connection {
   /**
@@ -21,10 +16,7 @@ export class Connection {
    * Get all existing records.
    */
   public get(): Elements {
-    const connection = this.getDatabaseConnection()
-    const entity = this.model.$entity()
-
-    return this.getDataProvider().getModuleState([connection, entity]).data
+    return this.getDataProvider().getModuleState(this.getThisModulePath()).data
   }
 
   /**
@@ -38,57 +30,50 @@ export class Connection {
    * Commit `save` mutation to the store.
    */
   public save(elements: Elements): void {
-    this.getDataProvider().save([this.getDatabaseConnection(), this.model.$entity()], elements)
+    this.getDataProvider().save(this.getThisModulePath(), elements)
   }
 
   /**
    * Commit `insert` mutation to the store.
    */
   public insert(records: Elements): void {
-    this.getDataProvider().insert([this.getDatabaseConnection(), this.model.$entity()], records)
+    this.getDataProvider().insert(this.getThisModulePath(), records)
   }
 
   /**
    * Commit `fresh` mutation to the store.
    */
   public fresh(records: Elements): void {
-    this.getDataProvider().replace([this.getDatabaseConnection(), this.model.$entity()], records)
+    this.getDataProvider().replace(this.getThisModulePath(), records)
   }
 
   /**
    * Commit `update` mutation to the store.
    */
   public update(records: Elements): void {
-    this.getDataProvider().update([this.getDatabaseConnection(), this.model.$entity()], records)
+    this.getDataProvider().update(this.getThisModulePath(), records)
   }
 
   /**
    * Commit `destroy` mutation to the store.
    */
   public destroy(ids: string[]): void {
-    this.getDataProvider().delete([this.getDatabaseConnection(), this.model.$entity()], ids)
+    this.getDataProvider().delete(this.getThisModulePath(), ids)
   }
 
   /**
    * Commit `delete` mutation to the store.
    */
   public delete(ids: string[]): void {
-    this.getDataProvider().delete([this.getDatabaseConnection(), this.model.$entity()], ids)
+    this.getDataProvider().delete(this.getThisModulePath(), ids)
   }
 
   /**
    * Commit `flush` mutation to the store.
    */
   public flush(): string[] {
-    const deleted = [] as string[]
-
-    const data = this.get()
-
-    for (const id in data) {
-      deleted.push(id)
-    }
-
-    this.getDataProvider().flush([this.getDatabaseConnection(), this.model.$entity()])
+    const deleted = Object.keys(this.get())
+    this.getDataProvider().flush(this.getThisModulePath())
 
     return deleted
   }
@@ -99,5 +84,9 @@ export class Connection {
 
   protected getDatabaseConnection() {
     return this.database.getConnection()
+  }
+
+  protected getThisModulePath(): ModulePath {
+    return [this.getDatabaseConnection(), this.model.$entity()]
   }
 }

@@ -1,41 +1,24 @@
-import type { Element } from '@rattus-orm/utils'
-import type { Schema as NormalizrSchema } from 'normalizr'
+import type { Element } from '@rattus-orm/utils/sharedTypes'
 
 import type { Collection } from '@/data/types'
 import type { Query } from '@/query/query'
 import type { Schema } from '@/schema/schema'
+import type { NormalizedSchema } from '@/schema/types'
 
 import type { Model } from '../../Model'
 import { Relation } from './relation'
 
 export class BelongsTo extends Relation {
   /**
-   * The child model instance of the relation.
-   */
-  protected child: Model
-
-  /**
-   * The foreign key of the parent model.
-   */
-  protected foreignKey: string
-
-  /**
-   * The associated key on the parent model.
-   */
-  protected ownerKey: string
-
-  /**
    * Create a new belongs-to relation instance.
    */
-  constructor(parent: Model, child: Model, foreignKey: string, ownerKey: string) {
+  constructor(
+    parent: Model,
+    protected readonly child: Model,
+    protected readonly foreignKey: string,
+    protected readonly ownerKey: string,
+  ) {
     super(parent, child)
-    this.foreignKey = foreignKey
-    this.ownerKey = ownerKey
-
-    // In the underlying base relation class, this property is referred to as
-    // the "parent" as most relations are not inversed. But, since this
-    // one is, we will create a "child" property for improved readability.
-    this.child = child
   }
 
   /**
@@ -48,7 +31,7 @@ export class BelongsTo extends Relation {
   /**
    * Define the normalizr schema for the relation.
    */
-  public define(schema: Schema): NormalizrSchema {
+  public define(schema: Schema): NormalizedSchema {
     return schema.one(this.child, this.parent)
   }
 

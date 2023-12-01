@@ -1,5 +1,6 @@
 import type { Model, Repository } from '@rattus-orm/core'
-import { computedProxify, pickFromClass } from '@rattus-orm/utils'
+import { pickFromClass } from '@rattus-orm/utils/pickFromClass'
+import { computedProxify } from '@rattus-orm/utils/vueComputedUtils'
 import { getCurrentInstance, inject } from 'vue'
 
 import { RattusOrmInjectionKey } from '../plugin/const'

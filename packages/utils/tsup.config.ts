@@ -1,8 +1,10 @@
-import { readFile, writeFile } from 'node:fs/promises'
-import { resolve } from 'node:path'
+import { writeFile } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 
 import createTsupConfig from '../../tsup.config.base'
+import packageJson from './package.json'
+
+const pkg = packageJson as Record<string, any>
 
 export const dirname = fileURLToPath(new URL('.', import.meta.url))
 
@@ -23,29 +25,16 @@ const createExportsBlock = (name: string) => ({
 })
 
 export default createTsupConfig(
-  { ...utilsList, all: './src/index.ts' },
+  { ...utilsList },
   {
     async onSuccess() {
-      const packageJsonPath = resolve(dirname, 'package.json')
-      const pkg = JSON.parse(await readFile(packageJsonPath, 'utf-8'))
-      pkg.main = './dist/all.js'
-      pkg.browser = './dist/all.mjs'
-      pkg.module = './dist/all.mjs'
-      pkg.types = './dist/all.d.ts'
-
-      pkg.exports = {
-        '.': {
-          import: pkg.module,
-          require: pkg.main,
-          types: pkg.types,
-        },
-      }
+      pkg.exports = {}
 
       for (const util in utilsList) {
         Object.assign(pkg.exports, createExportsBlock(util))
       }
 
-      await writeFile(packageJsonPath, JSON.stringify(pkg, null, 2), 'utf-8')
+      await writeFile('./package.json', JSON.stringify(pkg, null, 2) + '\n', 'utf-8')
     },
     splitting: true,
   },

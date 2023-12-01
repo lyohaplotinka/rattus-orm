@@ -1,10 +1,10 @@
-import type { Element } from '@rattus-orm/utils'
-import type { Schema as NormalizrSchema } from 'normalizr'
+import type { Element } from '@rattus-orm/utils/sharedTypes'
 
 import type { Collection } from '@/data/types'
 import type { Model } from '@/model/Model'
 import type { Query } from '@/query/query'
 import type { Schema } from '@/schema/schema'
+import type { NormalizedSchema } from '@/schema/types'
 import { assert } from '@/support/utils'
 
 import { Relation } from './relation'
@@ -17,42 +17,22 @@ interface DictionaryByEntities {
 
 export class MorphTo extends Relation {
   /**
-   * The related models.
-   */
-  protected relatedModels: Model[]
-
-  /**
    * The related model dictionary.
    */
   protected relatedTypes: Record<string, Model>
 
   /**
-   * The field name that contains id of the parent model.
-   */
-  protected morphId: string
-
-  /**
-   * The field name that contains type of the parent model.
-   */
-  protected morphType: string
-
-  /**
-   * The associated key of the child model.
-   */
-  protected ownerKey: string
-
-  /**
    * Create a new morph-to relation instance.
    */
-  constructor(parent: Model, relatedModels: Model[], morphId: string, morphType: string, ownerKey: string) {
+  constructor(
+    parent: Model,
+    protected readonly relatedModels: Model[],
+    protected readonly morphId: string,
+    protected readonly morphType: string,
+    protected readonly ownerKey: string,
+  ) {
     super(parent, parent)
-
-    this.relatedModels = relatedModels
     this.relatedTypes = this.createRelatedTypes(relatedModels)
-
-    this.morphId = morphId
-    this.morphType = morphType
-    this.ownerKey = ownerKey
   }
 
   /**
@@ -72,7 +52,7 @@ export class MorphTo extends Relation {
   /**
    * Define the normalizr schema for the relation.
    */
-  public define(schema: Schema): NormalizrSchema {
+  public define(schema: Schema): NormalizedSchema {
     return schema.union(this.relatedModels, (value, parent) => {
       // Assign missing parent id since the child model is not related back
       // and `attach` will not be called.

@@ -1,4 +1,4 @@
-import type { Elements } from '@rattus-orm/utils'
+import type { Elements } from '@rattus-orm/utils/sharedTypes'
 
 import type { Model } from '@/model/Model'
 import type { RecordKeysByValueType } from '@/types'
@@ -26,3 +26,5 @@ export type RawModelWithRelations<
     ? RawModelWithRelations<RawModel<T, PK, PKV>[key], PK, PKV>
     : RawModel<T, PK, PKV>[key]
 }
+
+export type Entities = Record<string, Elements>

@@ -1,12 +1,11 @@
-import type { DataProvider, State } from '@rattus-orm/utils'
-import type { schema as Normalizr } from 'normalizr'
+import type { DataProvider, State } from '@rattus-orm/utils/sharedTypes'
 
 import { Relation } from '@/model/attributes/relations/relation'
 import type { Model } from '@/model/Model'
 import type { ModelConstructor } from '@/model/types'
 import { Repository } from '@/repository/repository'
-import type { Schemas } from '@/schema/schema'
 import { Schema } from '@/schema/schema'
+import type { EntitySchema, Schemas } from '@/schema/types'
 
 export class Database {
   /**
@@ -18,7 +17,7 @@ export class Database {
    * The name of storage namespace. ORM will create objects from
    * the registered models, and modules, and define them under this namespace.
    */
-  protected connection!: string
+  protected connection: string
 
   /**
    * The list of registered models.
@@ -75,7 +74,6 @@ export class Database {
    */
   public start(): void {
     this.createRootModule()
-
     this.started = true
   }
 
@@ -87,11 +85,8 @@ export class Database {
 
     if (!this.models[entity]) {
       this.models[entity] = model
-
       this.createModule(model)
-
       this.createSchema(model)
-
       this.registerRelatedModels(model)
     }
   }
@@ -106,7 +101,7 @@ export class Database {
   /**
    * Get schema by the specified entity name.
    */
-  public getSchema(name: string): Normalizr.Entity {
+  public getSchema(name: string): EntitySchema {
     return this.schemas[name]
   }
 
@@ -118,7 +113,6 @@ export class Database {
 
     for (const name in fields) {
       const attr = fields[name]
-
       if (attr instanceof Relation) {
         attr.getRelateds().forEach((m) => {
           this.register(m)
@@ -139,7 +133,6 @@ export class Database {
    */
   protected createModule<M extends Model>(model: M): void {
     const entity = model.$entity()
-
     this.dataProvider.registerModule([this.connection, entity], this.createState())
   }
 
@@ -155,7 +148,7 @@ export class Database {
   /**
    * Create schema from the given model.
    */
-  protected createSchema<M extends Model>(model: M): Normalizr.Entity {
+  protected createSchema<M extends Model>(model: M): EntitySchema {
     return (this.schemas[model.$entity()] = new Schema(model).one())
   }
 }

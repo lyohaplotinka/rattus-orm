@@ -52,6 +52,8 @@ describe('plugin: pinia', () => {
     app.use(pinia).use(rattusOrmPiniaVuePlugin('database'))
     const globalProps = app._context.config.globalProperties
 
+    await nextTick()
+
     const expected = {
       ['database/user']: {
         data: {

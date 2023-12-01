@@ -6,7 +6,6 @@ describe('unit/model/Model', () => {
     static entity = 'users'
 
     @Attr() id!: number
-    @Attr() pogonyala!: string
   }
 
   it('ignores unkown field when filling the model', () => {

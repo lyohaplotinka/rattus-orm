@@ -21,12 +21,8 @@ export class Number extends Type {
       return value
     }
 
-    if (typeof value === 'string') {
-      return parseFloat(value)
-    }
-
-    if (typeof value === 'boolean') {
-      return value ? 1 : 0
+    if (['string', 'boolean'].includes(typeof value)) {
+      return +value
     }
 
     if (value === null && this.isNullable) {
