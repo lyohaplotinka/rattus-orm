@@ -19,7 +19,7 @@
     "typescript",
     "javascript"
   ],
-  "version": "0.0.2",
+  "version": "0.0.3",
   "exports": {
     "./createBasicProviderTest": {
       "import": "./dist/createBasicProviderTest.mjs",

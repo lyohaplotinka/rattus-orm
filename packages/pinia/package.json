@@ -42,7 +42,7 @@
     "typecheck": "bash -c 'run -T tsc -p tsconfig.json --noEmit'"
   },
   "dependencies": {
-    "@rattus-orm/utils": "^0.0.2"
+    "@rattus-orm/utils": "^0.0.3"
   },
   "devDependencies": {
     "@rattus-orm/core": "workspace:^",

@@ -1,3 +1,14 @@
+# 2023/12/01
+### Utils (0.0.3)
+* remove "main" entries from package.json.
+
+### Core (0.0.11)
+* bye-bye Normalizr.js, internal normalization;
+* refactor orderBy in query.
+
+### Vuex (0.0.10), Pinia (0.0.2)
+* use new core
+
 # 2023/11/29
 ### Utils (0.0.2)
 * basic types moved to Utils package;
