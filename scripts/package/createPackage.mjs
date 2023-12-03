@@ -11,7 +11,7 @@ const templatesPath = resolve(currentPath, './_template')
 
 program
   .name('createPackage.mjs')
-  .description('Create new packge from template')
+  .description('Create new package from template')
   .argument('<name>', 'Folder name for new package')
   .action(async (name) => {
     const packageName = name.trim()

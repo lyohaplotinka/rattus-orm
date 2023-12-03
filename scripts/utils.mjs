@@ -1,4 +1,4 @@
-import { spawn } from 'node:child_process'
+import { spawn, execSync } from 'node:child_process'
 import { readdir } from 'node:fs/promises'
 import { createRequire } from 'node:module'
 import { resolve } from 'node:path'
@@ -103,4 +103,13 @@ export async function* getFiles(dir) {
       yield res
     }
   }
+}
+
+export function getGitBranchName() {
+  const res = execSync('git rev-parse --abbrev-ref HEAD')
+  return res.toString().trim()
+}
+
+export function isOnMainBranch() {
+  return getGitBranchName() === 'main'
 }
