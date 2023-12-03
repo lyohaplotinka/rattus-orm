@@ -10,6 +10,7 @@ Rattus ORM is a versatile JavaScript/TypeScript package that offers an Object-Re
 
 ### Features
 
+- **Zero-dependency**: no Normalizr or other libraries.
 - **Flexible Integration**: Designed to work with any front-end state management library, providing a versatile solution for state handling.
 - **Source Code Foundation**: Built upon the source code of ["vuex-orm-next"](https://next.vuex-orm.org/) – the next iteration of Vuex ORM.
 - **Intuitive Syntax**: Simplifies the handling of complex data structures in front-end applications with an ORM-like approach.
