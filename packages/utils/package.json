@@ -20,6 +20,10 @@
     "javascript"
   ],
   "version": "0.0.3",
+  "main": "./dist/all.js",
+  "browser": "./dist/all.mjs",
+  "module": "./dist/all.mjs",
+  "types": "./dist/all.d.ts",
   "exports": {
     "./createBasicProviderTest": {
       "import": "./dist/createBasicProviderTest.mjs",
@@ -45,6 +49,11 @@
       "import": "./dist/sharedTypes.mjs",
       "require": "./dist/sharedTypes.js",
       "types": "./dist/sharedTypes.d.ts"
+    },
+    "./all": {
+      "import": "./dist/all.mjs",
+      "require": "./dist/all.js",
+      "types": "./dist/all.d.ts"
     }
   },
   "files": [
