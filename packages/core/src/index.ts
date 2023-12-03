@@ -1,8 +1,6 @@
-export * from './connection/connection'
 export * from './data/data-provider-helpers'
 export * from './data/types'
 export * from './database/database'
-export * from './interpreter/interpreter'
 export * from './model/attributes/attribute'
 export { BelongsTo as BelongsToAttr } from './model/attributes/relations/belongs-to'
 export { HasMany as HasManyAttr } from './model/attributes/relations/has-many'
@@ -38,9 +36,7 @@ export * from './schema/schema'
 export * from './types/index'
 export { Schemas } from '@/schema/types'
 
-import { Connection } from './connection/connection'
 import { Database } from './database/database'
-import { Interpreter } from './interpreter/interpreter'
 import { Attribute } from './model/attributes/attribute'
 import { BelongsTo as BelongsToAttr } from './model/attributes/relations/belongs-to'
 import { HasMany as HasManyAttr } from './model/attributes/relations/has-many'
@@ -79,7 +75,5 @@ export default {
   MorphOneAttr,
   MorphToAttr,
   Repository,
-  Interpreter,
   Query,
-  Connection,
 }

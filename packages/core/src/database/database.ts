@@ -1,4 +1,4 @@
-import type { DataProvider, State } from '@rattus-orm/utils/sharedTypes'
+import type { Constructor, DataProvider, State } from '@rattus-orm/utils/sharedTypes'
 
 import { Relation } from '@/model/attributes/relations/relation'
 import type { Model } from '@/model/Model'
@@ -37,6 +37,12 @@ export class Database {
 
   public isStarted() {
     return this.started
+  }
+
+  public buildRepository<R extends Repository>(repoConstructor: Constructor<R>): R {
+    const repo = new repoConstructor(this).initialize()
+    this.register(repo.getModel())
+    return repo
   }
 
   public getRepository<M extends typeof Model>(model: M): Repository<InstanceType<M>> {
@@ -109,10 +115,7 @@ export class Database {
    * Register all related models.
    */
   protected registerRelatedModels<M extends Model>(model: M): void {
-    const fields = model.$fields()
-
-    for (const name in fields) {
-      const attr = fields[name]
+    for (const attr of Object.values(model.$fields())) {
       if (attr instanceof Relation) {
         attr.getRelateds().forEach((m) => {
           this.register(m)

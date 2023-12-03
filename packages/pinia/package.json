@@ -39,7 +39,8 @@
     "clean": "rm -rf dist && rm -rf node_modules",
     "lint": "run -T eslint 'src/**/*.ts' --quiet --fix",
     "test": "run -T vitest run",
-    "typecheck": "bash -c 'run -T tsc -p tsconfig.json --noEmit'"
+    "typecheck": "bash -c 'run -T tsc -p tsconfig.json --noEmit'",
+    "size": "run -T size-limit"
   },
   "dependencies": {
     "@rattus-orm/utils": "^0.0.3"
@@ -55,5 +56,15 @@
     "@rattus-orm/core": "^0.0.11",
     "pinia": "^2.0.0",
     "vue": "^3.0.0"
-  }
+  },
+  "size-limit": [
+    {
+      "name": "ESM pinia provider",
+      "path": "./dist/rattus-orm-pinia-provider.mjs"
+    },
+    {
+      "name": "CJS pinia provider",
+      "path": "./dist/rattus-orm-pinia-provider.mjs"
+    }
+  ]
 }
