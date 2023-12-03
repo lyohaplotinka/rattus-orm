@@ -1,4 +1,4 @@
-import { spawn, execSync } from 'node:child_process'
+import { execSync, spawn } from 'node:child_process'
 import { readdir } from 'node:fs/promises'
 import { createRequire } from 'node:module'
 import { resolve } from 'node:path'
