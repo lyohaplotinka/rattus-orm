@@ -2945,7 +2945,7 @@ __metadata:
     pinia: "npm:^2.0.0"
     vue: "npm:^3.0.0"
   peerDependencies:
-    "@rattus-orm/core": ^0.0.10
+    "@rattus-orm/core": ^0.0.11
     pinia: ^2.0.0
     vue: ^3.0.0
   languageName: unknown
@@ -2973,7 +2973,7 @@ __metadata:
     vue: "npm:^3.0.0"
     vuex: "patch:vuex@npm%3A4.1.0#~/.yarn/patches/vuex-npm-4.1.0-c1d51099be.patch"
   peerDependencies:
-    "@rattus-orm/core": ^0.0.10
+    "@rattus-orm/core": ^0.0.11
     vue: ^3.0.0
     vuex: ^4.1.0
   languageName: unknown

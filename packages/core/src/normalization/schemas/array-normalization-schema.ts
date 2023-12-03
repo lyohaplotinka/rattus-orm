@@ -1,6 +1,7 @@
 import { isUnknownRecord } from '@rattus-orm/utils/isUnknownRecord'
 
 import { BaseSchema } from '@/normalization/schemas/base-schema'
+import { isNullish } from '@/support/utils'
 
 import type { Normalizer } from '../normalizer'
 import { isNormalizationSchema } from './guards'
@@ -15,7 +16,7 @@ export class ArrayNormalizationSchema extends BaseSchema<
     public definition: NormalizationSchema<any> | SchemaDefinition,
     public schemaAttribute?: SchemaAttributeGetter,
   ) {
-    super(definition)
+    super('_array', definition)
   }
 
   public define(definition: SchemaDefinition): void {
@@ -43,12 +44,12 @@ export class ArrayNormalizationSchema extends BaseSchema<
       const normalizedValue = visitor.visit(value, parent, key, schema)
 
       if (!isNormalizationSchema(this.definition) && this.schemaAttribute) {
-        return normalizedValue === undefined || normalizedValue === null
+        return isNullish(normalizedValue)
           ? undefined
           : { id: normalizedValue, schema: this.schemaAttribute(value, value) }
       }
 
-      return normalizedValue === undefined || normalizedValue === null ? undefined : (normalizedValue as string[])
+      return isNullish(normalizedValue) ? undefined : (normalizedValue as string[])
     }) as Record<string, unknown>[] | Identifier[] | undefined
   }
 

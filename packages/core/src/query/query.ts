@@ -1,12 +1,13 @@
 import type { Element, Elements } from '@rattus-orm/utils/sharedTypes'
+import type { ModulePath } from '@rattus-orm/utils/sharedTypes'
 
-import { Connection } from '@/connection/connection'
-import type { Collection, Item } from '@/data/types'
+import type { Collection, Entities, Item } from '@/data/types'
 import type { Database } from '@/database/database'
-import { Interpreter } from '@/interpreter/interpreter'
 import { MorphTo } from '@/model/attributes/relations/morph-to'
 import { Relation } from '@/model/attributes/relations/relation'
 import type { Model } from '@/model/Model'
+import { Normalizer } from '@/normalization/normalizer'
+import type { NormalizationSchemaParam } from '@/normalization/schemas/types'
 import { assert, groupBy, isArray, isEmpty, isFunction, isNumber, isString } from '@/support/utils'
 
 import type {
@@ -188,15 +189,9 @@ export class Query<M extends Model = Model> {
    * method will not process any query chain. It'll always retrieve all models.
    */
   public all(): Collection<M> {
-    const records = this.newConnection().get()
-
-    const collection = [] as Collection<M>
-
-    for (const id in records) {
-      collection.push(this.hydrate(records[id]))
-    }
-
-    return collection
+    return Object.values(this.getAll()).map((record) => {
+      return this.hydrate(record)
+    })
   }
 
   /**
@@ -275,14 +270,12 @@ export class Query<M extends Model = Model> {
   public reviveOne(schema: Element): Item<M> {
     const id = this.model.$getIndexId(schema)
 
-    const item = this.newConnection().find(id)
-
+    const item = this.getAll()[id]
     if (!item) {
       return null
     }
 
     const model = this.hydrate(item)
-
     this.reviveRelations(model, schema)
 
     return model
@@ -307,8 +300,7 @@ export class Query<M extends Model = Model> {
   public new(): M {
     const model = this.hydrate({})
 
-    this.newConnection().insert(this.compile(model))
-
+    this.getDataProvider().insert(this.getThisModulePath(), this.compile(model))
     return model
   }
 
@@ -320,7 +312,7 @@ export class Query<M extends Model = Model> {
   public save(record: Element): M
 
   public save(records: Element | Element[]): M | M[] {
-    const [data, entities] = this.newInterpreter().process(records)
+    const [data, entities] = this.getNormalizedEntities(records)
 
     for (const entity in entities) {
       const query = this.newQuery(entity)
@@ -348,7 +340,7 @@ export class Query<M extends Model = Model> {
         : this.hydrate(record).$getAttributes()
     }
 
-    this.newConnection().save(newData)
+    this.getDataProvider().save(this.getThisModulePath(), newData)
   }
 
   /**
@@ -361,8 +353,7 @@ export class Query<M extends Model = Model> {
   public insert(records: Element | Element[]): M | Collection<M> {
     const models = this.hydrate(records)
 
-    this.newConnection().insert(this.compile(models))
-
+    this.getDataProvider().insert(this.getThisModulePath(), this.compile(models))
     return models
   }
 
@@ -376,8 +367,7 @@ export class Query<M extends Model = Model> {
   public fresh(records: Element | Element[]): M | Collection<M> {
     const models = this.hydrate(records)
 
-    this.newConnection().fresh(this.compile(models))
-
+    this.getDataProvider().replace(this.getThisModulePath(), this.compile(models))
     return models
   }
 
@@ -395,8 +385,7 @@ export class Query<M extends Model = Model> {
       return this.hydrate({ ...model.$getAttributes(), ...record })
     })
 
-    this.newConnection().update(this.compile(newModels))
-
+    this.getDataProvider().update(this.getThisModulePath(), this.compile(newModels))
     return newModels
   }
 
@@ -427,8 +416,7 @@ export class Query<M extends Model = Model> {
     }
 
     const ids = this.getIndexIdsFromCollection(models)
-
-    this.newConnection().delete(ids)
+    this.getDataProvider().delete(this.getThisModulePath(), ids)
 
     return models
   }
@@ -438,31 +426,16 @@ export class Query<M extends Model = Model> {
    */
   public flush(): Collection<M> {
     const models = this.get()
-
-    this.newConnection().flush()
+    this.getDataProvider().flush(this.getThisModulePath())
 
     return models
-  }
-
-  /**
-   * Create a new interpreter instance.
-   */
-  protected newInterpreter(): Interpreter {
-    return new Interpreter(this.database, this.model)
-  }
-
-  /**
-   * Create a new connection instance.
-   */
-  protected newConnection(): Connection {
-    return new Connection(this.database, this.model)
   }
 
   /**
    * Get raw elements from the store.
    */
   protected data(): Elements {
-    return this.newConnection().get()
+    return this.getAll()
   }
 
   /**
@@ -633,8 +606,7 @@ export class Query<M extends Model = Model> {
       return null
     }
 
-    this.newConnection().destroy([model.$getIndexId()])
-
+    this.getDataProvider().delete(this.getThisModulePath(), [model.$getIndexId()])
     return model
   }
 
@@ -645,8 +617,7 @@ export class Query<M extends Model = Model> {
       return []
     }
 
-    this.newConnection().destroy(this.getIndexIdsFromCollection(models))
-
+    this.getDataProvider().delete(this.getThisModulePath(), this.getIndexIdsFromCollection(models))
     return models
   }
 
@@ -679,5 +650,29 @@ export class Query<M extends Model = Model> {
       records[model.$getIndexId()] = model.$getAttributes()
       return records
     }, {})
+  }
+
+  protected getNormalizedEntities(records: Element | Element[]): [data: Element | Element[], entities: Entities] {
+    const schema = this.database.getSchema(this.model.$entity())
+    const toNormalizrSchema: NormalizationSchemaParam = isArray(records) ? [schema] : schema
+    const entities = new Normalizer().normalize(records, toNormalizrSchema).entities
+
+    return [records, entities]
+  }
+
+  protected getDataProvider() {
+    return this.database.getDataProvider()
+  }
+
+  protected getDatabaseConnection() {
+    return this.database.getConnection()
+  }
+
+  protected getThisModulePath(): ModulePath {
+    return [this.getDatabaseConnection(), this.model.$entity()]
+  }
+
+  protected getAll() {
+    return this.getDataProvider().getModuleState(this.getThisModulePath()).data
   }
 }

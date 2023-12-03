@@ -12,7 +12,7 @@ export class EntityNormalizationSchema extends BaseSchema<Identifier> {
     public readonly definition: SchemaDefinition = {},
     public readonly idAttribute: IdentifierGetter = 'id',
   ) {
-    super(definition)
+    super(key, definition)
   }
 
   public normalize(
@@ -26,7 +26,7 @@ export class EntityNormalizationSchema extends BaseSchema<Identifier> {
 
     visitor.cache.set(input, id)
 
-    const processedEntity: Record<string, unknown> = Object.assign({}, input, { [idAttribute]: id })
+    const processedEntity: Record<string, unknown> = Object.assign({}, input)
 
     for (const key in this.definition) {
       if (!isUnknownRecord(processedEntity[key])) {

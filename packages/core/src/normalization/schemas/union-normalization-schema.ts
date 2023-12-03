@@ -9,7 +9,7 @@ export class UnionNormalizationSchema extends BaseSchema<Record<string, unknown>
     public definition: SchemaDefinition,
     public schemaAttribute: SchemaAttributeGetter,
   ) {
-    super(definition)
+    super('_union', definition)
   }
 
   public normalize(

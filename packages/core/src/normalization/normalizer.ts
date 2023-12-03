@@ -2,30 +2,21 @@ import { isUnknownRecord } from '@rattus-orm/utils/isUnknownRecord'
 import type { Element } from '@rattus-orm/utils/sharedTypes'
 
 import type { Entities } from '@/data/types'
-import { EntityNormalizationSchema } from '@/normalization/schemas/entity-normalization-schema'
 import { isNullish } from '@/support/utils'
 
 import { isNormalizationSchema } from './schemas/guards'
-import type { Identifier, NormalizationSchema } from './schemas/types'
+import type { Identifier, NormalizationSchema, NormalizationSchemaParam } from './schemas/types'
 
 export class Normalizer {
   public entities: Entities = {}
   public cache = new Map<unknown, Identifier>()
 
   public addEntity(schema: NormalizationSchema<unknown>, id: Identifier, processedEntity: Element) {
-    if (!(schema instanceof EntityNormalizationSchema)) {
-      return
-    }
     const obj = (this.entities[schema.key] ||= {})
     obj[id] = processedEntity
   }
 
-  public visit(
-    input: unknown,
-    parent: unknown,
-    key: unknown,
-    schema: NormalizationSchema<unknown> | NormalizationSchema<unknown>[],
-  ): unknown {
+  public visit(input: unknown, parent: unknown, key: unknown, schema: NormalizationSchemaParam): unknown {
     if (!isUnknownRecord(input)) {
       return input
     }
@@ -46,7 +37,7 @@ export class Normalizer {
     )
   }
 
-  public normalize(input: any, schema: NormalizationSchema<any> | NormalizationSchema<any>[]) {
+  public normalize(input: any, schema: NormalizationSchemaParam) {
     const normalized = this.visit(input, input, null, schema)
 
     return {
@@ -59,17 +50,16 @@ export class Normalizer {
     input: Record<string, unknown>,
     parent: unknown,
     key: unknown,
-    schema: NormalizationSchema<unknown>[],
+    [schema]: [NormalizationSchema<unknown>],
   ) {
-    const localSchema = schema[0]
-    return Object.values(input).map((value) => this.visit(value, parent, key, localSchema))
+    return Object.values(input).map((value) => this.visit(value, parent, key, schema))
   }
 
   protected visitObject(
     input: Record<string, unknown>,
     parent: unknown,
     rootKey: unknown,
-    schemasDictionary: Record<string, NormalizationSchema<unknown>>,
+    schemasDictionary: Record<string, NormalizationSchemaParam>,
   ) {
     const result = { ...input }
 
@@ -96,11 +86,9 @@ export class Normalizer {
     key: unknown,
     schema: NormalizationSchema<unknown>,
   ): Identifier {
-    const cachedId = this.cache.get(input)
-    if (cachedId !== undefined) {
-      return cachedId
+    if (this.cache.has(input)) {
+      return this.cache.get(input)!
     }
-
     return schema.normalize(input, parent, key, this) as Identifier
   }
 }

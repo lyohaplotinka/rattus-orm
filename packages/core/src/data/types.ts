@@ -3,10 +3,6 @@ import type { Elements } from '@rattus-orm/utils/sharedTypes'
 import type { Model } from '@/model/Model'
 import type { RecordKeysByValueType } from '@/types'
 
-export interface NormalizedData {
-  [entity: string]: Elements
-}
-
 export type Item<M extends Model = Model> = M | null
 
 export type Collection<M extends Model = Model> = M[]

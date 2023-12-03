@@ -1,11 +1,11 @@
 import { normalize, schema } from 'normalizr'
 import { describe, expect, it } from 'vitest'
 
-import { Normalizer } from './normalizer'
-import { ArrayNormalizationSchema } from './schemas/array-normalization-schema'
-import { EntityNormalizationSchema } from './schemas/entity-normalization-schema'
-import type { NormalizationSchema } from './schemas/types'
-import { UnionNormalizationSchema } from './schemas/union-normalization-schema'
+import { Normalizer } from '../src/normalization/normalizer'
+import { ArrayNormalizationSchema } from '../src/normalization/schemas/array-normalization-schema'
+import { EntityNormalizationSchema } from '../src/normalization/schemas/entity-normalization-schema'
+import type { NormalizationSchema } from '../src/normalization/schemas/types'
+import { UnionNormalizationSchema } from '../src/normalization/schemas/union-normalization-schema'
 
 const getNormalizerResult = (inputData: any, schema: NormalizationSchema<unknown>) => {
   const normalizer = new Normalizer()

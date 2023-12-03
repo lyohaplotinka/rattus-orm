@@ -59,7 +59,12 @@
     "packages/*"
   ],
   "lint-staged": {
-    "./{src,test}/*/**.ts": [
+    "./src/*/**.ts": [
+      "yarn typecheck",
+      "yarn lint",
+      "yarn test all"
+    ],
+    "./test/*/**.ts": [
       "yarn typecheck",
       "yarn lint",
       "yarn test all"

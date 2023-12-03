@@ -60,12 +60,12 @@
   },
   "size-limit": [
     {
-      "name": "Vuex ESM",
+      "name": "ESM Vuex provider",
       "path": "./dist/rattus-orm-vuex-provider.mjs"
     },
     {
-      "name": "Vuex CJS",
-      "path": "./dist/rattus-orm-vuex-provider.js"
+      "name": "CJS Vuex provider",
+      "path": "./dist/rattus-orm-vuex-provider.mjs"
     }
   ]
 }
