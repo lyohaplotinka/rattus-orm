@@ -58,16 +58,6 @@
   "workspaces": [
     "packages/*"
   ],
-  "lint-staged": {
-    "./{packages,test}/*/**.ts": [
-      "yarn typecheck",
-      "yarn lint",
-      "yarn test all"
-    ],
-    "./scripts/*/**.{js,mjs}": [
-      "yarn lint:scripts"
-    ]
-  },
   "simple-git-hooks": {
     "pre-commit": "./node_modules/.bin/lint-staged"
   }
