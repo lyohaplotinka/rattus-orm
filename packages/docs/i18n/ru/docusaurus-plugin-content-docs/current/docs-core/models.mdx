@@ -63,6 +63,30 @@ TypeScript и декораторами.
 нашей базе данных. Все модули в хранилище будут созданы
 базой данных и дата-провайдером автоматически.
 
+### Решение проблем с TypeScript и Vite
+Если вы используете TypeScript с Vite, убедитесь, что в вашем `tsconfig.json` есть такие настройки:
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    // ...
+    "useDefineForClassFields": true,
+    "experimentalDecorators": true
+  }
+}
+```
+
+Также вы можете столкнуться с проблемой отсутствия данных в моделях. В этом случае стоит использовать
+следующий синтаксис:
+```typescript
+class User extends Model {
+  public static entity = 'users'
+
+  @Str('')
+  // public id: string - может не сработать,
+  // все поля модели могут быть "null"
+  declare id: string
+```
+
 ### Типы полей
 
 #### Общий тип

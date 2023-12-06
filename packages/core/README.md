@@ -13,6 +13,30 @@ Use your favorite package manager. For example, yarn:
 ```bash
 yarn add @rattus-orm/core
 ```
+
+### Important notes
+If you are using Vite with TypeScript, make sure you have these settings in `tsconfig.json`:
+```json
+{
+  "compilerOptions": {
+    // ...
+    "useDefineForClassFields": true,
+    "experimentalDecorators": true
+  }
+}
+```
+
+Also you should use this syntax for defining models:
+```typescript
+class User extends Model {
+  public static entity = 'users'
+
+  @Str('')
+  // public id: string - will not work, 
+  // all fields of your models will be "null"
+  declare id: string
+```
+
 ### Basic usage
 
 ```typescript

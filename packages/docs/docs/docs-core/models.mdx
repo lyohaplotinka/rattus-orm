@@ -63,6 +63,31 @@ The static property `entity` is the name of the "table" in
 our database. All modules in the store will be created
 automatically by the database and data provider.
 
+### TypeScript and Vite troubleshooting
+If you are using Vite with TypeScript, make sure you have these settings in `tsconfig.json`:
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    // ...
+    "useDefineForClassFields": true,
+    "experimentalDecorators": true
+  }
+}
+```
+
+You may also encounter the problem of missing data in your models. In this case it is worth using
+the following syntax:
+```typescript
+class User extends Model {
+  public static entity = 'users'
+
+  @Str('')
+  // public id: string - will not work,
+  // all fields of your models will be "null"
+  declare id: string
+```
+
+
 ### Field Types
 
 #### General Type

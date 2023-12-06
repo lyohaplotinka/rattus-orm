@@ -1,0 +1,10 @@
+.previewIframe {
+  width: 100%;
+  height: 500px;
+}
+
+@media screen and (max-width: 800px) {
+  .previewIframe {
+    height: 65vh;
+  }
+}
