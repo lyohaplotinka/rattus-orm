@@ -3061,7 +3061,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rattus-orm/core@workspace:^, @rattus-orm/core@workspace:packages/core":
+"@rattus-orm/core@npm:^0.0.12, @rattus-orm/core@workspace:^, @rattus-orm/core@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "@rattus-orm/core@workspace:packages/core"
   dependencies:
@@ -3083,6 +3083,16 @@ __metadata:
     "@rattus-orm/core": ^0.0.12
     pinia: ^2.0.0
     vue: ^3.0.0
+  languageName: unknown
+  linkType: soft
+
+"@rattus-orm/react-signals@workspace:packages/react-signals":
+  version: 0.0.0-use.local
+  resolution: "@rattus-orm/react-signals@workspace:packages/react-signals"
+  dependencies:
+    "@rattus-orm/core": "npm:^0.0.12"
+  peerDependencies:
+    "@rattus-orm/core": ^0.0.12
   languageName: unknown
   linkType: soft
 

@@ -1,0 +1,50 @@
+{
+  "name": "@rattus-orm/react-signals",
+  "description": "ORM for your JS/TS apps: react-signals bindings",
+  "homepage": "https://lyohaplotinka.github.io/rattus-orm/",
+  "author": "Lyoha Plotinka",
+  "license": "MIT",
+  "packageManager": "yarn@4.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lyohaplotinka/rattus-orm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lyohaplotinka/rattus-orm/issues"
+  },
+  "keywords": [
+    "orm",
+    "rattus",
+    "react-signals",
+    "typescript",
+    "javascript"
+  ],
+  "version": "0.0.0",
+  "main": "./dist/rattus-orm-react-signals-provider.js",
+  "browser": "./dist/rattus-orm-react-signals-provider.mjs",
+  "module": "./dist/rattus-orm-react-signals-provider.mjs",
+  "types": "./dist/rattus-orm-react-signals-provider.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/rattus-orm-react-signals-provider.mjs",
+      "require": "./dist/rattus-orm-react-signals-provider.js",
+      "types": "./dist/rattus-orm-react-signals-provider.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "clean": "rm -rf dist",
+    "lint": "eslint 'src/**/*.ts' --quiet --fix",
+    "test": "vitest run",
+    "typecheck": "bash -c 'tsc -p tsconfig.json --noEmit'"
+  },
+  "devDependencies": {
+    "@rattus-orm/core": "^0.0.12"
+  },
+  "peerDependencies": {
+    "@rattus-orm/core": "^0.0.12"
+  }
+}

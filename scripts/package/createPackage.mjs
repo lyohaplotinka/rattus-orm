@@ -3,7 +3,7 @@ import { dirname as pathDirname, join, resolve } from 'node:path'
 
 import { program } from 'commander'
 
-import { dirname, getFiles, require } from '../utils.mjs'
+import { asyncSpawn, dirname, getFiles, require } from '../utils.mjs'
 
 const currentPath = dirname(import.meta.url)
 const corePackageVersion = require(resolve(currentPath, '../../packages/core/package.json')).version
@@ -18,6 +18,7 @@ program
     const newPackagePath = resolve(currentPath, `../../packages/${packageName}`)
 
     await mkdir(newPackagePath, { recursive: true })
+    const fileWritePromises = []
     for await (const filePath of getFiles(templatesPath)) {
       const fileRelativeToTemplates = filePath.replace(templatesPath, '')
       const toSaveFile = join(newPackagePath, fileRelativeToTemplates)
@@ -27,8 +28,11 @@ program
         .replaceAll('{{ PACKAGE }}', packageName)
         .replaceAll('{{ CORE_VERSION }}', corePackageVersion)
         .replaceAll('// @ts-ignore', '')
-      writeFile(toSaveFile, fixedContent, 'utf8')
+      fileWritePromises.push(writeFile(toSaveFile, fixedContent, 'utf8'))
     }
+
+    await Promise.all(fileWritePromises)
+    await asyncSpawn('yarn', ['link'])
   })
 
 program.parse()
