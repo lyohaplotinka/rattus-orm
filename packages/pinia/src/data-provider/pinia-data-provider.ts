@@ -79,10 +79,6 @@ export class PiniaDataProvider extends DataProviderHelpers implements DataProvid
     return result
   }
 
-  public restore(data: SerializedStorage) {
-    super.restore(data)
-  }
-
   protected getModulePathAsString(modulePath: ModulePath) {
     return ([] as string[]).concat(modulePath).join('/')
   }

@@ -2,7 +2,7 @@ import { describe, expect, vi } from 'vitest'
 import { Component, ComponentOptions, computed, nextTick } from 'vue'
 import { mount } from '@vue/test-utils'
 import { Attr, Model, Num, Repository } from '@rattus-orm/core'
-import { rattusOrmPiniaVuePlugin, useRattusContext, useRepository, useRepositoryComputed } from '../src'
+import { installRattusORM, useRattusContext, useRepository, useRepositoryComputed } from '../src'
 import { pullRepositoryKeys } from '../src/composable/types'
 import { createPinia } from 'pinia'
 
@@ -36,7 +36,7 @@ describe('composable: pinia', () => {
 
   const mountSetup = (setup: ComponentOptions['setup']) => {
     const component = attachSetup(setup)
-    return mount(component, { global: { plugins: [pinia, rattusOrmPiniaVuePlugin()] } })
+    return mount(component, { global: { plugins: [pinia, installRattusORM()] } })
   }
 
   const withSetup = <T extends () => any>(hook: T) => {
@@ -54,7 +54,7 @@ describe('composable: pinia', () => {
       },
       {
         global: {
-          plugins: [pinia, rattusOrmPiniaVuePlugin()],
+          plugins: [pinia, installRattusORM()],
         },
       },
     )

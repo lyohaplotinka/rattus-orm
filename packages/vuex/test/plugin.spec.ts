@@ -31,18 +31,18 @@ describe('plugin: vuex', () => {
       entities: {},
     }
 
-    const spyRepo = vi.spyOn(store.$database, 'getRepository')
+    const spyRepo = vi.spyOn(store.$rattusContext.$database, 'getRepository')
 
     expect(store.state).toEqual(expected)
-    expect(store.$database.isStarted()).toBe(true)
-    expect(store.$repo(User).database.getConnection()).toEqual('entities')
-    expect(store.$repo(User).getModel()).toBeInstanceOf(User)
+    expect(store.$rattusContext.$database.isStarted()).toBe(true)
+    expect(store.$rattusContext.$repo(User).database.getConnection()).toEqual('entities')
+    expect(store.$rattusContext.$repo(User).getModel()).toBeInstanceOf(User)
     expect(spyRepo).toHaveBeenCalledOnce()
   })
 
   it('can customize the namespace', () => {
     const store = createStore({
-      plugins: [installRattusORM({ namespace: 'database' })],
+      plugins: [installRattusORM({ connection: 'database' })],
     })
 
     const expected = {

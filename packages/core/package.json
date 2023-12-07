@@ -33,6 +33,11 @@
       "import": "./dist/object-data-provider.mjs",
       "require": "./dist/object-data-provider.js",
       "types": "./dist/object-data-provider.d.ts"
+    },
+    "./rattus-context": {
+      "import": "./dist/rattus-context.mjs",
+      "require": "./dist/rattus-context.js",
+      "types": "./dist/rattus-context.d.ts"
     }
   },
   "files": [
