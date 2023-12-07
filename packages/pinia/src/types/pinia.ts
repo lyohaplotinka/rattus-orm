@@ -1,12 +1,5 @@
-import type { Database } from '@rattus-orm/core'
-import type { Model, Repository } from '@rattus-orm/core'
+import type { RattusContext } from '@rattus-orm/core/rattus-context'
 import type { Pinia, Store } from 'pinia'
-
-export type RattusContext = {
-  $database: Database
-  $databases: Record<string, Database>
-  $repo<M extends typeof Model>(model: M, connection?: string): Repository<InstanceType<M>>
-}
 
 interface ComponentCustomPropertiesBase {
   $rattusContext: RattusContext

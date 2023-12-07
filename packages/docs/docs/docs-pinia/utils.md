@@ -15,10 +15,11 @@ Compositions only work if you used the plugin for installation. They rely on the
 ### useRattusContext
 Returns a special **RattusContext** object, which provides access to database management and repository retrieval.
 ```typescript
-export type RattusContext = {
-  $database: Database
-  $databases: Record<string, Database>
-  $repo<M extends typeof Model>(model: M, connection?: string): Repository<InstanceType<M>>
+declare class RattusContext {
+  $database: Database;
+  $databases: Record<string, Database>;
+  createDatabase(connection?: string, isPrimary?: boolean): Database;
+  $repo<M extends typeof Model>(model: M, connection?: string): Repository<InstanceType<M>>;
 }
 ```
 

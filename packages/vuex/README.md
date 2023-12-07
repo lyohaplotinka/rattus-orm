@@ -8,7 +8,7 @@
 
 ### Contents
 1. VuexDataProvider;
-2. Composables: `useRepository`, `useRepositoryComputed`.
+2. Composables: `useRattusContext`, `useRepository`, `useRepositoryComputed`.
 
 ### Installation
 Use your favorite package manager. For example, yarn:

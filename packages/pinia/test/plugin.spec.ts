@@ -3,7 +3,7 @@ import { App, createApp, nextTick } from 'vue'
 import { beforeEach, expect, vi } from 'vitest'
 import { Database, Model, Num, Uid } from '@rattus-orm/core'
 import { createPinia } from 'pinia'
-import { rattusOrmPiniaVuePlugin } from '../src'
+import { installRattusORM } from '../src'
 
 class User extends Model {
   public static entity = 'user'
@@ -29,7 +29,7 @@ describe('plugin: pinia', () => {
 
   it('installs Vuex ORM to the store', () => {
     const pinia = initPinia()
-    app.use(pinia).use(rattusOrmPiniaVuePlugin())
+    app.use(pinia).use(installRattusORM())
 
     const expected = {}
 
@@ -49,7 +49,7 @@ describe('plugin: pinia', () => {
 
   it('can customize the namespace', async () => {
     const pinia = createPinia()
-    app.use(pinia).use(rattusOrmPiniaVuePlugin('database'))
+    app.use(pinia).use(installRattusORM({ connection: 'database' }))
     const globalProps = app._context.config.globalProperties
 
     await nextTick()

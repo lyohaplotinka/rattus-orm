@@ -20,14 +20,14 @@ yarn add @rattus-orm/core @rattus-orm/pinia pinia
 ```typescript title="main.ts"
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-import { rattusOrmPiniaVuePlugin } from "@rattus-orm/pinia";
+import { installRattusORM } from "@rattus-orm/pinia";
 
 const pinia = createPinia()
 
 const app = createApp({ /* your root component */ })
 app
   .use(pinia)
-  .use(rattusOrmPiniaVuePlugin())
+  .use(installRattusORM())
 ```
 
 ```html title="App.vue"
@@ -78,13 +78,16 @@ Pinia во Vue. Следующий вариант установит созда�
 ```typescript title="main.ts - передача Pinia в rattusOrmPiniaVuePlugin"
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-import { rattusOrmPiniaVuePlugin } from "@rattus-orm/pinia";
+import { installRattusORM } from "@rattus-orm/pinia";
 
 const pinia = createPinia()
 
 const app = createApp({ /* your root component */ })
 app
-  // Первый аргумент - название базы данных, второй - инстанс Pinia.
+  // Передайте название базы данных и инстанс Pinia.
   // Pinia будет автоматически установлена во Vue.
-  .use(rattusOrmPiniaVuePlugin('entities', pinia))
+  .use(installRattusORM({
+    connection: 'entities',
+    pinia,
+  }))
 ```

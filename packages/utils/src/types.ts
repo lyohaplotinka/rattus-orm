@@ -39,3 +39,7 @@ export type Element = Record<string, any>
 export interface Elements {
   [id: string]: Element
 }
+
+export type RattusOrmInstallerOptions = {
+  connection?: string
+}

@@ -11,10 +11,22 @@ However, the package includes a number of other compositions.
 
 :::warning
 Compositions only work if you have used the plugin for installation.
-They rely on the presence of the `$database` key in your store. If you want
+They rely on the presence of the `$rattusContext` key in your store. If you want
 to use them with manual setup, ensure your database is
 placed in the Vuex store instance.
 :::
+
+### useRattusContext
+Returns a special **RattusContext** object, which provides access to database management and repository retrieval.
+```typescript
+declare class RattusContext {
+  $database: Database;
+  $databases: Record<string, Database>;
+  createDatabase(connection?: string, isPrimary?: boolean): Database;
+  $repo<M extends typeof Model>(model: M, connection?: string): Repository<InstanceType<M>>;
+}
+```
+
 
 ### useRepository
 

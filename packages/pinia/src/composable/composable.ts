@@ -1,10 +1,10 @@
 import type { Model, Repository } from '@rattus-orm/core'
+import type { RattusContext } from '@rattus-orm/core/rattus-context'
 import { pickFromClass } from '@rattus-orm/utils/pickFromClass'
 import { computedProxify } from '@rattus-orm/utils/vueComputedUtils'
 import { getCurrentInstance, inject } from 'vue'
 
 import { RattusOrmInjectionKey } from '../plugin/const'
-import type { RattusContext } from '../types/pinia'
 import type { ComputedPickedRepository, PickedRepository, RepositoryCustomKeys } from './types'
 import { pullRepositoryGettersKeys, pullRepositoryKeys } from './types'
 

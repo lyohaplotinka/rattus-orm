@@ -1,10 +1,12 @@
 import { beforeEach, describe, expect, vi } from 'vitest'
 import { Component, ComponentOptions, computed, nextTick } from 'vue'
 import { mount } from '@vue/test-utils'
-import { Model, Num, Repository, Attr } from '@rattus-orm/core'
+import { Model, Num, Repository, Attr, Database } from '@rattus-orm/core'
 import { createStore, Store } from 'vuex'
 import { installRattusORM, useRepository, useRepositoryComputed } from '../src'
 import { pullRepositoryKeys } from '../src/composable/types'
+import { useRattusContext } from '../src'
+import { RattusContext } from '@rattus-orm/core/rattus-context'
 
 class User extends Model {
   static entity = 'users'
@@ -33,7 +35,7 @@ describe('composable: vuex', () => {
       plugins: [installRattusORM()],
     })
 
-    store.$database.getRepository(User).insert([{ id: '1', age: 23 }])
+    store.$rattusContext.$database.getRepository(User).insert([{ id: '1', age: 23 }])
   })
 
   const mountSetup = (setup: ComponentOptions['setup']) => {
@@ -58,6 +60,13 @@ describe('composable: vuex', () => {
     // @ts-ignore
     return result as ReturnType<T>
   }
+
+  it('has correct context', () => {
+    const result = withSetup(() => useRattusContext())
+
+    expect(result).toBeInstanceOf(RattusContext)
+    expect(result.$database).toBeInstanceOf(Database)
+  })
 
   describe('useRepository returns correctly bound methods', () => {
     store = createStore({
@@ -100,7 +109,7 @@ describe('composable: vuex', () => {
   })
 
   it('useRepositoryComputed: returns reactive data', async () => {
-    const repo = store.$database.getRepository(User)
+    const repo = store.$rattusContext.$database.getRepository(User)
     const wrapper = mountSetup(() => {
       const { find } = useRepositoryComputed(User)
       const user = find('1')
