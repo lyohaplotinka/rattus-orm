@@ -16,6 +16,8 @@
     "orm",
     "rattus",
     "react-signals",
+    "react",
+    "signals",
     "typescript",
     "javascript"
   ],
@@ -43,7 +45,7 @@
     "size": "run -T size-limit"
   },
   "dependencies": {
-    "@rattus-orm/utils": "^0.0.4"
+    "@rattus-orm/utils": "^0.0.5"
   },
   "devDependencies": {
     "@preact/signals-react": "^1.3.7",
@@ -57,7 +59,7 @@
   },
   "peerDependencies": {
     "@preact/signals-react": "*",
-    "@rattus-orm/core": "^0.0.12",
+    "@rattus-orm/core": "^0.0.13",
     "react": "*"
   },
   "size-limit": [
