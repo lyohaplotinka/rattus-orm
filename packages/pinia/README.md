@@ -19,14 +19,14 @@ yarn add @rattus-orm/core @rattus-orm/pinia
 ```typescript title="main.ts"
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-import { rattusOrmPiniaVuePlugin } from "@rattus-orm/pinia";
+import { installRattusORM } from "@rattus-orm/pinia";
 
 const pinia = createPinia()
 
 const app = createApp({ /* your root component */ })
 app
   .use(pinia)
-  .use(rattusOrmPiniaVuePlugin())
+  .use(installRattusORM())
 ```
 
 ```html title="App.vue"

@@ -22,10 +22,11 @@ sidebar_position: 4
 Возвращает специальный объект **RattusContext**, дающий доступ
 к управлению базами данных и получению репозиториев.
 ```typescript
-export type RattusContext = {
-  $database: Database
-  $databases: Record<string, Database>
-  $repo<M extends typeof Model>(model: M, connection?: string): Repository<InstanceType<M>>
+declare class RattusContext {
+  $database: Database;
+  $databases: Record<string, Database>;
+  createDatabase(connection?: string, isPrimary?: boolean): Database;
+  $repo<M extends typeof Model>(model: M, connection?: string): Repository<InstanceType<M>>;
 }
 ```
 

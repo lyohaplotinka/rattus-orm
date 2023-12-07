@@ -19,14 +19,14 @@ Unlike the integration with Vuex, this is a plugin for Vue, not for Pinia.
 ```typescript title="main.ts"
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-import { rattusOrmPiniaVuePlugin } from "@rattus-orm/pinia";
+import { installRattusORM } from "@rattus-orm/pinia";
 
 const pinia = createPinia()
 
 const app = createApp({ /* your root component */ })
 app
   .use(pinia)
-  .use(rattusOrmPiniaVuePlugin())
+  .use(installRattusORM())
 ```
 
 ```html title="App.vue"
@@ -75,13 +75,16 @@ You do not have to manually install the Pinia plugin in Vue. The following optio
 ```typescript title="main.ts - passing Pinia to rattusOrmPiniaVuePlugin"
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-import { rattusOrmPiniaVuePlugin } from "@rattus-orm/pinia";
+import { installRattusORM } from "@rattus-orm/pinia";
 
 const pinia = createPinia()
 
 const app = createApp({ /* your root component */ })
 app
-  // The first argument is the database name, the second is the Pinia instance.
+  // Pass the database name and Pinia instance.
   // Pinia will be automatically installed in Vue.
-  .use(rattusOrmPiniaVuePlugin('entities', pinia))
+  .use(installRattusORM({
+    connection: 'entities',
+    pinia,
+  }))
 ```

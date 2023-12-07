@@ -11,10 +11,22 @@ sidebar_position: 4
 
 :::warning[Внимание]
 Композиции работают только если вы пользовались установкой через плагин. 
-Они опираются на наличие ключа `$database` в вашем хранилище. Если вы хотите
+Они опираются на наличие ключа `$rattusContext` в вашем хранилище. Если вы хотите
 их использовать при ручной настройке, позаботьсесь о размещении вашей базы 
 данных в экземпляре Vuex-хранилища.
 :::
+
+### useRattusContext
+Возвращает специальный объект **RattusContext**, дающий доступ
+к управлению базами данных и получению репозиториев.
+```typescript
+declare class RattusContext {
+  $database: Database;
+  $databases: Record<string, Database>;
+  createDatabase(connection?: string, isPrimary?: boolean): Database;
+  $repo<M extends typeof Model>(model: M, connection?: string): Repository<InstanceType<M>>;
+}
+```
 
 ### useRepository
 
