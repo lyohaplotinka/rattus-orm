@@ -24,7 +24,7 @@
     "lint": "yarn workspaces foreach -A run lint",
     "lint:scripts": "eslint -c ./scripts/.eslintrc.js ./scripts/**/*.{js,mjs} --fix",
     "typecheck": "yarn workspaces foreach -A run typecheck",
-    "build": "yarn workspaces foreach -Ap --topological-dev run build",
+    "build": "yarn workspaces foreach -Ap --exclude docs --topological-dev run build",
     "clean": "yarn workspaces foreach -A run clean",
     "release": "node ./scripts/releaser/releaser.mjs release",
     "prepare": "npx simple-git-hooks",
