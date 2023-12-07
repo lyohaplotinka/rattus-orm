@@ -3,7 +3,7 @@ sidebar_position: 3
 ---
 
 # Ручная настройка
-
+### Создание базы данных вручную
 Иногда использование плагина может быть неудобным. Если это ваш случай, всё 
 можно настроить вручную. 
 
@@ -26,3 +26,21 @@ const database = new Database()
 
 После этого вы можете использовать базу данных как обычно: она связана с хранилищем
 провайдером. 
+
+### Интеграция с Pinia
+Плагин для Pinia позволяет вам использовать созданную
+вручную базу данных. Для этого вам нужно
+передать её в параметры плагина:
+
+```typescript
+import { createApp } from 'vue'
+import { installRattusORM } from "@rattus-orm/pinia";
+import { myDatabase } from './database'
+
+const app = createApp({ /* your root component */ })
+app
+  .use(installRattusORM({ database: myDatabase }))
+```
+
+После этого вы можете использовать все композиции
+как обычно.

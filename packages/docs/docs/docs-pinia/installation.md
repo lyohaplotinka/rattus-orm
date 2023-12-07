@@ -56,7 +56,7 @@ export default defineComponent({
     
     save({ id: '1', email: 'test@test.com' })
     
-    the onClick = () => {
+    const onClick = () => {
       save({ id: '1', email: 'updated@test.com' })
     }
     
