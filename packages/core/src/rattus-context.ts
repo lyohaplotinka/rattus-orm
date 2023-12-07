@@ -1,1 +1,1 @@
-export { RattusContext } from './context/rattus-context'
+export * from './context/rattus-context'

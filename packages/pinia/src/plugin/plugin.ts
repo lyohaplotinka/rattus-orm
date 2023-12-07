@@ -1,4 +1,4 @@
-import { RattusContext } from '@rattus-orm/core/rattus-context'
+import { createRattusContext } from '@rattus-orm/core/rattus-context'
 import type { RattusOrmInstallerOptions } from '@rattus-orm/utils/sharedTypes'
 import type { Pinia } from 'pinia'
 import type { Plugin } from 'vue'
@@ -13,7 +13,7 @@ export type PiniaPluginOptions = RattusOrmInstallerOptions & {
 export function installRattusORM(options?: PiniaPluginOptions): Plugin {
   return {
     install(app) {
-      const { connection = 'entities', pinia } = options ?? {}
+      const { connection = 'entities', pinia, database } = options ?? {}
 
       const globalProperties = app._context.config.globalProperties
 
@@ -31,9 +31,10 @@ export function installRattusORM(options?: PiniaPluginOptions): Plugin {
       }
 
       if (!globalProperties.$rattusContext) {
-        const context = new RattusContext(new PiniaDataProvider(piniaInstance))
-        context.createDatabase(connection, true)
-        globalProperties.$rattusContext = context
+        globalProperties.$rattusContext = createRattusContext(
+          { connection, database },
+          new PiniaDataProvider(piniaInstance),
+        )
       }
 
       app.provide(RattusOrmInjectionKey, globalProperties.$rattusContext)

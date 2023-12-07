@@ -1,23 +1,16 @@
-import { RattusContext as RattusContextCore } from '@rattus-orm/core/rattus-context'
+import type { RattusContext as RattusContextCore } from '@rattus-orm/core/rattus-context'
+import { createRattusContext } from '@rattus-orm/core/rattus-context'
 import type { RattusOrmInstallerOptions } from '@rattus-orm/utils/sharedTypes'
 import type { PropsWithChildren } from 'react'
 import { createContext, useRef } from 'react'
 import React from 'react'
 
-import { ReactSignalsDataProvider } from '../data-provider/react-signals-data-provider'
-
-function createRattusContext(connectionName: string): RattusContextCore {
-  const dataProvider = new ReactSignalsDataProvider()
-  const context = new RattusContextCore(dataProvider)
-  context.createDatabase(connectionName, true)
-
-  return context
-}
+import { ReactSignalsDataProvider } from '../index'
 
 export const RattusContext = createContext<Partial<RattusContextCore>>({ $database: undefined, $databases: undefined })
 
-export function RattusProvider({ connection = 'entities', children }: PropsWithChildren<RattusOrmInstallerOptions>) {
-  const rattusContext = useRef(createRattusContext(connection))
+export function RattusProvider(props: PropsWithChildren<RattusOrmInstallerOptions>) {
+  const rattusContext = useRef(createRattusContext(props, new ReactSignalsDataProvider()))
 
-  return <RattusContext.Provider value={rattusContext.current}>{children}</RattusContext.Provider>
+  return <RattusContext.Provider value={rattusContext.current}>{props.children}</RattusContext.Provider>
 }
