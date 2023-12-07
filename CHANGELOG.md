@@ -1,3 +1,19 @@
+# 2023/12/07
+### Utils (0.0.5)
+* add common `RattusOrmInstallerOptions` type.
+
+### Core (0.0.13)
+* add `RattusContext` class for unified context management.
+
+### Vuex (0.0.12)
+* add `useRattusContext` composable;
+* refactor plugin to work with `RattusContext` from core;
+* `installRattusORM` plugin now uses `RattusOrmInstallerOptions` type.
+
+### Pinia (0.0.4)
+* rename plugin function: `rattusOrmPiniaVuePlugin` => `installRattusOrm`;
+* plugin function now uses `RattusOrmInstallerOptions` type.
+
 # 2023/12/01
 ### Utils (0.0.3)
 * remove "main" entries from package.json.
