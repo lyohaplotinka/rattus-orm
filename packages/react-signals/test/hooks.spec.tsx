@@ -65,7 +65,7 @@ describe('react-hooks: useRepository', () => {
     expect(() => query().where('id', '1').first()).not.toThrowError()
   })
 
-  it.only('useRepository returns reactive data', async () => {
+  it('useRepository returns reactive data', async () => {
     const {
       result: { save },
       renderResult,
@@ -73,18 +73,10 @@ describe('react-hooks: useRepository', () => {
     const elem = renderResult.getByTestId('reactivity')
     expect(elem).toHaveTextContent('')
 
-    act(() => {
-      save({ id: '1', age: 32 })
-    })
-
-    await Promise.resolve()
+    act(() => save({ id: '1', age: 32 }))
     expect(elem).toHaveTextContent('32')
 
-    act(() => {
-      save({ id: '1', age: 23 })
-    })
-
-    await Promise.resolve()
+    act(() => save({ id: '1', age: 23 }))
     expect(elem).toHaveTextContent('23')
   })
 })
