@@ -1,13 +1,18 @@
 import { RattusProvider, useRattusContext } from '../src'
 import React, { ReactElement } from 'react'
 import { render } from '@testing-library/react'
+import { RattusOrmInstallerOptions } from '@rattus-orm/utils/sharedTypes'
 
 export const TestComponent = () => {
   useRattusContext()
 
   return <div>TestComp</div>
 }
-export const renderWithResultAndContext = (ui: ReactElement, cb: CallableFunction) => {
+export const renderWithResultAndContext = (
+  ui: ReactElement = <TestComponent />,
+  cb: CallableFunction,
+  contextProps: RattusOrmInstallerOptions = {},
+) => {
   let result: any
 
   const Component = () => {
@@ -17,7 +22,7 @@ export const renderWithResultAndContext = (ui: ReactElement, cb: CallableFunctio
   }
 
   const renderResult = render(
-    <RattusProvider>
+    <RattusProvider {...contextProps}>
       <Component />
     </RattusProvider>,
   )

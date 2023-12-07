@@ -14,6 +14,7 @@ export class RattusContext {
     if (mainDatabase) {
       this.dataProvider = mainDatabase.getDataProvider()
       this.$database = mainDatabase
+      this.$databases[mainDatabase.getConnection()] = mainDatabase
     } else if (dataProvider) {
       this.dataProvider = dataProvider
     } else {
