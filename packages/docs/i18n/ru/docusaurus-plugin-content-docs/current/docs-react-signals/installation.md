@@ -1,22 +1,18 @@
-<p align="center">
-  <img style="margin-right: -15px" width="192px" src="https://raw.githubusercontent.com/lyohaplotinka/rattus-orm/main/assets/logo.svg" alt="Rattus ORM">
-</p>
+---
+sidebar_position: 2
+---
 
-<h1 align="center">Rattus ORM – React Signals</h1>
+# Установка и использование
 
-**React Signals data provider and helpers for Rattus ORM**
-
-### Contents
-1. ReactSignalsDataProvider;
-2. `<RattusProvier />` component;
-3. Hooks: `useRattusContext`, `useRepository`.
-
-### Installation
-Use your favorite package manager. For example, yarn:
+`@rattus-orm/react-signals` – это отдельный пакет, не включающий в себя основную библиотеку. Чтобы начать
+пользоваться ORM с Сигналами в вашем приложении React, нужно установить всё:
 ```bash
 yarn add @rattus-orm/core @rattus-orm/react-signals @preact/signals-react
 ```
-### Basic usage
+
+### Базовый пример использования
+Самый простой путь настроить Rattus ORM с Signals – использовать провайдер:
+
 ```tsx title="main.tsx"
 import React from 'react'
 import ReactDOM from 'react-dom/client'
@@ -70,9 +66,3 @@ function App() {
   )
 }
 ```
-
-### Documentation
-For detailed docs please read [documentation website](https://lyohaplotinka.github.io/rattus-orm/docs/category/signals-integration-react).
-
-### Contributing
-Contributions are welcome! Please read our [Contributing Guide](../../CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests.

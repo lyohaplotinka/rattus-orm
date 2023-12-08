@@ -2,16 +2,16 @@
 sidebar_position: 2
 ---
 
-# Установка и использование
+# Installation and Usage
 
-`@rattus-orm/react-signals` – это отдельный пакет, не включающий в себя основную библиотеку. Чтобы начать
-пользоваться ORM с Сигналами в вашем приложении React, нужно установить всё:
+`@rattus-orm/react-signals` is a separate package that does not include the main library. To start
+using ORM with Signals in your React application, you need to install everything:
 ```bash
 yarn add @rattus-orm/core @rattus-orm/react-signals @preact/signals-react
 ```
 
-### Базовый пример использования
-Самый простой путь настроить Rattus ORM с Signals – использовать контекст:
+### Basic Usage Example
+The simplest way to set up Rattus ORM with Signals is to use the provider:
 
 ```tsx title="main.tsx"
 import React from 'react'

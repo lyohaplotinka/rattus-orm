@@ -2,14 +2,14 @@
 sidebar_position: 4
 ---
 
-# Утилиты
+# Utilities
 
-В пакет входит ряд хуков, которые вы можете использовать
-в работе.
+The package includes a number of hooks that you can use
+in your work.
 
 ### useRattusContext
-Возвращает специальный объект **RattusContext**, дающий доступ
-к управлению базами данных и получению репозиториев.
+Returns a special object **RattusContext**, which provides access
+to database management and repository retrieval.
 ```typescript
 declare class RattusContext {
   $database: Database;
@@ -21,9 +21,9 @@ declare class RattusContext {
 
 ### useRepository
 
-Хук useRepository возвращает основные методы для взаимодействия с репозиторием:
-`'find', 'all', 'save', 'insert', 'fresh', 'destroy', 'flush', 'query`. Их можно использовать
-с деструктуризацией:
+The useRepository hook returns the main methods for interacting with the repository:
+`'find', 'all', 'save', 'insert', 'fresh', 'destroy', 'flush', 'query`. You can use them
+with destructuring:
 
 ```tsx
 function App() {
@@ -39,30 +39,30 @@ function App() {
 }
 ```
 
-Не забудьте, что полученный метод работает только с данными модели User.
-Для работы с другими моделями вы можете вызвать хук
-ещё раз. 
+Remember that the obtained method works only with the data of the User model.
+To work with other models, you can call the hook
+again.
 
-### Реактивность
-В отличие от интеграций с Vue, полученные данные уже
-реактивны. В примере выше вывод `user.email` будет
-обновляться сразу.
+### Reactivity
+Unlike integrations with Vue, the obtained data is already
+reactive. In the example above, the output of `user.email` will
+be updated immediately.
 
-Однако, важно помнить о контексте, в котором вы работаете.
-Хук `useComputed` будет работать только тогда, когда 
-обращение к базе данных происходит прямо внутри функции:
+However, it's important to remember the context in which you're working.
+The `useComputed` hook will only work when
+the database access occurs directly inside the function:
 
 ```tsx
 const user = query().where('id', '1').first()
 
-// Не сработает: нет обращения к сигналу внутри хука
+// Will not work: no signal access within the hook
 const emailWithExplanation = useComputed(() => {
   return user.email + ' - is Email'
 })
 ```
 
-Чтобы всё работало как ожидается, вы можете делать так
-(оба варианта сработают):
+To make everything work as expected, you can do the following
+(both options will work):
 ```tsx
 const emailWithExplanation = useComputed(() => {
   return query().where('id', '1').first().email + ' - is Email'

@@ -2,13 +2,12 @@
 sidebar_position: 3
 ---
 
-# Ручная настройка
-### Создание базы данных вручную
-Иногда использование плагина может быть неудобным. Если это ваш случай, всё
-можно настроить вручную. 
+# Manual Setup
+### Creating database manually
+Sometimes using the plugin might be inconvenient. If this is your case, you can set everything up manually.
 
-Прежде всего, нужно создать базу данных [(подробнее здесь)](/docs/docs-core/database).
-В процессе создания нужно передать в базу данных правильно настроенный Data provider:
+First of all, you need to create a database [(more details here)](/docs/docs-core/database).
+During the creation process, you need to pass a correctly configured Data provider to the database:
 
 ```typescript
 import { Database } from '@rattus-orm/core'
@@ -20,13 +19,13 @@ const database = new Database()
   .start()
 ```
 
-После этого вы можете использовать базу данных как обычно: она связана с хранилищем
-провайдером. 
+After this, you can use the database as usual: it's linked to the storage
+by the provider.
 
-### Интеграция с React
-Контекст для React позволяет вам использовать созданную
-вручную базу данных. Для этого вам нужно
-передать её в пропс:
+### Integration with React
+The provider for React allows you to use the
+manually created database. To do this, you need
+to pass it in the props:
 
 ```tsx title="main.tsx"
 import React from 'react'

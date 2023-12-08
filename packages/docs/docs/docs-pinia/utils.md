@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # Utilities
 
-In the previous steps, we discussed the first utility: the `rattusOrmPiniaVuePlugin` function, which provides a plugin for Vue.
+In the previous steps, we discussed the first utility: the `installRattusORM` function, which provides a plugin for Vue.
 
 However, the package includes a number of other compositions.
 
