@@ -52,7 +52,7 @@
     "size": "run -T size-limit"
   },
   "dependencies": {
-    "@rattus-orm/utils": "^0.0.5"
+    "@rattus-orm/utils": "^0.0.6"
   },
   "devDependencies": {
     "@rattus-orm/utils": "workspace:^",

@@ -1,3 +1,19 @@
+# 2023/12/08
+_For all: update dependencies_
+
+### Utils (0.0.6)
+* add common `DatabaseLike` type.
+
+### Core (0.0.14)
+* function `createRattusContext` for unified usage in integrations;
+
+### Vuex (0.0.13), Pinia (0.0.5)
+* use new `createRattusContext` in plugin, add ability to customize database.
+
+### React Signals (0.0.1)
+* introducing React integration with React Signals.
+
+
 # 2023/12/07
 ### Utils (0.0.5)
 * add common `RattusOrmInstallerOptions` type.
