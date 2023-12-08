@@ -1,12 +1,13 @@
 import React from 'react'
 import { describe, expect, it } from 'vitest'
 import { RattusProvider, ReactSignalsDataProvider, useRattusContext } from '../src'
-import { render } from '@testing-library/react'
+import { cleanup, render } from '@testing-library/react'
 import { isInitializedContext } from '../src/utils'
 import { Database } from '@rattus-orm/core'
 import { isUnknownRecord } from '@rattus-orm/utils/isUnknownRecord'
 import { renderWithResultAndContext, TestComponent } from './test-utils'
 import { RattusContext } from '@rattus-orm/core/rattus-context'
+import '@testing-library/jest-dom/vitest'
 
 describe('react-signals: context', () => {
   it('Context valid', () => {
@@ -31,14 +32,16 @@ describe('react-signals: context', () => {
   })
 
   it('Does not throw an error when wrapped and throws when not', () => {
-    expect(() =>
+    expect(
       render(
         <RattusProvider>
           <TestComponent />
         </RattusProvider>,
-      ),
-    ).not.toThrowError()
+      ).getByTestId('test-block'),
+    ).toHaveTextContent('TestComp')
 
-    expect(() => render(<TestComponent />)).toThrowError()
+    cleanup()
+
+    expect(render(<TestComponent />).getByTestId('test-block')).toHaveTextContent('Error')
   })
 })

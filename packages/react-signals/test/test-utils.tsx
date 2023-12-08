@@ -4,9 +4,13 @@ import { render } from '@testing-library/react'
 import { RattusOrmInstallerOptions } from '@rattus-orm/utils/sharedTypes'
 
 export const TestComponent = () => {
-  useRattusContext()
+  try {
+    useRattusContext()
+  } catch (e) {
+    return <div data-testid={'test-block'}>Error</div>
+  }
 
-  return <div>TestComp</div>
+  return <div data-testid={'test-block'}>TestComp</div>
 }
 export const renderWithResultAndContext = (
   ui: ReactElement = <TestComponent />,
