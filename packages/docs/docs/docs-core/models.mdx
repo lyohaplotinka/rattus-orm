@@ -27,17 +27,17 @@ from the `Model` class:
         import { Model, Str, Num, Uid } from '@rattus-orm/core'
 
         export class User extends Model {
-        public static entity = 'user'
+            public static entity = 'user'
 
-        @Uid()
-        public id: string
+            @Uid()
+            public id: string
 
-        @Str('')
-        public name: string
+            @Str('')
+            public name: string
 
-        @Num(0)
-        public age: number
-    }
+            @Num(0)
+            public age: number
+        }
         ```
     </TabItem>
     <TabItem value={'js'} label={'JavaScript'}>
@@ -45,16 +45,16 @@ from the `Model` class:
         import { Model } from '@rattus-orm/core'
 
         export class User extends Model {
-        static entity = 'user'
+            static entity = 'user'
 
-        static fields () {
-        return {
-        id: this.uid(),
-        name: this.string(''),
-        age: this.number(0)
-    }
-    }
-    }
+            static fields () {
+                return {
+                    id: this.uid(),
+                    name: this.string(''),
+                    age: this.number(0)
+                }
+            }
+        }
         ```
     </TabItem>
 </Tabs>
@@ -86,7 +86,20 @@ class User extends Model {
   // all fields of your models will be "null"
   declare id: string
 ```
+If you are getting error from ESBuild in dev mode, like `[ERROR] Decorators are not valid here`, make sure esbuild is targeted to your tsconfig in `vite.config.mts`:
 
+```typescript title="vite.config.mts"
+import { defineConfig } from 'vite';
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  optimizeDeps: {
+    esbuildOptions: {
+      tsconfig: 'tsconfig.json',
+    },
+  },
+});
+```
 
 ### Field Types
 

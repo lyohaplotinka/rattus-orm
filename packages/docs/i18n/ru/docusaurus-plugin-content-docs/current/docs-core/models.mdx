@@ -87,6 +87,21 @@ class User extends Model {
   declare id: string
 ```
 
+Если вы получаете сообщение об ошибке от ESBuild в режиме разработки, например: `[ERROR] Decorators are not valid here`, убедитесь, что
+esbuild настроен на ваш tsconfig в `vite.config.mts`:
+```typescript title="vite.config.mts"
+import { defineConfig } from 'vite';
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  optimizeDeps: {
+    esbuildOptions: {
+      tsconfig: 'tsconfig.json',
+    },
+  },
+});
+```
+
 ### Типы полей
 
 #### Общий тип
