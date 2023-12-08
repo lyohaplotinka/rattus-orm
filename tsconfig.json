@@ -27,6 +27,7 @@
     "strictPropertyInitialization": false,
     "useDefineForClassFields": false,
     "resolveJsonModule": true,
+    "jsx": "react",
     "lib": [
       "esnext",
       "dom"

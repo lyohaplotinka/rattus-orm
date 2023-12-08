@@ -20,5 +20,10 @@
     "autoBump": true,
     "order": 0,
     "runFunctional": false
+  },
+  "react-signals": {
+    "path": "packages/react-signals/test/provider-factory.ts",
+    "exportName": "dataProviderFactory",
+    "runFunctional": true
   }
 }

@@ -40,6 +40,12 @@ export interface Elements {
   [id: string]: Element
 }
 
+export interface DatabaseLike {
+  setDataProvider(provider: DataProvider): this
+  start(): void
+}
+
 export type RattusOrmInstallerOptions = {
   connection?: string
+  database?: DatabaseLike
 }

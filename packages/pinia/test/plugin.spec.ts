@@ -3,7 +3,8 @@ import { App, createApp, nextTick } from 'vue'
 import { beforeEach, expect, vi } from 'vitest'
 import { Database, Model, Num, Uid } from '@rattus-orm/core'
 import { createPinia } from 'pinia'
-import { installRattusORM } from '../src'
+import { installRattusORM, PiniaDataProvider } from '../src'
+import { RattusContext } from '@rattus-orm/core/rattus-context'
 
 class User extends Model {
   public static entity = 'user'
@@ -15,6 +16,18 @@ class User extends Model {
   public age: number
 }
 
+const createMockApp = () => ({
+  _context: {
+    config: {
+      globalProperties: {
+        $pinia: createPinia(),
+        $rattusContext: null as unknown as RattusContext,
+      },
+    },
+  },
+  provide() {},
+})
+
 describe('plugin: pinia', () => {
   let app: App
 
@@ -25,6 +38,29 @@ describe('plugin: pinia', () => {
 
   beforeEach(() => {
     app = createApp({ template: '<div />' })
+  })
+
+  it('context works correctly with default parameters', () => {
+    const mockApp = createMockApp()
+    installRattusORM().install!(mockApp as any)
+    const context = mockApp._context.config.globalProperties.$rattusContext
+
+    expect(context).toBeInstanceOf(RattusContext)
+    expect(context.$database.isStarted()).toEqual(true)
+    expect(context.$database.getConnection()).toEqual('entities')
+    expect(Object.keys(context.$databases)).toEqual(['entities'])
+  })
+
+  it('plugin params respect custom databases', () => {
+    const mockApp = createMockApp()
+    const database = new Database().setConnection('custom').setDataProvider(new PiniaDataProvider(createPinia()))
+    installRattusORM({ database }).install!(mockApp as any)
+
+    const context = mockApp._context.config.globalProperties.$rattusContext
+
+    expect(context).toBeInstanceOf(RattusContext)
+    expect(context.$database.isStarted()).toEqual(false)
+    expect(context.$database.getConnection()).toEqual('custom')
   })
 
   it('installs Vuex ORM to the store', () => {

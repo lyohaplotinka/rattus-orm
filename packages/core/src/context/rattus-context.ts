@@ -1,4 +1,4 @@
-import type { DataProvider } from '@rattus-orm/utils/sharedTypes'
+import type { DataProvider, RattusOrmInstallerOptions } from '@rattus-orm/utils/sharedTypes'
 
 import { Database } from '../database/database'
 import type { Model } from '../model/Model'
@@ -8,8 +8,21 @@ export class RattusContext {
   public $database: Database
   public $databases: Record<string, Database> = {}
   protected storedRepos = new Map<string, Repository>()
+  protected readonly dataProvider: DataProvider
 
-  constructor(protected readonly dataProvider: DataProvider) {}
+  constructor(dataProvider?: DataProvider, mainDatabase?: Database) {
+    if (mainDatabase) {
+      this.dataProvider = mainDatabase.getDataProvider()
+      this.$database = mainDatabase
+      this.$databases[mainDatabase.getConnection()] = mainDatabase
+    } else if (dataProvider) {
+      this.dataProvider = dataProvider
+    } else {
+      throw new Error(
+        '[RattusContext] no dataProvider and mainDatabase passed to context. You should pass at least one of them.',
+      )
+    }
+  }
 
   public createDatabase(connection: string = 'entities', isPrimary = false) {
     const newDb = new Database().setConnection(connection).setDataProvider(this.dataProvider)
@@ -46,4 +59,14 @@ export class RattusContext {
 
     return repo
   }
+}
+
+export function createRattusContext(params: RattusOrmInstallerOptions, dataProvider?: DataProvider): RattusContext {
+  if (params.database && params.database instanceof Database) {
+    return new RattusContext(undefined, params.database)
+  }
+  const context = new RattusContext(dataProvider)
+  context.createDatabase(params.connection, true)
+
+  return context
 }
