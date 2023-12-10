@@ -324,5 +324,14 @@
   },
   "Integrations": {
     "message": "Интеграции"
+  },
+  "Vue + Vuex integration": {
+    "message": "Интеграция для Vue + Vuex"
+  },
+  "Vue + Pinia integration": {
+    "message": "Интеграция для Vue + Pinia"
+  },
+  "React + Preact Signals integration": {
+    "message": "Интеграция для React + Preact Signals"
   }
 }

@@ -1,6 +1,5 @@
 import Link from '@docusaurus/Link'
-import Translate from '@docusaurus/Translate'
-import { $$t } from '@site/src/utils/utils'
+import Translate, { translate } from '@docusaurus/Translate'
 import PiniaLogo from '@site/static/img/integrations/pinia.svg'
 import ReactLogo from '@site/static/img/integrations/react.svg'
 import VuexLogo from '@site/static/img/integrations/vuex.svg'
@@ -24,21 +23,21 @@ const IntegrationsList: IntegrationItem[] = [
     packageName: '@rattus-orm/vuex',
     picture: VuexLogo,
     link: '/docs/category/vuex-integration-vue',
-    description: $$t('Vue + Vuex integration'),
+    description: translate({ message: 'Vue + Vuex integration' }),
   },
   {
     title: 'Pinia',
     packageName: '@rattus-orm/pinia',
     picture: PiniaLogo,
     link: '/docs/category/pinia-integration-vue',
-    description: $$t('Vue + Pinia integration'),
+    description: translate({ message: 'Vue + Pinia integration' }),
   },
   {
     title: 'React Signals',
     packageName: '@rattus-orm/react-signals',
     picture: ReactLogo,
     link: '/docs/category/signals-integration-react',
-    description: $$t('React + Preact Signals integration'),
+    description: translate({ message: 'React + Preact Signals integration' }),
   },
 ]
 
