@@ -3,6 +3,7 @@
   "extends": "@docusaurus/tsconfig",
   "compilerOptions": {
     "esModuleInterop": true,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "types": ["docusaurus-plugin-sass"]
   }
 }

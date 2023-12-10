@@ -2,7 +2,7 @@ import { useSignal } from '@preact/signals-react'
 import { debounce } from 'lodash-es'
 import { useEffect } from 'react'
 
-const match = () => window.matchMedia('(max-width: 800px)').matches
+const match = () => window.matchMedia('(max-width: 996px)').matches
 
 export function useSmallScreen() {
   const isSmall = useSignal(false)

@@ -58,7 +58,10 @@ function Feature({ title, Svg, description }: FeatureItem) {
 
 export default function HomepageFeatures(): JSX.Element {
   return (
-    <section className={styles.features}>
+    <section className={'section-block'}>
+      <Heading as={'h1'}>
+        <Translate>Main points</Translate>
+      </Heading>
       <div className="container">
         <div className="row">
           {FeatureList.map((props, idx) => (

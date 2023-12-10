@@ -41,7 +41,7 @@ const config: Config = {
           editUrl: 'https://github.com/lyohaplotinka/rattus-orm/tree/main/packages/docs',
         },
         theme: {
-          customCss: './src/css/custom.css',
+          customCss: './src/css/custom.scss',
         },
       } satisfies Preset.Options,
     ],
@@ -114,6 +114,7 @@ const config: Config = {
       respectPrefersColorScheme: false,
     },
   } satisfies Preset.ThemeConfig,
+  plugins: ['docusaurus-plugin-sass'],
 }
 
 export default config

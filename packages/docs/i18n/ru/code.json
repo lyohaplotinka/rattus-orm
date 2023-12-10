@@ -315,5 +315,14 @@
   },
   "Your data is organized, you have convenient access to it at any time": {
     "message": "Ваши данные упорядочены, вы имеете к ним удобный доступ в любой момент."
+  },
+  "Main points": {
+    "message": "Основные моменты"
+  },
+  "See docs": {
+    "message": "К документации"
+  },
+  "Integrations": {
+    "message": "Интеграции"
   }
 }

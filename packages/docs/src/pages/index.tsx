@@ -2,6 +2,7 @@ import Link from '@docusaurus/Link'
 import Translate, { translate } from '@docusaurus/Translate'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 import HomepageFeatures from '@site/src/components/HomepageFeatures'
+import HomepageIntegrations from '@site/src/components/HomepageIntegrations'
 import Logo from '@site/static/img/logo.svg'
 import Heading from '@theme/Heading'
 import Layout from '@theme/Layout'
@@ -42,6 +43,7 @@ export default function Home(): JSX.Element {
     >
       <HomepageHeader />
       <main>
+        <HomepageIntegrations />
         <HomepageFeatures />
       </main>
     </Layout>

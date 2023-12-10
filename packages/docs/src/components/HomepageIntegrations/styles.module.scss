@@ -1,0 +1,20 @@
+.integrationLogo {
+  height: 150px;
+  margin-bottom: 1rem;
+}
+
+.integrationCard {
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+  :global(.card__body), :global(.card__image), :global(.card__footer) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: 996px) {
+  .integrationCol + .integrationCol {
+    margin-top: 1rem;
+  }
+}
