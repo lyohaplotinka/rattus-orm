@@ -102,15 +102,15 @@ describe('feature/relations/morph_one_retrieve', () => {
   describe('when there are no images', () => {
     const store = createStore()
 
-    fillState(store, {
-      users: {
-        1: { id: 1, name: 'John Doe' },
-      },
-      posts: {},
-      images: {},
-    })
-
     it('can eager load missing relation as `null`', () => {
+      fillState(store, {
+        users: {
+          1: { id: 1, name: 'John Doe' },
+        },
+        posts: {},
+        images: {},
+      })
+
       const user = store.$repo(User).with('image').first()!
 
       expect(user).toBeInstanceOf(User)

@@ -25,5 +25,10 @@
     "path": "packages/react-signals/test/provider-factory.ts",
     "exportName": "dataProviderFactory",
     "runFunctional": true
+  },
+  "local-storage": {
+    "path": "packages/local-storage/test/provider-factory.ts",
+    "exportName": "dataProviderFactory",
+    "runFunctional": true
   }
 }
