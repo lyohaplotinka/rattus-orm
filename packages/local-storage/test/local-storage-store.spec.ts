@@ -12,7 +12,7 @@ const clearStorage = () => localStorage.clear()
 const largeAmount = 110_000
 
 describe('local-storage-store', () => {
-  it('initializes correctly', () => {
+  it('initializes correctly', async () => {
     new LocalStorageStore(['t', 'a'])
     expect(getDataForChunk(0)).toEqual('{"data":{}}')
     expect(localStorage.getItem(chunksNumberName)).toEqual('1')
@@ -50,10 +50,10 @@ describe('local-storage-store', () => {
 
     const store = new LocalStorageStore(['t', 'a'])
     store.save(data)
-    // expect(localStorage.getItem(chunksNumberName)).toEqual('2')
+    expect(localStorage.getItem(chunksNumberName)).toEqual('5')
 
-    const recieved = store.getData()
-    expect(Object.keys(recieved.data).length).toEqual(largeAmount)
-    expect(recieved.data).toStrictEqual(data)
+    const received = store.getData()
+    expect(Object.keys(received.data).length).toEqual(largeAmount)
+    expect(received.data).toStrictEqual(data)
   })
 })

@@ -7,35 +7,42 @@ const WARNING_LIMIT = 4_500_000
 
 export class LocalStorageStore {
   protected readonly key: string
+  protected state: State
 
   constructor(modulePath: ModulePath, initialState: State = { data: {} }) {
     this.key = `${RATTUS_LS_PREFIX}-${modulePath.join('/')}`
     if (this.getChunksNumber() === null) {
-      this.writeState(initialState)
+      this.state = initialState
+      this.writeState()
+    } else {
+      this.readState()
     }
   }
 
   public flush() {
-    this.writeState({ data: {} })
+    this.state = { data: {} }
+    this.writeState()
   }
 
   public fresh(records: Elements) {
-    this.writeState({
+    this.state = {
       data: records,
-    })
+    }
+    this.writeState()
   }
 
   public getData() {
-    return this.readState()
+    return this.state
   }
 
   public save(records: Elements) {
-    this.writeState({
+    this.state = {
       data: {
-        ...this.readState().data,
+        ...this.state.data,
         ...records,
       },
-    })
+    }
+    this.writeState()
   }
 
   public destroy(ids: string[]) {
@@ -50,8 +57,8 @@ export class LocalStorageStore {
     this.fresh(newData)
   }
 
-  protected writeState(state: State): void {
-    const serialized = JSON.stringify(state)
+  protected writeState(): void {
+    const serialized = JSON.stringify(this.state)
     if (serialized.length >= WARNING_LIMIT) {
       console.warn(
         `[LocalStorageStore] serialized data length exceeds ${WARNING_LIMIT} characters. LocalStorage quota may be exceeded.`,
@@ -70,7 +77,7 @@ export class LocalStorageStore {
     localStorage.setItem(this.getChunksNumberStoreKey(), String(chunksNumber))
   }
 
-  protected readState(): State {
+  protected readState(): void {
     const chunksNumber = this.getChunksNumber()
     if (!chunksNumber) {
       throw new Error(`Cannot read chunksNumber for ${this.key}`)
@@ -91,7 +98,7 @@ export class LocalStorageStore {
       throw new Error('Data is malformed')
     }
 
-    return parsed as State
+    this.state = parsed as State
   }
 
   protected getChunksNumber() {
