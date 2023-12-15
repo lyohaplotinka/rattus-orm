@@ -1,11 +1,14 @@
 .integrationLogo {
-  height: 150px;
+  height: 90px;
   margin-bottom: 1rem;
 }
+
+$cardWidth: 260;
 
 .integrationCard {
   padding-top: 2rem;
   padding-bottom: 1rem;
+  width: #{$cardWidth}px;
   :global(.card__body), :global(.card__image), :global(.card__footer) {
     display: flex;
     flex-direction: column;
@@ -13,8 +16,28 @@
   }
 }
 
+.integrationsWrapper {
+  display: flex;
+  flex-direction: column;
+  max-width: var(--ifm-container-width);
+  width: 90%;
+  gap: 15px;
+}
+
+.integrationRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* Used for both row and column gaps */
+  justify-content: center;
+  align-items: center;
+}
+
 @media screen and (max-width: 996px) {
   .integrationCol + .integrationCol {
     margin-top: 1rem;
   }
+}
+
+:export {
+  cardWidth: $cardWidth
 }
