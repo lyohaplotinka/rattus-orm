@@ -1,3 +1,8 @@
+# 2023/12/17
+
+### LocalStorage (0.0.1)
+* introducing localStorage integration.
+
 # 2023/12/08
 _For all: update dependencies_
 

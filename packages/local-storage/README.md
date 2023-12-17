@@ -41,7 +41,7 @@ const found = userRepo.find('2')
 ```
 
 ### Documentation
-For detailed docs please read [documentation website](https://lyohaplotinka.github.io/rattus-orm/docs/category/vuex-integration).
+For detailed docs please read [documentation website](https://lyohaplotinka.github.io/rattus-orm/docs/category/localstorage-integration).
 
 ### Contributing
 Contributions are welcome! Please read our [Contributing Guide](../../CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests.
