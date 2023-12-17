@@ -1,6 +1,6 @@
 {
-  "name": "@rattus-orm/{{ PACKAGE }}",
-  "description": "ORM for your JS/TS apps: {{ PACKAGE }} bindings",
+  "name": "@rattus-orm/local-storage",
+  "description": "ORM for your JS/TS apps: local-storage bindings",
   "homepage": "https://lyohaplotinka.github.io/rattus-orm/",
   "author": "Lyoha Plotinka",
   "license": "MIT",
@@ -15,20 +15,20 @@
   "keywords": [
     "orm",
     "rattus",
-    "{{ PACKAGE }}",
+    "local-storage",
     "typescript",
     "javascript"
   ],
   "version": "0.0.0",
-  "main": "./dist/rattus-orm-{{ PACKAGE }}-provider.js",
-  "browser": "./dist/rattus-orm-{{ PACKAGE }}-provider.mjs",
-  "module": "./dist/rattus-orm-{{ PACKAGE }}-provider.mjs",
-  "types": "./dist/rattus-orm-{{ PACKAGE }}-provider.d.ts",
+  "main": "./dist/rattus-orm-local-storage-provider.js",
+  "browser": "./dist/rattus-orm-local-storage-provider.mjs",
+  "module": "./dist/rattus-orm-local-storage-provider.mjs",
+  "types": "./dist/rattus-orm-local-storage-provider.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/rattus-orm-{{ PACKAGE }}-provider.mjs",
-      "require": "./dist/rattus-orm-{{ PACKAGE }}-provider.js",
-      "types": "./dist/rattus-orm-{{ PACKAGE }}-provider.d.ts"
+      "import": "./dist/rattus-orm-local-storage-provider.mjs",
+      "require": "./dist/rattus-orm-local-storage-provider.js",
+      "types": "./dist/rattus-orm-local-storage-provider.d.ts"
     }
   },
   "files": [
@@ -43,23 +43,23 @@
     "size": "run -T size-limit"
   },
   "dependencies": {
-    "@rattus-orm/utils": "^{{ UTILS_VERSION }}"
+    "@rattus-orm/utils": "^0.0.6"
   },
   "devDependencies": {
     "@rattus-orm/core": "workspace:^",
     "@rattus-orm/utils": "workspace:^"
   },
   "peerDependencies": {
-    "@rattus-orm/core": "^{{ CORE_VERSION }}"
+    "@rattus-orm/core": "^0.0.14"
   },
   "size-limit": [
     {
-      "name": "ESM {{ PACKAGE }} provider",
-      "path": "./dist/rattus-orm-{{ PACKAGE }}-provider.mjs"
+      "name": "ESM local-storage provider",
+      "path": "./dist/rattus-orm-local-storage-provider.mjs"
     },
     {
-      "name": "CJS {{ PACKAGE }} provider",
-      "path": "./dist/rattus-orm-{{ PACKAGE }}-provider.mjs"
+      "name": "CJS local-storage provider",
+      "path": "./dist/rattus-orm-local-storage-provider.mjs"
     }
   ]
 }

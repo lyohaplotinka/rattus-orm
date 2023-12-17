@@ -3078,6 +3078,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@rattus-orm/local-storage@workspace:packages/local-storage":
+  version: 0.0.0-use.local
+  resolution: "@rattus-orm/local-storage@workspace:packages/local-storage"
+  dependencies:
+    "@rattus-orm/core": "workspace:^"
+    "@rattus-orm/utils": "workspace:^"
+  peerDependencies:
+    "@rattus-orm/core": ^0.0.14
+  languageName: unknown
+  linkType: soft
+
 "@rattus-orm/pinia@workspace:packages/pinia":
   version: 0.0.0-use.local
   resolution: "@rattus-orm/pinia@workspace:packages/pinia"

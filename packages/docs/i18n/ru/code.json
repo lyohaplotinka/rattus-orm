@@ -326,12 +326,15 @@
     "message": "Интеграции"
   },
   "Vue + Vuex integration": {
-    "message": "Интеграция для Vue + Vuex"
+    "message": "Rattus для Vue + Vuex"
   },
   "Vue + Pinia integration": {
-    "message": "Интеграция для Vue + Pinia"
+    "message": "Rattus для Vue + Pinia"
   },
-  "React + Preact Signals integration": {
-    "message": "Интеграция для React + Preact Signals"
+  "React + Signals integration": {
+    "message": "Rattus для React + Signals"
+  },
+  "localStorage integration": {
+    "message": "Rattus для localStorage"
   }
 }

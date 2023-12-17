@@ -42,5 +42,13 @@
   "sidebar.tutorialSidebar.category.Signals integration (React).link.generated-index.description": {
     "message": "Data provider и хелперы для React Signals",
     "description": "The generated-index page description for category Signals integration (React) in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.localStorage integration": {
+    "message": "Интеграция с localStorage",
+    "description": "The label for category localStorage integration in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.localStorage integration.link.generated-index.description": {
+    "message": "Data Provider для localStorage",
+    "description": "The generated-index page description for category localStorage integration in sidebar tutorialSidebar"
   }
 }

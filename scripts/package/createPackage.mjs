@@ -7,6 +7,7 @@ import { asyncSpawn, dirname, getFiles, require } from '../utils.mjs'
 
 const currentPath = dirname(import.meta.url)
 const corePackageVersion = require(resolve(currentPath, '../../packages/core/package.json')).version
+const utilsPackageVersion = require(resolve(currentPath, '../../packages/utils/package.json')).version
 const templatesPath = resolve(currentPath, './_template')
 
 program
@@ -27,6 +28,7 @@ program
       const fixedContent = content
         .replaceAll('{{ PACKAGE }}', packageName)
         .replaceAll('{{ CORE_VERSION }}', corePackageVersion)
+        .replaceAll('{{ UTILS_VERSION }}', utilsPackageVersion)
         .replaceAll('// @ts-ignore', '')
       fileWritePromises.push(writeFile(toSaveFile, fixedContent, 'utf8'))
     }

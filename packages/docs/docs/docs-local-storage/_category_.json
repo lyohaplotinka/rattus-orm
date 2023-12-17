@@ -1,0 +1,8 @@
+{
+  "label": "localStorage integration",
+  "position": 5,
+  "link": {
+    "type": "generated-index",
+    "description": "localStorage data provider"
+  }
+}
