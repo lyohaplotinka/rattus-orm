@@ -47,7 +47,7 @@ const IntegrationsList: IntegrationItem[] = [
     title: 'LocalStorage',
     packageName: '@rattus-orm/local-storage',
     picture: LsLogo,
-    link: '/docs/category/signals-integration-react',
+    link: '/docs/category/localstorage-integration',
     description: translate({ message: 'localStorage integration' }),
   },
 ]

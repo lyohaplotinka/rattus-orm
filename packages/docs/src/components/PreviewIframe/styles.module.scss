@@ -1,0 +1,38 @@
+.previewIframe {
+  width: 100%;
+  height: 500px;
+}
+
+.placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  &::after {
+    z-index: -1;
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-image: linear-gradient(90deg, transparent 25%, rgb(82, 82, 82) 50%, transparent 75%),
+    linear-gradient(#3b3b3b 100%, transparent 0);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: -1000px 0, center 0;
+    box-sizing: border-box;
+    animation: loading 1s linear infinite;
+  }
+}
+
+@keyframes loading {
+  to {
+    background-position: 1000px 0, center 0;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .previewIframe {
+    height: 65vh;
+  }
+}
