@@ -98,7 +98,19 @@ Failing to return data can lead to unexpected consequences,
 up to the absence of data in the database.
 :::
 
-### Using Events
+## Unsubscribing from Events
+The database method `on` returns a function for unsubscribing from the event. You can unsubscribe from listening to events at any time.
+```typescript
+const unsubscribe = db.on(RattusEvents.DELETE, (ids: string[]) => {
+  return ids.filter((id) => id !== 'do_not_delete')
+})
+
+setTimeout(() => {
+  unsubscribe()
+}, 10_000)
+```
+
+## Using Events
 You can use events for a variety of purposes. Perhaps the most obvious are:
 * Debugging and logging data changes
 * Data validation
