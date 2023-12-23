@@ -4,8 +4,14 @@ import { ObjectDataProvider } from '../src/data/object-data-provider'
 import { ModuleRegisterEventPayload, RattusEvents } from '../src/events/types'
 import { merge } from 'lodash-es'
 
+class TestEventsDataProviderWrapper extends EventsDataProviderWrapper {
+  public getInternalListeners() {
+    return this.internalListeners
+  }
+}
+
 const createProvider = () => {
-  const provider = new EventsDataProviderWrapper(new ObjectDataProvider())
+  const provider = new TestEventsDataProviderWrapper(new ObjectDataProvider())
   provider.registerConnection('entities')
   provider.registerModule(['entities', 'test'])
 
@@ -92,5 +98,33 @@ describe('events-data-provider-wrapper', () => {
     provider.flush(['newconn', ''])
 
     expect(outputs).toEqual('newconnnull')
+  })
+
+  it('reset listeners works correctly for event', () => {
+    const provider = createProvider()
+
+    provider.listen(RattusEvents.CONNECTION_REGISTER, () => true)
+    provider.listen(RattusEvents.REPLACE, (data) => data)
+
+    provider.resetListeners(RattusEvents.REPLACE)
+
+    const listeners = provider.getInternalListeners()
+    expect(listeners[RattusEvents.CONNECTION_REGISTER]).toBeInstanceOf(Set)
+    expect(listeners[RattusEvents.CONNECTION_REGISTER]!.size).toEqual(1)
+
+    expect(listeners[RattusEvents.REPLACE]).toBeInstanceOf(Set)
+    expect(listeners[RattusEvents.REPLACE]!.size).toEqual(0)
+  })
+
+  it('reset listeners works correctly if no event passed', () => {
+    const provider = createProvider()
+
+    provider.listen(RattusEvents.CONNECTION_REGISTER, () => true)
+    provider.listen(RattusEvents.REPLACE, (data) => data)
+
+    provider.resetListeners()
+
+    const listeners = provider.getInternalListeners()
+    expect(listeners).toStrictEqual({})
   })
 })

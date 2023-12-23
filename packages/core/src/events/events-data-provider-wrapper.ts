@@ -1,10 +1,10 @@
 import type { DataProvider, Elements, ModulePath, SerializedStorage, State } from '@rattus-orm/utils/sharedTypes'
 
-import type { InternalListener, ModuleRegisterEventPayload, RattusEvent } from './types'
+import type { CancelSubscriptionCallback, InternalListener, ModuleRegisterEventPayload, RattusEvent } from './types'
 import { RattusEvents } from './types'
 
 export class EventsDataProviderWrapper implements DataProvider {
-  protected readonly internalListeners: Partial<Record<RattusEvent, Set<InternalListener>>> = {}
+  protected internalListeners: Partial<Record<RattusEvent, Set<InternalListener>>> = {}
 
   constructor(protected readonly provider: DataProvider) {}
 
@@ -65,12 +65,20 @@ export class EventsDataProviderWrapper implements DataProvider {
     this.provider.flush(module)
   }
 
-  public listen(event: RattusEvent, listener: InternalListener): () => void {
+  public listen(event: RattusEvent, listener: InternalListener): CancelSubscriptionCallback {
     if (!this.internalListeners[event]) {
       this.internalListeners[event] = new Set()
     }
     this.internalListeners[event]!.add(listener)
     return () => this.internalListeners[event]!.delete(listener)
+  }
+
+  public resetListeners(event?: RattusEvent) {
+    if (event) {
+      this.internalListeners[event] = new Set()
+    } else {
+      this.internalListeners = {}
+    }
   }
 
   protected dispatchVoidEvent<T = string>(event: RattusEvent, param: T) {
