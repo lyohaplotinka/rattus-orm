@@ -18,26 +18,9 @@ $cardWidth: 260;
 
 .integrationsWrapper {
   display: flex;
-  flex-direction: column;
-  max-width: var(--ifm-container-width);
-  width: 90%;
-  gap: 15px;
-}
-
-.integrationRow {
-  display: flex;
   flex-wrap: wrap;
-  gap: 10px; /* Used for both row and column gaps */
+  gap: 15px;
   justify-content: center;
   align-items: center;
-}
-
-@media screen and (max-width: 996px) {
-  .integrationCol + .integrationCol {
-    margin-top: 1rem;
-  }
-}
-
-:export {
-  cardWidth: $cardWidth
+  max-width: 95%;
 }
