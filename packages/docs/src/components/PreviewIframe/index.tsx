@@ -1,8 +1,6 @@
-import { useComputed, useSignal } from '@preact/signals-react'
 import { Loader } from '@site/src/components/Loader'
-import { useSmallScreen } from '@site/src/hooks/useSmallScreen'
 import clsx from 'clsx'
-import { useCallback, useRef } from 'react'
+import { useRef, useState } from 'react'
 
 import Styles from './styles.module.scss'
 
@@ -19,27 +17,23 @@ function PreviewIframePlaceholder() {
 }
 
 export default function PreviewIframe({ src }: PreviewIframeProps) {
-  const iframeHeight = useSignal<number | undefined>(0)
-  const showLoader = useSignal(true)
+  const [iframeHeight, setIframeHeight] = useState<number | undefined>(0)
+  const [showLoader, setShowLoader] = useState(true)
   const iframeRef = useRef<HTMLIFrameElement>()
-  const isSmall = useSmallScreen()
-  const srcManaged = useComputed(() => {
-    return isSmall.value ? src + '&view=preview' : src
-  })
 
-  const onIframeLoad = useCallback(() => {
-    iframeHeight.value = undefined
-    showLoader.value = false
-  }, [])
+  const onIframeLoad = () => {
+    setIframeHeight(undefined)
+    setShowLoader(false)
+  }
 
   return (
     <>
-      {showLoader.value && <PreviewIframePlaceholder />}
+      {showLoader && <PreviewIframePlaceholder />}
       <iframe
         onLoad={onIframeLoad}
         ref={iframeRef}
-        src={srcManaged.value}
-        style={{ height: iframeHeight.value }}
+        src={src}
+        style={{ height: iframeHeight }}
         className={Styles.previewIframe}
       />
     </>
