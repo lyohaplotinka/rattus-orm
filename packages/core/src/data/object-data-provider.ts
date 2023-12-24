@@ -28,11 +28,7 @@ export class ObjectDataProvider extends DataProviderHelpers implements DataProvi
   }
 
   public insert(module: ModulePath, records: Elements): void {
-    const moduleStore = this.getModuleByPath(module)
-    moduleStore.data = {
-      ...moduleStore.data,
-      ...records,
-    }
+    this.internalSave(module, records)
   }
 
   public registerConnection(name: string) {
@@ -57,11 +53,11 @@ export class ObjectDataProvider extends DataProviderHelpers implements DataProvi
   }
 
   public save(module: ModulePath, records: Elements): void {
-    return this.insert(module, records)
+    this.internalSave(module, records)
   }
 
   public update(module: ModulePath, records: Elements): void {
-    return this.insert(module, records)
+    this.internalSave(module, records)
   }
 
   public dump(): SerializedStorage {
@@ -75,5 +71,13 @@ export class ObjectDataProvider extends DataProviderHelpers implements DataProvi
   protected getModuleByPath([connection, module]: ModulePath): State {
     const connectionState = this.storage[connection]
     return connectionState[module] ?? { data: {} }
+  }
+
+  protected internalSave(module: ModulePath, records: Elements) {
+    const moduleStore = this.getModuleByPath(module)
+    moduleStore.data = {
+      ...moduleStore.data,
+      ...records,
+    }
   }
 }

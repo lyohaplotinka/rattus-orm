@@ -1,5 +1,14 @@
-import type { Constructor, DataProvider, State } from '@rattus-orm/utils/sharedTypes'
+import type { Constructor, DataProvider, Elements, State } from '@rattus-orm/utils/sharedTypes'
 
+import type { DatabasePlugin } from '@/database/types'
+import { EventsDataProviderWrapper } from '@/events/events-data-provider-wrapper'
+import type {
+  CancelSubscriptionCallback,
+  DataEventCallback,
+  ModuleRegisterEventPayload,
+  RattusEvent,
+  RattusEvents,
+} from '@/events/types'
 import { Relation } from '@/model/attributes/relations/relation'
 import type { Model } from '@/model/Model'
 import type { ModelConstructor } from '@/model/types'
@@ -11,7 +20,7 @@ export class Database {
   /**
    * The store instance.
    */
-  protected dataProvider: DataProvider
+  protected dataProvider: EventsDataProviderWrapper
 
   /**
    * The name of storage namespace. ORM will create objects from
@@ -52,10 +61,10 @@ export class Database {
   }
 
   /**
-   * Set the store.
+   * Set the data provider.
    */
-  public setDataProvider(store: DataProvider): this {
-    this.dataProvider = store
+  public setDataProvider(dataProvider: DataProvider): this {
+    this.dataProvider = new EventsDataProviderWrapper(dataProvider)
     return this
   }
 
@@ -109,6 +118,36 @@ export class Database {
    */
   public getSchema(name: string): EntitySchema {
     return this.schemas[name]
+  }
+
+  public on(
+    event: Extract<RattusEvent, 'save' | 'insert' | 'update' | 'replace'>,
+    callback: DataEventCallback<Elements, Elements>,
+  ): CancelSubscriptionCallback
+  public on(
+    event: typeof RattusEvents.DELETE,
+    callback: DataEventCallback<string[], string[]>,
+  ): CancelSubscriptionCallback
+  public on(
+    event: typeof RattusEvents.MODULE_REGISTER,
+    callback: DataEventCallback<ModuleRegisterEventPayload, ModuleRegisterEventPayload>,
+  ): CancelSubscriptionCallback
+  public on(event: typeof RattusEvents.FLUSH, callback: DataEventCallback<undefined>): CancelSubscriptionCallback
+  public on(
+    event: typeof RattusEvents.CONNECTION_REGISTER,
+    callback: DataEventCallback<string>,
+  ): CancelSubscriptionCallback
+  public on(event: RattusEvent, callback: DataEventCallback<any, any>): CancelSubscriptionCallback {
+    return this.dataProvider.listen(event, callback)
+  }
+
+  public resetListeners(event?: RattusEvent) {
+    return this.dataProvider.resetListeners(event)
+  }
+
+  public use(plugin: DatabasePlugin): this {
+    plugin(this)
+    return this
   }
 
   /**
