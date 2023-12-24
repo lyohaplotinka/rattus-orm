@@ -54,7 +54,7 @@
     "vuex": "patch:vuex@npm%3A4.1.0#~/.yarn/patches/vuex-npm-4.1.0-c1d51099be.patch"
   },
   "peerDependencies": {
-    "@rattus-orm/core": "^0.0.14",
+    "@rattus-orm/core": "^0.0.15",
     "vue": "^3.0.0",
     "vuex": "^4.1.0"
   },

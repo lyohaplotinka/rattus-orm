@@ -59,7 +59,7 @@
   },
   "peerDependencies": {
     "@preact/signals-react": "*",
-    "@rattus-orm/core": "^0.0.14",
+    "@rattus-orm/core": "^0.0.15",
     "react": "*"
   },
   "size-limit": [
