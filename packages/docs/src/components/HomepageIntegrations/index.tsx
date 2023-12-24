@@ -1,15 +1,12 @@
 import Link from '@docusaurus/Link'
 import Translate, { translate } from '@docusaurus/Translate'
-import { useSignal } from '@preact/signals-react'
-import { useResize } from '@site/src/hooks/useResize'
 import LsLogo from '@site/static/img/integrations/local-storage.svg'
 import PiniaLogo from '@site/static/img/integrations/pinia.svg'
 import ReactLogo from '@site/static/img/integrations/react.svg'
 import VuexLogo from '@site/static/img/integrations/vuex.svg'
 import Heading from '@theme/Heading'
 import clsx from 'clsx'
-import { chunk, isEqual } from 'lodash-es'
-import React, { useRef } from 'react'
+import React from 'react'
 
 import styles from './styles.module.scss'
 
@@ -79,41 +76,15 @@ function Integration({ title, picture: IntegrationPicture, description, packageN
   )
 }
 
-const cardWidth = parseInt(styles.cardWidth)
-
 export default function HomepageIntegrations(): JSX.Element {
-  const containerRef = useRef<HTMLDivElement>()
-  const chunked = useSignal<IntegrationItem[][]>([])
-
-  useResize(() => {
-    const container = containerRef.current
-    if (!container) {
-      return
-    }
-
-    const width = container.offsetWidth
-    const itemsPerRow = Math.floor(width / (cardWidth + 7))
-    const newChunked = chunk(IntegrationsList, itemsPerRow)
-    if (isEqual(chunked.value, newChunked)) {
-      return
-    }
-    chunked.value = newChunked
-  })
-
   return (
     <section className={'section-block'}>
       <Heading as={'h1'}>
         <Translate>Integrations</Translate>
       </Heading>
-      <div ref={containerRef} className={clsx('padding-vert--lg', styles.integrationsWrapper)}>
-        {chunked.value.map((intArray, rowIdx) => {
-          return (
-            <div className={clsx(styles.integrationRow)} key={`row${rowIdx}`}>
-              {intArray.map((integration, index) => {
-                return <Integration key={`int${index}`} {...integration} />
-              })}
-            </div>
-          )
+      <div className={clsx('padding-vert--lg', styles.integrationsWrapper)}>
+        {IntegrationsList.map((integration, index) => {
+          return <Integration key={`int${index}`} {...integration} />
         })}
       </div>
     </section>

@@ -50,5 +50,13 @@
   "sidebar.tutorialSidebar.category.localStorage integration.link.generated-index.description": {
     "message": "Data Provider для localStorage",
     "description": "The generated-index page description for category localStorage integration in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Integrations": {
+    "message": "Интеграции",
+    "description": "The label for category Integrations in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Integrations.link.generated-index.description": {
+    "message": "Используйте Rattus ORM с библиотеками и фреймворками",
+    "description": "The generated-index page description for category Integrations in sidebar tutorialSidebar"
   }
 }
