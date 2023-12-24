@@ -1,3 +1,15 @@
+# 2023/12/23
+
+### Core (0.0.15)
+* Add events concept;
+* add plugins concept.
+
+### Utils (0.0.7)
+* Add common `Callback` type.
+
+### Vuex (0.0.14), Pinia (0.0.6), React Signals (0.0.2), LocalStorage (0.0.2)
+* update Utils and Core packages.
+
 # 2023/12/17
 
 ### LocalStorage (0.0.1)
