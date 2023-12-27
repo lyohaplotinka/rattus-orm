@@ -50,7 +50,7 @@
     "@rattus-orm/utils": "workspace:^"
   },
   "peerDependencies": {
-    "@rattus-orm/core": "^0.0.15"
+    "@rattus-orm/core": "^0.0.16"
   },
   "size-limit": [
     {

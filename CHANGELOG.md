@@ -1,6 +1,12 @@
 # 2023/12/27
+### Core (0.0.16)
+* add DATA_CHANGED event.
+
 ### Redux (0.0.1)
 * introducing React Redux integration.
+
+### Vuex (0.0.15), Pinia (0.0.7), React Signals (0.0.3), LocalStorage (0.0.3), Redux (0.0.2)
+* update Core package.
 
 # 2023/12/23
 
