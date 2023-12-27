@@ -1,0 +1,67 @@
+{
+  "name": "@rattus-orm/plugin-zod-validate",
+  "description": "ORM for your JS/TS apps: validation plugin with Zod",
+  "homepage": "https://lyohaplotinka.github.io/rattus-orm/",
+  "author": "Lyoha Plotinka",
+  "license": "MIT",
+  "packageManager": "yarn@4.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lyohaplotinka/rattus-orm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lyohaplotinka/rattus-orm/issues"
+  },
+  "keywords": [
+    "orm",
+    "rattus",
+    "zod",
+    "validate",
+    "typescript",
+    "javascript"
+  ],
+  "version": "0.0.0",
+  "main": "./dist/rattus-orm-plugin-zod-validate-provider.js",
+  "browser": "./dist/rattus-orm-plugin-zod-validate-provider.mjs",
+  "module": "./dist/rattus-orm-plugin-zod-validate-provider.mjs",
+  "types": "./dist/rattus-orm-plugin-zod-validate-provider.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/rattus-orm-plugin-zod-validate-provider.mjs",
+      "require": "./dist/rattus-orm-plugin-zod-validate-provider.js",
+      "types": "./dist/rattus-orm-plugin-zod-validate-provider.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "run -T tsup",
+    "clean": "rm -rf dist && rm -rf node_modules",
+    "lint": "run -T eslint 'src/**/*.ts' --quiet --fix",
+    "test": "run -T vitest run",
+    "typecheck": "bash -c 'run -T tsc -p tsconfig.json --noEmit'",
+    "size": "run -T size-limit"
+  },
+  "dependencies": {
+    "@rattus-orm/utils": "^0.0.7",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@rattus-orm/core": "workspace:^",
+    "@rattus-orm/utils": "workspace:^"
+  },
+  "peerDependencies": {
+    "@rattus-orm/core": "^0.0.16"
+  },
+  "size-limit": [
+    {
+      "name": "ESM plugin-zod-validate provider",
+      "path": "./dist/rattus-orm-plugin-zod-validate-provider.mjs"
+    },
+    {
+      "name": "CJS plugin-zod-validate provider",
+      "path": "./dist/rattus-orm-plugin-zod-validate-provider.mjs"
+    }
+  ]
+}
