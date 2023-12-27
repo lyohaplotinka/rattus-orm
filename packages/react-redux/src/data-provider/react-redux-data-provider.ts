@@ -1,11 +1,13 @@
 import { DataProviderHelpers } from '@rattus-orm/core'
 import type { DataProvider, Elements, ModulePath, SerializedStorage, State } from '@rattus-orm/utils/sharedTypes'
+import { useSelector } from 'react-redux'
 import type { Reducer } from 'redux'
 import { combineReducers } from 'redux'
 import { type Store } from 'redux'
 
 import { ReducerStore } from '../redux/reducer-store'
 import { rattusReduxActions } from '../redux/types'
+import { isCalledInComponent } from '../utils'
 
 export class ReactReduxDataProvider extends DataProviderHelpers implements DataProvider {
   protected reducers = new Map<string, ReducerStore<any>>()
@@ -69,6 +71,10 @@ export class ReactReduxDataProvider extends DataProviderHelpers implements DataP
 
   public getModuleState(module: ModulePath): State {
     const reducer = this.getModule(module)
+    if (isCalledInComponent()) {
+      return useSelector((state: Record<string, State>) => state[reducer.getReducerPrefix()])
+    }
+
     return this.store.getState()[reducer.getReducerPrefix()] as State
   }
 
