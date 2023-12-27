@@ -15,7 +15,8 @@
   "keywords": [
     "orm",
     "rattus",
-    "react-redux",
+    "react",
+    "redux",
     "typescript",
     "javascript"
   ],

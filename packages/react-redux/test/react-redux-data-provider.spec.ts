@@ -3,9 +3,9 @@ import { createBasicProviderTest } from '@rattus-orm/utils/createBasicProviderTe
 import { ReactReduxDataProvider } from '../src/data-provider/react-redux-data-provider'
 import { createStore } from 'redux'
 
-describe('react-signals-data-provider', () => {
+describe('react-redux-data-provider', () => {
   createBasicProviderTest({
-    name: 'react-signals',
+    name: 'react-redux',
     connectionRequired: false,
     storeFactory() {
       const store = createStore((state: any = {}, action) => {
