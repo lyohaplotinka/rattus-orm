@@ -336,5 +336,8 @@
   },
   "localStorage integration": {
     "message": "Rattus для localStorage"
+  },
+  "React + Redux integration": {
+    "message": "Rattus для React + Redux"
   }
 }

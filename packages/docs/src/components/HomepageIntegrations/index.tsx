@@ -3,6 +3,7 @@ import Translate, { translate } from '@docusaurus/Translate'
 import LsLogo from '@site/static/img/integrations/local-storage.svg'
 import PiniaLogo from '@site/static/img/integrations/pinia.svg'
 import ReactLogo from '@site/static/img/integrations/react.svg'
+import ReduxLogo from '@site/static/img/integrations/redux.svg'
 import VuexLogo from '@site/static/img/integrations/vuex.svg'
 import Heading from '@theme/Heading'
 import clsx from 'clsx'
@@ -32,6 +33,13 @@ const IntegrationsList: IntegrationItem[] = [
     picture: PiniaLogo,
     link: '/docs/category/pinia-integration-vue',
     description: translate({ message: 'Vue + Pinia integration' }),
+  },
+  {
+    title: 'React Redux',
+    packageName: '@rattus-orm/react-redux',
+    picture: ReduxLogo,
+    link: '/docs/category/redux-integration-react',
+    description: translate({ message: 'React + Redux integration' }),
   },
   {
     title: 'React Signals',
