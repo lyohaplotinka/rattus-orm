@@ -17,10 +17,12 @@ Rattus ORM is a versatile JavaScript/TypeScript package that offers an Object-Re
 - **TypeScript Support**: Offers full TypeScript support for type safety and an enhanced development experience.
 - **Efficient Data Management**: Optimized for front-end data operations, ensuring efficient and reactive state management.
 
-### Packages:
+### Packages
+#### Integrations:
 * [@rattus-orm/core](./packages/core): core of Rattus ORM
 * [@rattus-orm/vuex](./packages/vuex): vuex data provider (vue)
 * [@rattus-orm/pinia](./packages/pinia): pinia data provider (vue)
+* [@rattus-orm/react-redux](./packages/react-redux): redux data provider (react)
 * [@rattus-orm/react-signals](./packages/react-signals): signals data provider (react)
 * [@rattus-orm/local-storage](./packages/local-storage): localStorage data provider
 

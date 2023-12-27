@@ -1,3 +1,7 @@
+# 2023/12/27
+### Redux (0.0.1)
+* introducing React Redux integration.
+
 # 2023/12/23
 
 ### Core (0.0.15)
