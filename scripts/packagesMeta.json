@@ -30,5 +30,10 @@
     "path": "packages/local-storage/test/provider-factory.ts",
     "exportName": "dataProviderFactory",
     "runFunctional": true
+  },
+  "react-redux": {
+    "path": "packages/react-redux/test/provider-factory.ts",
+    "exportName": "dataProviderFactory",
+    "runFunctional": true
   }
 }

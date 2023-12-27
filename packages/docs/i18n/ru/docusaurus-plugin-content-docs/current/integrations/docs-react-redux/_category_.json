@@ -1,0 +1,8 @@
+{
+  "label": "Интеграция с Redux (React)",
+  "position": 5,
+  "link": {
+    "type": "generated-index",
+    "description": "Data provider и хелперы для React Redux"
+  }
+}

@@ -58,5 +58,13 @@
   "sidebar.tutorialSidebar.category.Integrations.link.generated-index.description": {
     "message": "Используйте Rattus ORM с библиотеками и фреймворками",
     "description": "The generated-index page description for category Integrations in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Redux integration (React)": {
+    "message": "Интеграция с Redux (React)",
+    "description": "The label for category Redux integration (React) in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Redux integration (React).link.generated-index.description": {
+    "message": "Data provider и хелперы для React Redux",
+    "description": "The generated-index page description for category Redux integration (React) in sidebar tutorialSidebar"
   }
 }

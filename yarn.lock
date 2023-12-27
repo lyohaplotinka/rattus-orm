@@ -3085,7 +3085,7 @@ __metadata:
     "@rattus-orm/core": "workspace:^"
     "@rattus-orm/utils": "workspace:^"
   peerDependencies:
-    "@rattus-orm/core": ^0.0.14
+    "@rattus-orm/core": ^0.0.15
   languageName: unknown
   linkType: soft
 
@@ -3099,9 +3099,24 @@ __metadata:
     pinia: "npm:^2.1.7"
     vue: "npm:^3.3.10"
   peerDependencies:
-    "@rattus-orm/core": ^0.0.14
+    "@rattus-orm/core": ^0.0.15
     pinia: ^2.0.0
     vue: ^3.0.0
+  languageName: unknown
+  linkType: soft
+
+"@rattus-orm/react-redux@workspace:packages/react-redux":
+  version: 0.0.0-use.local
+  resolution: "@rattus-orm/react-redux@workspace:packages/react-redux"
+  dependencies:
+    "@rattus-orm/core": "workspace:^"
+    "@rattus-orm/utils": "workspace:^"
+    react-redux: "npm:^9.0.4"
+    redux: "npm:^5.0.1"
+  peerDependencies:
+    "@rattus-orm/core": ^0.0.15
+    react-redux: "*"
+    redux: "*"
   languageName: unknown
   linkType: soft
 
@@ -3119,7 +3134,7 @@ __metadata:
     react: "npm:^18.2.0"
   peerDependencies:
     "@preact/signals-react": "*"
-    "@rattus-orm/core": ^0.0.14
+    "@rattus-orm/core": ^0.0.15
     react: "*"
   languageName: unknown
   linkType: soft
@@ -3146,7 +3161,7 @@ __metadata:
     vue: "npm:^3.3.10"
     vuex: "patch:vuex@npm%3A4.1.0#~/.yarn/patches/vuex-npm-4.1.0-c1d51099be.patch"
   peerDependencies:
-    "@rattus-orm/core": ^0.0.14
+    "@rattus-orm/core": ^0.0.15
     vue: ^3.0.0
     vuex: ^4.1.0
   languageName: unknown
@@ -4199,6 +4214,13 @@ __metadata:
   version: 2.0.10
   resolution: "@types/unist@npm:2.0.10"
   checksum: 5f247dc2229944355209ad5c8e83cfe29419fa7f0a6d557421b1985a1500444719cc9efcc42c652b55aab63c931813c88033e0202c1ac684bcd4829d66e44731
+  languageName: node
+  linkType: hard
+
+"@types/use-sync-external-store@npm:^0.0.3":
+  version: 0.0.3
+  resolution: "@types/use-sync-external-store@npm:0.0.3"
+  checksum: 82824c1051ba40a00e3d47964cdf4546a224e95f172e15a9c62aa3f118acee1c7518b627a34f3aa87298a2039f982e8509f92bfcc18bea7c255c189c293ba547
   languageName: node
   linkType: hard
 
@@ -13154,6 +13176,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-redux@npm:^9.0.4":
+  version: 9.0.4
+  resolution: "react-redux@npm:9.0.4"
+  dependencies:
+    "@types/use-sync-external-store": "npm:^0.0.3"
+    use-sync-external-store: "npm:^1.0.0"
+  peerDependencies:
+    "@types/react": ^18.2.25
+    react: ^18.0
+    react-native: ">=0.69"
+    redux: ^5.0.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    react-native:
+      optional: true
+    redux:
+      optional: true
+  checksum: 23af10014b129aeb051de729bde01de21175170b860deefb7ad83483feab5816253f770a4cea93333fc22a53ac9ac699b27f5c3705c388dab53dbcb2906a571a
+  languageName: node
+  linkType: hard
+
 "react-refresh@npm:^0.14.0":
   version: 0.14.0
   resolution: "react-refresh@npm:0.14.0"
@@ -13285,6 +13329,13 @@ __metadata:
     indent-string: "npm:^4.0.0"
     strip-indent: "npm:^3.0.0"
   checksum: d64a6b5c0b50eb3ddce3ab770f866658a2b9998c678f797919ceb1b586bab9259b311407280bd80b804e2a7c7539b19238ae6a2a20c843f1a7fcff21d48c2eae
+  languageName: node
+  linkType: hard
+
+"redux@npm:^5.0.1":
+  version: 5.0.1
+  resolution: "redux@npm:5.0.1"
+  checksum: b10c28357194f38e7d53b760ed5e64faa317cc63de1fb95bc5d9e127fab956392344368c357b8e7a9bedb0c35b111e7efa522210cfdc3b3c75e5074718e9069c
   languageName: node
   linkType: hard
 
@@ -15425,7 +15476,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"use-sync-external-store@npm:^1.2.0":
+"use-sync-external-store@npm:^1.0.0, use-sync-external-store@npm:^1.2.0":
   version: 1.2.0
   resolution: "use-sync-external-store@npm:1.2.0"
   peerDependencies:

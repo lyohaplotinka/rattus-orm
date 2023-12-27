@@ -1,0 +1,70 @@
+{
+  "name": "@rattus-orm/react-redux",
+  "description": "ORM for your JS/TS apps: react-redux bindings",
+  "homepage": "https://lyohaplotinka.github.io/rattus-orm/",
+  "author": "Lyoha Plotinka",
+  "license": "MIT",
+  "packageManager": "yarn@4.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lyohaplotinka/rattus-orm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lyohaplotinka/rattus-orm/issues"
+  },
+  "keywords": [
+    "orm",
+    "rattus",
+    "react",
+    "redux",
+    "typescript",
+    "javascript"
+  ],
+  "version": "0.0.0",
+  "main": "./dist/rattus-orm-react-redux-provider.js",
+  "browser": "./dist/rattus-orm-react-redux-provider.mjs",
+  "module": "./dist/rattus-orm-react-redux-provider.mjs",
+  "types": "./dist/rattus-orm-react-redux-provider.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/rattus-orm-react-redux-provider.mjs",
+      "require": "./dist/rattus-orm-react-redux-provider.js",
+      "types": "./dist/rattus-orm-react-redux-provider.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "run -T tsup",
+    "clean": "rm -rf dist && rm -rf node_modules",
+    "lint": "run -T eslint 'src/**/*.ts' --quiet --fix",
+    "test": "run -T vitest run",
+    "typecheck": "bash -c 'run -T tsc -p tsconfig.json --noEmit'",
+    "size": "run -T size-limit"
+  },
+  "dependencies": {
+    "@rattus-orm/utils": "^0.0.7"
+  },
+  "devDependencies": {
+    "@rattus-orm/core": "workspace:^",
+    "@rattus-orm/utils": "workspace:^",
+    "react-redux": "^9.0.4",
+    "redux": "^5.0.1"
+  },
+  "peerDependencies": {
+    "@rattus-orm/core": "^0.0.15",
+    "react-redux": "*",
+    "redux": "*"
+  },
+  "size-limit": [
+    {
+      "name": "ESM react-redux provider",
+      "path": "./dist/rattus-orm-react-redux-provider.mjs"
+    },
+    {
+      "name": "CJS react-redux provider",
+      "path": "./dist/rattus-orm-react-redux-provider.mjs"
+    }
+  ]
+}
