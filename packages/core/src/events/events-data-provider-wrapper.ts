@@ -25,6 +25,12 @@ export class EventsDataProviderWrapper implements DataProvider {
 
   public restore(data: SerializedStorage): void {
     this.provider.restore(data)
+    for (const connection in data) {
+      const connectionData = data[connection]
+      for (const entity in connectionData) {
+        this.dispatchDataChangedEvent([connection, entity])
+      }
+    }
   }
 
   public registerModule(modulePath: ModulePath, moduleInitialState?: State): void {
@@ -37,6 +43,7 @@ export class EventsDataProviderWrapper implements DataProvider {
       modulePath,
     )
     this.provider.registerModule(path, initialState)
+    this.dispatchDataChangedEvent(path)
   }
 
   public getModuleState(module: ModulePath): State {
