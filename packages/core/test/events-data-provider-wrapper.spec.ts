@@ -104,12 +104,14 @@ describe('events-data-provider-wrapper', () => {
     const provider = createProvider()
     let outputs = ''
 
-    provider.listen(RattusEvents.DATA_CHANGED, (data: any) => {
-      outputs = JSON.stringify(data)
+    provider.listen(RattusEvents.DATA_CHANGED, (data: any, modulePath) => {
+      outputs = JSON.stringify(data) + JSON.stringify(modulePath)
     })
 
     provider.save(['entities', 'test'], { '1': { id: 1, age: 1024 } })
-    expect(outputs).toEqual('{"path":["entities","test"],"state":{"data":{"1":{"id":1,"age":1024}}}}')
+    expect(outputs).toEqual(
+      '{"path":["entities","test"],"state":{"data":{"1":{"id":1,"age":1024}}}}["entities","test"]',
+    )
   })
 
   it('reset listeners works correctly for event', () => {
