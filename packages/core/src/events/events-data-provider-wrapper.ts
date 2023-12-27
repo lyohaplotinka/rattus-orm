@@ -1,6 +1,12 @@
 import type { DataProvider, Elements, ModulePath, SerializedStorage, State } from '@rattus-orm/utils/sharedTypes'
 
-import type { CancelSubscriptionCallback, InternalListener, ModuleRegisterEventPayload, RattusEvent } from './types'
+import type {
+  CancelSubscriptionCallback,
+  DataChangedEventPayload,
+  InternalListener,
+  ModuleRegisterEventPayload,
+  RattusEvent,
+} from './types'
 import { RattusEvents } from './types'
 
 export class EventsDataProviderWrapper implements DataProvider {
@@ -18,7 +24,7 @@ export class EventsDataProviderWrapper implements DataProvider {
   }
 
   public restore(data: SerializedStorage): void {
-    return this.provider.restore(data)
+    this.provider.restore(data)
   }
 
   public registerModule(modulePath: ModulePath, moduleInitialState?: State): void {
@@ -29,7 +35,7 @@ export class EventsDataProviderWrapper implements DataProvider {
         initialState: moduleInitialState,
       },
     )
-    return this.provider.registerModule(path, initialState)
+    this.provider.registerModule(path, initialState)
   }
 
   public getModuleState(module: ModulePath): State {
@@ -41,28 +47,34 @@ export class EventsDataProviderWrapper implements DataProvider {
   }
 
   public save(module: ModulePath, records: Elements): void {
-    return this.provider.save(module, this.dispatchEventWithResult(RattusEvents.SAVE, records))
+    this.provider.save(module, this.dispatchEventWithResult(RattusEvents.SAVE, records))
+    this.dispatchDataChangedEvent(module)
   }
 
   public insert(module: ModulePath, records: Elements): void {
-    return this.provider.insert(module, this.dispatchEventWithResult(RattusEvents.INSERT, records))
+    this.provider.insert(module, this.dispatchEventWithResult(RattusEvents.INSERT, records))
+    this.dispatchDataChangedEvent(module)
   }
 
   public replace(module: ModulePath, records: Elements): void {
-    return this.provider.replace(module, this.dispatchEventWithResult(RattusEvents.REPLACE, records))
+    this.provider.replace(module, this.dispatchEventWithResult(RattusEvents.REPLACE, records))
+    this.dispatchDataChangedEvent(module)
   }
 
   public update(module: ModulePath, records: Elements): void {
-    return this.provider.update(module, this.dispatchEventWithResult(RattusEvents.UPDATE, records))
+    this.provider.update(module, this.dispatchEventWithResult(RattusEvents.UPDATE, records))
+    this.dispatchDataChangedEvent(module)
   }
 
   public delete(module: ModulePath, ids: string[]): void {
     this.provider.delete(module, this.dispatchEventWithResult(RattusEvents.DELETE, ids))
+    this.dispatchDataChangedEvent(module)
   }
 
   public flush(module: ModulePath): void {
     this.dispatchVoidEvent(RattusEvents.FLUSH, null)
     this.provider.flush(module)
+    this.dispatchDataChangedEvent(module)
   }
 
   public listen(event: RattusEvent, listener: InternalListener): CancelSubscriptionCallback {
@@ -95,5 +107,12 @@ export class EventsDataProviderWrapper implements DataProvider {
   protected getListenersForEvent(event: RattusEvent): InternalListener[] {
     const set = this.internalListeners[event]
     return set ? Array.from(set) : []
+  }
+
+  protected dispatchDataChangedEvent(path: ModulePath) {
+    this.dispatchVoidEvent<DataChangedEventPayload>(RattusEvents.DATA_CHANGED, {
+      path,
+      state: this.getModuleState(path),
+    })
   }
 }

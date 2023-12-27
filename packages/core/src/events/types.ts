@@ -9,10 +9,12 @@ export const RattusEvents = {
   UPDATE: 'update',
   DELETE: 'delete',
   FLUSH: 'flush',
+  DATA_CHANGED: 'data-changed',
 } as const
 
 export type CancelSubscriptionCallback = Callback<[], void>
 export type ModuleRegisterEventPayload = { path: ModulePath; initialState?: State }
+export type DataChangedEventPayload = { path: ModulePath; state: State }
 export type RattusEvent = (typeof RattusEvents)[keyof typeof RattusEvents]
 export type DataEventCallback<T, R = void> = (data: T) => R
 export type InternalListener = (param: unknown) => unknown

@@ -1,7 +1,7 @@
 import { describe, expect } from 'vitest'
 import { EventsDataProviderWrapper } from '../src/events/events-data-provider-wrapper'
 import { ObjectDataProvider } from '../src/data/object-data-provider'
-import { ModuleRegisterEventPayload, RattusEvents } from '../src/events/types'
+import { ModuleRegisterEventPayload, RattusEvents } from '../src'
 import { merge } from 'lodash-es'
 
 class TestEventsDataProviderWrapper extends EventsDataProviderWrapper {
@@ -98,6 +98,18 @@ describe('events-data-provider-wrapper', () => {
     provider.flush(['newconn', ''])
 
     expect(outputs).toEqual('newconnnull')
+  })
+
+  it('data changed event working', () => {
+    const provider = createProvider()
+    let outputs = ''
+
+    provider.listen(RattusEvents.DATA_CHANGED, (data: any) => {
+      outputs = JSON.stringify(data)
+    })
+
+    provider.save(['entities', 'test'], { '1': { id: 1, age: 1024 } })
+    expect(outputs).toEqual('{"path":["entities","test"],"state":{"data":{"1":{"id":1,"age":1024}}}}')
   })
 
   it('reset listeners works correctly for event', () => {
