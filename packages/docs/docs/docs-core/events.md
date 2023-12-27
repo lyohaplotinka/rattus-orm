@@ -26,6 +26,8 @@ export const RattusEvents = {
   DELETE: 'delete',
   // All data removed from the table
   FLUSH: 'flush',
+  // Module data changed, fires AFTER update
+  DATA_CHANGED: 'data-changed',
 } as const
 ```
 
@@ -52,6 +54,14 @@ If you subscribe to data creation or update events – `INSERT`, `SAVE`, `UPDATE
 db.on(RattusEvents.INSERT, (data: Elements) => {
   data['1'].age = data['1'].age * 2
   return data
+})
+```
+
+The `DATA_CHANGED` event, unlike those described above, is triggered after the data of a specific module has been updated, and does not allow changing the data. The callback's argument is an object with the module's path (connection and entity name), as well as the current state of the module:
+```typescript
+db.on(RattusEvents.DATA_CHANGED, (data) => {
+  console.log(data.path) // ['entities', 'users']
+  console.log(data.state) // { data: { '1': { id: '1', ... } }}
 })
 ```
 

@@ -4,6 +4,7 @@ import type { DatabasePlugin } from '@/database/types'
 import { EventsDataProviderWrapper } from '@/events/events-data-provider-wrapper'
 import type {
   CancelSubscriptionCallback,
+  DataChangedEventPayload,
   DataEventCallback,
   ModuleRegisterEventPayload,
   RattusEvent,
@@ -136,6 +137,10 @@ export class Database {
   public on(
     event: typeof RattusEvents.CONNECTION_REGISTER,
     callback: DataEventCallback<string>,
+  ): CancelSubscriptionCallback
+  public on(
+    event: typeof RattusEvents.DATA_CHANGED,
+    callback: DataEventCallback<DataChangedEventPayload>,
   ): CancelSubscriptionCallback
   public on(event: RattusEvent, callback: DataEventCallback<any, any>): CancelSubscriptionCallback {
     return this.dataProvider.listen(event, callback)
