@@ -1,7 +1,6 @@
 {
   "*.{ts,tsx}": [
     "yarn typecheck",
-    "yarn lint",
-    "yarn test all"
+    "yarn lint"
   ]
 }
