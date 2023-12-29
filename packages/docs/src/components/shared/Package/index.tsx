@@ -32,7 +32,7 @@ export function Package({ title, picture: PackagePicture, description, packageNa
             {packageName}
           </code>
         </div>
-        <p>{description}</p>
+        <p className={styles.packageDesc}>{description}</p>
       </div>
       <div className="card__footer">
         <Link to={link} className="button button--outline button--secondary button--block">

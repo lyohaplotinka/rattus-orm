@@ -1,0 +1,8 @@
+{
+  "label": "Плагины",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "description": "Расширение функциональности Rattus ORM"
+  }
+}

@@ -11,14 +11,6 @@
     "message": "Основной пакет Rattus ORM, предоставляющий базу данных, репозитории, query и модели.",
     "description": "The generated-index page description for category Core package in sidebar tutorialSidebar"
   },
-  "sidebar.tutorialSidebar.category.Vuex integration": {
-    "message": "Использование с Vuex",
-    "description": "The label for category Vuex integration in sidebar tutorialSidebar"
-  },
-  "sidebar.tutorialSidebar.category.Vuex integration.link.generated-index.description": {
-    "message": "Data provider для Vuex и утилиты для удобного использования",
-    "description": "The generated-index page description for category Vuex integration in sidebar tutorialSidebar"
-  },
   "sidebar.tutorialSidebar.category.Vuex integration (Vue)": {
     "message": "Интеграция с Vuex (Vue)",
     "description": "The label for category Vuex integration (Vue) in sidebar tutorialSidebar"
@@ -66,5 +58,21 @@
   "sidebar.tutorialSidebar.category.Redux integration (React).link.generated-index.description": {
     "message": "Data provider и хелперы для React Redux",
     "description": "The generated-index page description for category Redux integration (React) in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Plugins": {
+    "message": "Плагины",
+    "description": "The label for category Plugins in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Plugins.link.generated-index.description": {
+    "message": "Расширение функциональности Rattus ORM",
+    "description": "The generated-index page description for category Plugins in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Zod Validate": {
+    "message": "Zod Validate",
+    "description": "The label for category Zod Validate in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Zod Validate.link.generated-index.description": {
+    "message": "Валидация данных с помощью Zod",
+    "description": "The generated-index page description for category Zod Validate in sidebar tutorialSidebar"
   }
 }
