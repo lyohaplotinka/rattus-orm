@@ -20,6 +20,10 @@ export abstract class Type extends Attribute {
     this.value = value
   }
 
+  public isTypeNullable() {
+    return this.isNullable
+  }
+
   /**
    * Set the nullable option to true.
    */
