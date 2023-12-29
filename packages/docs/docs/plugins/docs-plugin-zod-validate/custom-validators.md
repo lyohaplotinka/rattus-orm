@@ -1,28 +1,24 @@
 ---
+
 sidebar_position: 3
+
 ---
 
-# Собственные валидаторы
+# Custom Validators
 
-### Введение
-Автоматически создаваемые типы Zod для примитивных полей не всегда могут покрыть все
-ваши потребности. К примеру, для поле с атрибутом `Attr` по умолчанию создаётся схема типа 
-`z.unknown()`. Это ограничивает возможности валидации структур. 
+### Introduction
+Automatically created Zod types for primitive fields may not always meet all your requirements. For example, for a field with the `Attr` attribute, a schema of type `z.unknown()` is created by default. This limits the possibilities for validating structures.
 
-Кроме того, иногда нужно убедиться, что строка длиннее определённого количества символов, или
-число меньше какого-либо максимального значения. 
+Additionally, there might be cases where you need to ensure that a string is longer than a certain number of characters, or a number is less than a specific maximum value.
 
-Для этого вы можете назначить свои схемы Zod любому из полей. Это можно сделать двумя способами,
-о которых пойдёт речь ниже. 
+For these situations, you can assign your own Zod schemas to any of the fields. This can be done in two ways, which will be discussed below.
 
-:::warning[Важно]
-Схема, которую вы определите, не **дополняет**, а **заменяет** автоматически сгенерированную.
-Учитывайте это при написании типов. 
+:::warning[Important]
+The schema you define does not **supplement** but **replaces** the automatically generated one. Keep this in mind when writing types.
 :::
 
-### Определение через статическое свойство
-Для JavaScript и TypeScript можно определить свои схемы для полей при помощи статического
-свойства класса вашей модели, как это сделано со свойством `entity`:
+### Definition Through Static Property
+For both JavaScript and TypeScript, you can define your own schemas for fields using a static property of your model's class, similar to how the `entity` property is defined:
 
 ```typescript
 import { z } from 'zod'
@@ -39,11 +35,10 @@ export class User extends Model {
 }
 ```
 
-В итоге свойство `age` будет валидироваться определённой вами схемой, остальные поля будут
-работать как раньше. Базовая валидация для Num работать **не будет**.
+As a result, the `age` property will be validated using the schema you defined, while other fields will continue to work as before. The basic validation for Num will **not** work.
 
-### Определение через декораторы
-То же самое можно сделать с помощью декоратора `ZodFieldType`:
+### Definition Through Decorators
+The same can be achieved using the `ZodFieldType` decorator:
 
 ```typescript
 import { z } from 'zod'

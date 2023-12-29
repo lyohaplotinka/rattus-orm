@@ -1,19 +1,19 @@
 ---
+
 sidebar_position: 2
+
 ---
 
-# Установка и использование
+# Installation and Usage
 
-### Введение
+### Introduction
 
-Установить библиотеку можно с помощью вашего любимого пакетного менеджера: 
+You can install the library using your favorite package manager:
 ```bash
 yarn add @rattus-orm/plugin-zod-validate
 ```
 
-`@rattus-orm/plugin-zod-validate` использует [события базы данных](/docs/docs-core/events) 
-для реализации проверки типа, поэтому его можно использовать с любым Data Provider. Чтобы 
-включить валидацию, вызовите фабрику плагина в методе `use` базы данных:
+`@rattus-orm/plugin-zod-validate` uses [database events](/docs/docs-core/events) for type checking implementation, so it can be used with any Data Provider. To enable validation, invoke the plugin factory in the `use` method of your database:
 
 ```typescript
 const db = new Database()
@@ -24,10 +24,9 @@ const db = new Database()
 db.start()
 ```
 
-### Нестрогий режим
+### Non-Strict Mode
 
-По умолчанию валидатор работает в **нестрогом** режиме, то есть, при неудачной валидации данных
-не будет выброшено исключение:
+By default, the validator operates in **non-strict** mode, meaning no exception will be thrown in case of failed data validation:
 
 ```typescript
 class User extends Model {
@@ -41,23 +40,22 @@ class User extends Model {
 }
 
 db.getRepository(User).save({ id: 'asdasd', name: 'test' })
-// Ошибки не будет, будет warning в консоль: 
+// No error will occur, only a warning in the console: 
 // 
 // Data validation failed (connection.user):
 // 1. Invalid number: "asdasd" (user.id)
 ```
 
-### Строгий режим
-Если вы хотите получать ошибку при несоответствии данных, вы можете включить строгий
-режим валидации: 
+### Strict Mode
+If you prefer to receive an error when data doesn't match the criteria, you can enable strict validation mode:
 ```typescript
 db.use(RattusZodValidationPlugin({ strict: true }))
 ```
-Либо, вы можете включить строгий режим для определённых моделей: 
+Or, you can activate strict mode for specific models:
 ```typescript
 db.use(RattusZodValidationPlugin({ strict: [User.entity] }))
 ```
-В этом случае, описанный выше warning станет текстом ошибки: 
+In this case, the above warning will turn into an error message:
 ```typescript
 class User extends Model {
   public static entity = 'user'
@@ -74,8 +72,7 @@ db.getRepository(User).save({ id: 'asdasd', name: 'test' })
 // 1. Invalid number: "asdasd" (user.id)
 ```
 
-Ошибка `RattusZodValidationError` содержит в себе оригинальные ошибки Zod, если по каким-то
-причинам они вам нужны. Для TypeScript вы можете использовать специальный тайп-гард: 
+The `RattusZodValidationError` contains the original Zod errors, in case they are needed. For TypeScript, you can use a special type guard:
 
 ```typescript
 import { isRattusZodValidationError } from '@rattus-orm/plugin-zod-validate'

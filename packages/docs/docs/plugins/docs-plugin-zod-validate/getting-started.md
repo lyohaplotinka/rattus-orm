@@ -1,16 +1,17 @@
 ---
+
 sidebar_position: 1
+
 ---
 
 # Introduction
 
-`@rattus-orm/plugin-zod-validate` - это плагин для Rattus ORM, позволяющий валидировать ваши данные
-в моделях при помощи библиотеки [Zod](https://zod.dev/).
+`@rattus-orm/plugin-zod-validate` is a plugin for Rattus ORM, designed to validate your data in models using the [Zod](https://zod.dev/) library.
 
-Основные возможности: 
-1. Работает с любым Data Provider;
-2. Автоматическое создание типов Zod для базовых типов полей: string, number, boolean;
-3. Строгий режим - выбрасывает ошибку при неудачной валидации (по умолчанию - warning в консоль);
-4. Возможность настроить строгий режим для конкретных моделей;
-5. Возможность определить свой валидатор для полей;
-6. Поддержка декораторов для полей.
+Key features:
+1. Works with any Data Provider;
+2. Automatically creates Zod types for basic field types: string, number, boolean;
+3. Strict mode - throws an error on unsuccessful validation (default is a warning in the console);
+4. Option to configure strict mode for specific models;
+5. Ability to define a custom validator for fields;
+6. Supports decorators for fields.
