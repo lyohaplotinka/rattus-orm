@@ -9,7 +9,7 @@ const PluginsList: PackageItem[] = [
     title: 'Zod Validate',
     packageName: '@rattus-orm/plugin-zod-validate',
     picture: ZodLogo,
-    link: '/docs/category/plugin-zod-validate',
+    link: '/docs/category/zod-validate',
     description: translate({ message: 'Data validation with Zod' }),
   },
 ]

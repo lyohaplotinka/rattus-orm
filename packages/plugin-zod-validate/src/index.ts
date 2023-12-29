@@ -54,7 +54,7 @@ export function RattusZodValidationPlugin(params: RattusZodValidationPluginParam
   }
 }
 
-export function ZodType(type: ZodLibType) {
+export function ZodFieldType(type: ZodLibType) {
   return (target: Model, propertyKey: string) => {
     const self = target.$self() as ModelWithZodSchemas
 
