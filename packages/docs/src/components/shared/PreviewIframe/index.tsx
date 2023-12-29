@@ -1,4 +1,4 @@
-import { Loader } from '@site/src/components/Loader'
+import { Loader } from '@site/src/components/shared/Loader'
 import clsx from 'clsx'
 import { useRef, useState } from 'react'
 

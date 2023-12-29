@@ -11,4 +11,11 @@
     --ifm-font-color-base-inverse: #e0dfdf;
 }
 
+.w-full {
+  width: 100%;
+}
+.mw-full {
+  max-width: 100%;
+}
+
 @import "blocks";
