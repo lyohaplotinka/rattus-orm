@@ -19,7 +19,8 @@
   "utils": {
     "autoBump": true,
     "order": 0,
-    "runFunctional": false
+    "runFunctional": false,
+    "runLocal": false
   },
   "react-signals": {
     "path": "packages/react-signals/test/provider-factory.ts",
@@ -35,5 +36,9 @@
     "path": "packages/react-redux/test/provider-factory.ts",
     "exportName": "dataProviderFactory",
     "runFunctional": true
+  },
+  "plugin-zod-validate": {
+    "autoBump": true,
+    "runFunctional": false
   }
 }
