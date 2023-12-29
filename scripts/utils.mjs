@@ -16,12 +16,29 @@ export function getPackageMeta(pkg) {
   return loadPackagesMeta()[pkg]
 }
 
+function sortPackages(packages) {
+  const configuredProviders = loadPackagesMeta()
+
+  return packages.toSorted((a, b) => {
+    const pkgA = configuredProviders[a]
+    const pkgB = configuredProviders[b]
+
+    const pkgAOrder = pkgA.order ?? 9999
+    const pkgBOrder = pkgB.order ?? 9999
+
+    return pkgAOrder - pkgBOrder
+  })
+}
+
 export function parsePackages(commaSeparatedString, filter = null) {
   const configuredProviders = loadPackagesMeta()
   const configuredProvidersKeys = Object.keys(configuredProviders)
 
   if (!commaSeparatedString || commaSeparatedString.trim() === 'all') {
-    return filter ? configuredProvidersKeys.filter((pkg) => filter(configuredProviders[pkg])) : configuredProvidersKeys
+    const filtered = filter
+      ? configuredProvidersKeys.filter((pkg) => filter(configuredProviders[pkg]))
+      : configuredProvidersKeys
+    return sortPackages(filtered)
   }
 
   const packagesOption = commaSeparatedString.split(',')
@@ -31,27 +48,7 @@ export function parsePackages(commaSeparatedString, filter = null) {
     }
   })
 
-  const sorted = packagesOption.sort((a, b) => {
-    const pkgA = configuredProviders[a]
-    const pkgB = configuredProviders[b]
-
-    if (pkgA.autoBump === true && pkgB.autoBump !== true) {
-      return -1
-    }
-
-    if (pkgA.autoBump !== false && pkgB.autoBump === true) {
-      return 1
-    }
-
-    if (pkgA.autoBump === true && pkgB.autoBump === true) {
-      if (typeof pkgA.order === 'number' && typeof pkgB.order === 'number') {
-        return pkgB.order - pkgA.order
-      }
-    }
-
-    return 0
-  })
-
+  const sorted = sortPackages(packagesOption)
   return filter ? sorted.filter((pkg) => filter(configuredProviders[pkg])) : sorted
 }
 
