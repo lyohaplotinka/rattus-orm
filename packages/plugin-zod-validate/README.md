@@ -19,7 +19,7 @@ yarn add @rattus-orm/plugin-zod-validate
 ```
 
 ### Documentation
-For detailed docs please read [documentation website](https://lyohaplotinka.github.io/rattus-orm/docs/category/plugin-zod-validate).
+For detailed docs please read [documentation website](https://lyohaplotinka.github.io/rattus-orm/docs/category/zod-validate).
 
 ### Contributing
 Contributions are welcome! Please read our [Contributing Guide](../../CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests.
