@@ -339,5 +339,11 @@
   },
   "React + Redux integration": {
     "message": "Rattus для React + Redux"
+  },
+  "Data validation with Zod": {
+    "message": "Валидация данных с помощью Zod"
+  },
+  "Plugins": {
+    "message": "Плагины"
   }
 }

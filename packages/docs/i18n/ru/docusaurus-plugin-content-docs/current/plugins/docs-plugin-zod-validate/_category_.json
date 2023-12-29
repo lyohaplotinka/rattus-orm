@@ -1,0 +1,8 @@
+{
+  "label": "Zod Validate",
+  "position": 1,
+  "link": {
+    "type": "generated-index",
+    "description": "Data validation with Zod"
+  }
+}

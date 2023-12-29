@@ -28,6 +28,9 @@ program
   .option('-lp, --local-pattern <pattern>', 'tests pattern for local tests', '')
   .option('-fp, --functional-pattern <pattern>', 'tests pattern for functional tests', '')
   .action(async (str, { skipLocal, skipFunctional, localPattern, functionalPattern, verbose }) => {
+    const allPackagesNames = parsePackages(str, (pkg) => {
+      return pkg.runLocal !== false
+    })
     const packagesNames = parsePackages(str, (pkg) => {
       return !!pkg.runFunctional
     })
@@ -36,7 +39,7 @@ program
 
     if (!skipLocal) {
       console.log('Running local tests')
-      const localTestsPromise = packagesNames.map(async (pkg) => {
+      const localTestsPromise = allPackagesNames.map(async (pkg) => {
         const resultIndicator = `${pkg} (local)`
         try {
           await runLocalTests(pkg, localPattern, verbose)

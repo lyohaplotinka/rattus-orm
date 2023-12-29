@@ -15,7 +15,7 @@ export class EventsDataProviderWrapper implements DataProvider {
   constructor(protected readonly provider: DataProvider) {}
 
   public registerConnection(name: string): void {
-    this.dispatchVoidEvent(RattusEvents.CONNECTION_REGISTER, name)
+    this.dispatchVoidEvent(RattusEvents.CONNECTION_REGISTER, name, [name, name])
     return this.provider.registerConnection(name)
   }
 
@@ -25,6 +25,12 @@ export class EventsDataProviderWrapper implements DataProvider {
 
   public restore(data: SerializedStorage): void {
     this.provider.restore(data)
+    for (const connection in data) {
+      const connectionData = data[connection]
+      for (const entity in connectionData) {
+        this.dispatchDataChangedEvent([connection, entity])
+      }
+    }
   }
 
   public registerModule(modulePath: ModulePath, moduleInitialState?: State): void {
@@ -34,8 +40,10 @@ export class EventsDataProviderWrapper implements DataProvider {
         path: modulePath,
         initialState: moduleInitialState,
       },
+      modulePath,
     )
     this.provider.registerModule(path, initialState)
+    this.dispatchDataChangedEvent(path)
   }
 
   public getModuleState(module: ModulePath): State {
@@ -47,32 +55,32 @@ export class EventsDataProviderWrapper implements DataProvider {
   }
 
   public save(module: ModulePath, records: Elements): void {
-    this.provider.save(module, this.dispatchEventWithResult(RattusEvents.SAVE, records))
+    this.provider.save(module, this.dispatchEventWithResult(RattusEvents.SAVE, records, module))
     this.dispatchDataChangedEvent(module)
   }
 
   public insert(module: ModulePath, records: Elements): void {
-    this.provider.insert(module, this.dispatchEventWithResult(RattusEvents.INSERT, records))
+    this.provider.insert(module, this.dispatchEventWithResult(RattusEvents.INSERT, records, module))
     this.dispatchDataChangedEvent(module)
   }
 
   public replace(module: ModulePath, records: Elements): void {
-    this.provider.replace(module, this.dispatchEventWithResult(RattusEvents.REPLACE, records))
+    this.provider.replace(module, this.dispatchEventWithResult(RattusEvents.REPLACE, records, module))
     this.dispatchDataChangedEvent(module)
   }
 
   public update(module: ModulePath, records: Elements): void {
-    this.provider.update(module, this.dispatchEventWithResult(RattusEvents.UPDATE, records))
+    this.provider.update(module, this.dispatchEventWithResult(RattusEvents.UPDATE, records, module))
     this.dispatchDataChangedEvent(module)
   }
 
   public delete(module: ModulePath, ids: string[]): void {
-    this.provider.delete(module, this.dispatchEventWithResult(RattusEvents.DELETE, ids))
+    this.provider.delete(module, this.dispatchEventWithResult(RattusEvents.DELETE, ids, module))
     this.dispatchDataChangedEvent(module)
   }
 
   public flush(module: ModulePath): void {
-    this.dispatchVoidEvent(RattusEvents.FLUSH, null)
+    this.dispatchVoidEvent(RattusEvents.FLUSH, null, module)
     this.provider.flush(module)
     this.dispatchDataChangedEvent(module)
   }
@@ -93,13 +101,13 @@ export class EventsDataProviderWrapper implements DataProvider {
     }
   }
 
-  protected dispatchVoidEvent<T = string>(event: RattusEvent, param: T) {
-    this.getListenersForEvent(event).forEach((listener) => listener(param))
+  protected dispatchVoidEvent<T = string>(event: RattusEvent, param: T, modulePath: ModulePath) {
+    this.getListenersForEvent(event).forEach((listener) => listener(param, modulePath))
   }
 
-  protected dispatchEventWithResult<T>(eventName: RattusEvent, param: T): T {
+  protected dispatchEventWithResult<T>(eventName: RattusEvent, param: T, modulePath: ModulePath): T {
     return this.getListenersForEvent(eventName).reduce<T>((result, listener) => {
-      result = listener(param) as T
+      result = listener(param, modulePath) as T
       return result
     }, param)
   }
@@ -110,9 +118,13 @@ export class EventsDataProviderWrapper implements DataProvider {
   }
 
   protected dispatchDataChangedEvent(path: ModulePath) {
-    this.dispatchVoidEvent<DataChangedEventPayload>(RattusEvents.DATA_CHANGED, {
+    this.dispatchVoidEvent<DataChangedEventPayload>(
+      RattusEvents.DATA_CHANGED,
+      {
+        path,
+        state: this.getModuleState(path),
+      },
       path,
-      state: this.getModuleState(path),
-    })
+    )
   }
 }

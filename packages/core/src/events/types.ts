@@ -16,5 +16,5 @@ export type CancelSubscriptionCallback = Callback<[], void>
 export type ModuleRegisterEventPayload = { path: ModulePath; initialState?: State }
 export type DataChangedEventPayload = { path: ModulePath; state: State }
 export type RattusEvent = (typeof RattusEvents)[keyof typeof RattusEvents]
-export type DataEventCallback<T, R = void> = (data: T) => R
-export type InternalListener = (param: unknown) => unknown
+export type DataEventCallback<T, R = void> = (data: T, modulePath: ModulePath) => R
+export type InternalListener = (param: unknown, modulePath: ModulePath) => unknown

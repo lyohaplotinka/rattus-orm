@@ -1,11 +1,10 @@
-.integrationLogo {
+.packageLogo {
   height: 90px;
-  margin-bottom: 1rem;
 }
 
 $cardWidth: 260;
 
-.integrationCard {
+.packageCard {
   padding-top: 2rem;
   padding-bottom: 1rem;
   width: #{$cardWidth}px;
@@ -16,11 +15,24 @@ $cardWidth: 260;
   }
 }
 
-.integrationsWrapper {
+.packageName {
+  white-space: nowrap;
+  display: block;
+  margin: 0 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.packagesWrapper {
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
   justify-content: center;
   align-items: center;
   max-width: 95%;
+}
+
+.packageDesc {
+  text-align: center;
+  line-height: 1.2;
 }
