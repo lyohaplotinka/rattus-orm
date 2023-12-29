@@ -21,15 +21,15 @@
     "javascript"
   ],
   "version": "0.0.0",
-  "main": "./dist/rattus-orm-plugin-zod-validate-provider.js",
-  "browser": "./dist/rattus-orm-plugin-zod-validate-provider.mjs",
-  "module": "./dist/rattus-orm-plugin-zod-validate-provider.mjs",
-  "types": "./dist/rattus-orm-plugin-zod-validate-provider.d.ts",
+  "main": "./dist/rattus-orm-plugin-zod-validate.js",
+  "browser": "./dist/rattus-orm-plugin-zod-validate.mjs",
+  "module": "./dist/rattus-orm-plugin-zod-validate.mjs",
+  "types": "./dist/rattus-orm-plugin-zod-validate.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/rattus-orm-plugin-zod-validate-provider.mjs",
-      "require": "./dist/rattus-orm-plugin-zod-validate-provider.js",
-      "types": "./dist/rattus-orm-plugin-zod-validate-provider.d.ts"
+      "import": "./dist/rattus-orm-plugin-zod-validate.mjs",
+      "require": "./dist/rattus-orm-plugin-zod-validate.js",
+      "types": "./dist/rattus-orm-plugin-zod-validate.d.ts"
     }
   },
   "files": [
@@ -57,11 +57,11 @@
   "size-limit": [
     {
       "name": "ESM plugin-zod-validate provider",
-      "path": "./dist/rattus-orm-plugin-zod-validate-provider.mjs"
+      "path": "./dist/rattus-orm-plugin-zod-validate.mjs"
     },
     {
       "name": "CJS plugin-zod-validate provider",
-      "path": "./dist/rattus-orm-plugin-zod-validate-provider.mjs"
+      "path": "./dist/rattus-orm-plugin-zod-validate.mjs"
     }
   ]
 }
