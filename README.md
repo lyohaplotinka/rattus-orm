@@ -26,6 +26,9 @@ Rattus ORM is a versatile JavaScript/TypeScript package that offers an Object-Re
 * [@rattus-orm/react-signals](./packages/react-signals): signals data provider (react)
 * [@rattus-orm/local-storage](./packages/local-storage): localStorage data provider
 
+#### Plugins:
+* [@rattus-orm/plugin-zod-validate](./packages/plugin-zod-validate): validate your data with Zod
+
 ### Documentation
 For more detailed usage and API documentation, please visit [Rattus ORM Documentation](https://lyohaplotinka.github.io/rattus-orm/).
 
