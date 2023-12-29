@@ -55,14 +55,14 @@ describe('react-hooks: useRepository', () => {
       <TestComponent />,
       () => useRepository(User),
     ).result
-    expect(() => insert({ id: '2', age: 22 })).not.toThrowError()
-    expect(() => fresh([{ id: '1', age: 11 }])).not.toThrowError()
-    expect(() => destroy('1')).not.toThrowError()
-    expect(() => find('1')).not.toThrowError()
-    expect(() => save({ id: '2', age: 22 })).not.toThrowError()
-    expect(() => all()).not.toThrowError()
-    expect(() => flush()).not.toThrowError()
-    expect(() => query().where('id', '1').first()).not.toThrowError()
+    expect(() => act(() => insert({ id: '2', age: 22 }))).not.toThrowError()
+    expect(() => act(() => fresh([{ id: '1', age: 11 }]))).not.toThrowError()
+    expect(() => act(() => destroy('1'))).not.toThrowError()
+    expect(() => act(() => find('1'))).not.toThrowError()
+    expect(() => act(() => save({ id: '2', age: 22 }))).not.toThrowError()
+    expect(() => act(() => all())).not.toThrowError()
+    expect(() => act(() => flush())).not.toThrowError()
+    expect(() => act(() => query().where('id', '1').first())).not.toThrowError()
   })
 
   it('useRepository returns reactive data', async () => {
