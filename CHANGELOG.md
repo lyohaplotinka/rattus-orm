@@ -1,3 +1,15 @@
+# 2023/12/29
+### Core (0.0.17)
+* Module path for events listeners;
+* DATA_CHANGED event for module register and data restore;
+* `isTypeNullable` method for Type abstract class.
+
+### Plugin Zod Validate (0.0.1)
+* introducing Plugin Zod Validate
+
+### Vuex (0.0.16), Pinia (0.0.8), React Signals (0.0.4), LocalStorage (0.0.4), Redux (0.0.3)
+* update Core package.
+
 # 2023/12/27
 ### Core (0.0.16)
 * add DATA_CHANGED event.

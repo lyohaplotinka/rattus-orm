@@ -19,7 +19,7 @@
     "typescript",
     "javascript"
   ],
-  "version": "0.0.16",
+  "version": "0.0.17",
   "main": "./dist/rattus-orm-core.js",
   "module": "./dist/rattus-orm-core.mjs",
   "types": "./dist/rattus-orm-core.d.ts",

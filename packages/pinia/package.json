@@ -53,7 +53,7 @@
     "vue": "^3.3.10"
   },
   "peerDependencies": {
-    "@rattus-orm/core": "^0.0.16",
+    "@rattus-orm/core": "^0.0.17",
     "pinia": "^2.0.0",
     "vue": "^3.0.0"
   },
