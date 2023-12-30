@@ -88,3 +88,16 @@ app
     pinia,
   }))
 ```
+
+### Using plugins
+
+If you want to use [plugins](/docs/docs-core/plugins) with a database, you can
+pass an array of plugins into the plugin configuration
+object. For example, a [validation plugin with Zod](/docs/category/zod-validate):
+```typescript
+app
+  .use(pinia)
+  .use(installRattusORM({
+    plugins: [RattusZodValidationPlugin()]
+  }))
+```
