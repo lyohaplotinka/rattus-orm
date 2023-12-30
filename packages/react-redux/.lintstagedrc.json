@@ -1,5 +1,0 @@
-{
-  "*.{ts,tsx}": [
-    "yarn test react-redux"
-  ]
-}
