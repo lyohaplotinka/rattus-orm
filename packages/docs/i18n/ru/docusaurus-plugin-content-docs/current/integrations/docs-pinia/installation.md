@@ -91,3 +91,15 @@ app
     pinia,
   }))
 ```
+
+### Использование плагинов
+
+Если вы хотите использовать [плагины](/docs/docs-core/plugins) с базой
+данных, вы можете передать массив плагинов в объект конфигурации плагина. К примеру, [плагин для валидации с Zod](/docs/category/zod-validate):
+```typescript
+app
+  .use(pinia)
+  .use(installRattusORM({
+    plugins: [RattusZodValidationPlugin()]
+  }))
+```

@@ -68,3 +68,17 @@ export default defineComponent({
 })
 </script>
 ``` 
+
+### Использование плагинов
+
+Если вы хотите использовать [плагины](/docs/docs-core/plugins) с базой 
+данных, вы можете передать массив плагинов в объект конфигурации плагина. К примеру, [плагин для валидации с Zod](/docs/category/zod-validate):
+```typescript
+const store = createStore({ 
+  plugins: [
+    installRattusORM({
+      plugins: [RattusZodValidationPlugin()]
+    })
+  ]
+})
+```

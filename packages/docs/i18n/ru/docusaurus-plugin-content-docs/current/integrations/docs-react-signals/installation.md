@@ -66,3 +66,17 @@ function App() {
   )
 }
 ```
+
+### Использование плагинов
+
+Если вы хотите использовать [плагины](/docs/docs-core/plugins) с базой
+данных, вы можете передать массив плагинов в пропс провайдера. К примеру, [плагин для валидации с Zod](/docs/category/zod-validate):
+```tsx
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <RattusProvider plugins={[RattusZodValidationPlugin()]}>
+      <App />
+  </RattusProvider>
+  </React.StrictMode>,
+)
+```
