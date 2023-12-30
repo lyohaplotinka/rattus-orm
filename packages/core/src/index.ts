@@ -1,7 +1,6 @@
 export * from './data/data-provider-helpers'
 export * from './data/types'
 export * from './database/database'
-export * from './database/types'
 export * from './events/types'
 export * from './model/attributes/attribute'
 export { BelongsTo as BelongsToAttr } from './model/attributes/relations/belongs-to'

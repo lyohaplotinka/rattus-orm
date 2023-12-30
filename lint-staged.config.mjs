@@ -37,7 +37,7 @@ export default (allStagedFiles) => {
   }
 
   if (coreMatch.length > 0) {
-    commands.push('yarn workspace @rattus-orm/core run build')
+    commands.unshift('yarn workspace @rattus-orm/core run build')
   }
 
   if (utilsMatch.length > 0) {

@@ -61,12 +61,19 @@ export class RattusContext {
   }
 }
 
-export function createRattusContext(params: RattusOrmInstallerOptions, dataProvider?: DataProvider): RattusContext {
+export function createRattusContext(
+  params: RattusOrmInstallerOptions<Database>,
+  dataProvider?: DataProvider,
+): RattusContext {
   if (params.database && params.database instanceof Database) {
     return new RattusContext(undefined, params.database)
   }
   const context = new RattusContext(dataProvider)
-  context.createDatabase(params.connection, true)
+  const db = context.createDatabase(params.connection, true)
+
+  if (params.plugins?.length) {
+    params.plugins.forEach((plugin) => db.use(plugin))
+  }
 
   return context
 }
