@@ -20,7 +20,7 @@
     "typescript",
     "javascript"
   ],
-  "version": "0.0.3",
+  "version": "0.0.4",
   "main": "./dist/rattus-orm-react-redux-provider.js",
   "browser": "./dist/rattus-orm-react-redux-provider.mjs",
   "module": "./dist/rattus-orm-react-redux-provider.mjs",
