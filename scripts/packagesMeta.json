@@ -38,7 +38,7 @@
     "runFunctional": true
   },
   "plugin-zod-validate": {
-    "autoBump": true,
+    "autoBump": false,
     "runFunctional": false
   }
 }
