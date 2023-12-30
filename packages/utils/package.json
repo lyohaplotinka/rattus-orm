@@ -19,7 +19,7 @@
     "typescript",
     "javascript"
   ],
-  "version": "0.0.7",
+  "version": "0.0.8",
   "main": "./dist/all.js",
   "browser": "./dist/all.mjs",
   "module": "./dist/all.mjs",

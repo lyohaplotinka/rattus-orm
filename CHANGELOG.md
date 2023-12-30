@@ -1,3 +1,15 @@
+# 2023/12/30
+### Core (0.0.18)
+* move `DatabasePlugin` type to Utils;
+* rattusContext: accept plugins form params.
+
+### Utils (0.0.8)
+* move `DatabasePlugin` type to Utils.
+
+### Vuex (0.0.17), Pinia (0.0.9), React Signals (0.0.5), Redux (0.0.4), Plugin Zod Validate (0.0.2)
+* apply new types;
+* for integrations - verify plugins pass ability.
+
 # 2023/12/29
 ### Core (0.0.17)
 * Module path for events listeners;

@@ -44,7 +44,7 @@
     "size": "run -T size-limit"
   },
   "dependencies": {
-    "@rattus-orm/utils": "^0.0.7",
+    "@rattus-orm/utils": "^0.0.8",
     "zod": "^3.22.4"
   },
   "devDependencies": {
