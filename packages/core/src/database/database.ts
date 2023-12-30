@@ -1,6 +1,5 @@
-import type { Constructor, DataProvider, Elements, State } from '@rattus-orm/utils/sharedTypes'
+import type { Constructor, DatabasePlugin, DataProvider, Elements, State } from '@rattus-orm/utils/sharedTypes'
 
-import type { DatabasePlugin } from '@/database/types'
 import { EventsDataProviderWrapper } from '@/events/events-data-provider-wrapper'
 import type {
   CancelSubscriptionCallback,
@@ -150,7 +149,7 @@ export class Database {
     return this.dataProvider.resetListeners(event)
   }
 
-  public use(plugin: DatabasePlugin): this {
+  public use(plugin: DatabasePlugin<Database>): this {
     plugin(this)
     return this
   }

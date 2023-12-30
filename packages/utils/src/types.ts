@@ -46,7 +46,10 @@ export interface DatabaseLike {
   start(): void
 }
 
-export type RattusOrmInstallerOptions = {
+export type DatabasePlugin<DB> = (database: DB) => void
+
+export type RattusOrmInstallerOptions<DB> = {
   connection?: string
   database?: DatabaseLike
+  plugins?: DatabasePlugin<DB>[]
 }
