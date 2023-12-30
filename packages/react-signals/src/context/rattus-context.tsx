@@ -1,3 +1,4 @@
+import type { Database } from '@rattus-orm/core'
 import type { RattusContext as RattusContextCore } from '@rattus-orm/core/rattus-context'
 import { createRattusContext } from '@rattus-orm/core/rattus-context'
 import type { RattusOrmInstallerOptions } from '@rattus-orm/utils/sharedTypes'
@@ -9,7 +10,7 @@ import { ReactSignalsDataProvider } from '../index'
 
 export const RattusContext = createContext<Partial<RattusContextCore>>({ $database: undefined, $databases: undefined })
 
-export function RattusProvider(props: PropsWithChildren<RattusOrmInstallerOptions>) {
+export function RattusProvider(props: PropsWithChildren<RattusOrmInstallerOptions<Database>>) {
   const rattusContext = useRef(createRattusContext(props, new ReactSignalsDataProvider()))
 
   return <RattusContext.Provider value={rattusContext.current}>{props.children}</RattusContext.Provider>
