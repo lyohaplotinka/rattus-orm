@@ -19,7 +19,7 @@ export function getPackageMeta(pkg) {
 function sortPackages(packages) {
   const configuredProviders = loadPackagesMeta()
 
-  return packages.toSorted((a, b) => {
+  return packages.sort((a, b) => {
     const pkgA = configuredProviders[a]
     const pkgB = configuredProviders[b]
 
