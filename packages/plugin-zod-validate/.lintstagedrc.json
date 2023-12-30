@@ -1,5 +1,0 @@
-{
-  "*.{ts,tsx}": [
-    "yarn workspace @rattus-orm/plugin-zod-validate run test"
-  ]
-}
