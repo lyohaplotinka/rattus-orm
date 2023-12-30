@@ -21,7 +21,7 @@
     "typescript",
     "javascript"
   ],
-  "version": "0.0.4",
+  "version": "0.0.5",
   "main": "./dist/rattus-orm-react-signals-provider.js",
   "browser": "./dist/rattus-orm-react-signals-provider.mjs",
   "module": "./dist/rattus-orm-react-signals-provider.mjs",
