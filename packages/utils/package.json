@@ -66,8 +66,8 @@
     "typecheck": "bash -c 'tsc -p tsconfig.json --noEmit'"
   },
   "devDependencies": {
-    "vitest": "^1.0.2",
-    "vue": "^3.3.10"
+    "vitest": "^1.1.1",
+    "vue": "^3.4.4"
   },
   "peerDependencies": {
     "vitest": "^0.34.6",

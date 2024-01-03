@@ -50,7 +50,7 @@
     "@rattus-orm/utils": "workspace:^",
     "@vue/test-utils": "^2.4.3",
     "pinia": "^2.1.7",
-    "vue": "^3.3.10"
+    "vue": "^3.4.4"
   },
   "peerDependencies": {
     "@rattus-orm/core": "^0.0.18",
