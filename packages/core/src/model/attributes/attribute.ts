@@ -2,7 +2,7 @@ import type { ModelConstructor } from '@/model/types'
 
 import type { Model } from '../Model'
 
-export abstract class Attribute {
+export abstract class Attribute<MakeValue> {
   /**
    * The model instance.
    */
@@ -18,5 +18,13 @@ export abstract class Attribute {
   /**
    * Make the value for the attribute.
    */
-  public abstract make(value?: any): any
+  public make(value?: any): MakeValue {
+    if (this.model.$self().dataTypeCasting) {
+      return this.makeCasted(value)
+    }
+    return this.makeRaw(value)
+  }
+
+  protected abstract makeCasted(value?: any): MakeValue
+  protected abstract makeRaw(value?: any): MakeValue
 }

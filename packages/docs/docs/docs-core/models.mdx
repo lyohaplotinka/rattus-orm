@@ -122,7 +122,7 @@ export class User extends Model {
 You can use primitive type attributes:
 `@Str('')`, `@Num(0)`, or `@Bool(false)`
 (for JS - `this.string()`, `this.number()`, and `this.boolean()`).
-These attributes ensure casting, which
+These attributes ensure casting by default, which
 converts the given value to the specified type.
 For example, `'0'` is converted to `0`, and `1` to `true`.
 As with `this.attr()`, the argument is the
@@ -149,6 +149,31 @@ go into the fields. Instead, **type casting** will be performed.
 The string `John Doe` going into a Boolean field will be
 converted to `true`.
 :::
+
+You can disable type casting for a specific model. To do this, you
+need to declare a public static property `dataTypeCasting` and set
+its value to `false`. In such a case, even if a field is marked
+with the `@Bool` decorator, and a one (1) is entered into the model,
+it will not be converted to `true`, but will remain a one (1).
+There will also be no validation. If you need to validate values,
+consider looking at [Zod Validate plugin](/docs/plugins/docs-plugin-zod-validate/getting-started).
+
+```typescript
+export class User extends Model {
+    public static entity = 'user'
+    // type casting of fields is disabled
+    public static dataTypeCasting = false
+
+    @Str('')
+    public name: string
+
+    @Num(0)
+    public age: number
+
+    @Bool(true)
+    public isAwesome: boolean
+}
+```
 
 #### UID Type
 `@Uid()`  (or `this.uid()` in JS) generates a unique

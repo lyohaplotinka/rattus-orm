@@ -1,7 +1,7 @@
 import type { Model } from '../../Model'
 import { Type } from './Type'
 
-export class String extends Type {
+export class String extends Type<string | null> {
   /**
    * Create a new String attribute instance.
    */
@@ -12,7 +12,7 @@ export class String extends Type {
   /**
    * Make the value for the attribute.
    */
-  public make(value: any): string | null {
+  protected makeCasted(value: any): string | null {
     if (value === undefined) {
       return this.value
     }

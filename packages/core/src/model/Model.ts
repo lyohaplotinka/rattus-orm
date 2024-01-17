@@ -18,10 +18,10 @@ import { Number as Num } from './attributes/types/Number'
 import { String as Str } from './attributes/types/String'
 import { Uid } from './attributes/types/Uid'
 
-export type ModelFields = Record<string, Attribute>
+export type ModelFields = Record<string, Attribute<unknown>>
 export type ModelSchemas = Record<string, ModelFields>
 export type ModelRegistries = Record<string, ModelRegistry>
-export type ModelRegistry = Record<string, () => Attribute>
+export type ModelRegistry = Record<string, () => Attribute<unknown>>
 
 export interface ModelOptions {
   fill?: boolean
@@ -33,6 +33,11 @@ export class Model {
    * The name of the model.
    */
   public static entity: string
+
+  /**
+   * Should or should not cast data types
+   */
+  public static dataTypeCasting: boolean = true
 
   /**
    * The primary key for the model.
@@ -78,7 +83,7 @@ export class Model {
   /**
    * Set the attribute to the registry.
    */
-  public static setRegistry<M extends typeof Model>(this: M, key: string, attribute: () => Attribute): M {
+  public static setRegistry<M extends typeof Model>(this: M, key: string, attribute: () => Attribute<unknown>): M {
     if (!this.registries[this.entity]) {
       this.registries[this.entity] = {}
     }
@@ -486,7 +491,7 @@ export class Model {
   /**
    * Fill the given attribute with a given value specified by the given key.
    */
-  protected $fillField(key: string, attr: Attribute, value: any): void {
+  protected $fillField(key: string, attr: Attribute<unknown>, value: any): void {
     if (value !== undefined) {
       this[key] = attr instanceof MorphTo ? attr.make(value, this[attr.getType()]) : attr.make(value)
 
