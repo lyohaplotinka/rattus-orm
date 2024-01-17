@@ -12,7 +12,7 @@ export interface Dictionary {
   [id: string]: Model[]
 }
 
-export abstract class Relation extends Attribute {
+export abstract class Relation extends Attribute<any> {
   /**
    * Create a new relation instance.
    */
@@ -53,6 +53,9 @@ export abstract class Relation extends Attribute {
       return dictionary
     }, {})
   }
+
+  protected makeCasted(): any {}
+  protected makeRaw(): any {}
 
   /**
    * Get all related models for the relationship.

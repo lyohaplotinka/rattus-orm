@@ -1,7 +1,7 @@
 import type { Model } from '../../Model'
 import { Type } from './Type'
 
-export class Number extends Type {
+export class Number extends Type<number | null> {
   /**
    * Create a new Number attribute instance.
    */
@@ -12,7 +12,7 @@ export class Number extends Type {
   /**
    * Make the value for the attribute.
    */
-  public make(value: any): number | null {
+  protected makeCasted(value: any): number | null {
     if (value === undefined) {
       return this.value
     }

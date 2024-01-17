@@ -1,7 +1,7 @@
 import type { Model } from '../../Model'
 import { Type } from './Type'
 
-export class Boolean extends Type {
+export class Boolean extends Type<boolean | null> {
   /**
    * Create a new Boolean attribute instance.
    */
@@ -12,7 +12,7 @@ export class Boolean extends Type {
   /**
    * Make the value for the attribute.
    */
-  public make(value: any): boolean | null {
+  protected makeCasted(value: any): boolean | null {
     if (value === undefined) {
       return this.value
     }

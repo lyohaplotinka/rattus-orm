@@ -1,7 +1,7 @@
 import type { Model } from '../../Model'
 import { Attribute } from '../attribute'
 
-export abstract class Type extends Attribute {
+export abstract class Type<MakeValue> extends Attribute<MakeValue> {
   /**
    * The default value for the attribute.
    */
@@ -31,5 +31,9 @@ export abstract class Type extends Attribute {
     this.isNullable = true
 
     return this
+  }
+
+  protected makeRaw(value?: any): MakeValue {
+    return value ?? null
   }
 }

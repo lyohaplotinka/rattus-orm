@@ -1,10 +1,10 @@
 import { Type } from './Type'
 
-export class Uid extends Type {
+export class Uid extends Type<string> {
   /**
    * Make the value for the attribute.
    */
-  public make(value: any): string {
+  protected makeCasted(value: any): string {
     return value ?? crypto.randomUUID()
   }
 }

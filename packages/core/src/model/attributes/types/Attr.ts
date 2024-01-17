@@ -1,10 +1,10 @@
 import { Type } from './Type'
 
-export class Attr extends Type {
+export class Attr extends Type<any> {
   /**
    * Make the value for the attribute.
    */
-  public make(value: any): any {
+  protected makeCasted(value: any): any {
     return value === undefined ? this.value : value
   }
 }
