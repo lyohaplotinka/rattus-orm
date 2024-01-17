@@ -1,8 +1,4 @@
-export type Constructor<T> = T extends { constructor: (...args: infer P) => any }
-  ? {
-      new (...args: P): T
-    }
-  : never
+export type Constructor<T, Args extends any[] = any[]> = new (...args: Args) => T
 export type Callback<P extends any[] = [], R = void> = (...args: P) => R
 
 export type ModulePath = [connection: string, module: string]
