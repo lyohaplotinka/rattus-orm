@@ -57,9 +57,9 @@ Link it to the model using the `use` property:
 
 ```typescript
 import { Repository } from '@rattus-orm/core'
-import User from '@/models/User'
+import Post from '@/models/Post'
 
-export class UserRepository extends Repository {
+export class PostRepository extends Repository<Post> {
   public use = Post
   
   public myMethod() {
@@ -67,3 +67,35 @@ export class UserRepository extends Repository {
   }
 }
 ```
+
+You have two options for using a custom repository. The first is to 
+directly create an instance of it, passing the database to the 
+constructor, and then call the `initialize` method:
+```typescript
+const postRepository = new PostRepository(database).initialize()
+postRepository.myMethod()
+```
+
+The second option is to register the repository in the database, so 
+that you automatically get the desired class when calling the 
+`getRepository` method:
+```typescript
+const db = new Database()
+  .setConnection('entities')
+  .setDataProvider(...)
+  .registerCustomRepository(PostRepository)
+  .start()
+
+const postRepository = db.getRepository<PostRepository>(Post)
+postRepository.myMethod()
+```
+This will also work with the context (in integrations):
+```typescript
+const postRepository = useRattusContext().$repo<PostRepository>(Post)
+postRepository.myMethod()
+```
+
+:::info[Important (for TypeScript)]
+The `getRepository` method in the database and `$repo` in the context by default return the type `Repository<your_model>`. Don't forget to pass the type of your repository as a generic argument to the respective method.
+:::
+

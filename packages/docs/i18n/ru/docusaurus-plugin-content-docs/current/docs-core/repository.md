@@ -57,9 +57,9 @@ Vuex. Заменяйте `store.$repo` на результат выполнен�
 
 ```typescript
 import { Repository } from '@rattus-orm/core'
-import User from '@/models/User'
+import Post from '@/models/Post'
 
-export class UserRepository extends Repository {
+export class PostRepository extends Repository<Post> {
   public use = Post
   
   public myMethod() {
@@ -67,3 +67,32 @@ export class UserRepository extends Repository {
   }
 }
 ```
+
+У вас есть два варианта использования кастомного репозитория. Первый - создать его экземпляр напрямую, передав в конструктор базу данных, а затем вызвать метод `initialize`:
+```typescript
+const postRepository = new PostRepository(database).initialize()
+postRepository.myMethod()
+```
+
+Второй - зарегистрировать репозиторий в базе данных, чтобы автоматически получать нужный класс при вызове метода `getRepository`:
+```typescript
+const db = new Database()
+  .setConnection('entities')
+  .setDataProvider(...)
+  .registerCustomRepository(PostRepository)
+  .start()
+
+const postRepository = db.getRepository<PostRepository>(Post)
+postRepository.myMethod()
+```
+Это также будет работать и с контекстом (в интеграциях):
+```typescript
+const postRepository = useRattusContext().$repo<PostRepository>(Post)
+postRepository.myMethod()
+```
+
+:::info[Важно (для TypeScript)]
+Метод `getRepository` в базе данных и `$repo` в контексте по умолчанию возвращают
+тип `Repository<ваша_модель>`. Не забудьте передать тип вашего репозитория
+в аргумент дженерика соответствующего метода.
+:::
