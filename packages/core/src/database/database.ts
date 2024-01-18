@@ -12,11 +12,17 @@ import type {
 import { Relation } from '@/model/attributes/relations/relation'
 import type { Model } from '@/model/Model'
 import type { ModelConstructor } from '@/model/types'
-import { Repository } from '@/repository/repository'
+import type { Repository } from '@/repository/repository'
+import { RepositoryManager } from '@/repository/repository-manager'
 import { Schema } from '@/schema/schema'
 import type { EntitySchema, Schemas } from '@/schema/types'
 
 export class Database {
+  /**
+   * Repository constructors manager (for custom repositories)
+   */
+  protected readonly repositoryManager = new RepositoryManager()
+
   /**
    * The store instance.
    */
@@ -48,16 +54,24 @@ export class Database {
     return this.started
   }
 
-  public buildRepository<R extends Repository>(repoConstructor: Constructor<R>): R {
-    const repo = new repoConstructor(this).initialize()
+  /**
+   * Get repository for model
+   * @param model
+   */
+  public getRepository<R extends Repository<InstanceType<M>>, M extends typeof Model = typeof Model>(model: M): R {
+    const RepoCtor = this.repositoryManager.getRepositoryCtorForModel(model)
+    const repo = new RepoCtor(this).initialize(model as ModelConstructor<any>)
     this.register(repo.getModel())
-    return repo
+    return repo as R
   }
 
-  public getRepository<M extends typeof Model>(model: M): Repository<InstanceType<M>> {
-    const repo = new Repository<ModelConstructor<any>>(this).initialize(model)
-    this.register(repo.getModel())
-    return repo as Repository<InstanceType<M>>
+  /**
+   * Add custom repository constructor
+   * @param repo
+   */
+  public registerCustomRepository<R extends Repository>(repo: Constructor<R>): this {
+    this.repositoryManager.addRepositoryConstructor(repo, this)
+    return this
   }
 
   /**
@@ -87,9 +101,10 @@ export class Database {
   /**
    * Initialize the database before a user can start using it.
    */
-  public start(): void {
+  public start(): this {
     this.createRootModule()
     this.started = true
+    return this
   }
 
   /**

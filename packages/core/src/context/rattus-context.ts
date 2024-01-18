@@ -36,9 +36,12 @@ export class RattusContext {
     return newDb
   }
 
-  public $repo<M extends typeof Model>(model: M, connection?: string): Repository<InstanceType<M>> {
+  public $repo<R extends Repository<InstanceType<M>>, M extends typeof Model = typeof Model>(
+    model: M,
+    connection?: string,
+  ): R {
     if (this.storedRepos.has(model.entity)) {
-      return this.storedRepos.get(model.entity) as Repository<InstanceType<M>>
+      return this.storedRepos.get(model.entity) as R
     }
 
     let localDb: Database
@@ -54,7 +57,7 @@ export class RattusContext {
       localDb = this.$database
     }
 
-    const repo = localDb.getRepository(model)
+    const repo = localDb.getRepository<R>(model)
     this.storedRepos.set(model.entity, repo)
 
     return repo

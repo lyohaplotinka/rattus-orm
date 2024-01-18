@@ -1,7 +1,22 @@
 import { describe, expect, it } from 'vitest'
 import { createRattusContext, RattusContext } from '../src/context/rattus-context'
 import { ObjectDataProvider } from '../src/data/object-data-provider'
-import { Database } from '../src'
+import { Database, Model, Repository, Str } from '../src'
+
+class Email extends Model {
+  public static entity = 'email'
+
+  @Str('')
+  public id: string
+}
+
+class EmailRepository extends Repository<Email> {
+  public use = Email
+
+  public getAllButCool() {
+    return this.all()
+  }
+}
 
 describe('context.spec.ts', () => {
   it('createTestContext function returns correct context with default parameters', () => {
@@ -30,5 +45,18 @@ describe('context.spec.ts', () => {
       third: db,
     })
     expect(context.$database.isStarted()).toEqual(false)
+  })
+
+  it('$repo method allows retrieve custom repos', () => {
+    const db = new Database()
+      .setConnection('entities')
+      .setDataProvider(new ObjectDataProvider())
+      .registerCustomRepository(EmailRepository)
+      .start()
+    const context = createRattusContext({ database: db })
+
+    const repo = context.$repo<EmailRepository>(Email)
+    expect(repo).toBeInstanceOf(EmailRepository)
+    expect(() => repo.getAllButCool()).not.toThrowError()
   })
 })
