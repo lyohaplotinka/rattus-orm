@@ -1,6 +1,10 @@
 # 2024/01/17
 ### Core (0.0.19)
 * ability to disable type casting for models (#17)
+* custom repositories management (#18)
+
+### Utils (0.0.9)
+* fixed `Constructor` type
 
 # 2023/12/30
 ### Core (0.0.18)
