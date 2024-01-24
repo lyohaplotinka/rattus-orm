@@ -2,8 +2,8 @@ import { describe, expect, vi } from 'vitest'
 import { Component, ComponentOptions, computed, nextTick } from 'vue'
 import { mount } from '@vue/test-utils'
 import { Attr, Model, Num, Repository } from '@rattus-orm/core'
-import { installRattusORM, useRattusContext, useRepository, useRepositoryComputed } from '../src'
-import { pullRepositoryKeys } from '../src/composable/types'
+import { installRattusORM, useRattusContext, useRepository } from '../src'
+import { pullRepositoryGettersKeys, pullRepositoryKeys } from '../src/composable/types'
 import { createPinia } from 'pinia'
 
 class User extends Model {
@@ -82,14 +82,16 @@ describe('composable: pinia', () => {
     })
 
     it.each(pullRepositoryKeys)('%s has correct context', (methodName) => {
-      expect((result[methodName] as any).boundTo).toBeInstanceOf(Repository)
+      if (!pullRepositoryGettersKeys.includes(methodName as any)) {
+        expect((result[methodName] as any).boundTo).toBeInstanceOf(Repository)
+      }
     })
 
     mocked.mockRestore()
   })
 
-  it('useRepositoryComputed: methods are not ruined', () => {
-    const { insert, fresh, destroy, find, save, all, flush } = withSetup(() => useRepositoryComputed(User))
+  it('useRepository: methods are not ruined', () => {
+    const { insert, fresh, destroy, find, save, all, flush } = withSetup(() => useRepository(User))
     expect(() => insert({ id: '2', age: 22 })).not.toThrowError()
     expect(() => fresh([{ id: '1', age: 11 }])).not.toThrowError()
     expect(() => destroy('1')).not.toThrowError()
@@ -99,9 +101,9 @@ describe('composable: pinia', () => {
     expect(() => flush()).not.toThrowError()
   })
 
-  it('useRepositoryComputed: returns reactive data', async () => {
+  it('useRepository: returns reactive data', async () => {
     const wrapper = mountSetup(() => {
-      const { find } = useRepositoryComputed(User)
+      const { find } = useRepository(User)
       const user = find('1')
 
       return {
