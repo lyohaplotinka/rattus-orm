@@ -2,6 +2,10 @@
 ### Core (0.0.19)
 * ability to disable type casting for models (#17)
 * custom repositories management (#18)
+* add `useRepositoryForDynamicContext` - refactor use repository (#19).
+
+### Vuex (0.0.18), Pinia (0.0.10), React Signals (0.0.6), Redux (0.0.5)
+* refactor repository management (#19) - use `useRepositoryForDynamicContext`.
 
 ### Utils (0.0.9)
 * fixed `Constructor` type
