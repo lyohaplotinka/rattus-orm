@@ -19,7 +19,8 @@ declare class RattusContext {
 
 ### useRepository
 
-The useRepository hook returns the main methods for interacting with the repository: `'find', 'all', 'save', 'insert', 'fresh', 'destroy', 'flush', 'query`. They can be used with destructuring:
+The useRepository composition function returns all methods of the
+Repository class. These methods can be used with destructuring:
 
 ```tsx
 function App() {
@@ -36,6 +37,11 @@ function App() {
 ```
 
 Remember that the obtained method works only with the data of the User model. To work with other models, you can invoke the hook again.
+
+If you have previously registered a custom repository, you can pass
+it as a parameter in the generic: `useRepository<UserCustomRepository>(User)`.
+All custom methods and properties will also be available for
+destructuring.
 
 ### Reactivity
 Unlike integrations with Vue, the obtained data are already reactive. In the example above, the output of `user.email` will update immediately.
