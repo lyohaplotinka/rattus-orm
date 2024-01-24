@@ -17,7 +17,7 @@ export type RepositoryGettersKeys = (typeof pullRepositoryGettersKeys)[number]
 
 export type UseComputedRepository<R extends Repository<InstanceType<M>>, M extends typeof Model = typeof Model> = Omit<
   UseRepository<R>,
-  RepositoryGettersKeys | 'query'
+  RepositoryGettersKeys
 > & {
   find: {
     (id: string | number): ComputedRef<Item<InstanceType<M>>>

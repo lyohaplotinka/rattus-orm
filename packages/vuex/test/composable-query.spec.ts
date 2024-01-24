@@ -1,10 +1,10 @@
 import { beforeEach, describe, expect } from 'vitest'
 import { Attr, Model, Num } from '@rattus-orm/core'
-import { isRef } from 'vue'
 import { createStore, Store } from 'vuex'
 import { installRattusORM } from '../src'
 import { mount } from '@vue/test-utils'
 import { useRepository } from '../src'
+import { isComputed } from './utils'
 
 class User extends Model {
   static entity = 'users'
@@ -51,6 +51,6 @@ describe('composable-query', () => {
   it('withQuery returns computed property', () => {
     const repo = withSetup(() => useRepository(User))
     const result = repo.withQuery((query) => query.where('age', (v: number) => v > 25))
-    expect(isRef(result) && !!result.effect).toEqual(true)
+    expect(isComputed(result)).toEqual(true)
   })
 })
