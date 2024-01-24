@@ -8,7 +8,7 @@
 
 ### Contents
 1. PiniaDataProvider;
-2. Composables: `useRattusContext`, `useRepository`, `useRepositoryComputed`.
+2. Composables: `useRattusContext`, `useRepository`.
 
 ### Installation
 Use your favorite package manager. For example, yarn:
@@ -38,7 +38,7 @@ app
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { Model, Uid, Str } from '@rattus-orm/core'
-import { useRepositoryComputed } from '@rattus-orm/pinia'
+import { useRepository } from '@rattus-orm/pinia'
 
 class User extends Model {
     public static entity = 'user'
@@ -52,7 +52,7 @@ class User extends Model {
 
 export default defineComponent({
   setup() {
-    const { save, find } = useRepositoryComputed(User)
+    const { save, find } = useRepository(User)
     
     save({ id: '1', email: 'test@test.com' })
     
