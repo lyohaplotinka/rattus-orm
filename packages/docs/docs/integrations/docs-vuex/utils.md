@@ -30,9 +30,8 @@ declare class RattusContext {
 
 ### useRepository
 
-The `useRepository` composition returns the main methods for interacting with the repository:
-`'find', 'all', 'save', 'insert', 'fresh', 'destroy', 'flush'`. These can be used
-with destructuring:
+The useRepository composition function returns all methods of the
+Repository class. These methods can be used with destructuring:
 
 ```html
 <script lang="ts" setup>
@@ -45,20 +44,16 @@ with destructuring:
 </script>
 ```
 
-Remember that the retrieved method works only with data of the User model.
-For working with other models, you can call the composition
-again.
+Remember that the obtained method only works with data of the `User`
+model. To work with other models, you can call the composition again.
 
-### useRepositoryComputed
-This composition is very similar to the previous one, however,
-all methods related to data retrieval –
-`find` and `all` – are automatically wrapped in
-Computed.
-```html
-<script lang="ts" setup>
-    const { find, all } = useRepository(User)
-    
-    const user = find('1') // ComputedRef<User>
-    the allUsers = all() // ComputedRef<User[]>
-</script>
-```
+`useRepository` automatically returns a `ComputedRef` from the `find`
+and `all` methods. For working with a Query, the composition provides
+two methods:
+1. `query()` – returns a regular instance of Query, and the retrieval methods are not wrapped in `ComputedRef`;
+2. `withQuery((query: Query) => {...})` – wraps the result of the callback in `ComputedRef`.
+
+If you have previously registered a custom repository, you can pass
+it as a parameter in the generic: `useRepository<UserCustomRepository>(User)`.
+All custom methods and properties will also be available for
+destructuring, however, they will not be wrapped in `ComputedRef`.

@@ -1,6 +1,7 @@
 import type { Repository } from '@rattus-orm/core'
-import type { Model } from '@rattus-orm/core'
+import type { Model, Query } from '@rattus-orm/core'
 import type { Collection, Item } from '@rattus-orm/core'
+import type { UseRepository } from '@rattus-orm/core/integrations-helpers'
 import type { ComputedRef } from 'vue'
 
 export const pullRepositoryGettersKeys = ['find', 'all'] satisfies Array<keyof Repository>
@@ -12,39 +13,16 @@ export const pullRepositoryKeys = [
   'flush',
   ...pullRepositoryGettersKeys,
 ] satisfies Array<keyof Repository>
-
 export type RepositoryGettersKeys = (typeof pullRepositoryGettersKeys)[number]
-export type RepositoryPullKeys = (typeof pullRepositoryKeys)[number]
 
-// CK = "Custom Keys"
-export type PickedRepository<
-  T extends typeof Model = typeof Model,
-  R extends Repository<InstanceType<T>> = Repository<InstanceType<T>>,
-  CK extends RepositoryCustomKeys<R> | undefined = undefined,
-> = Pick<R, Exclude<RepositoryPullKeys, 'find'>> &
-  (CK extends keyof R ? Pick<R, CK> : never) & {
-    find: {
-      (id: string | number): Item<InstanceType<T>>
-      (ids: (string | number)[]): Collection<InstanceType<T>>
-    }
-  }
-
-export type ComputedPickedRepository<
-  T extends typeof Model = typeof Model,
-  R extends Repository<InstanceType<T>> = Repository<InstanceType<T>>,
-  CK extends RepositoryCustomKeys<R> | undefined = undefined,
-> = {
-  [key in keyof Omit<PickedRepository<T, R, CK>, 'find'>]: key extends RepositoryGettersKeys
-    ? (...args: Parameters<PickedRepository<T, R, CK>[key]>) => ComputedRef<ReturnType<PickedRepository<T, R, CK>[key]>>
-    : PickedRepository<T, R, CK>[key]
-} & {
+export type UseComputedRepository<R extends Repository<InstanceType<M>>, M extends typeof Model = typeof Model> = Omit<
+  UseRepository<R>,
+  RepositoryGettersKeys
+> & {
   find: {
-    (id: string | number): ComputedRef<Item<InstanceType<T>>>
-    (ids: (string | number)[]): ComputedRef<Collection<InstanceType<T>>>
+    (id: string | number): ComputedRef<Item<InstanceType<M>>>
+    (ids: (string | number)[]): ComputedRef<Collection<InstanceType<M>>>
   }
+  all: () => ComputedRef<ReturnType<R['all']>>
+  withQuery: <R>(computedCb: (query: Query<InstanceType<M>>) => R) => ComputedRef<R>
 }
-
-export type RepositoryCustomKeys<R extends Repository<InstanceType<any>> = Repository<InstanceType<any>>> = Exclude<
-  keyof R,
-  RepositoryPullKeys
->

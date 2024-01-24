@@ -32,8 +32,7 @@ declare class RattusContext {
 
 ### useRepository
 
-Композиция useRepository возвращает основные методы для взаимодействия с репозиторием:
-`'find', 'all', 'save', 'insert', 'fresh', 'destroy', 'flush'`. Их можно использовать
+Композиция useRepository возвращает все методы класса Repository. Их можно использовать
 с деструктуризацией:
 
 ```html
@@ -51,16 +50,13 @@ declare class RattusContext {
 Для работы с другими моделями вы можете вызвать композицию
 ещё раз. 
 
-### useRepositoryComputed
-Эта композиция очень похожа на предыдущую, однако, 
-все методы, связанные с получением данных – 
-`find` и `all` – автоматически оборачиваются в 
-Computed. 
-```html
-<script lang="ts" setup>
-    const { find, all } = useRepository(User)
-    
-    const user = find('1') // ComputedRef<User>
-    const allUsers = all() // ComputedRef<User[]>
-</script>
-```
+`useRepository` автоматически возвращает `ComputedRef` из методов `find` 
+и `all`. Для работы с Query композиция предоставляет два метода: 
+1. `query()` – возвращает обычный экземпляр Query, все методы получения не оборачиваются в `ComputedRef`;
+2. `withQuery((query: Query) => {...})` – оборачивает результат коллбэка в `ComputedRef`. 
+
+Если ранее вы регистрировали кастомный репозиторий, мы можете передать его параметром
+в дженерик: `useRepository<UserCustomRepository>(User)`. Все кастомные методы 
+и свойства также будут доступны с дестркутуризацией, однако, в `ComputedRef` они
+обёрнуты не будут.
+

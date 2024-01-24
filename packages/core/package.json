@@ -38,6 +38,11 @@
       "import": "./dist/rattus-context.mjs",
       "require": "./dist/rattus-context.js",
       "types": "./dist/rattus-context.d.ts"
+    },
+    "./integrations-helpers": {
+      "import": "./dist/integrations-helpers.mjs",
+      "require": "./dist/integrations-helpers.js",
+      "types": "./dist/integrations-helpers.d.ts"
     }
   },
   "files": [

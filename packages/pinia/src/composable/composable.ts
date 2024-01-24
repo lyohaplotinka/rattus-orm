@@ -1,12 +1,10 @@
-import type { Model, Repository } from '@rattus-orm/core'
+import type { Model, Query, Repository } from '@rattus-orm/core'
+import { useRepositoryForDynamicContext } from '@rattus-orm/core/integrations-helpers'
 import type { RattusContext } from '@rattus-orm/core/rattus-context'
-import { pickFromClass } from '@rattus-orm/utils/pickFromClass'
-import { computedProxify } from '@rattus-orm/utils/vueComputedUtils'
-import { getCurrentInstance, inject } from 'vue'
+import { computed, getCurrentInstance, inject } from 'vue'
 
 import { RattusOrmInjectionKey } from '../plugin/const'
-import type { ComputedPickedRepository, PickedRepository, RepositoryCustomKeys } from './types'
-import { pullRepositoryGettersKeys, pullRepositoryKeys } from './types'
+import type { UseComputedRepository } from './types'
 
 export function useRattusContext(): RattusContext {
   let context = inject<RattusContext>(RattusOrmInjectionKey)
@@ -24,26 +22,21 @@ export function useRattusContext(): RattusContext {
   return context
 }
 
-export function useRepository<
-  T extends typeof Model,
-  CK extends RepositoryCustomKeys<R>,
-  R extends Repository<InstanceType<T>> = Repository<InstanceType<T>>,
->(model: T, pullCustomKeys: CK[] = []): PickedRepository<T, R, CK> {
-  const context = useRattusContext()
-  const repository = context.$repo(model) as R
+export function useRepository<R extends Repository<InstanceType<M>>, M extends typeof Model = typeof Model>(
+  model: M,
+): UseComputedRepository<R, M> {
+  const repo = useRepositoryForDynamicContext<R, M>(useRattusContext, model)
 
-  const combinedKeys = Array.from(new Set([...pullRepositoryKeys, ...pullCustomKeys]))
-
-  return pickFromClass(repository, combinedKeys) as PickedRepository<T, R, CK>
-}
-
-export function useRepositoryComputed<
-  T extends typeof Model,
-  CK extends RepositoryCustomKeys<R>,
-  R extends Repository<InstanceType<T>> = Repository<InstanceType<T>>,
->(model: T, pullCustomKeys: CK[] = []): ComputedPickedRepository<T, R, CK> {
-  return computedProxify(
-    useRepository<T, CK, R>(model, pullCustomKeys),
-    pullRepositoryGettersKeys,
-  ) as unknown as ComputedPickedRepository<T, R, CK>
+  return {
+    ...repo,
+    find(ids: any) {
+      return computed(() => repo.find(ids))
+    },
+    all() {
+      return computed(() => repo.all())
+    },
+    withQuery<R>(cb: (query: Query<InstanceType<M>>) => R) {
+      return computed(() => cb(repo.query()))
+    },
+  } as unknown as UseComputedRepository<R, M>
 }
