@@ -12,6 +12,7 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './packages/core/src'),
       '@func-test': path.resolve(__dirname, './test'),
+      '@core-shared-utils': path.resolve(__dirname, './packages/core/shared-utils'),
     },
   },
 })

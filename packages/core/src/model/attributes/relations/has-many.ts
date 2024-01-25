@@ -1,4 +1,4 @@
-import type { Element } from '@rattus-orm/utils/sharedTypes'
+import type { Element } from '@core-shared-utils/sharedTypes'
 
 import type { Collection } from '@/data/types'
 import type { Model } from '@/model/Model'

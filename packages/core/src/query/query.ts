@@ -1,5 +1,5 @@
-import type { Element, Elements } from '@rattus-orm/utils/sharedTypes'
-import type { ModulePath } from '@rattus-orm/utils/sharedTypes'
+import type { Element, Elements } from '@core-shared-utils/sharedTypes'
+import type { ModulePath } from '@core-shared-utils/sharedTypes'
 
 import type { Collection, Entities, Item } from '@/data/types'
 import type { Database } from '@/database/database'

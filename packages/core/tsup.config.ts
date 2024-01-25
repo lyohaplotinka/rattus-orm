@@ -1,4 +1,5 @@
-import { createBuildsAndExportsForFiles, dirName, patchPackageJson } from '../../scripts/nodeUtils'
+import { createBuildsAndExportsForFiles, dirName, patchPackageJson } from '@scripts/nodeUtils'
+
 import createTsupConfig from '../../tsup.config.base'
 
 const __dirname = dirName(import.meta.url)

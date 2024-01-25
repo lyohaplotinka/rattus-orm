@@ -1,4 +1,4 @@
-import { isUnknownRecord } from '@rattus-orm/utils/isUnknownRecord'
+import { isUnknownRecord } from '@core-shared-utils/isUnknownRecord'
 
 import type { NormalizationSchema } from './types'
 

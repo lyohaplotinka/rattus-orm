@@ -1,4 +1,4 @@
-import type { ModulePath, SerializedStorage, State } from '@rattus-orm/utils/sharedTypes'
+import type { ModulePath, SerializedStorage, State } from '@core-shared-utils/sharedTypes'
 
 export abstract class DataProviderHelpers {
   protected readonly registeredModules = new Set<string>()

@@ -34,7 +34,9 @@
     ],
     "paths": {
       "@/*": ["./packages/core/src/*"],
-      "@func-test/*": ["test/*"]
+      "@func-test/*": ["test/*"],
+      "@core-shared-utils/*": ["./packages/core/shared-utils/*"],
+      "@scripts/*": ["./scripts/*"]
     },
     "types": [
       "node",
