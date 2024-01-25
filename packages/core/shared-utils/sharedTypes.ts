@@ -1,3 +1,5 @@
+import type { Repository } from '@/repository/repository'
+
 export type Constructor<T, Args extends any[] = any[]> = new (...args: Args) => T
 export type Callback<P extends any[] = [], R = void> = (...args: P) => R
 
@@ -48,4 +50,5 @@ export type RattusOrmInstallerOptions<DB> = {
   connection?: string
   database?: DatabaseLike
   plugins?: DatabasePlugin<DB>[]
+  customRepositories?: Constructor<Repository>[]
 }
