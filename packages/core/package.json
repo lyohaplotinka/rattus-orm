@@ -39,10 +39,25 @@
       "require": "./dist/rattus-context.js",
       "types": "./dist/rattus-context.d.ts"
     },
-    "./utils/integrations-helpers": {
-      "import": "./dist/utils/integrations-helpers.mjs",
-      "require": "./dist/utils/integrations-helpers.js",
-      "types": "./dist/utils/integrations-helpers.d.ts"
+    "./utils/createBasicProviderTest": {
+      "import": "./dist/utils/createBasicProviderTest.mjs",
+      "require": "./dist/utils/createBasicProviderTest.js",
+      "types": "./dist/utils/createBasicProviderTest.d.ts"
+    },
+    "./utils/integrationsHelpers": {
+      "import": "./dist/utils/integrationsHelpers.mjs",
+      "require": "./dist/utils/integrationsHelpers.js",
+      "types": "./dist/utils/integrationsHelpers.d.ts"
+    },
+    "./utils/isUnknownRecord": {
+      "import": "./dist/utils/isUnknownRecord.mjs",
+      "require": "./dist/utils/isUnknownRecord.js",
+      "types": "./dist/utils/isUnknownRecord.d.ts"
+    },
+    "./utils/sharedTypes": {
+      "import": "./dist/utils/sharedTypes.mjs",
+      "require": "./dist/utils/sharedTypes.js",
+      "types": "./dist/utils/sharedTypes.d.ts"
     }
   },
   "files": [
