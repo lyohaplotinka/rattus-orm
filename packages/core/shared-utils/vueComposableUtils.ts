@@ -3,6 +3,7 @@ import { computed } from 'vue'
 
 import type { Collection, Item, Model, Query, Repository } from '../src'
 import { type UseRepository } from './integrationsHelpers'
+import { isUnknownRecord } from './isUnknownRecord'
 
 export const pullRepositoryGettersKeys = ['find', 'all'] satisfies Array<keyof Repository>
 export const pullRepositoryKeys = [
@@ -42,4 +43,8 @@ export function computifyUseRepository<R extends Repository<InstanceType<M>>, M 
       return computed(() => cb(repo.query()))
     },
   } as unknown as UseComputedRepository<R, M>
+}
+
+export const isComputed = (value: unknown): value is ComputedRef<any> => {
+  return isUnknownRecord(value) && !!value.effect && !!value.value
 }
