@@ -16,12 +16,6 @@
     "exportName": "dataProviderFactory",
     "runFunctional": true
   },
-  "utils": {
-    "autoBump": true,
-    "order": 0,
-    "runFunctional": false,
-    "runLocal": false
-  },
   "react-signals": {
     "path": "packages/react-signals/test/provider-factory.ts",
     "exportName": "dataProviderFactory",
