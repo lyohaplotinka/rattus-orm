@@ -1,4 +1,4 @@
-import type { Constructor, DatabasePlugin, DataProvider, Elements, State } from '@rattus-orm/utils/sharedTypes'
+import type { Constructor, DatabasePlugin, DataProvider, Elements, State } from '@core-shared-utils/sharedTypes'
 
 import { EventsDataProviderWrapper } from '@/events/events-data-provider-wrapper'
 import type {

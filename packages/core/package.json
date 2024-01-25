@@ -39,10 +39,25 @@
       "require": "./dist/rattus-context.js",
       "types": "./dist/rattus-context.d.ts"
     },
-    "./integrations-helpers": {
-      "import": "./dist/integrations-helpers.mjs",
-      "require": "./dist/integrations-helpers.js",
-      "types": "./dist/integrations-helpers.d.ts"
+    "./utils/createBasicProviderTest": {
+      "import": "./dist/utils/createBasicProviderTest.mjs",
+      "require": "./dist/utils/createBasicProviderTest.js",
+      "types": "./dist/utils/createBasicProviderTest.d.ts"
+    },
+    "./utils/integrationsHelpers": {
+      "import": "./dist/utils/integrationsHelpers.mjs",
+      "require": "./dist/utils/integrationsHelpers.js",
+      "types": "./dist/utils/integrationsHelpers.d.ts"
+    },
+    "./utils/isUnknownRecord": {
+      "import": "./dist/utils/isUnknownRecord.mjs",
+      "require": "./dist/utils/isUnknownRecord.js",
+      "types": "./dist/utils/isUnknownRecord.d.ts"
+    },
+    "./utils/sharedTypes": {
+      "import": "./dist/utils/sharedTypes.mjs",
+      "require": "./dist/utils/sharedTypes.js",
+      "types": "./dist/utils/sharedTypes.d.ts"
     }
   },
   "files": [
@@ -56,11 +71,7 @@
     "typecheck": "bash -c 'run -T tsc -p tsconfig.json --noEmit'",
     "size": "run -T size-limit"
   },
-  "dependencies": {
-    "@rattus-orm/utils": "^0.0.8"
-  },
   "devDependencies": {
-    "@rattus-orm/utils": "workspace:^",
     "normalizr": "^3.6.2"
   },
   "size-limit": [

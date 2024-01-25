@@ -1,4 +1,4 @@
-import { assertState, createStore, mockUid } from 'test/utils/Helpers'
+import { assertState, createStore, mockUid } from '@func-test/utils/Helpers'
 
 import { Attr, Model, MorphTo, Num, Str, Uid } from '@/index'
 

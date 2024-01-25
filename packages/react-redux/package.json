@@ -43,12 +43,8 @@
     "typecheck": "bash -c 'run -T tsc -p tsconfig.json --noEmit'",
     "size": "run -T size-limit"
   },
-  "dependencies": {
-    "@rattus-orm/utils": "^0.0.8"
-  },
   "devDependencies": {
     "@rattus-orm/core": "workspace:^",
-    "@rattus-orm/utils": "workspace:^",
     "react-redux": "^9.1.0",
     "redux": "^5.0.1"
   },

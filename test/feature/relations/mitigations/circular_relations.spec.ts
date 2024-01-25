@@ -1,4 +1,4 @@
-import { assertState, createStore } from 'test/utils/Helpers'
+import { assertState, createStore } from '@func-test/utils/Helpers'
 
 import User from './_fixtures/circular_relations_user'
 

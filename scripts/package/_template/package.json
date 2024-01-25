@@ -42,12 +42,8 @@
     "typecheck": "bash -c 'run -T tsc -p tsconfig.json --noEmit'",
     "size": "run -T size-limit"
   },
-  "dependencies": {
-    "@rattus-orm/utils": "^{{ UTILS_VERSION }}"
-  },
   "devDependencies": {
     "@rattus-orm/core": "workspace:^",
-    "@rattus-orm/utils": "workspace:^"
   },
   "peerDependencies": {
     "@rattus-orm/core": "^{{ CORE_VERSION }}"

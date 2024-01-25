@@ -1,4 +1,4 @@
-import type { DataProvider, Elements, ModulePath, SerializedStorage, State } from '@rattus-orm/utils/sharedTypes'
+import type { DataProvider, Elements, ModulePath, SerializedStorage, State } from '@core-shared-utils/sharedTypes'
 
 import type {
   CancelSubscriptionCallback,

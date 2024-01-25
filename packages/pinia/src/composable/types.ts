@@ -1,7 +1,7 @@
 import type { Repository } from '@rattus-orm/core'
 import type { Model, Query } from '@rattus-orm/core'
 import type { Collection, Item } from '@rattus-orm/core'
-import type { UseRepository } from '@rattus-orm/core/integrations-helpers'
+import type { UseRepository } from '@rattus-orm/core/utils/integrationsHelpers'
 import type { ComputedRef } from 'vue'
 
 export const pullRepositoryGettersKeys = ['find', 'all'] satisfies Array<keyof Repository>

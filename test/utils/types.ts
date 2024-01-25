@@ -1,5 +1,5 @@
 import { Database } from '@/database/database'
-import { Elements, ModulePath, State } from '@rattus-orm/utils/sharedTypes'
+import { Elements, ModulePath, State } from '@core-shared-utils/sharedTypes'
 import { Repository } from '@/repository/repository'
 
 export type Entities = {

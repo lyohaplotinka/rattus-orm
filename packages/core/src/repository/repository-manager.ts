@@ -1,4 +1,4 @@
-import type { Constructor } from '@rattus-orm/utils/sharedTypes'
+import type { Constructor } from '@core-shared-utils/sharedTypes'
 
 import type { Database } from '@/database/database'
 import type { Model } from '@/model/Model'

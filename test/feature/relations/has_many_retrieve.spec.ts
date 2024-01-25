@@ -1,4 +1,4 @@
-import { assertInstanceOf, assertModel, createStore, fillState } from 'test/utils/Helpers'
+import { assertInstanceOf, assertModel, createStore, fillState } from '@func-test/utils/Helpers'
 
 import { Attr, HasMany, Model, Str } from '@/index'
 

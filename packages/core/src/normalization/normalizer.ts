@@ -1,5 +1,5 @@
-import { isUnknownRecord } from '@rattus-orm/utils/isUnknownRecord'
-import type { Element } from '@rattus-orm/utils/sharedTypes'
+import { isUnknownRecord } from '@core-shared-utils/isUnknownRecord'
+import type { Element } from '@core-shared-utils/sharedTypes'
 
 import type { Entities } from '@/data/types'
 import { isNullish } from '@/support/utils'

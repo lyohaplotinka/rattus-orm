@@ -1,4 +1,4 @@
-import { assertModel, createStore, fillState } from 'test/utils/Helpers'
+import { assertModel, createStore, fillState } from '@func-test/utils/Helpers'
 
 import { Model, MorphOne, Num, Str } from '@/index'
 

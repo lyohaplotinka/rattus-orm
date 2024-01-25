@@ -1,4 +1,4 @@
-import type { Callback, ModulePath, State } from '@rattus-orm/utils/sharedTypes'
+import type { Callback, ModulePath, State } from '@core-shared-utils/sharedTypes'
 
 export const RattusEvents = {
   CONNECTION_REGISTER: 'connection-register',

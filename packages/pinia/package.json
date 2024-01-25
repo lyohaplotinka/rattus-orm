@@ -42,12 +42,8 @@
     "typecheck": "bash -c 'run -T tsc -p tsconfig.json --noEmit'",
     "size": "run -T size-limit"
   },
-  "dependencies": {
-    "@rattus-orm/utils": "^0.0.8"
-  },
   "devDependencies": {
     "@rattus-orm/core": "workspace:^",
-    "@rattus-orm/utils": "workspace:^",
     "@vue/test-utils": "^2.4.3",
     "pinia": "^2.1.7",
     "vue": "^3.4.15"

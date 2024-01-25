@@ -1,5 +1,5 @@
-import { isUnknownRecord } from '@rattus-orm/utils/isUnknownRecord'
-import type { Elements, ModulePath, State } from '@rattus-orm/utils/sharedTypes'
+import { isUnknownRecord } from '@rattus-orm/core/utils/isUnknownRecord'
+import type { Elements, ModulePath, State } from '@rattus-orm/core/utils/sharedTypes'
 
 export const RATTUS_LS_PREFIX = '$rattusorm-lsprefix$'
 const CHUNK_SIZE = 1024 * 1024

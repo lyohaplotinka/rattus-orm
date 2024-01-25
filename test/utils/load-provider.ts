@@ -1,4 +1,4 @@
-import { TestingStoreFactory } from 'test/utils/types'
+import { TestingStoreFactory } from '@func-test/utils/types'
 
 export const loadProvider = async (path: string, exportName: string): Promise<TestingStoreFactory> => {
   const result = await import(path)

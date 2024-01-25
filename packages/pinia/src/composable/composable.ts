@@ -1,6 +1,6 @@
 import type { Model, Query, Repository } from '@rattus-orm/core'
-import { useRepositoryForDynamicContext } from '@rattus-orm/core/integrations-helpers'
 import type { RattusContext } from '@rattus-orm/core/rattus-context'
+import { useRepositoryForDynamicContext } from '@rattus-orm/core/utils/integrationsHelpers'
 import { computed, getCurrentInstance, inject } from 'vue'
 
 import { RattusOrmInjectionKey } from '../plugin/const'

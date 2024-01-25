@@ -1,4 +1,4 @@
-import type { Elements, State } from '@rattus-orm/utils/sharedTypes'
+import type { Elements, State } from '@rattus-orm/core/utils/sharedTypes'
 import type { StoreDefinition } from 'pinia'
 
 export type OrmGettersTree = {

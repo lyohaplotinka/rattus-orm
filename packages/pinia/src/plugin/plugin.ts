@@ -1,6 +1,6 @@
 import type { Database } from '@rattus-orm/core'
 import { createRattusContext } from '@rattus-orm/core/rattus-context'
-import type { RattusOrmInstallerOptions } from '@rattus-orm/utils/sharedTypes'
+import type { RattusOrmInstallerOptions } from '@rattus-orm/core/utils/sharedTypes'
 import type { Pinia } from 'pinia'
 import type { Plugin } from 'vue'
 

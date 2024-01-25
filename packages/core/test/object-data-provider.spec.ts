@@ -1,5 +1,5 @@
 import { describe } from 'vitest'
-import { createBasicProviderTest } from '@rattus-orm/utils/createBasicProviderTest'
+import { createBasicProviderTest } from '@core-shared-utils/createBasicProviderTest'
 import { ObjectDataProvider } from '../src/data/object-data-provider'
 
 describe('object-data-provider', () => {

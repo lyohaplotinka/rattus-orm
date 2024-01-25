@@ -1,7 +1,7 @@
 import type { Database } from '@rattus-orm/core'
 import { AttrAttr, BooleanAttr, NumberAttr, StringAttr } from '@rattus-orm/core'
 import { Type } from '@rattus-orm/core'
-import type { ModulePath } from '@rattus-orm/utils/sharedTypes'
+import type { ModulePath } from '@rattus-orm/core/utils/sharedTypes'
 import { z, type ZodSchema, type ZodTypeAny } from 'zod'
 
 import { isModelWithZodSchemas } from '../types/guards'

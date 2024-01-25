@@ -1,6 +1,6 @@
-import type { RattusContext } from './context/rattus-context'
-import type { Model } from './model/Model'
-import type { Repository } from './repository/repository'
+import type { RattusContext } from '../src/context/rattus-context'
+import type { Model } from '../src/model/Model'
+import type { Repository } from '../src/repository/repository'
 
 const useRepositorySkippedKeys = ['database', 'use', 'model', 'constructor'] as const
 type UseRepositorySkippedKeys = (typeof useRepositorySkippedKeys)[number]

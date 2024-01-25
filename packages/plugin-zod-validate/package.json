@@ -44,12 +44,10 @@
     "size": "run -T size-limit"
   },
   "dependencies": {
-    "@rattus-orm/utils": "^0.0.8",
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@rattus-orm/core": "workspace:^",
-    "@rattus-orm/utils": "workspace:^"
+    "@rattus-orm/core": "workspace:^"
   },
   "peerDependencies": {
     "@rattus-orm/core": "^0.0.18"

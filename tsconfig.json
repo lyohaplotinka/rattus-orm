@@ -9,7 +9,6 @@
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "baseUrl": ".",
-    "rootDir": ".",
     "outDir": "dist",
     "sourceMap": true,
     "declaration": true,
@@ -34,7 +33,9 @@
     ],
     "paths": {
       "@/*": ["./packages/core/src/*"],
-      "test/*": ["test/*"]
+      "@func-test/*": ["test/*"],
+      "@core-shared-utils/*": ["./packages/core/shared-utils/*"],
+      "@scripts/*": ["./scripts/*"]
     },
     "types": [
       "node",

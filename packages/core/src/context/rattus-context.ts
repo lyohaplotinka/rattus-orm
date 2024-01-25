@@ -1,4 +1,4 @@
-import type { DataProvider, RattusOrmInstallerOptions } from '@rattus-orm/utils/sharedTypes'
+import type { DataProvider, RattusOrmInstallerOptions } from '@core-shared-utils/sharedTypes'
 
 import { Database } from '../database/database'
 import type { Model } from '../model/Model'

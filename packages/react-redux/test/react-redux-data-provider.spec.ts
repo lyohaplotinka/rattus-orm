@@ -1,5 +1,5 @@
 import { describe } from 'vitest'
-import { createBasicProviderTest } from '@rattus-orm/utils/createBasicProviderTest'
+import { createBasicProviderTest } from '@rattus-orm/core/utils/createBasicProviderTest'
 import { ReactReduxDataProvider } from '../src/data-provider/react-redux-data-provider'
 import { createStore } from 'redux'
 

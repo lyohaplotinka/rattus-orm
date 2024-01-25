@@ -1,7 +1,7 @@
 import { RattusProvider, useRattusContext } from '../src'
 import React, { ReactElement } from 'react'
 import { render } from '@testing-library/react'
-import { RattusOrmInstallerOptions } from '@rattus-orm/utils/sharedTypes'
+import { RattusOrmInstallerOptions } from '@rattus-orm/core/utils/sharedTypes'
 import type { Database } from '@rattus-orm/core'
 
 export const TestComponent = () => {
