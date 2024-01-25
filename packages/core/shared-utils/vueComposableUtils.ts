@@ -2,19 +2,9 @@ import type { ComputedRef } from 'vue'
 import { computed } from 'vue'
 
 import type { Collection, Item, Model, Query, Repository } from '../src'
+import type { RepositoryGettersKeys } from './integrationsHelpers'
 import { type UseRepository } from './integrationsHelpers'
 import { isUnknownRecord } from './isUnknownRecord'
-
-export const pullRepositoryGettersKeys = ['find', 'all'] satisfies Array<keyof Repository>
-export const pullRepositoryKeys = [
-  'save',
-  'insert',
-  'fresh',
-  'destroy',
-  'flush',
-  ...pullRepositoryGettersKeys,
-] satisfies Array<keyof Repository>
-export type RepositoryGettersKeys = (typeof pullRepositoryGettersKeys)[number]
 
 export type UseComputedRepository<R extends Repository<InstanceType<M>>, M extends typeof Model = typeof Model> = Omit<
   UseRepository<R>,
