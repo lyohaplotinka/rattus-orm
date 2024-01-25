@@ -1,4 +1,4 @@
-import { createStore } from 'test/utils/Helpers'
+import { createStore } from '@func-test/utils/Helpers'
 
 import { Attr, Model, Repository, Str } from '@/index'
 

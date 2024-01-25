@@ -34,7 +34,7 @@
     ],
     "paths": {
       "@/*": ["./packages/core/src/*"],
-      "test/*": ["test/*"]
+      "@func-test/*": ["test/*"]
     },
     "types": [
       "node",
