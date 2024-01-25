@@ -52,6 +52,7 @@
     "size-limit": "^11.0.2",
     "tslib": "^2.6.2",
     "tsup": "^8.0.1",
+    "type-fest": "^4.10.1",
     "typescript": "^5.3.3",
     "vitest": "^1.2.1"
   },

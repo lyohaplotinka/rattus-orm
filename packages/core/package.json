@@ -39,10 +39,10 @@
       "require": "./dist/rattus-context.js",
       "types": "./dist/rattus-context.d.ts"
     },
-    "./integrations-helpers": {
-      "import": "./dist/integrations-helpers.mjs",
-      "require": "./dist/integrations-helpers.js",
-      "types": "./dist/integrations-helpers.d.ts"
+    "./utils/integrations-helpers": {
+      "import": "./dist/utils/integrations-helpers.mjs",
+      "require": "./dist/utils/integrations-helpers.js",
+      "types": "./dist/utils/integrations-helpers.d.ts"
     }
   },
   "files": [

@@ -12968,6 +12968,7 @@ __metadata:
     size-limit: "npm:^11.0.2"
     tslib: "npm:^2.6.2"
     tsup: "npm:^8.0.1"
+    type-fest: "npm:^4.10.1"
     typescript: "npm:^5.3.3"
     vitest: "npm:^1.2.1"
   languageName: unknown
@@ -15065,6 +15066,13 @@ __metadata:
   version: 3.13.1
   resolution: "type-fest@npm:3.13.1"
   checksum: 547d22186f73a8c04590b70dcf63baff390078c75ea8acd366bbd510fd0646e348bd1970e47ecf795b7cff0b41d26e9c475c1fedd6ef5c45c82075fbf916b629
+  languageName: node
+  linkType: hard
+
+"type-fest@npm:^4.10.1":
+  version: 4.10.1
+  resolution: "type-fest@npm:4.10.1"
+  checksum: 0523bc1a407cdc03fe20ee78698646e36fd40c99cb2c5b115e72d5a7e4d236f1e7fbf15b3b7b8e703f9108467a8e69aa2df268feefa65847bf37a89555703352
   languageName: node
   linkType: hard
 
