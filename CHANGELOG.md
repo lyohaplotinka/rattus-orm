@@ -9,6 +9,9 @@
 ### Vuex (0.0.18), Pinia (0.0.10), React Signals (0.0.6), Redux (0.0.5)
 * refactor repository management (#19) - use `useRepositoryForDynamicContext`.
 
+### LocalStorage (0.0.5), Plugin Zod Validate(0.0.3)
+* use utils from core package.
+
 ### Utils (0.0.8)
 * Utils package deprecated and removed from monorepo.
 
