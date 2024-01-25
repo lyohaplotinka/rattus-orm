@@ -49,7 +49,7 @@
     "redux": "^5.0.1"
   },
   "peerDependencies": {
-    "@rattus-orm/core": "^0.0.18",
+    "@rattus-orm/core": "^0.0.19",
     "react-redux": "*",
     "redux": "*"
   },
