@@ -33,7 +33,7 @@ jobs:
 
       - name: Install deps
         if: steps.yarn-cache.outputs.cache-hit != 'true'
-        run: yarn install --immutable
+        run: yarn install
 
       - name: Build
         run: yarn workspace docs run build
