@@ -1,5 +1,5 @@
 import { RattusContext } from '@rattus-orm/core/rattus-context'
-import { isUnknownRecord } from '@rattus-orm/utils/isUnknownRecord'
+import { isUnknownRecord } from '@rattus-orm/core/utils/isUnknownRecord'
 import React from 'react'
 
 export const isInitializedContext = (value: unknown): value is RattusContext => {

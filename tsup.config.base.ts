@@ -12,7 +12,7 @@ export default function createTsupConfig(entries: Record<string, string>, mixinO
     dts: {
       entry: entries,
     },
-    external: ['vue', 'vuex', '@rattus-orm/utils', '@vue/reactivity', 'vitest'],
+    external: ['vue', 'vuex', '@rattus-orm/core', '@vue/reactivity', 'vitest'],
   }
 
   const merged = merge(configBase, mixinOptions)

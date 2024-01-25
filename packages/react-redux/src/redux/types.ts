@@ -1,4 +1,4 @@
-import type { ModulePath } from '@rattus-orm/utils/sharedTypes'
+import type { ModulePath } from '@rattus-orm/core/utils/sharedTypes'
 import { type Action } from 'redux'
 
 export const rattusReduxActions = {

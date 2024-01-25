@@ -1,8 +1,8 @@
 import '../types/vuex'
 
 import type { Model, Query, Repository } from '@rattus-orm/core'
-import { useRepositoryForDynamicContext } from '@rattus-orm/core/integrations-helpers'
 import type { RattusContext } from '@rattus-orm/core/rattus-context'
+import { useRepositoryForDynamicContext } from '@rattus-orm/core/utils/integrationsHelpers'
 import { computed, type InjectionKey } from 'vue'
 import { type Store, useStore } from 'vuex'
 

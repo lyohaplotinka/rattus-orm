@@ -1,6 +1,6 @@
 import type { Model } from '@rattus-orm/core'
 import type { Repository } from '@rattus-orm/core'
-import { type UseRepository, useRepositoryForDynamicContext } from '@rattus-orm/core/integrations-helpers'
+import { type UseRepository, useRepositoryForDynamicContext } from '@rattus-orm/core/utils/integrationsHelpers'
 
 import { useRattusContext } from './useRattusContext'
 

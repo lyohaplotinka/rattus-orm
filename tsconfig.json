@@ -9,7 +9,6 @@
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "baseUrl": ".",
-    "rootDir": ".",
     "outDir": "dist",
     "sourceMap": true,
     "declaration": true,

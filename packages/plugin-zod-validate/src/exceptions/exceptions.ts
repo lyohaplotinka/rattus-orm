@@ -1,4 +1,4 @@
-import { isUnknownRecord } from '@rattus-orm/utils/isUnknownRecord'
+import { isUnknownRecord } from '@rattus-orm/core/utils/isUnknownRecord'
 import type { ZodError } from 'zod'
 
 import type { ZodIssueWithData } from '../types/types'

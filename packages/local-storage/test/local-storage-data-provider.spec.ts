@@ -1,5 +1,5 @@
 import { beforeEach, describe } from 'vitest'
-import { createBasicProviderTest } from '@rattus-orm/utils/createBasicProviderTest'
+import { createBasicProviderTest } from '@rattus-orm/core/utils/createBasicProviderTest'
 import { LocalStorageDataProvider } from '../src'
 
 describe('local-storage-data-provider', () => {
