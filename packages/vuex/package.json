@@ -20,7 +20,7 @@
     "javascript",
     "vue"
   ],
-  "version": "0.0.17",
+  "version": "0.0.18",
   "main": "./dist/rattus-orm-vuex-provider.js",
   "browser": "./dist/rattus-orm-vuex-provider.mjs",
   "module": "./dist/rattus-orm-vuex-provider.mjs",
