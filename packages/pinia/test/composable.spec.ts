@@ -3,7 +3,7 @@ import { Component, ComponentOptions, computed, nextTick } from 'vue'
 import { mount } from '@vue/test-utils'
 import { Attr, Model, Num, Repository } from '@rattus-orm/core'
 import { installRattusORM, useRattusContext, useRepository } from '../src'
-import { pullRepositoryGettersKeys, pullRepositoryKeys } from '../src/composable/types'
+import { pullRepositoryGettersKeys, pullRepositoryKeys } from '@rattus-orm/core/utils/vueComposableUtils'
 import { createPinia } from 'pinia'
 
 class User extends Model {
