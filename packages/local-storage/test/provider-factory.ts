@@ -1,5 +1,5 @@
-import { TestingStoreFactory } from '../../../test/utils/types'
-import { TestStore } from '../../../test/utils/test-store'
+import { TestingStoreFactory } from '@func-test/utils/types'
+import { TestStore } from '@func-test/utils/test-store'
 import { LocalStorageDataProvider } from '../src'
 import { afterEach } from 'vitest'
 

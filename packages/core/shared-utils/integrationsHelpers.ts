@@ -58,3 +58,14 @@ export function useRepositoryForDynamicContext<
 
   return result
 }
+
+export const pullRepositoryGettersKeys = ['find', 'all'] satisfies Array<keyof Repository>
+export const pullRepositoryKeys = [
+  'save',
+  'insert',
+  'fresh',
+  'destroy',
+  'flush',
+  ...pullRepositoryGettersKeys,
+] satisfies Array<keyof Repository>
+export type RepositoryGettersKeys = (typeof pullRepositoryGettersKeys)[number]

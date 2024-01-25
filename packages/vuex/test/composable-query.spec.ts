@@ -4,7 +4,7 @@ import { createStore, Store } from 'vuex'
 import { installRattusORM } from '../src'
 import { mount } from '@vue/test-utils'
 import { useRepository } from '../src'
-import { isComputed } from './utils'
+import { isComputed } from '@rattus-orm/core/utils/vueComposableUtils'
 
 class User extends Model {
   static entity = 'users'

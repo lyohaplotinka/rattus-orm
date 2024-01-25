@@ -1,10 +1,11 @@
-import type { Model, Query, Repository } from '@rattus-orm/core'
+import type { Model, Repository } from '@rattus-orm/core'
 import type { RattusContext } from '@rattus-orm/core/rattus-context'
 import { useRepositoryForDynamicContext } from '@rattus-orm/core/utils/integrationsHelpers'
-import { computed, getCurrentInstance, inject } from 'vue'
+import type { UseComputedRepository } from '@rattus-orm/core/utils/vueComposableUtils'
+import { computifyUseRepository } from '@rattus-orm/core/utils/vueComposableUtils'
+import { getCurrentInstance, inject } from 'vue'
 
 import { RattusOrmInjectionKey } from '../plugin/const'
-import type { UseComputedRepository } from './types'
 
 export function useRattusContext(): RattusContext {
   let context = inject<RattusContext>(RattusOrmInjectionKey)
@@ -26,17 +27,5 @@ export function useRepository<R extends Repository<InstanceType<M>>, M extends t
   model: M,
 ): UseComputedRepository<R, M> {
   const repo = useRepositoryForDynamicContext<R, M>(useRattusContext, model)
-
-  return {
-    ...repo,
-    find(ids: any) {
-      return computed(() => repo.find(ids))
-    },
-    all() {
-      return computed(() => repo.all())
-    },
-    withQuery<R>(cb: (query: Query<InstanceType<M>>) => R) {
-      return computed(() => cb(repo.query()))
-    },
-  } as unknown as UseComputedRepository<R, M>
+  return computifyUseRepository<R, M>(repo)
 }

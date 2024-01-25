@@ -69,10 +69,18 @@ export function createRattusContext(
   dataProvider?: DataProvider,
 ): RattusContext {
   if (params.database && params.database instanceof Database) {
+    for (const repo of params.customRepositories ?? []) {
+      params.database.registerCustomRepository(repo)
+    }
+
     return new RattusContext(undefined, params.database)
   }
   const context = new RattusContext(dataProvider)
   const db = context.createDatabase(params.connection, true)
+
+  for (const repo of params.customRepositories ?? []) {
+    db.registerCustomRepository(repo)
+  }
 
   if (params.plugins?.length) {
     params.plugins.forEach((plugin) => db.use(plugin))

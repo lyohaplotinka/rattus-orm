@@ -3,7 +3,7 @@ import { describe, expect } from 'vitest'
 import { Attr, Model, Num, Repository } from '@rattus-orm/core'
 import { renderWithResultAndContext, TestComponent } from './test-utils'
 import { useRepository } from '../src'
-import { pullRepositoryKeys } from '../src/hooks/types'
+import { pullRepositoryKeys } from '@rattus-orm/core/utils/integrationsHelpers'
 import '@testing-library/jest-dom/vitest'
 import { act } from '@testing-library/react'
 

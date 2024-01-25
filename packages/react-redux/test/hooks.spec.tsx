@@ -1,10 +1,11 @@
+import '@testing-library/jest-dom/vitest'
+
 import React from 'react'
 import { describe, expect } from 'vitest'
 import { Attr, Model, Num, Repository } from '@rattus-orm/core'
 import { renderWithResultAndContext, TestComponent } from './test-utils'
 import { useRepository } from '../src'
-import { pullRepositoryKeys } from '../src/hooks/types'
-import '@testing-library/jest-dom/vitest'
+import { pullRepositoryKeys } from '@rattus-orm/core/utils/integrationsHelpers'
 import { act } from '@testing-library/react'
 
 class User extends Model {

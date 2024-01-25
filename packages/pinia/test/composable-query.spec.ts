@@ -3,7 +3,7 @@ import { Attr, Model, Num } from '@rattus-orm/core'
 import { installRattusORM, useRattusContext } from '../src'
 import { mount } from '@vue/test-utils'
 import { useRepository } from '../src'
-import { isComputed } from './utils'
+import { isComputed } from '@rattus-orm/core/utils/vueComposableUtils'
 import { createPinia } from 'pinia'
 
 class User extends Model {

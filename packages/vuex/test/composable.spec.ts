@@ -4,7 +4,7 @@ import { mount } from '@vue/test-utils'
 import { Model, Num, Repository, Attr, Database } from '@rattus-orm/core'
 import { createStore, Store } from 'vuex'
 import { installRattusORM, useRepository } from '../src'
-import { pullRepositoryGettersKeys, pullRepositoryKeys } from '../src/composable/types'
+import { pullRepositoryGettersKeys, pullRepositoryKeys } from '@rattus-orm/core/utils/integrationsHelpers'
 import { useRattusContext } from '../src'
 import { RattusContext } from '@rattus-orm/core/rattus-context'
 
