@@ -3077,6 +3077,7 @@ __metadata:
   resolution: "@rattus-orm/core@workspace:packages/core"
   dependencies:
     normalizr: "npm:^3.6.2"
+    vue: "npm:^3.4.15"
   languageName: unknown
   linkType: soft
 

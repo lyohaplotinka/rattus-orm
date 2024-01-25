@@ -58,6 +58,11 @@
       "import": "./dist/utils/sharedTypes.mjs",
       "require": "./dist/utils/sharedTypes.js",
       "types": "./dist/utils/sharedTypes.d.ts"
+    },
+    "./utils/vueComposableUtils": {
+      "import": "./dist/utils/vueComposableUtils.mjs",
+      "require": "./dist/utils/vueComposableUtils.js",
+      "types": "./dist/utils/vueComposableUtils.d.ts"
     }
   },
   "files": [
@@ -72,7 +77,8 @@
     "size": "run -T size-limit"
   },
   "devDependencies": {
-    "normalizr": "^3.6.2"
+    "normalizr": "^3.6.2",
+    "vue": "^3.4.15"
   },
   "size-limit": [
     {
