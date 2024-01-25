@@ -1,14 +1,16 @@
-# 2024/01/17
+# 2024/01/25
 ### Core (0.0.19)
 * ability to disable type casting for models (#17)
 * custom repositories management (#18)
-* add `useRepositoryForDynamicContext` - refactor use repository (#19).
+* add `useRepositoryForDynamicContext` - refactor use repository (#19)
+* all utils moved to core, utils package deprecated (#20)
+  * fixed `Constructor` type.
 
 ### Vuex (0.0.18), Pinia (0.0.10), React Signals (0.0.6), Redux (0.0.5)
 * refactor repository management (#19) - use `useRepositoryForDynamicContext`.
 
-### Utils (0.0.9)
-* fixed `Constructor` type
+### Utils (0.0.8)
+* Utils package deprecated and removed from monorepo.
 
 # 2023/12/30
 ### Core (0.0.18)
