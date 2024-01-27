@@ -1,9 +1,24 @@
+import type { Database } from '@/database/database'
 import type { Repository } from '@/repository/repository'
 
 export type Constructor<T, Args extends any[] = any[]> = new (...args: Args) => T
 export type Callback<P extends any[] = [], R = void> = (...args: P) => R
 
 export type ModulePath = [connection: string, module: string]
+
+// credits goes to https://stackoverflow.com/a/50375286
+type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (k: infer I) => void ? I : never
+
+// Converts union to overloaded function
+type UnionToOvlds<U> = UnionToIntersection<U extends any ? (f: U) => void : never>
+
+type PopUnion<U> = UnionToOvlds<U> extends (a: infer A) => void ? A : never
+
+type IsUnion<T> = [T] extends [UnionToIntersection<T>] ? false : true
+
+// Finally me)
+export type UnionToArray<T, A extends unknown[] = []> =
+  IsUnion<T> extends true ? UnionToArray<Exclude<T, PopUnion<T>>, [PopUnion<T>, ...A]> : [T, ...A]
 
 export interface DataProvider {
   // basics
@@ -39,16 +54,11 @@ export interface Elements {
   [id: string]: Element
 }
 
-export interface DatabaseLike {
-  setDataProvider(provider: DataProvider): this
-  start(): void
-}
-
 export type DatabasePlugin<DB> = (database: DB) => void
 
 export type RattusOrmInstallerOptions<DB> = {
   connection?: string
-  database?: DatabaseLike
+  database?: Database
   plugins?: DatabasePlugin<DB>[]
   customRepositories?: Constructor<Repository>[]
 }

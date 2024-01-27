@@ -1,8 +1,10 @@
 import ts, {
+  ConstructorDeclaration,
   createSourceFile,
   getJSDocCommentsAndTags,
   getJSDocParameterTags,
   getModifiers,
+  isConstructorDeclaration,
   isMethodDeclaration,
   MethodDeclaration,
   ScriptTarget,
@@ -23,7 +25,7 @@ function getMethodName(node: MethodDeclaration, sourceFile: SourceFile): string 
   return node.name.getText(sourceFile)
 }
 
-function getMethodDescription(node: MethodDeclaration): string {
+function getMethodDescription(node: MethodDeclaration | ConstructorDeclaration): string {
   if (node.parameters.length) {
     const paramTags = getJSDocParameterTags(node.parameters[0])
     const parentComment = paramTags[0]?.parent?.comment
@@ -34,7 +36,7 @@ function getMethodDescription(node: MethodDeclaration): string {
   return jsdoc && typeof jsdoc.comment === 'string' ? jsdoc.comment : ''
 }
 
-function getMethodParams(node: MethodDeclaration, sourceFile: SourceFile): MethodParam[] {
+function getMethodParams(node: MethodDeclaration | ConstructorDeclaration, sourceFile: SourceFile): MethodParam[] {
   if (!node.parameters.length) {
     return []
   }
@@ -62,14 +64,17 @@ program
     visitNode(
       sourceFile!,
       (node) => {
-        if (isMethodDeclaration(node) && getModifiers(node)!.every((mod) => mod.kind === SyntaxKind.PublicKeyword)) {
+        if (
+          isConstructorDeclaration(node) ||
+          (isMethodDeclaration(node) && getModifiers(node)!.every((mod) => mod.kind === SyntaxKind.PublicKeyword))
+        ) {
           const params = getMethodParams(node, sourceFile)
           if (params.some((v) => v.description === 'COMPLEX')) {
             return
           }
 
           methodDeclarations.push({
-            name: getMethodName(node, sourceFile),
+            name: isConstructorDeclaration(node) ? 'constructor' : getMethodName(node, sourceFile),
             typeParams: node.typeParameters?.map((param) => param.getText(sourceFile)) ?? [],
             params: params,
             returnType: node.type ? node.type.getText(sourceFile) : '',
