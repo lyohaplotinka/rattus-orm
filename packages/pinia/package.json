@@ -19,7 +19,7 @@
     "typescript",
     "javascript"
   ],
-  "version": "0.0.11",
+  "version": "0.1.0",
   "main": "./dist/rattus-orm-pinia-provider.js",
   "browser": "./dist/rattus-orm-pinia-provider.mjs",
   "module": "./dist/rattus-orm-pinia-provider.mjs",
