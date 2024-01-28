@@ -1,31 +1,36 @@
-import ts, {
-  ConstructorDeclaration,
+import ts from 'typescript'
+import type { ConstructorDeclaration, MethodDeclaration, SourceFile, MethodSignature } from 'typescript'
+import { MethodParam, ModuleJsonDocs, PublicMethod } from './types'
+import { readFileSync, writeFileSync } from 'node:fs'
+import { program } from 'commander'
+import { resolve, parse } from 'node:path'
+import { capitalize } from 'lodash-es'
+import { dirName } from '../../nodeUtils'
+
+const __dirname = dirName(import.meta.url)
+
+const {
   createSourceFile,
   getJSDocCommentsAndTags,
   getJSDocParameterTags,
   getModifiers,
   isConstructorDeclaration,
   isMethodDeclaration,
-  MethodDeclaration,
   ScriptTarget,
-  SourceFile,
   SyntaxKind,
-} from 'typescript'
-import { MethodParam, PublicMethod } from './types'
-import { readFileSync, writeFileSync } from 'node:fs'
-import { program } from 'commander'
-import { resolve, parse } from 'node:path'
+  isMethodSignature,
+} = ts
 
 function visitNode(node: ts.Node, cb: (node: ts.Node) => void, declArray: PublicMethod[]) {
   cb(node)
   node.forEachChild((child) => visitNode(child, cb, declArray))
 }
 
-function getMethodName(node: MethodDeclaration, sourceFile: SourceFile): string {
+function getMethodName(node: MethodDeclaration | MethodSignature, sourceFile: SourceFile): string {
   return node.name.getText(sourceFile)
 }
 
-function getMethodDescription(node: MethodDeclaration | ConstructorDeclaration): string {
+function getMethodDescription(node: MethodDeclaration | ConstructorDeclaration | MethodSignature): string {
   if (node.parameters.length) {
     const paramTags = getJSDocParameterTags(node.parameters[0])
     const parentComment = paramTags[0]?.parent?.comment
@@ -36,7 +41,10 @@ function getMethodDescription(node: MethodDeclaration | ConstructorDeclaration):
   return jsdoc && typeof jsdoc.comment === 'string' ? jsdoc.comment : ''
 }
 
-function getMethodParams(node: MethodDeclaration | ConstructorDeclaration, sourceFile: SourceFile): MethodParam[] {
+function getMethodParams(
+  node: MethodDeclaration | ConstructorDeclaration | MethodSignature,
+  sourceFile: SourceFile,
+): MethodParam[] {
   if (!node.parameters.length) {
     return []
   }
@@ -58,14 +66,18 @@ program
   .argument('filePath', 'file to create docs for')
   .action((fileStr: string) => {
     const sourceFile = createSourceFile('x.ts', readFileSync(fileStr, 'utf8'), ScriptTarget.Latest, true)
-
-    const methodDeclarations: PublicMethod[] = []
+    const moduleDocs: ModuleJsonDocs = {
+      name: capitalize(parse(fileStr).name),
+      publicMethods: [],
+      publicProperties: [],
+    }
 
     visitNode(
       sourceFile!,
       (node) => {
         if (
           isConstructorDeclaration(node) ||
+          isMethodSignature(node) ||
           (isMethodDeclaration(node) && getModifiers(node)!.every((mod) => mod.kind === SyntaxKind.PublicKeyword))
         ) {
           const params = getMethodParams(node, sourceFile)
@@ -73,7 +85,7 @@ program
             return
           }
 
-          methodDeclarations.push({
+          moduleDocs.publicMethods.push({
             name: isConstructorDeclaration(node) ? 'constructor' : getMethodName(node, sourceFile),
             typeParams: node.typeParameters?.map((param) => param.getText(sourceFile)) ?? [],
             params: params,
@@ -82,14 +94,14 @@ program
           })
         }
       },
-      methodDeclarations,
+      moduleDocs.publicMethods,
     )
 
     const parsedPath = parse(fileStr)
     const newFileName = `${parsedPath.name}.api.json`
     writeFileSync(
-      resolve(__dirname, '../../', 'packages/docs/src/api-docs', newFileName),
-      JSON.stringify(methodDeclarations, null, 2) + '\n',
+      resolve(__dirname, '../../../', 'packages/docs/src/api-docs', newFileName),
+      JSON.stringify(moduleDocs, null, 2) + '\n',
       'utf8',
     )
   })

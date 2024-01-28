@@ -25,10 +25,12 @@
     "lint:scripts": "eslint -c ./scripts/.eslintrc.js ./scripts/**/*.{js,mjs} --fix",
     "typecheck": "yarn workspaces foreach -A run typecheck",
     "build": "yarn workspaces foreach -Ap --exclude docs --topological-dev run build",
-    "clean": "yarn workspaces foreach -A run clean",
+    "clean": "yarn workspaces foreach -A run clean && rm -rf ./scripts/compilable/dist && rm -rf node_modules",
     "release": "node ./scripts/releaser/releaser.mjs release",
-    "prepare": "npx simple-git-hooks",
-    "create-package": "node ./scripts/package/createPackage.mjs"
+    "prepare": "npx simple-git-hooks && yarn build:scripts",
+    "create-package": "node ./scripts/package/createPackage.mjs",
+    "build:scripts": "cd ./scripts/compilable && tsup",
+    "generate-api": "node ./scripts/compilable/dist/docsBuilder.mjs"
   },
   "devDependencies": {
     "@size-limit/preset-big-lib": "^11.0.2",

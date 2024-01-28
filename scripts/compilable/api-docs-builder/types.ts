@@ -11,3 +11,9 @@ export type PublicMethod = {
   returnType: string
   description: string
 }
+
+export type ModuleJsonDocs = {
+  name: string
+  publicMethods: PublicMethod[]
+  publicProperties: any[]
+}

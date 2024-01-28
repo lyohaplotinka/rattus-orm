@@ -1,0 +1,186 @@
+{
+  "name": "Sharedtypes",
+  "publicMethods": [
+    {
+      "name": "registerConnection",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "name: string",
+          "name": "name",
+          "description": "name of connection"
+        }
+      ],
+      "returnType": "void",
+      "description": "Register connection in your data storage"
+    },
+    {
+      "name": "dump",
+      "typeParams": [],
+      "params": [],
+      "returnType": "SerializedStorage",
+      "description": "Get all data from your data provider"
+    },
+    {
+      "name": "restore",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "data: SerializedStorage",
+          "name": "data",
+          "description": "- data to set"
+        }
+      ],
+      "returnType": "void",
+      "description": "Set data to data provider"
+    },
+    {
+      "name": "registerModule",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "path: ModulePath",
+          "name": "path",
+          "description": "tuple like [connection, <moduleName>]"
+        },
+        {
+          "declaration": "initialState?: State",
+          "name": "initialState",
+          "description": "optional initial module state"
+        }
+      ],
+      "returnType": "void",
+      "description": "Register module in your connection"
+    },
+    {
+      "name": "getModuleState",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "module: ModulePath",
+          "name": "module",
+          "description": "tuple like [connection, <moduleName>]"
+        }
+      ],
+      "returnType": "State",
+      "description": "Get state of specific module"
+    },
+    {
+      "name": "hasModule",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "module: ModulePath",
+          "name": "module",
+          "description": "tuple like [connection, <moduleName>]"
+        }
+      ],
+      "returnType": "boolean",
+      "description": "Does specific module exist"
+    },
+    {
+      "name": "save",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "module: ModulePath",
+          "name": "module",
+          "description": "tuple like [connection, <moduleName>]"
+        },
+        {
+          "declaration": "records: Elements",
+          "name": "records",
+          "description": "record like { [id: string]: Entity }"
+        }
+      ],
+      "returnType": "void",
+      "description": "Save data"
+    },
+    {
+      "name": "insert",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "module: ModulePath",
+          "name": "module",
+          "description": "tuple like [connection, <moduleName>]"
+        },
+        {
+          "declaration": "records: Elements",
+          "name": "records",
+          "description": "record like { [id: string]: Entity }"
+        }
+      ],
+      "returnType": "void",
+      "description": "Insert data"
+    },
+    {
+      "name": "replace",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "module: ModulePath",
+          "name": "module",
+          "description": "tuple like [connection, <moduleName>]"
+        },
+        {
+          "declaration": "records: Elements",
+          "name": "records",
+          "description": "record like { [id: string]: Entity }"
+        }
+      ],
+      "returnType": "void",
+      "description": "Replace part of data with new data"
+    },
+    {
+      "name": "update",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "module: ModulePath",
+          "name": "module",
+          "description": "tuple like [connection, <moduleName>]"
+        },
+        {
+          "declaration": "records: Elements",
+          "name": "records",
+          "description": "record like { [id: string]: Entity }"
+        }
+      ],
+      "returnType": "void",
+      "description": "Update part of data"
+    },
+    {
+      "name": "delete",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "module: ModulePath",
+          "name": "module",
+          "description": "tuple like [connection, <moduleName>]"
+        },
+        {
+          "declaration": "ids: string[]",
+          "name": "ids",
+          "description": "primaryKey array of elements which will be deleted"
+        }
+      ],
+      "returnType": "void",
+      "description": "Delete data"
+    },
+    {
+      "name": "flush",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "module: ModulePath",
+          "name": "module",
+          "description": "tuple like [connection, <moduleName>]"
+        }
+      ],
+      "returnType": "void",
+      "description": "Remove all data from module"
+    }
+  ],
+  "publicProperties": []
+}
