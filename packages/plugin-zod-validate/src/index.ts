@@ -1,7 +1,6 @@
 import type { Model } from '@rattus-orm/core'
-import type { Database } from '@rattus-orm/core'
+import type { DatabasePlugin, Elements, ModulePath } from '@rattus-orm/core'
 import { RattusEvents } from '@rattus-orm/core'
-import type { DatabasePlugin, Elements, ModulePath } from '@rattus-orm/core/utils/sharedTypes'
 import type { ZodError, ZodType as ZodLibType } from 'zod'
 
 import { RattusZodValidationError } from './exceptions/exceptions'
@@ -13,9 +12,7 @@ const defaultParams: RattusZodValidationPluginParams = {
   strict: false,
 }
 
-export function RattusZodValidationPlugin(
-  params: RattusZodValidationPluginParams = defaultParams,
-): DatabasePlugin<Database> {
+export function RattusZodValidationPlugin(params: RattusZodValidationPluginParams = defaultParams): DatabasePlugin {
   const schemaManager = new ZodSchemaManager()
 
   return (db) => {
