@@ -1,6 +1,4 @@
-import type { Element } from '@core-shared-utils/sharedTypes'
-
-import type { Collection, Item } from '@/data/types'
+import type { Collection, Element, Item } from '@/data/types'
 import type { Database } from '@/database/database'
 import type { Model } from '@/model/Model'
 import type { ModelConstructor } from '@/model/types'

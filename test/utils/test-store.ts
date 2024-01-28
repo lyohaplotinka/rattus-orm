@@ -1,7 +1,7 @@
 import { Database } from '@/database/database'
 import { Repository } from '@/repository/repository'
-import type { DataProvider, ModulePath, State } from '@core-shared-utils/sharedTypes'
 import { Entities, TestingStore } from '@func-test/utils/types'
+import { DataProvider, ModulePath, State } from '@/data/types'
 
 export class TestStore implements TestingStore {
   public $database: Database

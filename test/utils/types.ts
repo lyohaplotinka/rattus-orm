@@ -1,6 +1,6 @@
 import { Database } from '@/database/database'
-import { Elements, ModulePath, State } from '@core-shared-utils/sharedTypes'
 import { Repository } from '@/repository/repository'
+import { Elements, ModulePath, State } from '@/data/types'
 
 export type Entities = {
   [name: string]: Elements

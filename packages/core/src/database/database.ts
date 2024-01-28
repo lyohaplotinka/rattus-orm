@@ -1,5 +1,5 @@
-import type { Constructor, DatabasePlugin, DataProvider, Elements, State } from '@core-shared-utils/sharedTypes'
-
+import type { DataProvider, Elements, State } from '@/data/types'
+import type { DatabasePlugin } from '@/database/types'
 import { EventsDataProviderWrapper } from '@/events/events-data-provider-wrapper'
 import type {
   CancelSubscriptionCallback,
@@ -16,6 +16,7 @@ import type { Repository } from '@/repository/repository'
 import { RepositoryManager } from '@/repository/repository-manager'
 import { Schema } from '@/schema/schema'
 import type { EntitySchema, Schemas } from '@/schema/types'
+import type { Constructor } from '@/types'
 
 export class Database {
   /**
@@ -233,7 +234,7 @@ export class Database {
    *
    * @param {DatabasePlugin} plugin database plugin function
    */
-  public use(plugin: DatabasePlugin<Database>): this {
+  public use(plugin: DatabasePlugin): this {
     plugin(this)
     return this
   }

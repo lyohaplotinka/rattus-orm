@@ -1,5 +1,6 @@
 import { isUnknownRecord } from '../../shared-utils/isUnknownRecord'
-import type { DataProvider, UnionToArray } from '../../shared-utils/sharedTypes'
+import type { UnionToArray } from '../types'
+import type { DataProvider } from './types'
 
 export const DataProviderKeys: UnionToArray<keyof DataProvider> = [
   'registerConnection',
