@@ -1,7 +1,7 @@
 {
   "Database": "../packages/core/src/database/database.ts",
   "RattusContext": "../packages/core/src/context/rattus-context.ts",
-  "DataProvider": "../packages/core/shared-utils/sharedTypes.ts",
+  "DataProvider": "../packages/core/src/data/types.ts",
   "Model": "../packages/core/src/model/Model.ts",
   "Query": "../packages/core/src/query/query.ts",
   "Repository": "../packages/core/src/repository/repository.ts"
