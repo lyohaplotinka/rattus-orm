@@ -1,4 +1,4 @@
-import type { ModulePath, State } from '@rattus-orm/core/utils/sharedTypes'
+import type { ModulePath, State } from '@rattus-orm/core'
 import { type Reducer, type Store } from 'redux'
 
 import type { RattusReducerAction, RattusReducerActionName, RattusReducerPrefix, RattusReduxActionName } from './types'

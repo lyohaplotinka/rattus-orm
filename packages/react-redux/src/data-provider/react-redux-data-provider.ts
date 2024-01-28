@@ -1,5 +1,5 @@
+import type { DataProvider, Elements, ModulePath, SerializedStorage, State } from '@rattus-orm/core'
 import { DataProviderHelpers } from '@rattus-orm/core'
-import type { DataProvider, Elements, ModulePath, SerializedStorage, State } from '@rattus-orm/core/utils/sharedTypes'
 import { useSelector } from 'react-redux'
 import type { Reducer } from 'redux'
 import { combineReducers } from 'redux'

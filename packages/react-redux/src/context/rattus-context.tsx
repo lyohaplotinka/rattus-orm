@@ -1,14 +1,13 @@
-import type { Database } from '@rattus-orm/core'
-import type { RattusContext as RattusContextCore } from '@rattus-orm/core/rattus-context'
-import { createRattusContext } from '@rattus-orm/core/rattus-context'
-import type { RattusOrmInstallerOptions } from '@rattus-orm/core/utils/sharedTypes'
+import type { RattusOrmInstallerOptions } from '@rattus-orm/core'
+import type { RattusContext as RattusContextCore } from '@rattus-orm/core/utils/rattus-context'
+import { createRattusContext } from '@rattus-orm/core/utils/rattus-context'
 import React, { createContext, type PropsWithChildren, useRef } from 'react'
 import { Provider } from 'react-redux'
 import type { Reducer, Store } from 'redux'
 
 import { ReactReduxDataProvider } from '../data-provider/react-redux-data-provider'
 
-type RattusProviderProps = RattusOrmInstallerOptions<Database> & {
+type RattusProviderProps = RattusOrmInstallerOptions & {
   store: Store
   sideReducers?: Record<string, Reducer>
 }
