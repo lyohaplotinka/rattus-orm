@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import { LocalStorageStore, RATTUS_LS_PREFIX } from '../src/data-provider/local-storage-store'
 import { range } from 'lodash-es'
-import type { Elements } from '@core-shared-utils/sharedTypes'
+
+import { Elements } from '@/data/types'
 
 const testStorePrefix = `${RATTUS_LS_PREFIX}-t/a`
 

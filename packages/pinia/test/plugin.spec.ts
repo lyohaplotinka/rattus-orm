@@ -4,7 +4,7 @@ import { beforeEach, expect, vi } from 'vitest'
 import { Database, Model, Num, Uid } from '@rattus-orm/core'
 import { createPinia } from 'pinia'
 import { installRattusORM, PiniaDataProvider } from '../src'
-import { RattusContext } from '@rattus-orm/core/rattus-context'
+import { RattusContext } from '@rattus-orm/core/utils/rattus-context'
 
 class User extends Model {
   public static entity = 'user'

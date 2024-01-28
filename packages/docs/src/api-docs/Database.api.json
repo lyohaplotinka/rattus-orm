@@ -255,7 +255,7 @@
       "typeParams": [],
       "params": [
         {
-          "declaration": "plugin: DatabasePlugin<Database>",
+          "declaration": "plugin: DatabasePlugin",
           "name": "plugin",
           "description": "database plugin function"
         }

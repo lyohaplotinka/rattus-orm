@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import type { DataProvider, Elements, SerializedStorage } from './sharedTypes'
+import type { DataProvider, Elements, SerializedStorage } from '../src'
 
 type CreateBasicProviderTestParams<StoreType> = {
   name: string

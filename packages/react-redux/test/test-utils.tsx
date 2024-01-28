@@ -1,9 +1,8 @@
 import { RattusProvider, useRattusContext } from '../src'
 import React, { ReactElement } from 'react'
 import { render } from '@testing-library/react'
-import { RattusOrmInstallerOptions } from '@rattus-orm/core/utils/sharedTypes'
+import { RattusOrmInstallerOptions } from '@rattus-orm/core'
 import { createStore } from 'redux'
-import type { Database } from '@rattus-orm/core'
 
 export const TestComponent = () => {
   try {
@@ -17,7 +16,7 @@ export const TestComponent = () => {
 export const renderWithResultAndContext = (
   ui: ReactElement = <TestComponent />,
   cb: CallableFunction,
-  contextProps: RattusOrmInstallerOptions<Database> = {},
+  contextProps: RattusOrmInstallerOptions = {},
 ) => {
   let result: any
   const store = createStore((data) => data)

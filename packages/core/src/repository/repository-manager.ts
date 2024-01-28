@@ -1,7 +1,6 @@
-import type { Constructor } from '@core-shared-utils/sharedTypes'
-
 import type { Database } from '@/database/database'
 import type { Model } from '@/model/Model'
+import type { Constructor } from '@/types'
 
 import { Repository } from './repository'
 

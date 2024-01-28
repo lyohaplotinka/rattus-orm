@@ -1,6 +1,6 @@
 import type { Model, Repository } from '@rattus-orm/core'
-import type { RattusContext } from '@rattus-orm/core/rattus-context'
 import { useRepositoryForDynamicContext } from '@rattus-orm/core/utils/integrationsHelpers'
+import type { RattusContext } from '@rattus-orm/core/utils/rattus-context'
 import type { UseComputedRepository } from '@rattus-orm/core/utils/vueComposableUtils'
 import { computifyUseRepository } from '@rattus-orm/core/utils/vueComposableUtils'
 import { getCurrentInstance, inject } from 'vue'

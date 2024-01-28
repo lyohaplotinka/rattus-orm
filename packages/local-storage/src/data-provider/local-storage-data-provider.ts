@@ -1,5 +1,5 @@
+import type { DataProvider, Elements, ModulePath, SerializedStorage, State } from '@rattus-orm/core'
 import { DataProviderHelpers } from '@rattus-orm/core'
-import type { DataProvider, Elements, ModulePath, SerializedStorage, State } from '@rattus-orm/core/utils/sharedTypes'
 
 import { LocalStorageStore } from './local-storage-store'
 

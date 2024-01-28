@@ -1,6 +1,4 @@
-import type { Element } from '@core-shared-utils/sharedTypes'
-
-import type { Collection } from '@/data/types'
+import type { Collection, Element } from '@/data/types'
 import type { Query } from '@/query/query'
 import type { Schema } from '@/schema/schema'
 import type { NormalizedSchema } from '@/schema/types'

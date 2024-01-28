@@ -4,6 +4,11 @@
 
 <h1 align="center">Rattus ORM</h1>
 
+<p align="center">
+  <img alt="bundle size" src="https://img.shields.io/bundlephobia/minzip/%40rattus-orm%2Fcore">
+  <img alt="npm version (core)" src="https://img.shields.io/npm/v/%40rattus-orm%2Fcore">
+</p>
+
 > **Note**: Rattus ORM is currently in its early stages of development. We welcome feedback and contributions to help improve and evolve the package.
 
 Rattus ORM is a versatile JavaScript/TypeScript package that offers an Object-Relational Mapping (ORM) like experience for JS/TS applications. It is developed based on the source code of "vuex-orm-next", ensuring compatibility with its API while broadening its applicability beyond specific state managers.

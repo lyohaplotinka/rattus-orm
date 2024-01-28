@@ -54,15 +54,15 @@
       "require": "./dist/utils/isUnknownRecord.js",
       "types": "./dist/utils/isUnknownRecord.d.ts"
     },
-    "./utils/sharedTypes": {
-      "import": "./dist/utils/sharedTypes.mjs",
-      "require": "./dist/utils/sharedTypes.js",
-      "types": "./dist/utils/sharedTypes.d.ts"
-    },
     "./utils/vueComposableUtils": {
       "import": "./dist/utils/vueComposableUtils.mjs",
       "require": "./dist/utils/vueComposableUtils.js",
       "types": "./dist/utils/vueComposableUtils.d.ts"
+    },
+    "./utils/rattus-context": {
+      "import": "./dist/utils/rattus-context.mjs",
+      "require": "./dist/utils/rattus-context.js",
+      "types": "./dist/utils/rattus-context.d.ts"
     }
   },
   "files": [

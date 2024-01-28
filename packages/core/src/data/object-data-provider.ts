@@ -1,7 +1,7 @@
 import { isUnknownRecord } from '@core-shared-utils/isUnknownRecord'
-import type { DataProvider, Elements, ModulePath, SerializedStorage, State } from '@core-shared-utils/sharedTypes'
 
 import { DataProviderHelpers } from './data-provider-helpers'
+import type { DataProvider, Elements, ModulePath, SerializedStorage, State } from './types'
 
 export class ObjectDataProvider extends DataProviderHelpers implements DataProvider {
   protected storage: SerializedStorage = {}

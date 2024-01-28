@@ -6,7 +6,7 @@ import { createStore, Store } from 'vuex'
 import { installRattusORM, useRepository } from '../src'
 import { pullRepositoryGettersKeys, pullRepositoryKeys } from '@rattus-orm/core/utils/integrationsHelpers'
 import { useRattusContext } from '../src'
-import { RattusContext } from '@rattus-orm/core/rattus-context'
+import { RattusContext } from '@rattus-orm/core/utils/rattus-context'
 
 class User extends Model {
   static entity = 'users'

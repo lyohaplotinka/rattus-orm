@@ -1,7 +1,6 @@
 import { isUnknownRecord } from '@core-shared-utils/isUnknownRecord'
-import type { Element } from '@core-shared-utils/sharedTypes'
 
-import type { Entities } from '@/data/types'
+import type { Element, Entities } from '@/data/types'
 import { isNullish } from '@/support/utils'
 
 import { isNormalizationSchema } from './schemas/guards'

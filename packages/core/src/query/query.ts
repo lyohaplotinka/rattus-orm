@@ -1,7 +1,4 @@
-import type { Element, Elements } from '@core-shared-utils/sharedTypes'
-import type { ModulePath } from '@core-shared-utils/sharedTypes'
-
-import type { Collection, Entities, Item } from '@/data/types'
+import type { Collection, Element, Elements, Entities, Item, ModulePath } from '@/data/types'
 import type { Database } from '@/database/database'
 import { MorphTo } from '@/model/attributes/relations/morph-to'
 import { Relation } from '@/model/attributes/relations/relation'
