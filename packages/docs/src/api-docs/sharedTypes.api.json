@@ -1,5 +1,5 @@
 {
-  "name": "Sharedtypes",
+  "name": "DataProvider",
   "publicMethods": [
     {
       "name": "registerConnection",

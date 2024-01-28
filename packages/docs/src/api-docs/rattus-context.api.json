@@ -1,67 +1,71 @@
-[
-  {
-    "name": "constructor",
-    "typeParams": [],
-    "params": [
-      {
-        "declaration": "dataProvider: DataProvider",
-        "name": "dataProvider",
-        "description": "chosen DataProvider"
-      }
-    ],
-    "returnType": "",
-    "description": "Create context with DataProvider passed"
-  },
-  {
-    "name": "constructor",
-    "typeParams": [],
-    "params": [
-      {
-        "declaration": "mainDatabase: Database",
-        "name": "mainDatabase",
-        "description": "main database in context"
-      }
-    ],
-    "returnType": "",
-    "description": "Create context with Database passed. DataProvider will be inferred from database."
-  },
-  {
-    "name": "createDatabase",
-    "typeParams": [],
-    "params": [
-      {
-        "declaration": "connection: string = 'entities'",
-        "name": "connection",
-        "description": "connection name for new database"
-      },
-      {
-        "declaration": "isPrimary = false",
-        "name": "isPrimary",
-        "description": "should new database become \"main\" database"
-      }
-    ],
-    "returnType": "Database",
-    "description": "Create database, save it in context and return."
-  },
-  {
-    "name": "$repo",
-    "typeParams": [
-      "R extends Repository<InstanceType<M>>",
-      "M extends typeof Model = typeof Model"
-    ],
-    "params": [
-      {
-        "declaration": "model: M",
-        "name": "model",
-        "description": "model for which a repository is needed"
-      },
-      {
-        "declaration": "connection?: string",
-        "name": "connection",
-        "description": "database connection name"
-      }
-    ],
-    "returnType": "R",
-    "description": "Get repository for model from database from specific connection"
-  }
-]
+{
+  "name": "RattusContext",
+  "publicMethods": [
+    {
+      "name": "constructor",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "dataProvider: DataProvider",
+          "name": "dataProvider",
+          "description": "chosen DataProvider"
+        }
+      ],
+      "returnType": "",
+      "description": "Create context with DataProvider passed"
+    },
+    {
+      "name": "constructor",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "mainDatabase: Database",
+          "name": "mainDatabase",
+          "description": "main database in context"
+        }
+      ],
+      "returnType": "",
+      "description": "Create context with Database passed. DataProvider will be inferred from database."
+    },
+    {
+      "name": "createDatabase",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "connection: string = 'entities'",
+          "name": "connection",
+          "description": "connection name for new database"
+        },
+        {
+          "declaration": "isPrimary = false",
+          "name": "isPrimary",
+          "description": "should new database become \"main\" database"
+        }
+      ],
+      "returnType": "Database",
+      "description": "Create database, save it in context and return."
+    },
+    {
+      "name": "$repo",
+      "typeParams": [
+        "R extends Repository<InstanceType<M>>",
+        "M extends typeof Model = typeof Model"
+      ],
+      "params": [
+        {
+          "declaration": "model: M",
+          "name": "model",
+          "description": "model for which a repository is needed"
+        },
+        {
+          "declaration": "connection?: string",
+          "name": "connection",
+          "description": "database connection name"
+        }
+      ],
+      "returnType": "R",
+      "description": "Get repository for model from database from specific connection"
+    }
+  ],
+  "publicProperties": []
+}

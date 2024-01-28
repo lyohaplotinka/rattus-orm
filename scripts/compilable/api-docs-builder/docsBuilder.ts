@@ -2,10 +2,9 @@ import ts from 'typescript'
 import type { ConstructorDeclaration, MethodDeclaration, SourceFile, MethodSignature } from 'typescript'
 import { MethodParam, ModuleJsonDocs, PublicMethod } from './types'
 import { readFileSync, writeFileSync } from 'node:fs'
-import { program } from 'commander'
 import { resolve, parse } from 'node:path'
-import { capitalize } from 'lodash-es'
 import { dirName } from '../../nodeUtils'
+import apiDocsFiles from '../../apiDocsFiles.json'
 
 const __dirname = dirName(import.meta.url)
 
@@ -60,49 +59,57 @@ function getMethodParams(
   })
 }
 
-program
-  .name('build-docs')
-  .command('generate')
-  .argument('filePath', 'file to create docs for')
-  .action((fileStr: string) => {
-    const sourceFile = createSourceFile('x.ts', readFileSync(fileStr, 'utf8'), ScriptTarget.Latest, true)
-    const moduleDocs: ModuleJsonDocs = {
-      name: capitalize(parse(fileStr).name),
-      publicMethods: [],
-      publicProperties: [],
-    }
+function buildDocsForFile(fileStr: string, sectionName: string) {
+  const sourceFile = createSourceFile(
+    'x.ts',
+    readFileSync(resolve(__dirname, '../../', fileStr), 'utf8'),
+    ScriptTarget.Latest,
+    true,
+  )
+  const moduleDocs: ModuleJsonDocs = {
+    name: sectionName,
+    publicMethods: [],
+    publicProperties: [],
+  }
 
-    visitNode(
-      sourceFile!,
-      (node) => {
-        if (
-          isConstructorDeclaration(node) ||
-          isMethodSignature(node) ||
-          (isMethodDeclaration(node) && getModifiers(node)!.every((mod) => mod.kind === SyntaxKind.PublicKeyword))
-        ) {
-          const params = getMethodParams(node, sourceFile)
-          if (params.some((v) => v.description === 'COMPLEX')) {
-            return
-          }
-
-          moduleDocs.publicMethods.push({
-            name: isConstructorDeclaration(node) ? 'constructor' : getMethodName(node, sourceFile),
-            typeParams: node.typeParameters?.map((param) => param.getText(sourceFile)) ?? [],
-            params: params,
-            returnType: node.type ? node.type.getText(sourceFile) : '',
-            description: getMethodDescription(node).replace(/\n/g, ' '),
-          })
+  visitNode(
+    sourceFile!,
+    (node) => {
+      if (
+        isConstructorDeclaration(node) ||
+        isMethodSignature(node) ||
+        (isMethodDeclaration(node) && getModifiers(node)!.every((mod) => mod.kind === SyntaxKind.PublicKeyword))
+      ) {
+        const params = getMethodParams(node, sourceFile)
+        if (params.some((v) => v.description === 'COMPLEX')) {
+          return
         }
-      },
-      moduleDocs.publicMethods,
-    )
 
-    const parsedPath = parse(fileStr)
-    const newFileName = `${parsedPath.name}.api.json`
-    writeFileSync(
-      resolve(__dirname, '../../../', 'packages/docs/src/api-docs', newFileName),
-      JSON.stringify(moduleDocs, null, 2) + '\n',
-      'utf8',
-    )
-  })
-  .parse()
+        moduleDocs.publicMethods.push({
+          name: isConstructorDeclaration(node) ? 'constructor' : getMethodName(node, sourceFile),
+          typeParams: node.typeParameters?.map((param) => param.getText(sourceFile)) ?? [],
+          params: params,
+          returnType: node.type ? node.type.getText(sourceFile) : '',
+          description: getMethodDescription(node).replace(/\n/g, ' '),
+        })
+      }
+    },
+    moduleDocs.publicMethods,
+  )
+
+  const parsedPath = parse(fileStr)
+  const newFileName = `${parsedPath.name}.api.json`
+  writeFileSync(
+    resolve(__dirname, '../../../', 'packages/docs/src/api-docs', newFileName),
+    JSON.stringify(moduleDocs, null, 2) + '\n',
+    'utf8',
+  )
+}
+
+function main() {
+  for (const [name, path] of Object.entries(apiDocsFiles)) {
+    buildDocsForFile(path, name)
+  }
+}
+
+main()
