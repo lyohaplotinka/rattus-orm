@@ -30,6 +30,7 @@
     "prepare": "npx simple-git-hooks && yarn build:scripts",
     "create-package": "node ./scripts/package/createPackage.mjs",
     "build:scripts": "cd ./scripts/compilable && tsup",
+    "build:docs": "yarn generate-api && yarn workspace docs run build",
     "generate-api": "node ./scripts/compilable/dist/docsBuilder.mjs"
   },
   "devDependencies": {

@@ -8,11 +8,12 @@ import type {
 import ts from 'typescript'
 import { MethodParam, ModuleJsonDocs, PublicMethod } from './types'
 import { readFileSync, writeFileSync } from 'node:fs'
-import { parse, resolve } from 'node:path'
+import { resolve } from 'node:path'
 import { dirName } from '../../nodeUtils'
 import apiDocsFiles from '../../apiDocsFiles.json' assert { type: 'json' }
 
 const __dirname = dirName(import.meta.url)
+const apiDocsDir = resolve(__dirname, '../../../', 'packages/docs/src/api-docs')
 
 const {
   createSourceFile,
@@ -127,19 +128,19 @@ function buildDocsForFile(fileStr: string, sectionName: string) {
     moduleDocs.publicMethods,
   )
 
-  const parsedPath = parse(fileStr)
-  const newFileName = `${parsedPath.name}.api.json`
-  writeFileSync(
-    resolve(__dirname, '../../../', 'packages/docs/src/api-docs', newFileName),
-    JSON.stringify(moduleDocs, null, 2) + '\n',
-    'utf8',
-  )
+  const newFileName = `${sectionName}.api.json`
+  writeFileSync(resolve(apiDocsDir, newFileName), JSON.stringify(moduleDocs, null, 2) + '\n', 'utf8')
 }
 
 function main() {
+  const exports: string[] = []
+
   for (const [name, path] of Object.entries(apiDocsFiles)) {
     buildDocsForFile(path, name)
+    exports.push(`export { default as ${name}Api } from './${name}.api.json'`)
   }
+
+  writeFileSync(resolve(apiDocsDir, 'index.ts'), exports.join('\n') + '\n', 'utf8')
 }
 
 main()
