@@ -1,9 +1,14 @@
 # 2024/01/28
-### Core (0.0.20)
-* RattusContext constructor with overload.
+### Core (0.1.0)
+* RattusContext constructor with overload
+* sharedTypes.ts removed
+* RattusContext moved to utils.
 
-### Pinia (0.0.11)
+### Pinia (0.1.0)
 * Pinia plugin accepts options.
+
+### Vuex (0.1.0), Pinia (0.1.0), React Signals (0.1.0), Redux (0.1.0), LocalStorage (0.1.0), Plugin Zod Validate(0.1.0)
+* updated types according to core package.
 
 # 2024/01/25
 ### Core (0.0.19)
