@@ -1,6 +1,6 @@
 import type { Signal } from '@preact/signals-react'
 import { signal } from '@preact/signals-react'
-import type { Elements, State } from '@rattus-orm/core/utils/sharedTypes'
+import type { Elements, State } from '@rattus-orm/core'
 
 export class SignalStore {
   protected signal: Signal<State>
