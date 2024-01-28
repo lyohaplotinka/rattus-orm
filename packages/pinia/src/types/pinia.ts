@@ -1,4 +1,4 @@
-import type { RattusContext } from '@rattus-orm/core/rattus-context'
+import type { RattusContext } from '@rattus-orm/core/utils/rattus-context'
 import type { Pinia, Store } from 'pinia'
 
 interface ComponentCustomPropertiesBase {

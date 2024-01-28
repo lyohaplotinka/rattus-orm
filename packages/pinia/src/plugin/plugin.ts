@@ -1,13 +1,12 @@
-import type { Database } from '@rattus-orm/core'
-import { createRattusContext } from '@rattus-orm/core/rattus-context'
-import type { RattusOrmInstallerOptions } from '@rattus-orm/core/utils/sharedTypes'
+import type { RattusOrmInstallerOptions } from '@rattus-orm/core'
+import { createRattusContext } from '@rattus-orm/core/utils/rattus-context'
 import type { Pinia } from 'pinia'
 import type { Plugin } from 'vue'
 
 import { PiniaDataProvider } from '../data-provider/pinia-data-provider'
 import { RattusOrmInjectionKey } from './const'
 
-export type PiniaPluginOptions = RattusOrmInstallerOptions<Database> & {
+export type PiniaPluginOptions = RattusOrmInstallerOptions & {
   pinia?: Pinia
 }
 
