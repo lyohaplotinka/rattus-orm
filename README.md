@@ -3,10 +3,11 @@
 </p>
 
 <h1 align="center">Rattus ORM</h1>
-<div align="center">
-![NPM bundle size](https://img.shields.io/bundlephobia/minzip/%40rattus-orm%2Fcore)
-![NPM Version](https://img.shields.io/npm/v/%40rattus-orm%2Fcore)
-</div>
+
+<p align="center">
+  <img alt="bundle size" src="https://img.shields.io/bundlephobia/minzip/%40rattus-orm%2Fcore">
+  <img alt="npm version (core)" src="https://img.shields.io/npm/v/%40rattus-orm%2Fcore">
+</p>
 
 > **Note**: Rattus ORM is currently in its early stages of development. We welcome feedback and contributions to help improve and evolve the package.
 
