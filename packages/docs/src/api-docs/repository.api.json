@@ -1,0 +1,388 @@
+{
+  "name": "Repository",
+  "publicMethods": [
+    {
+      "name": "constructor",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "public database: Database",
+          "name": "database",
+          "description": "database to work with"
+        }
+      ],
+      "returnType": "",
+      "description": "Create a new Repository instance."
+    },
+    {
+      "name": "initialize",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "model?: ModelConstructor<M>",
+          "name": "model",
+          "description": "model to initialize repository"
+        }
+      ],
+      "returnType": "this",
+      "description": "Initialize the repository by setting the model instance."
+    },
+    {
+      "name": "getModel",
+      "typeParams": [],
+      "params": [],
+      "returnType": "M",
+      "description": "Get the model instance. If the model is not registered to the repository, it will throw an error. It happens when users use a custom repository without setting `use` property."
+    },
+    {
+      "name": "repo",
+      "typeParams": [
+        "M extends typeof Model"
+      ],
+      "params": [
+        {
+          "declaration": "model: M",
+          "name": "model",
+          "description": "model to create new repository for"
+        }
+      ],
+      "returnType": "Repository<InstanceType<M>>",
+      "description": "Create a new repository with the given model."
+    },
+    {
+      "name": "query",
+      "typeParams": [],
+      "params": [],
+      "returnType": "Query<M>",
+      "description": "Create a new Query instance."
+    },
+    {
+      "name": "where",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "field: WherePrimaryClosure | string",
+          "name": "field",
+          "description": "field name to work with"
+        },
+        {
+          "declaration": "value?: WhereSecondaryClosure | any",
+          "name": "value",
+          "description": "optional value to match"
+        }
+      ],
+      "returnType": "Query<M>",
+      "description": "Add a basic where clause to the query."
+    },
+    {
+      "name": "orWhere",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "field: WherePrimaryClosure | string",
+          "name": "field",
+          "description": "field name to work with"
+        },
+        {
+          "declaration": "value?: WhereSecondaryClosure | any",
+          "name": "value",
+          "description": "optional value to match"
+        }
+      ],
+      "returnType": "Query<M>",
+      "description": "Add an \"or where\" clause to the query."
+    },
+    {
+      "name": "orderBy",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "field: OrderBy",
+          "name": "field",
+          "description": "field name to work with"
+        },
+        {
+          "declaration": "direction?: OrderDirection",
+          "name": "direction",
+          "description": "direction of order (asc | desc)"
+        }
+      ],
+      "returnType": "Query<M>",
+      "description": "Add an \"order by\" clause to the query."
+    },
+    {
+      "name": "limit",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "value: number",
+          "name": "value",
+          "description": "limit records to count"
+        }
+      ],
+      "returnType": "Query<M>",
+      "description": "Set the \"limit\" value of the query."
+    },
+    {
+      "name": "offset",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "value: number",
+          "name": "value",
+          "description": "offset for records"
+        }
+      ],
+      "returnType": "Query<M>",
+      "description": "Set the \"offset\" value of the query."
+    },
+    {
+      "name": "with",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "name: string",
+          "name": "name",
+          "description": "relation name"
+        },
+        {
+          "declaration": "callback?: EagerLoadConstraint",
+          "name": "callback",
+          "description": "callback to load"
+        }
+      ],
+      "returnType": "Query<M>",
+      "description": "Set the relationships that should be eager loaded."
+    },
+    {
+      "name": "withAll",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "callback?: EagerLoadConstraint",
+          "name": "callback",
+          "description": "callback to load"
+        }
+      ],
+      "returnType": "Query<M>",
+      "description": "Set to eager load all top-level relationships. Constraint is set for all relationships."
+    },
+    {
+      "name": "withAllRecursive",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "depth?: number",
+          "name": "depth",
+          "description": "relations depth to load"
+        }
+      ],
+      "returnType": "Query<M>",
+      "description": "Set to eager load all top-level relationships. Constraint is set for all relationships."
+    },
+    {
+      "name": "all",
+      "typeParams": [],
+      "params": [],
+      "returnType": "Collection<M>",
+      "description": "Get all models from the store."
+    },
+    {
+      "name": "find",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "id: string | number",
+          "name": "id",
+          "description": "primary key value of needed item"
+        }
+      ],
+      "returnType": "Item<M>",
+      "description": "Find a model by its primary key."
+    },
+    {
+      "name": "find",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "ids: (string | number)[]",
+          "name": "ids",
+          "description": "primary keys array of needed items"
+        }
+      ],
+      "returnType": "Collection<M>",
+      "description": "Find multiple models by their primary keys."
+    },
+    {
+      "name": "revive",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "schema: Element[]",
+          "name": "schema",
+          "description": "elements to revive"
+        }
+      ],
+      "returnType": "Collection<M>",
+      "description": "Retrieves the models from the store by following the given normalized schema."
+    },
+    {
+      "name": "revive",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "schema: Element",
+          "name": "schema",
+          "description": "element to revive"
+        }
+      ],
+      "returnType": "Item<M>",
+      "description": "Retrieves the model from the store by following the given normalized schema."
+    },
+    {
+      "name": "make",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "attributes?: Element",
+          "name": "attributes",
+          "description": "values for new model instance"
+        }
+      ],
+      "returnType": "M",
+      "description": "Create a new model instance. This method will not save the model to the store. It's pretty much the alternative to `new Model()`, but it injects the store instance to support model instance methods in SSR environment."
+    },
+    {
+      "name": "save",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "records: Element[]",
+          "name": "records",
+          "description": "elements to save"
+        }
+      ],
+      "returnType": "M[]",
+      "description": "Save the given records to the store with data normalization."
+    },
+    {
+      "name": "save",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "record: Element",
+          "name": "record",
+          "description": "element to save"
+        }
+      ],
+      "returnType": "M",
+      "description": "Save the given records to the store with data normalization."
+    },
+    {
+      "name": "new",
+      "typeParams": [],
+      "params": [],
+      "returnType": "M",
+      "description": "Create and persist model with default values."
+    },
+    {
+      "name": "insert",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "records: Element[]",
+          "name": "records",
+          "description": "elements to insert"
+        }
+      ],
+      "returnType": "Collection<M>",
+      "description": "Insert the given record to the store."
+    },
+    {
+      "name": "insert",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "record: Element",
+          "name": "record",
+          "description": "element to insert"
+        }
+      ],
+      "returnType": "M",
+      "description": "Insert the given record to the store."
+    },
+    {
+      "name": "fresh",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "records: Element[]",
+          "name": "records",
+          "description": "new elements"
+        }
+      ],
+      "returnType": "Collection<M>",
+      "description": "Insert the given records to the store by replacing any existing records."
+    },
+    {
+      "name": "fresh",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "record: Element",
+          "name": "record",
+          "description": "new element"
+        }
+      ],
+      "returnType": "M",
+      "description": "Insert the given record to the store by replacing any existing records."
+    },
+    {
+      "name": "destroy",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "ids: (string | number)[]",
+          "name": "ids",
+          "description": "primary keys to destroy"
+        }
+      ],
+      "returnType": "Collection<M>",
+      "description": "Destroy the models for the given ids."
+    },
+    {
+      "name": "destroy",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "id: string | number",
+          "name": "id",
+          "description": "primary key to destroy"
+        }
+      ],
+      "returnType": "Item<M>",
+      "description": "Destroy the models for the given id."
+    },
+    {
+      "name": "flush",
+      "typeParams": [],
+      "params": [],
+      "returnType": "M[]",
+      "description": "Delete all records in the store."
+    }
+  ],
+  "publicProperties": [
+    {
+      "name": "static _isRepository",
+      "type": "boolean",
+      "initialValue": "true",
+      "description": "A special flag to indicate if this is the repository class or not. It's\nused when retrieving repository instance from `store.$repo()` method to\ndetermine whether the passed in class is either a repository or a model."
+    },
+    {
+      "name": "use",
+      "type": "typeof Model",
+      "initialValue": "",
+      "description": "The model object to be used for the custom repository."
+    }
+  ]
+}
