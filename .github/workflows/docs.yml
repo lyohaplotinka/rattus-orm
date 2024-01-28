@@ -35,6 +35,9 @@ jobs:
         if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: yarn install
 
+      - name: Generate API docs
+        run: yarn generate-api
+
       - name: Build
         run: yarn build:docs
 

@@ -1,3 +1,10 @@
+# 2024/01/28
+### Core (0.0.20)
+* RattusContext constructor with overload.
+
+### Pinia (0.0.11)
+* Pinia plugin accepts options.
+
 # 2024/01/25
 ### Core (0.0.19)
 * ability to disable type casting for models (#17)
