@@ -1,0 +1,268 @@
+{
+  "name": "Database",
+  "publicMethods": [
+    {
+      "name": "isStarted",
+      "typeParams": [],
+      "params": [],
+      "returnType": "",
+      "description": "Whether the database has already been installed or not. The model registration procedure depends on this flag."
+    },
+    {
+      "name": "getRepository",
+      "typeParams": [
+        "R extends Repository<InstanceType<M>>",
+        "M extends typeof Model = typeof Model"
+      ],
+      "params": [
+        {
+          "declaration": "model: M",
+          "name": "model",
+          "description": "model for which a repository is needed"
+        }
+      ],
+      "returnType": "R",
+      "description": "Get repository for model"
+    },
+    {
+      "name": "registerCustomRepository",
+      "typeParams": [
+        "R extends Repository"
+      ],
+      "params": [
+        {
+          "declaration": "repo: Constructor<R>",
+          "name": "repo",
+          "description": "constructor of your repository"
+        }
+      ],
+      "returnType": "this",
+      "description": "Add custom repository constructor"
+    },
+    {
+      "name": "setDataProvider",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "dataProvider: DataProvider",
+          "name": "dataProvider",
+          "description": "instance of chosen DataProvider"
+        }
+      ],
+      "returnType": "this",
+      "description": "Set data provider"
+    },
+    {
+      "name": "getDataProvider",
+      "typeParams": [],
+      "params": [],
+      "returnType": "",
+      "description": "Get current database DataProvider"
+    },
+    {
+      "name": "setConnection",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "connection: string",
+          "name": "connection",
+          "description": "connection name"
+        }
+      ],
+      "returnType": "this",
+      "description": "Set the connection."
+    },
+    {
+      "name": "getConnection",
+      "typeParams": [],
+      "params": [],
+      "returnType": "string",
+      "description": "Get current database connection"
+    },
+    {
+      "name": "start",
+      "typeParams": [],
+      "params": [],
+      "returnType": "this",
+      "description": "Initialize the database before a user can start using it."
+    },
+    {
+      "name": "register",
+      "typeParams": [
+        "M extends Model"
+      ],
+      "params": [
+        {
+          "declaration": "model: M",
+          "name": "model",
+          "description": "model to register"
+        }
+      ],
+      "returnType": "void",
+      "description": "Register the given model."
+    },
+    {
+      "name": "getModel",
+      "typeParams": [
+        "M extends Model"
+      ],
+      "params": [
+        {
+          "declaration": "name: string",
+          "name": "name",
+          "description": "model name (from static entity field)"
+        }
+      ],
+      "returnType": "M",
+      "description": "Get a model by the specified entity name."
+    },
+    {
+      "name": "getSchema",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "name: string",
+          "name": "name",
+          "description": "model name (from static entity field)"
+        }
+      ],
+      "returnType": "EntitySchema",
+      "description": "Get schema by the specified entity name."
+    },
+    {
+      "name": "on",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "event: Extract<RattusEvent, 'save' | 'insert' | 'update' | 'replace'>",
+          "name": "event",
+          "description": "event to listen to"
+        },
+        {
+          "declaration": "callback: DataEventCallback<Elements, Elements>",
+          "name": "callback",
+          "description": "callback, accepts Elements, returns Elements"
+        }
+      ],
+      "returnType": "CancelSubscriptionCallback",
+      "description": "Listen to RattusEvent which can modify data it operates with. Should return an updated data."
+    },
+    {
+      "name": "on",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "event: typeof RattusEvents.DELETE",
+          "name": "event",
+          "description": "event to listen to"
+        },
+        {
+          "declaration": "callback: DataEventCallback<string[], string[]>",
+          "name": "callback",
+          "description": "callback, accepts Array<string | number>, returns Array<string | number>"
+        }
+      ],
+      "returnType": "CancelSubscriptionCallback",
+      "description": "Listen to RattusEvent on delete data. Should return an array of primary keys that will be deleted"
+    },
+    {
+      "name": "on",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "event: typeof RattusEvents.MODULE_REGISTER",
+          "name": "event",
+          "description": "event to listen to"
+        },
+        {
+          "declaration": "callback: DataEventCallback<ModuleRegisterEventPayload, ModuleRegisterEventPayload>",
+          "name": "callback",
+          "description": "callback, accepts ModuleRegisterEventPayload, returns ModuleRegisterEventPayload"
+        }
+      ],
+      "returnType": "CancelSubscriptionCallback",
+      "description": "Listen to RattusEvent on register new module. Should return special metadata payload: { path: ModulePath, initialState?: State }"
+    },
+    {
+      "name": "on",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "event: typeof RattusEvents.FLUSH",
+          "name": "event",
+          "description": "event to listen to"
+        },
+        {
+          "declaration": "callback: DataEventCallback<undefined>",
+          "name": "callback",
+          "description": "void callback"
+        }
+      ],
+      "returnType": "CancelSubscriptionCallback",
+      "description": "Listen to RattusEvent on flush data. Can't modify data."
+    },
+    {
+      "name": "on",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "event: typeof RattusEvents.CONNECTION_REGISTER",
+          "name": "event",
+          "description": "event to listen to"
+        },
+        {
+          "declaration": "callback: DataEventCallback<string>",
+          "name": "callback",
+          "description": "void callback, accepts connection name."
+        }
+      ],
+      "returnType": "CancelSubscriptionCallback",
+      "description": "Listen to RattusEvent on connection register. Can't modify data."
+    },
+    {
+      "name": "on",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "event: typeof RattusEvents.DATA_CHANGED",
+          "name": "event",
+          "description": "event to listen to"
+        },
+        {
+          "declaration": "callback: DataEventCallback<DataChangedEventPayload>",
+          "name": "callback",
+          "description": "void callback, accepts { path: ModulePath, state: State }"
+        }
+      ],
+      "returnType": "CancelSubscriptionCallback",
+      "description": "Listen to RattusEvent on any data changed. Can't modify data."
+    },
+    {
+      "name": "resetListeners",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "event?: RattusEvent",
+          "name": "event",
+          "description": "reset for this event"
+        }
+      ],
+      "returnType": "",
+      "description": "Reset listeners for specific event"
+    },
+    {
+      "name": "use",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "plugin: DatabasePlugin<Database>",
+          "name": "plugin",
+          "description": "database plugin function"
+        }
+      ],
+      "returnType": "this",
+      "description": "Use plugin"
+    }
+  ],
+  "publicProperties": []
+}

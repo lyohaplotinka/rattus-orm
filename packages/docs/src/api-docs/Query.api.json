@@ -1,0 +1,501 @@
+{
+  "name": "Query",
+  "publicMethods": [
+    {
+      "name": "constructor",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "protected readonly database: Database",
+          "name": "database",
+          "description": "database to work with"
+        },
+        {
+          "declaration": "protected readonly model: M",
+          "name": "model",
+          "description": "model to work with"
+        }
+      ],
+      "returnType": "",
+      "description": "Create a new query instance."
+    },
+    {
+      "name": "newQuery",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "model: string",
+          "name": "model",
+          "description": "model entity to work with"
+        }
+      ],
+      "returnType": "Query<Model>",
+      "description": "Create a new query instance for the given model."
+    },
+    {
+      "name": "newQueryWithConstraints",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "model: string",
+          "name": "model",
+          "description": "model entity to work with"
+        }
+      ],
+      "returnType": "Query<Model>",
+      "description": "Create a new query instance with constraints for the given model."
+    },
+    {
+      "name": "newQueryForRelation",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "relation: Relation",
+          "name": "relation",
+          "description": "relation to get model from"
+        }
+      ],
+      "returnType": "Query<Model>",
+      "description": "Create a new query instance from the given relation."
+    },
+    {
+      "name": "where",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "field: WherePrimaryClosure | string",
+          "name": "field",
+          "description": "field name to work with"
+        },
+        {
+          "declaration": "value?: WhereSecondaryClosure | any",
+          "name": "value",
+          "description": "optional value to match"
+        }
+      ],
+      "returnType": "this",
+      "description": "Add a basic where clause to the query."
+    },
+    {
+      "name": "whereIn",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "field: string",
+          "name": "field",
+          "description": "field name to work with"
+        },
+        {
+          "declaration": "values: any[]",
+          "name": "values",
+          "description": "values to match"
+        }
+      ],
+      "returnType": "this",
+      "description": "Add a \"where in\" clause to the query."
+    },
+    {
+      "name": "whereId",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "ids: string | number | (string | number)[]",
+          "name": "ids",
+          "description": "primary keys to match"
+        }
+      ],
+      "returnType": "this",
+      "description": "Add a where clause on the primary key to the query."
+    },
+    {
+      "name": "orWhere",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "field: WherePrimaryClosure | string",
+          "name": "field",
+          "description": "field name to work with"
+        },
+        {
+          "declaration": "value?: WhereSecondaryClosure | any",
+          "name": "value",
+          "description": "optional value to match"
+        }
+      ],
+      "returnType": "this",
+      "description": "Add an \"or where\" clause to the query."
+    },
+    {
+      "name": "orderBy",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "field: OrderBy",
+          "name": "field",
+          "description": "field name to work with"
+        },
+        {
+          "declaration": "direction: OrderDirection = 'asc'",
+          "name": "direction",
+          "description": "direction of order (asc | desc)"
+        }
+      ],
+      "returnType": "Query<M>",
+      "description": "Add an \"order by\" clause to the query."
+    },
+    {
+      "name": "limit",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "value: number",
+          "name": "value",
+          "description": "limit records to count"
+        }
+      ],
+      "returnType": "this",
+      "description": "Set the \"limit\" value of the query."
+    },
+    {
+      "name": "offset",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "value: number",
+          "name": "value",
+          "description": "offset for records"
+        }
+      ],
+      "returnType": "this",
+      "description": "Set the \"offset\" value of the query."
+    },
+    {
+      "name": "with",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "name: string",
+          "name": "name",
+          "description": "relation name"
+        },
+        {
+          "declaration": "callback: EagerLoadConstraint = () => {}",
+          "name": "callback",
+          "description": "callback to load"
+        }
+      ],
+      "returnType": "Query<M>",
+      "description": "Set the relationships that should be eager loaded."
+    },
+    {
+      "name": "withAll",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "callback: EagerLoadConstraint = () => {}",
+          "name": "callback",
+          "description": "callback to load"
+        }
+      ],
+      "returnType": "Query<M>",
+      "description": "Set to eager load all top-level relationships. Constraint is set for all relationships."
+    },
+    {
+      "name": "withAllRecursive",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "depth: number = 3",
+          "name": "depth",
+          "description": "relations depth to load"
+        }
+      ],
+      "returnType": "Query<M>",
+      "description": "Set to eager load all relationships recursively."
+    },
+    {
+      "name": "all",
+      "typeParams": [],
+      "params": [],
+      "returnType": "Collection<M>",
+      "description": "Get all models from the store. The difference with the `get` is that this method will not process any query chain. It'll always retrieve all models."
+    },
+    {
+      "name": "get",
+      "typeParams": [],
+      "params": [],
+      "returnType": "Collection<M>",
+      "description": "Retrieve models by processing whole query chain."
+    },
+    {
+      "name": "first",
+      "typeParams": [],
+      "params": [],
+      "returnType": "Item<M>",
+      "description": "Execute the query and get the first result."
+    },
+    {
+      "name": "find",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "id: string | number",
+          "name": "id",
+          "description": "primary key value of needed item"
+        }
+      ],
+      "returnType": "Item<M>",
+      "description": "Find a model by its primary key."
+    },
+    {
+      "name": "find",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "ids: (string | number)[]",
+          "name": "ids",
+          "description": "primary keys array of needed items"
+        }
+      ],
+      "returnType": "Collection<M>",
+      "description": "Find multiple models by their primary keys."
+    },
+    {
+      "name": "findIn",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "ids: (string | number)[]",
+          "name": "ids",
+          "description": "primary keys array of needed items"
+        }
+      ],
+      "returnType": "Collection<M>",
+      "description": "Find multiple models by their primary keys."
+    },
+    {
+      "name": "select",
+      "typeParams": [],
+      "params": [],
+      "returnType": "Collection<M>",
+      "description": "Retrieve models by processing all filters set to the query chain."
+    },
+    {
+      "name": "load",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "models: Collection<M>",
+          "name": "models",
+          "description": "models array for relations load"
+        }
+      ],
+      "returnType": "void",
+      "description": "Eager load relations on the model."
+    },
+    {
+      "name": "revive",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "schema: Element[]",
+          "name": "schema",
+          "description": "elements to revive"
+        }
+      ],
+      "returnType": "Collection<M>",
+      "description": "Retrieves the models from the store by following the given normalized schema."
+    },
+    {
+      "name": "revive",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "schema: Element",
+          "name": "schema",
+          "description": "element to revive"
+        }
+      ],
+      "returnType": "Item<M>",
+      "description": "Retrieves the model from the store by following the given normalized schema."
+    },
+    {
+      "name": "reviveOne",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "schema: Element",
+          "name": "schema",
+          "description": "element to revive"
+        }
+      ],
+      "returnType": "Item<M>",
+      "description": "Revive single model from the given schema."
+    },
+    {
+      "name": "reviveMany",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "schema: Element[]",
+          "name": "schema",
+          "description": "elements to revive"
+        }
+      ],
+      "returnType": "Collection<M>",
+      "description": "Revive multiple models from the given schema."
+    },
+    {
+      "name": "new",
+      "typeParams": [],
+      "params": [],
+      "returnType": "M",
+      "description": "Create and persist model with default values."
+    },
+    {
+      "name": "save",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "records: Element[]",
+          "name": "records",
+          "description": "elements to save"
+        }
+      ],
+      "returnType": "M[]",
+      "description": "Save the given records to the store with data normalization."
+    },
+    {
+      "name": "save",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "record: Element",
+          "name": "record",
+          "description": "element to save"
+        }
+      ],
+      "returnType": "M",
+      "description": "Save the given records to the store with data normalization."
+    },
+    {
+      "name": "saveElements",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "elements: Elements",
+          "name": "elements",
+          "description": "elements map to save"
+        }
+      ],
+      "returnType": "void",
+      "description": "Save the given elements to the store."
+    },
+    {
+      "name": "insert",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "records: Element[]",
+          "name": "records",
+          "description": "elements to insert"
+        }
+      ],
+      "returnType": "Collection<M>",
+      "description": "Insert the given record to the store."
+    },
+    {
+      "name": "insert",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "record: Element",
+          "name": "record",
+          "description": "element to insert"
+        }
+      ],
+      "returnType": "M",
+      "description": "Insert the given record to the store."
+    },
+    {
+      "name": "fresh",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "records: Element[]",
+          "name": "records",
+          "description": "new elements"
+        }
+      ],
+      "returnType": "Collection<M>",
+      "description": "Insert the given records to the store by replacing any existing records."
+    },
+    {
+      "name": "fresh",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "record: Element",
+          "name": "record",
+          "description": "new element"
+        }
+      ],
+      "returnType": "M",
+      "description": "Insert the given record to the store by replacing any existing records."
+    },
+    {
+      "name": "update",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "record: Element",
+          "name": "record",
+          "description": "element update payload"
+        }
+      ],
+      "returnType": "Collection<M>",
+      "description": "Update the record matching the query chain."
+    },
+    {
+      "name": "destroy",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "ids: (string | number)[]",
+          "name": "ids",
+          "description": "primary keys to destroy"
+        }
+      ],
+      "returnType": "Collection<M>",
+      "description": "Destroy the models for the given ids."
+    },
+    {
+      "name": "destroy",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "id: string | number",
+          "name": "id",
+          "description": "primary key to destroy"
+        }
+      ],
+      "returnType": "Item<M>",
+      "description": "Destroy the models for the given id."
+    },
+    {
+      "name": "delete",
+      "typeParams": [],
+      "params": [],
+      "returnType": "M[]",
+      "description": "Delete records resolved by the query chain."
+    },
+    {
+      "name": "flush",
+      "typeParams": [],
+      "params": [],
+      "returnType": "Collection<M>",
+      "description": "Delete all records in the store."
+    }
+  ],
+  "publicProperties": []
+}

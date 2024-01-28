@@ -36,7 +36,7 @@ jobs:
         run: yarn install
 
       - name: Build
-        run: yarn workspace docs run build
+        run: yarn build:docs
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2

@@ -33,7 +33,7 @@ export function installRattusORM(options?: PiniaPluginOptions): Plugin {
 
       if (!globalProperties.$rattusContext) {
         globalProperties.$rattusContext = createRattusContext(
-          { connection, database },
+          { ...options, connection, database },
           new PiniaDataProvider(piniaInstance),
         )
       }

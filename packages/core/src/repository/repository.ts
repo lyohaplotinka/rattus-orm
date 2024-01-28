@@ -34,11 +34,15 @@ export class Repository<M extends Model = Model> {
 
   /**
    * Create a new Repository instance.
+   *
+   * @param {Database} database database to work with
    */
   constructor(public database: Database) {}
 
   /**
    * Initialize the repository by setting the model instance.
+   *
+   * @param {ModelConstructor} model model to initialize repository
    */
   public initialize(model?: ModelConstructor<M>): this {
     // If there's a model passed in, just use that and return immediately.
@@ -79,6 +83,8 @@ export class Repository<M extends Model = Model> {
 
   /**
    * Create a new repository with the given model.
+   *
+   * @param {Model} model model to create new repository for
    */
   public repo<M extends typeof Model>(model: M): Repository<InstanceType<M>> {
     return this.database.getRepository(model)
@@ -93,6 +99,9 @@ export class Repository<M extends Model = Model> {
 
   /**
    * Add a basic where clause to the query.
+   *
+   * @param {WherePrimaryClosure | string} field field name to work with
+   * @param {WhereSecondaryClosure | any} value optional value to match
    */
   public where(field: WherePrimaryClosure | string, value?: WhereSecondaryClosure | any): Query<M> {
     return this.query().where(field, value)
@@ -100,6 +109,9 @@ export class Repository<M extends Model = Model> {
 
   /**
    * Add an "or where" clause to the query.
+   *
+   * @param {WherePrimaryClosure | string} field field name to work with
+   * @param {WhereSecondaryClosure | any} value optional value to match
    */
   public orWhere(field: WherePrimaryClosure | string, value?: WhereSecondaryClosure | any): Query<M> {
     return this.query().orWhere(field, value)
@@ -107,6 +119,9 @@ export class Repository<M extends Model = Model> {
 
   /**
    * Add an "order by" clause to the query.
+   *
+   * @param {OrderBy} field field name to work with
+   * @param {OrderDirection} direction direction of order (asc | desc)
    */
   public orderBy(field: OrderBy, direction?: OrderDirection): Query<M> {
     return this.query().orderBy(field, direction)
@@ -114,6 +129,8 @@ export class Repository<M extends Model = Model> {
 
   /**
    * Set the "limit" value of the query.
+   *
+   * @param {number} value limit records to count
    */
   public limit(value: number): Query<M> {
     return this.query().limit(value)
@@ -121,6 +138,8 @@ export class Repository<M extends Model = Model> {
 
   /**
    * Set the "offset" value of the query.
+   *
+   * @param {number} value offset for records
    */
   public offset(value: number): Query<M> {
     return this.query().offset(value)
@@ -128,6 +147,9 @@ export class Repository<M extends Model = Model> {
 
   /**
    * Set the relationships that should be eager loaded.
+   *
+   * @param {string} name relation name
+   * @param {EagerLoadConstraint} callback callback to load
    */
   public with(name: string, callback?: EagerLoadConstraint): Query<M> {
     return this.query().with(name, callback)
@@ -135,13 +157,17 @@ export class Repository<M extends Model = Model> {
 
   /**
    * Set to eager load all top-level relationships. Constraint is set for all relationships.
-   */
+   *
+   * @param {EagerLoadConstraint} callback callback to load
+   * */
   public withAll(callback?: EagerLoadConstraint): Query<M> {
     return this.query().withAll(callback)
   }
 
   /**
    * Set to eager load all top-level relationships. Constraint is set for all relationships.
+   *
+   * @param {number} depth relations depth to load
    */
   public withAllRecursive(depth?: number): Query<M> {
     return this.query().withAllRecursive(depth)
@@ -155,9 +181,16 @@ export class Repository<M extends Model = Model> {
   }
 
   /**
-   * Find the model with the given id.
+   * Find a model by its primary key.
+   *
+   * @param {string | number} id primary key value of needed item
    */
   public find(id: string | number): Item<M>
+  /**
+   * Find multiple models by their primary keys.
+   *
+   * @param {(string | number)[]} ids primary keys array of needed items
+   */
   public find(ids: (string | number)[]): Collection<M>
   public find(ids: any): Item<any> {
     return this.query().find(ids)
@@ -166,8 +199,16 @@ export class Repository<M extends Model = Model> {
   /**
    * Retrieves the models from the store by following the given
    * normalized schema.
+   *
+   * @param {Element[]} schema elements to revive
    */
   public revive(schema: Element[]): Collection<M>
+  /**
+   * Retrieves the model from the store by following the given
+   * normalized schema.
+   *
+   * @param {Element} schema element to revive
+   */
   public revive(schema: Element): Item<M>
   public revive(schema: Element | Element[]): Item<M> | Collection<M> {
     return this.query().revive(schema)
@@ -177,6 +218,8 @@ export class Repository<M extends Model = Model> {
    * Create a new model instance. This method will not save the model to the
    * store. It's pretty much the alternative to `new Model()`, but it injects
    * the store instance to support model instance methods in SSR environment.
+   *
+   * @param {Element} attributes values for new model instance
    */
   public make(attributes?: Element): M {
     return this.getModel().$newInstance(attributes, {
@@ -184,10 +227,17 @@ export class Repository<M extends Model = Model> {
     })
   }
 
-  /*
+  /**
    * Save the given records to the store with data normalization.
+   *
+   * @param {Element[]} records elements to save
    */
   public save(records: Element[]): M[]
+  /**
+   * Save the given records to the store with data normalization.
+   *
+   * @param {Element} record element to save
+   */
   public save(record: Element): M
   public save(records: Element | Element[]): M | M[] {
     return this.query().save(records)
@@ -201,9 +251,16 @@ export class Repository<M extends Model = Model> {
   }
 
   /**
-   * Insert the given records to the store.
+   * Insert the given record to the store.
+   *
+   * @param {Element[]} records elements to insert
    */
   public insert(records: Element[]): Collection<M>
+  /**
+   * Insert the given record to the store.
+   *
+   * @param {Element} record element to insert
+   */
   public insert(record: Element): M
   public insert(records: Element | Element[]): M | Collection<M> {
     return this.query().insert(records)
@@ -211,17 +268,31 @@ export class Repository<M extends Model = Model> {
 
   /**
    * Insert the given records to the store by replacing any existing records.
+   *
+   * @param {Element[]} records new elements
    */
   public fresh(records: Element[]): Collection<M>
+  /**
+   * Insert the given record to the store by replacing any existing records.
+   *
+   * @param {Element} record new element
+   */
   public fresh(record: Element): M
   public fresh(records: Element | Element[]): M | Collection<M> {
     return this.query().fresh(records)
   }
 
   /**
-   * Destroy the models for the given id.
+   * Destroy the models for the given ids.
+   *
+   * @param {(string | number)[]} ids primary keys to destroy
    */
   public destroy(ids: (string | number)[]): Collection<M>
+  /**
+   * Destroy the models for the given id.
+   *
+   * @param {string | number} id primary key to destroy
+   */
   public destroy(id: string | number): Item<M>
   public destroy(ids: any): any {
     return this.query().destroy(ids)

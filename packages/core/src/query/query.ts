@@ -54,6 +54,9 @@ export class Query<M extends Model = Model> {
 
   /**
    * Create a new query instance.
+   *
+   * @param {Database} database database to work with
+   * @param {Model} model model to work with
    */
   constructor(
     protected readonly database: Database,
@@ -62,6 +65,8 @@ export class Query<M extends Model = Model> {
 
   /**
    * Create a new query instance for the given model.
+   *
+   * @param {string} model model entity to work with
    */
   public newQuery(model: string): Query<Model> {
     return new Query(this.database, this.database.getModel(model))
@@ -69,6 +74,8 @@ export class Query<M extends Model = Model> {
 
   /**
    * Create a new query instance with constraints for the given model.
+   *
+   * @param {string} model model entity to work with
    */
   public newQueryWithConstraints(model: string): Query<Model> {
     const newQuery = new Query(this.database, this.database.getModel(model))
@@ -85,6 +92,8 @@ export class Query<M extends Model = Model> {
 
   /**
    * Create a new query instance from the given relation.
+   *
+   * @param {Relation} relation relation to get model from
    */
   public newQueryForRelation(relation: Relation): Query<Model> {
     return new Query(this.database, relation.getRelated())
@@ -92,6 +101,9 @@ export class Query<M extends Model = Model> {
 
   /**
    * Add a basic where clause to the query.
+   *
+   * @param {WherePrimaryClosure | string} field field name to work with
+   * @param {WhereSecondaryClosure | any} value optional value to match
    */
   public where(field: WherePrimaryClosure | string, value?: WhereSecondaryClosure | any): this {
     this.wheres.push({ field, value, boolean: 'and' })
@@ -101,6 +113,9 @@ export class Query<M extends Model = Model> {
 
   /**
    * Add a "where in" clause to the query.
+   *
+   * @param {string} field field name to work with
+   * @param {any[]} values values to match
    */
   public whereIn(field: string, values: any[]): this {
     this.wheres.push({ field, value: values, boolean: 'and' })
@@ -110,6 +125,8 @@ export class Query<M extends Model = Model> {
 
   /**
    * Add a where clause on the primary key to the query.
+   *
+   * @param {string | number | (string | number)[]} ids primary keys to match
    */
   public whereId(ids: string | number | (string | number)[]): this {
     return this.where(this.model.$getKeyName() as any, ids)
@@ -117,6 +134,9 @@ export class Query<M extends Model = Model> {
 
   /**
    * Add an "or where" clause to the query.
+   *
+   * @param {WherePrimaryClosure | string} field field name to work with
+   * @param {WhereSecondaryClosure | any} value optional value to match
    */
   public orWhere(field: WherePrimaryClosure | string, value?: WhereSecondaryClosure | any): this {
     this.wheres.push({ field, value, boolean: 'or' })
@@ -126,6 +146,9 @@ export class Query<M extends Model = Model> {
 
   /**
    * Add an "order by" clause to the query.
+   *
+   * @param {OrderBy} field field name to work with
+   * @param {OrderDirection} direction direction of order (asc | desc)
    */
   public orderBy(field: OrderBy, direction: OrderDirection = 'asc'): Query<M> {
     this.orders.push({ field, direction })
@@ -135,6 +158,8 @@ export class Query<M extends Model = Model> {
 
   /**
    * Set the "limit" value of the query.
+   *
+   * @param {number} value limit records to count
    */
   public limit(value: number): this {
     this.take = value
@@ -144,6 +169,8 @@ export class Query<M extends Model = Model> {
 
   /**
    * Set the "offset" value of the query.
+   *
+   * @param {number} value offset for records
    */
   public offset(value: number): this {
     this.skip = value
@@ -153,6 +180,9 @@ export class Query<M extends Model = Model> {
 
   /**
    * Set the relationships that should be eager loaded.
+   *
+   * @param {string} name relation name
+   * @param {EagerLoadConstraint} callback callback to load
    */
   public with(name: string, callback: EagerLoadConstraint = () => {}): Query<M> {
     this.eagerLoad[name] = callback
@@ -162,6 +192,8 @@ export class Query<M extends Model = Model> {
 
   /**
    * Set to eager load all top-level relationships. Constraint is set for all relationships.
+   *
+   * @param {EagerLoadConstraint} callback callback to load
    */
   public withAll(callback: EagerLoadConstraint = () => {}): Query<M> {
     const fields = this.model.$fields()
@@ -175,6 +207,8 @@ export class Query<M extends Model = Model> {
 
   /**
    * Set to eager load all relationships recursively.
+   *
+   * @param {number} depth relations depth to load
    */
   public withAllRecursive(depth: number = 3): Query<M> {
     this.withAll((query) => {
@@ -216,9 +250,15 @@ export class Query<M extends Model = Model> {
 
   /**
    * Find a model by its primary key.
+   *
+   * @param {string | number} id primary key value of needed item
    */
   public find(id: string | number): Item<M>
-
+  /**
+   * Find multiple models by their primary keys.
+   *
+   * @param {(string | number)[]} ids primary keys array of needed items
+   */
   public find(ids: (string | number)[]): Collection<M>
 
   public find(ids: any): any {
@@ -227,6 +267,8 @@ export class Query<M extends Model = Model> {
 
   /**
    * Find multiple models by their primary keys.
+   *
+   * @param {(string | number)[]} ids primary keys array of needed items
    */
   public findIn(ids: (string | number)[]): Collection<M> {
     return this.whereId(ids).get()
@@ -247,25 +289,35 @@ export class Query<M extends Model = Model> {
 
   /**
    * Eager load relations on the model.
+   *
+   * @param {Collection<Model>} models models array for relations load
    */
   public load(models: Collection<M>): void {
     this.eagerLoadRelations(models)
   }
 
-  /*
+  /**
    * Retrieves the models from the store by following the given
    * normalized schema.
+   *
+   * @param {Element[]} schema elements to revive
    */
   public revive(schema: Element[]): Collection<M>
-
+  /**
+   * Retrieves the model from the store by following the given
+   * normalized schema.
+   *
+   * @param {Element} schema element to revive
+   */
   public revive(schema: Element): Item<M>
-
   public revive(schema: Element | Element[]): Item<M> | Collection<M> {
     return isArray(schema) ? this.reviveMany(schema) : this.reviveOne(schema)
   }
 
   /**
    * Revive single model from the given schema.
+   *
+   * @param {Element} schema element to revive
    */
   public reviveOne(schema: Element): Item<M> {
     const id = this.model.$getIndexId(schema)
@@ -283,6 +335,8 @@ export class Query<M extends Model = Model> {
 
   /**
    * Revive multiple models from the given schema.
+   *
+   * @param {Element[]} schema elements to revive
    */
   public reviveMany(schema: Element[]): Collection<M> {
     return schema.reduce<Collection<M>>((collection, item) => {
@@ -306,11 +360,16 @@ export class Query<M extends Model = Model> {
 
   /**
    * Save the given records to the store with data normalization.
+   *
+   * @param {Element[]} records elements to save
    */
   public save(records: Element[]): M[]
-
+  /**
+   * Save the given records to the store with data normalization.
+   *
+   * @param {Element} record element to save
+   */
   public save(record: Element): M
-
   public save(records: Element | Element[]): M | M[] {
     const [data, entities] = this.getNormalizedEntities(records)
 
@@ -326,6 +385,8 @@ export class Query<M extends Model = Model> {
 
   /**
    * Save the given elements to the store.
+   *
+   * @param {Elements} elements elements map to save
    */
   public saveElements(elements: Elements): void {
     const newData = {} as Elements
@@ -345,11 +406,16 @@ export class Query<M extends Model = Model> {
 
   /**
    * Insert the given record to the store.
+   *
+   * @param {Element[]} records elements to insert
    */
   public insert(records: Element[]): Collection<M>
-
+  /**
+   * Insert the given record to the store.
+   *
+   * @param {Element} record element to insert
+   */
   public insert(record: Element): M
-
   public insert(records: Element | Element[]): M | Collection<M> {
     const models = this.hydrate(records)
 
@@ -359,11 +425,16 @@ export class Query<M extends Model = Model> {
 
   /**
    * Insert the given records to the store by replacing any existing records.
+   *
+   * @param {Element[]} records new elements
    */
   public fresh(records: Element[]): Collection<M>
-
+  /**
+   * Insert the given record to the store by replacing any existing records.
+   *
+   * @param {Element} record new element
+   */
   public fresh(record: Element): M
-
   public fresh(records: Element | Element[]): M | Collection<M> {
     const models = this.hydrate(records)
 
@@ -372,7 +443,9 @@ export class Query<M extends Model = Model> {
   }
 
   /**
-   * Update the reocrd matching the query chain.
+   * Update the record matching the query chain.
+   *
+   * @param {Element} record element update payload
    */
   public update(record: Element): Collection<M> {
     const models = this.get()
@@ -390,12 +463,17 @@ export class Query<M extends Model = Model> {
   }
 
   /**
-   * Destroy the models for the given id.
+   * Destroy the models for the given ids.
+   *
+   * @param {(string | number)[]} ids primary keys to destroy
    */
   public destroy(ids: (string | number)[]): Collection<M>
-
+  /**
+   * Destroy the models for the given id.
+   *
+   * @param {string | number} id primary key to destroy
+   */
   public destroy(id: string | number): Item<M>
-
   public destroy(ids: any): any {
     assert(!this.model.$hasCompositeKey(), [
       "You can't use the `destroy` method on a model with a composite key.",
