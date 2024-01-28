@@ -3,7 +3,7 @@ import { createStore } from 'vuex'
 import { installRattusORM, VuexDataProvider } from '../src'
 import { beforeEach, expect, vi } from 'vitest'
 import { Model, Num, Uid, Database } from '@rattus-orm/core'
-import { RattusContext } from '@rattus-orm/core/rattus-context'
+import { RattusContext } from '@rattus-orm/core/utils/rattus-context'
 
 class User extends Model {
   public static entity = 'user'
