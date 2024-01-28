@@ -6,6 +6,6 @@ export default createTsupConfig(
   },
   {
     format: 'esm',
-    external: ['typescript', 'commander', 'lodash', 'lodash-es'],
+    external: ['typescript', 'commander', 'lodash', 'lodash-es', '../../apiDocsFiles.json'],
   },
 )

@@ -1,10 +1,16 @@
+import type {
+  ConstructorDeclaration,
+  MethodDeclaration,
+  MethodSignature,
+  SourceFile,
+  PropertyDeclaration,
+} from 'typescript'
 import ts from 'typescript'
-import type { ConstructorDeclaration, MethodDeclaration, SourceFile, MethodSignature } from 'typescript'
 import { MethodParam, ModuleJsonDocs, PublicMethod } from './types'
 import { readFileSync, writeFileSync } from 'node:fs'
-import { resolve, parse } from 'node:path'
+import { parse, resolve } from 'node:path'
 import { dirName } from '../../nodeUtils'
-import apiDocsFiles from '../../apiDocsFiles.json'
+import apiDocsFiles from '../../apiDocsFiles.json' assert { type: 'json' }
 
 const __dirname = dirName(import.meta.url)
 
@@ -18,6 +24,7 @@ const {
   ScriptTarget,
   SyntaxKind,
   isMethodSignature,
+  isPropertyDeclaration,
 } = ts
 
 function visitNode(node: ts.Node, cb: (node: ts.Node) => void, declArray: PublicMethod[]) {
@@ -25,14 +32,28 @@ function visitNode(node: ts.Node, cb: (node: ts.Node) => void, declArray: Public
   node.forEachChild((child) => visitNode(child, cb, declArray))
 }
 
-function getMethodName(node: MethodDeclaration | MethodSignature, sourceFile: SourceFile): string {
-  return node.name.getText(sourceFile)
+function getMethodOrPropertyName(
+  node: MethodDeclaration | MethodSignature | PropertyDeclaration,
+  sourceFile: SourceFile,
+): string {
+  const name = node.name.getText(sourceFile)
+  if (Array.isArray(node.modifiers) && node.modifiers.some((mod) => mod.kind === SyntaxKind.StaticKeyword)) {
+    return `static ${name}`
+  }
+  return name
 }
 
-function getMethodDescription(node: MethodDeclaration | ConstructorDeclaration | MethodSignature): string {
-  if (node.parameters.length) {
+function getMethodOrPropertyDescription(
+  node: MethodDeclaration | ConstructorDeclaration | MethodSignature | PropertyDeclaration,
+): string {
+  if (!isPropertyDeclaration(node) && node.parameters.length && node.parameters[0].name.getText() !== 'this') {
     const paramTags = getJSDocParameterTags(node.parameters[0])
     const parentComment = paramTags[0]?.parent?.comment
+
+    if (isMethodDeclaration(node) && node.name.getText() === 'setRegistry') {
+      console.log(getJSDocParameterTags(node.parameters[0]))
+    }
+
     return typeof parentComment === 'string' ? parentComment : 'COMPLEX'
   }
 
@@ -78,19 +99,28 @@ function buildDocsForFile(fileStr: string, sectionName: string) {
       if (
         isConstructorDeclaration(node) ||
         isMethodSignature(node) ||
-        (isMethodDeclaration(node) && getModifiers(node)!.every((mod) => mod.kind === SyntaxKind.PublicKeyword))
+        (isMethodDeclaration(node) && getModifiers(node)!.some((mod) => mod.kind === SyntaxKind.PublicKeyword))
       ) {
-        const params = getMethodParams(node, sourceFile)
+        const params = getMethodParams(node, sourceFile).filter((v) => v.name !== 'this')
         if (params.some((v) => v.description === 'COMPLEX')) {
           return
         }
 
         moduleDocs.publicMethods.push({
-          name: isConstructorDeclaration(node) ? 'constructor' : getMethodName(node, sourceFile),
+          name: isConstructorDeclaration(node) ? 'constructor' : getMethodOrPropertyName(node, sourceFile),
           typeParams: node.typeParameters?.map((param) => param.getText(sourceFile)) ?? [],
           params: params,
           returnType: node.type ? node.type.getText(sourceFile) : '',
-          description: getMethodDescription(node).replace(/\n/g, ' '),
+          description: getMethodOrPropertyDescription(node).replace(/\n/g, ' '),
+        })
+      }
+
+      if (isPropertyDeclaration(node) && getModifiers(node)!.some((mod) => mod.kind === SyntaxKind.PublicKeyword)) {
+        moduleDocs.publicProperties.push({
+          name: getMethodOrPropertyName(node, sourceFile),
+          type: node.type ? node.type.getText(sourceFile) : '',
+          initialValue: node.initializer ? node.initializer.getText(sourceFile) : '',
+          description: getMethodOrPropertyDescription(node),
         })
       }
     },

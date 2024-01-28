@@ -8,12 +8,13 @@ import type { Repository } from '../repository/repository'
 export class RattusContext {
   /**
    * instance of first (main) database
-   * @type Database
-   * @public
    */
   public $database: Database
-
+  /**
+   * all databases storage
+   */
   public $databases: Record<string, Database> = {}
+
   protected storedRepos = new Map<string, Repository>()
   protected readonly dataProvider: DataProvider
 

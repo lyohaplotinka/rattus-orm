@@ -67,5 +67,18 @@
       "description": "Get repository for model from database from specific connection"
     }
   ],
-  "publicProperties": []
+  "publicProperties": [
+    {
+      "name": "$database",
+      "type": "Database",
+      "initialValue": "",
+      "description": "instance of first (main) database"
+    },
+    {
+      "name": "$databases",
+      "type": "Record<string, Database>",
+      "initialValue": "{}",
+      "description": "all databases storage"
+    }
+  ]
 }

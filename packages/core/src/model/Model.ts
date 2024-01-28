@@ -82,6 +82,9 @@ export class Model {
 
   /**
    * Set the attribute to the registry.
+   *
+   * @param {string} key model field name
+   * @param {() => Attribute<unknown>} attribute attribute factory
    */
   public static setRegistry<M extends typeof Model>(this: M, key: string, attribute: () => Attribute<unknown>): M {
     if (!this.registries[this.entity]) {
@@ -94,7 +97,7 @@ export class Model {
   }
 
   /**
-   * Clear the list of booted models so they can be re-booted.
+   * Clear the list of booted models, so they can be re-booted.
    */
   public static clearBootedModels(): void {
     this.booted = {}
@@ -125,6 +128,8 @@ export class Model {
 
   /**
    * Create a new Attr attribute instance.
+   *
+   * @param {any} value initial attribute value
    */
   public static attr(value: any): Attr {
     return new Attr(this.thisAsModelConstructor().newRawInstance(), value)
@@ -132,6 +137,8 @@ export class Model {
 
   /**
    * Create a new String attribute instance.
+   *
+   * @param {string | null} value initial value, null if nullable
    */
   public static string(value: string | null): Str {
     return new Str(this.thisAsModelConstructor().newRawInstance(), value)
@@ -139,6 +146,8 @@ export class Model {
 
   /**
    * Create a new Number attribute instance.
+   *
+   * @param {number | null} value initial value, null if nullable
    */
   public static number(value: number | null): Num {
     return new Num(this.thisAsModelConstructor().newRawInstance(), value)
@@ -146,6 +155,8 @@ export class Model {
 
   /**
    * Create a new Boolean attribute instance.
+   *
+   * @param {boolean | null} value initial value, null if nullable
    */
   public static boolean(value: boolean | null): Bool {
     return new Bool(this.thisAsModelConstructor().newRawInstance(), value)
@@ -160,6 +171,10 @@ export class Model {
 
   /**
    * Create a new HasOne relation instance.
+   *
+   * @param {ModelConstructor} related related model
+   * @param {string} foreignKey related model key
+   * @param {string} localKey this model key
    */
   public static hasOne(related: ModelConstructor<any>, foreignKey: string, localKey?: string): HasOne {
     const model = this.thisAsModelConstructor().newRawInstance()
@@ -171,6 +186,10 @@ export class Model {
 
   /**
    * Create a new BelongsTo relation instance.
+   *
+   * @param {ModelConstructor} related related model
+   * @param {string} foreignKey model key
+   * @param {string} ownerKey related primary key
    */
   public static belongsTo(related: ModelConstructor<any>, foreignKey: string, ownerKey?: string): BelongsTo {
     const instance = related.newRawInstance()
@@ -182,6 +201,10 @@ export class Model {
 
   /**
    * Create a new HasMany relation instance.
+   *
+   * @param {ModelConstructor} related related model
+   * @param {string} foreignKey related model key
+   * @param {string} localKey this model key
    */
   public static hasMany(related: ModelConstructor<any>, foreignKey: string, localKey?: string): HasMany {
     const model = this.thisAsModelConstructor().newRawInstance()
@@ -193,6 +216,10 @@ export class Model {
 
   /**
    * Create a new HasManyBy relation instance.
+   *
+   * @param {ModelConstructor} related related model
+   * @param {string} foreignKey model key
+   * @param {string} ownerKey related model key
    */
   public static hasManyBy(related: ModelConstructor<Model>, foreignKey: string, ownerKey?: string): HasManyBy {
     const instance = related.newRawInstance()
@@ -204,6 +231,11 @@ export class Model {
 
   /**
    * Create a new MorphOne relation instance.
+   *
+   * @param {ModelConstructor} related related model
+   * @param {string} id related model key
+   * @param {string} type morph type
+   * @param {string} localKey local key
    */
   public static morphOne(related: ModelConstructor<Model>, id: string, type: string, localKey?: string): MorphOne {
     const model = this.thisAsModelConstructor().newRawInstance()
@@ -215,6 +247,11 @@ export class Model {
 
   /**
    * Create a new MorphTo relation instance.
+   *
+   * @param {ModelConstructor[]} related related models
+   * @param {string} id related model key
+   * @param {string} type morph type
+   * @param {string} ownerKey owner key
    */
   public static morphTo(related: ModelConstructor<any>[], id: string, type: string, ownerKey: string = ''): MorphTo {
     const instance = this.thisAsModelConstructor().newRawInstance()
@@ -277,6 +314,9 @@ export class Model {
    * Create a new instance of this model. This method provides a convenient way
    * to re-generate a fresh instance of this model. It's particularly useful
    * during hydration through Query operations.
+   *
+   * @param {Element} attributes data to fill new instance with
+   * @param {ModelOptions} options options (should fill, include relations)
    */
   public $newInstance(attributes?: Element, options?: ModelOptions): this {
     const self = this.$self()
@@ -286,6 +326,9 @@ export class Model {
   /**
    * Fill this model by the given attributes. Missing fields will be populated
    * by the attributes default value.
+   *
+   * @param {Element} attributes data to fill new instance with
+   * @param {ModelOptions} options options (should fill, include relations)
    */
   public $fill(attributes: Element = {}, options: ModelOptions = {}): this {
     const fields = this.$fields()
@@ -315,6 +358,8 @@ export class Model {
   /**
    * Get primary key value for the model. If the model has the composite key,
    * it will return an array of ids.
+   *
+   * @param {Element} record optional data of element to get key
    */
   public $getKey(record?: Element): string | number | (string | number)[] | null {
     record = record ?? this
@@ -337,6 +382,8 @@ export class Model {
 
   /**
    * Get the index id of this model or for a given record.
+   *
+   * @param {Element} record optional data of element to index id
    */
   public $getIndexId(record?: Element): string {
     const target = record ?? this
@@ -369,6 +416,8 @@ export class Model {
 
   /**
    * Get the relation instance for the given relation name.
+   *
+   * @param {string} name name of relation to get instance
    */
   public $getRelation(name: string): Relation {
     const relation = this.$fields()[name]
@@ -380,6 +429,9 @@ export class Model {
 
   /**
    * Set the given relationship on the model.
+   *
+   * @param {string} relation relation name
+   * @param {Model | Model[] | null} model model to set relation
    */
   public $setRelation(relation: string, model: Model | Model[] | null): this {
     this[relation] = model
@@ -396,6 +448,9 @@ export class Model {
 
   /**
    * Serialize this model, or the given model, as POJO.
+   *
+   * @param {Model} model optional to serialize
+   * @param {ModelOptions} options optional options to apply
    */
   public $toJson(model?: Model, options: ModelOptions = {}): Element {
     model = model ?? this
@@ -432,6 +487,8 @@ export class Model {
    * Note that this method only sanitizes existing fields in the given record.
    * It will not generate missing model fields. If you need to generate all
    * model fields, use `$sanitizeAndFill` method instead.
+   *
+   * @param {Element} record data to sanitize
    */
   public $sanitize(record: Element): Element {
     const sanitizedRecord = {} as Element
@@ -452,6 +509,8 @@ export class Model {
   /**
    * Same as `$sanitize` method, but it produces missing model fields with its
    * default value.
+   *
+   * @param {Element} record data to sanitize
    */
   public $sanitizeAndFill(record: Element): Element {
     const sanitizedRecord = {} as Element

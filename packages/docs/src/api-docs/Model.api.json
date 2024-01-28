@@ -1,0 +1,475 @@
+{
+  "name": "Model",
+  "publicMethods": [
+    {
+      "name": "static fields",
+      "typeParams": [],
+      "params": [],
+      "returnType": "ModelFields",
+      "description": "Create a new model fields definition."
+    },
+    {
+      "name": "static setRegistry",
+      "typeParams": [
+        "M extends typeof Model"
+      ],
+      "params": [
+        {
+          "declaration": "key: string",
+          "name": "key",
+          "description": "model field name"
+        },
+        {
+          "declaration": "attribute: () => Attribute<unknown>",
+          "name": "attribute",
+          "description": "attribute factory"
+        }
+      ],
+      "returnType": "M",
+      "description": "Set the attribute to the registry."
+    },
+    {
+      "name": "static clearBootedModels",
+      "typeParams": [],
+      "params": [],
+      "returnType": "void",
+      "description": "Clear the list of booted models, so they can be re-booted."
+    },
+    {
+      "name": "static clearRegistries",
+      "typeParams": [],
+      "params": [],
+      "returnType": "void",
+      "description": "Clear registries."
+    },
+    {
+      "name": "static newRawInstance",
+      "typeParams": [
+        "M extends Model"
+      ],
+      "params": [],
+      "returnType": "M",
+      "description": "Create a new model instance without field values being populated.  This method is mainly for the internal use when registering models to the database. Since all pre-registered models are for referencing its model setting during the various process, but the fields are not required.  Use this method when you want create a new model instance for: - Registering model to a component (eg. Repository, Query, etc.) - Registering model to attributes (String, Has Many, etc.)"
+    },
+    {
+      "name": "static attr",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "value: any",
+          "name": "value",
+          "description": "initial attribute value"
+        }
+      ],
+      "returnType": "Attr",
+      "description": "Create a new Attr attribute instance."
+    },
+    {
+      "name": "static string",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "value: string | null",
+          "name": "value",
+          "description": "initial value, null if nullable"
+        }
+      ],
+      "returnType": "Str",
+      "description": "Create a new String attribute instance."
+    },
+    {
+      "name": "static number",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "value: number | null",
+          "name": "value",
+          "description": "initial value, null if nullable"
+        }
+      ],
+      "returnType": "Num",
+      "description": "Create a new Number attribute instance."
+    },
+    {
+      "name": "static boolean",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "value: boolean | null",
+          "name": "value",
+          "description": "initial value, null if nullable"
+        }
+      ],
+      "returnType": "Bool",
+      "description": "Create a new Boolean attribute instance."
+    },
+    {
+      "name": "static uid",
+      "typeParams": [],
+      "params": [],
+      "returnType": "Uid",
+      "description": "Create a new Uid attribute instance."
+    },
+    {
+      "name": "static hasOne",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "related: ModelConstructor<any>",
+          "name": "related",
+          "description": "related model"
+        },
+        {
+          "declaration": "foreignKey: string",
+          "name": "foreignKey",
+          "description": "related model key"
+        },
+        {
+          "declaration": "localKey?: string",
+          "name": "localKey",
+          "description": "this model key"
+        }
+      ],
+      "returnType": "HasOne",
+      "description": "Create a new HasOne relation instance."
+    },
+    {
+      "name": "static belongsTo",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "related: ModelConstructor<any>",
+          "name": "related",
+          "description": "related model"
+        },
+        {
+          "declaration": "foreignKey: string",
+          "name": "foreignKey",
+          "description": "model key"
+        },
+        {
+          "declaration": "ownerKey?: string",
+          "name": "ownerKey",
+          "description": "related primary key"
+        }
+      ],
+      "returnType": "BelongsTo",
+      "description": "Create a new BelongsTo relation instance."
+    },
+    {
+      "name": "static hasMany",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "related: ModelConstructor<any>",
+          "name": "related",
+          "description": "related model"
+        },
+        {
+          "declaration": "foreignKey: string",
+          "name": "foreignKey",
+          "description": "related model key"
+        },
+        {
+          "declaration": "localKey?: string",
+          "name": "localKey",
+          "description": "this model key"
+        }
+      ],
+      "returnType": "HasMany",
+      "description": "Create a new HasMany relation instance."
+    },
+    {
+      "name": "static hasManyBy",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "related: ModelConstructor<Model>",
+          "name": "related",
+          "description": "related model"
+        },
+        {
+          "declaration": "foreignKey: string",
+          "name": "foreignKey",
+          "description": "model key"
+        },
+        {
+          "declaration": "ownerKey?: string",
+          "name": "ownerKey",
+          "description": "related model key"
+        }
+      ],
+      "returnType": "HasManyBy",
+      "description": "Create a new HasManyBy relation instance."
+    },
+    {
+      "name": "static morphOne",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "related: ModelConstructor<Model>",
+          "name": "related",
+          "description": "related model"
+        },
+        {
+          "declaration": "id: string",
+          "name": "id",
+          "description": "related model key"
+        },
+        {
+          "declaration": "type: string",
+          "name": "type",
+          "description": "morph type"
+        },
+        {
+          "declaration": "localKey?: string",
+          "name": "localKey",
+          "description": "local key"
+        }
+      ],
+      "returnType": "MorphOne",
+      "description": "Create a new MorphOne relation instance."
+    },
+    {
+      "name": "static morphTo",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "related: ModelConstructor<any>[]",
+          "name": "related",
+          "description": "related models"
+        },
+        {
+          "declaration": "id: string",
+          "name": "id",
+          "description": "related model key"
+        },
+        {
+          "declaration": "type: string",
+          "name": "type",
+          "description": "morph type"
+        },
+        {
+          "declaration": "ownerKey: string = ''",
+          "name": "ownerKey",
+          "description": "owner key"
+        }
+      ],
+      "returnType": "MorphTo",
+      "description": "Create a new MorphTo relation instance."
+    },
+    {
+      "name": "$self",
+      "typeParams": [],
+      "params": [],
+      "returnType": "typeof Model",
+      "description": "Get the constructor for this model."
+    },
+    {
+      "name": "$entity",
+      "typeParams": [],
+      "params": [],
+      "returnType": "string",
+      "description": "Get the entity for this model."
+    },
+    {
+      "name": "$primaryKey",
+      "typeParams": [],
+      "params": [],
+      "returnType": "string | string[]",
+      "description": "Get the primary key for this model."
+    },
+    {
+      "name": "$fields",
+      "typeParams": [],
+      "params": [],
+      "returnType": "ModelFields",
+      "description": "Get the model fields for this model."
+    },
+    {
+      "name": "$newInstance",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "attributes?: Element",
+          "name": "attributes",
+          "description": "data to fill new instance with"
+        },
+        {
+          "declaration": "options?: ModelOptions",
+          "name": "options",
+          "description": "options (should fill, include relations)"
+        }
+      ],
+      "returnType": "this",
+      "description": "Create a new instance of this model. This method provides a convenient way to re-generate a fresh instance of this model. It's particularly useful during hydration through Query operations."
+    },
+    {
+      "name": "$fill",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "attributes: Element = {}",
+          "name": "attributes",
+          "description": "data to fill new instance with"
+        },
+        {
+          "declaration": "options: ModelOptions = {}",
+          "name": "options",
+          "description": "options (should fill, include relations)"
+        }
+      ],
+      "returnType": "this",
+      "description": "Fill this model by the given attributes. Missing fields will be populated by the attributes default value."
+    },
+    {
+      "name": "$getKeyName",
+      "typeParams": [],
+      "params": [],
+      "returnType": "string | string[]",
+      "description": "Get the primary key field name."
+    },
+    {
+      "name": "$getKey",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "record?: Element",
+          "name": "record",
+          "description": "optional data of element to get key"
+        }
+      ],
+      "returnType": "string | number | (string | number)[] | null",
+      "description": "Get primary key value for the model. If the model has the composite key, it will return an array of ids."
+    },
+    {
+      "name": "$hasCompositeKey",
+      "typeParams": [],
+      "params": [],
+      "returnType": "boolean",
+      "description": "Check whether the model has composite key."
+    },
+    {
+      "name": "$getIndexId",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "record?: Element",
+          "name": "record",
+          "description": "optional data of element to index id"
+        }
+      ],
+      "returnType": "string",
+      "description": "Get the index id of this model or for a given record."
+    },
+    {
+      "name": "$getLocalKey",
+      "typeParams": [],
+      "params": [],
+      "returnType": "string",
+      "description": "Get the local key name for the model."
+    },
+    {
+      "name": "$getRelation",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "name: string",
+          "name": "name",
+          "description": "name of relation to get instance"
+        }
+      ],
+      "returnType": "Relation",
+      "description": "Get the relation instance for the given relation name."
+    },
+    {
+      "name": "$setRelation",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "relation: string",
+          "name": "relation",
+          "description": "relation name"
+        },
+        {
+          "declaration": "model: Model | Model[] | null",
+          "name": "model",
+          "description": "model to set relation"
+        }
+      ],
+      "returnType": "this",
+      "description": "Set the given relationship on the model."
+    },
+    {
+      "name": "$getAttributes",
+      "typeParams": [],
+      "params": [],
+      "returnType": "Element",
+      "description": "Get the serialized model attributes."
+    },
+    {
+      "name": "$toJson",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "model?: Model",
+          "name": "model",
+          "description": "optional to serialize"
+        },
+        {
+          "declaration": "options: ModelOptions = {}",
+          "name": "options",
+          "description": "optional options to apply"
+        }
+      ],
+      "returnType": "Element",
+      "description": "Serialize this model, or the given model, as POJO."
+    },
+    {
+      "name": "$sanitize",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "record: Element",
+          "name": "record",
+          "description": "data to sanitize"
+        }
+      ],
+      "returnType": "Element",
+      "description": "Sanitize the given record. This method is similar to `$toJson` method, but the difference is that it doesn't instantiate the full model. The method is used to sanitize the record before persisting to the store.  It removes fields that don't exist in the model field schema or if the field is relationship fields.  Note that this method only sanitizes existing fields in the given record. It will not generate missing model fields. If you need to generate all model fields, use `$sanitizeAndFill` method instead."
+    },
+    {
+      "name": "$sanitizeAndFill",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "record: Element",
+          "name": "record",
+          "description": "data to sanitize"
+        }
+      ],
+      "returnType": "Element",
+      "description": "Same as `$sanitize` method, but it produces missing model fields with its default value."
+    }
+  ],
+  "publicProperties": [
+    {
+      "name": "static entity",
+      "type": "string",
+      "initialValue": "",
+      "description": "The name of the model."
+    },
+    {
+      "name": "static dataTypeCasting",
+      "type": "boolean",
+      "initialValue": "true",
+      "description": "Should or should not cast data types"
+    },
+    {
+      "name": "static primaryKey",
+      "type": "string | string[]",
+      "initialValue": "'id'",
+      "description": "The primary key for the model."
+    }
+  ]
+}

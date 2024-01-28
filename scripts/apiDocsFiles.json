@@ -1,5 +1,6 @@
 {
   "Database": "../packages/core/src/database/database.ts",
   "RattusContext": "../packages/core/src/context/rattus-context.ts",
-  "DataProvider": "../packages/core/shared-utils/sharedTypes.ts"
+  "DataProvider": "../packages/core/shared-utils/sharedTypes.ts",
+  "Model": "../packages/core/src/model/Model.ts"
 }
