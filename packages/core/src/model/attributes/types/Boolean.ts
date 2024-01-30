@@ -1,3 +1,5 @@
+import { isNumber, isString } from '@/support/utils'
+
 import type { Model } from '../../Model'
 import { Type } from './Type'
 
@@ -21,7 +23,7 @@ export class Boolean extends Type<boolean | null> {
       return value
     }
 
-    if (typeof value === 'string') {
+    if (isString(value)) {
       if (!value.length) {
         return false
       }
@@ -29,7 +31,7 @@ export class Boolean extends Type<boolean | null> {
       return isNaN(int) ? true : !!int
     }
 
-    if (typeof value === 'number') {
+    if (isNumber(value)) {
       return !!value
     }
 

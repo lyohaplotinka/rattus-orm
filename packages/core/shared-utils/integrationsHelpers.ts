@@ -1,11 +1,11 @@
+import type { Model, Repository } from '../src'
 import type { RattusContext } from '../src/context/rattus-context'
-import type { Model } from '../src/model/Model'
-import type { Repository } from '../src/repository/repository'
+import { isFunction, isString } from '../src/support/utils'
 
 const useRepositorySkippedKeys = ['database', 'use', 'model', 'constructor'] as const
 type UseRepositorySkippedKeys = (typeof useRepositorySkippedKeys)[number]
 const isSkippedKey = (value: unknown): value is UseRepositorySkippedKeys => {
-  return typeof value === 'string' && useRepositorySkippedKeys.includes(value as UseRepositorySkippedKeys)
+  return isString(value) && useRepositorySkippedKeys.includes(value as UseRepositorySkippedKeys)
 }
 
 export type ContextRetriever = () => RattusContext
@@ -41,7 +41,7 @@ export function useRepositoryForDynamicContext<
     }
     const repoValue = repo[key]
 
-    if (typeof repoValue === 'function') {
+    if (isFunction(repoValue)) {
       result[key as string] = repoValue.bind(repo)
       continue
     }

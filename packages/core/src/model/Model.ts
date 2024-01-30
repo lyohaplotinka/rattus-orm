@@ -1,6 +1,10 @@
+import { isUnknownRecord } from '@core-shared-utils/isUnknownRecord'
+
 import type { Collection, Element, Item } from '@/data/types'
+import type { Type } from '@/model/attributes/types/Type'
 import type { ModelConstructor } from '@/model/types'
-import { assert, isArray, isNullish } from '@/support/utils'
+import { assert, isArray, isFunction, isNullish } from '@/support/utils'
+import type { Constructor } from '@/types'
 
 import type { Attribute } from './attributes/attribute'
 import { BelongsTo } from './attributes/relations/belongs-to'
@@ -65,10 +69,9 @@ export class Model {
    */
   constructor(attributes?: Element, options: ModelOptions = {}) {
     this.$boot()
-
-    const fill = options.fill ?? true
-
-    fill && this.$fill(attributes, options)
+    if (options.fill ?? true) {
+      this.$fill(attributes, options)
+    }
   }
 
   /**
@@ -85,11 +88,10 @@ export class Model {
    * @param {() => Attribute<unknown>} attribute attribute factory
    */
   public static setRegistry<M extends typeof Model>(this: M, key: string, attribute: () => Attribute<unknown>): M {
-    if (!this.registries[this.entity]) {
-      this.registries[this.entity] = {}
+    this.registries[this.entity] = {
+      ...(this.registries[this.entity] ?? {}),
+      [key]: attribute,
     }
-
-    this.registries[this.entity][key] = attribute
 
     return this
   }
@@ -130,7 +132,7 @@ export class Model {
    * @param {any} value initial attribute value
    */
   public static attr(value: any): Attr {
-    return new Attr(this.thisAsModelConstructor().newRawInstance(), value)
+    return this.createType(Attr, value)
   }
 
   /**
@@ -139,7 +141,7 @@ export class Model {
    * @param {string | null} value initial value, null if nullable
    */
   public static string(value: string | null): Str {
-    return new Str(this.thisAsModelConstructor().newRawInstance(), value)
+    return this.createType(Str, value)
   }
 
   /**
@@ -148,7 +150,7 @@ export class Model {
    * @param {number | null} value initial value, null if nullable
    */
   public static number(value: number | null): Num {
-    return new Num(this.thisAsModelConstructor().newRawInstance(), value)
+    return this.createType(Num, value)
   }
 
   /**
@@ -157,14 +159,14 @@ export class Model {
    * @param {boolean | null} value initial value, null if nullable
    */
   public static boolean(value: boolean | null): Bool {
-    return new Bool(this.thisAsModelConstructor().newRawInstance(), value)
+    return this.createType(Bool, value)
   }
 
   /**
    * Create a new Uid attribute instance.
    */
   public static uid(): Uid {
-    return new Uid(this.thisAsModelConstructor().newRawInstance())
+    return this.createType(Uid)
   }
 
   /**
@@ -176,10 +178,7 @@ export class Model {
    */
   public static hasOne(related: ModelConstructor<any>, foreignKey: string, localKey?: string): HasOne {
     const model = this.thisAsModelConstructor().newRawInstance()
-
-    localKey = localKey ?? model.$getLocalKey()
-
-    return new HasOne(model, related.newRawInstance(), foreignKey, localKey as string)
+    return new HasOne(model, related.newRawInstance(), foreignKey, localKey ?? model.$getLocalKey())
   }
 
   /**
@@ -191,10 +190,12 @@ export class Model {
    */
   public static belongsTo(related: ModelConstructor<any>, foreignKey: string, ownerKey?: string): BelongsTo {
     const instance = related.newRawInstance()
-
-    ownerKey = ownerKey ?? instance.$getLocalKey()
-
-    return new BelongsTo(this.thisAsModelConstructor().newRawInstance(), instance, foreignKey, ownerKey as string)
+    return new BelongsTo(
+      this.thisAsModelConstructor().newRawInstance(),
+      instance,
+      foreignKey,
+      ownerKey ?? instance.$getLocalKey(),
+    )
   }
 
   /**
@@ -206,10 +207,7 @@ export class Model {
    */
   public static hasMany(related: ModelConstructor<any>, foreignKey: string, localKey?: string): HasMany {
     const model = this.thisAsModelConstructor().newRawInstance()
-
-    localKey = localKey ?? model.$getLocalKey()
-
-    return new HasMany(model, related.newRawInstance(), foreignKey, localKey as string)
+    return new HasMany(model, related.newRawInstance(), foreignKey, localKey ?? model.$getLocalKey())
   }
 
   /**
@@ -221,10 +219,12 @@ export class Model {
    */
   public static hasManyBy(related: ModelConstructor<Model>, foreignKey: string, ownerKey?: string): HasManyBy {
     const instance = related.newRawInstance()
-
-    ownerKey = ownerKey ?? instance.$getLocalKey()
-
-    return new HasManyBy(this.thisAsModelConstructor().newRawInstance(), instance, foreignKey, ownerKey)
+    return new HasManyBy(
+      this.thisAsModelConstructor().newRawInstance(),
+      instance,
+      foreignKey,
+      ownerKey ?? instance.$getLocalKey(),
+    )
   }
 
   /**
@@ -237,10 +237,7 @@ export class Model {
    */
   public static morphOne(related: ModelConstructor<Model>, id: string, type: string, localKey?: string): MorphOne {
     const model = this.thisAsModelConstructor().newRawInstance()
-
-    localKey = localKey ?? model.$getLocalKey()
-
-    return new MorphOne(model, related.newRawInstance(), id, type, localKey as string)
+    return new MorphOne(model, related.newRawInstance(), id, type, localKey ?? model.$getLocalKey())
   }
 
   /**
@@ -252,10 +249,17 @@ export class Model {
    * @param {string} ownerKey owner key
    */
   public static morphTo(related: ModelConstructor<any>[], id: string, type: string, ownerKey: string = ''): MorphTo {
-    const instance = this.thisAsModelConstructor().newRawInstance()
-    const relatedModels = related.map((model) => model.newRawInstance())
+    return new MorphTo(
+      this.thisAsModelConstructor().newRawInstance(),
+      related.map((model) => model.newRawInstance()),
+      id,
+      type,
+      ownerKey,
+    )
+  }
 
-    return new MorphTo(instance, relatedModels, id, type, ownerKey)
+  protected static createType<T extends Type<any>>(TypeCtor: Constructor<T>, value?: any) {
+    return new TypeCtor(this.thisAsModelConstructor().newRawInstance(), value)
   }
 
   protected static thisAsModelConstructor() {
@@ -268,15 +272,8 @@ export class Model {
   protected static initializeSchema(): void {
     this.schemas[this.entity] = {}
 
-    const registry = {
-      ...this.fields(),
-      ...this.registries[this.entity],
-    }
-
-    for (const key in registry) {
-      const attribute = registry[key]
-
-      this.schemas[this.entity][key] = typeof attribute === 'function' ? attribute() : attribute
+    for (const [key, attribute] of Object.entries({ ...this.fields(), ...this.registries[this.entity] })) {
+      this.schemas[this.entity][key] = isFunction(attribute) ? attribute() : attribute
     }
   }
 
@@ -329,17 +326,11 @@ export class Model {
    * @param {ModelOptions} options options (should fill, include relations)
    */
   public $fill(attributes: Element = {}, options: ModelOptions = {}): this {
-    const fields = this.$fields()
-    const fillRelation = options.relations ?? true
-
-    for (const key in fields) {
-      const attr = fields[key]
+    for (const [key, attr] of Object.entries(this.$fields())) {
       const value = attributes[key]
-
-      if (attr instanceof Relation && !fillRelation) {
+      if (attr instanceof Relation && !(options.relations ?? true)) {
         continue
       }
-
       this.$fillField(key, attr, value)
     }
 
@@ -359,23 +350,11 @@ export class Model {
    *
    * @param {Element} record optional data of element to get key
    */
-  public $getKey(record?: Element): string | number | (string | number)[] | null {
-    record = record ?? this
-
-    if (this.$hasCompositeKey()) {
+  public $getKey(record: Element = this): string | number | (string | number)[] | null {
+    if (isArray(this.$getKeyName())) {
       return this.$getCompositeKey(record)
     }
-
-    const id = record[this.$getKeyName() as string]
-
-    return isNullish(id) ? null : id
-  }
-
-  /**
-   * Check whether the model has composite key.
-   */
-  public $hasCompositeKey(): boolean {
-    return isArray(this.$getKeyName())
+    return record[this.$getKeyName() as string] ?? null
   }
 
   /**
@@ -383,10 +362,8 @@ export class Model {
    *
    * @param {Element} record optional data of element to index id
    */
-  public $getIndexId(record?: Element): string {
-    const target = record ?? this
-
-    const id = this.$getKey(target)
+  public $getIndexId(record: Element = this): string {
+    const id = this.$getKey(record)
 
     assert(id !== null, [
       'The record is missing the primary key. If you want to persist record',
@@ -404,7 +381,7 @@ export class Model {
     // If the model has a composite key, we can't use it as a local key for the
     // relation. The user must provide the key name explicitly, so we'll throw
     // an error here.
-    assert(!this.$hasCompositeKey(), [
+    assert(!isArray(this.$getKeyName()), [
       'Please provide the local key for the relationship. The model with the',
       "composite key can't infer its local key.",
     ])
@@ -450,28 +427,14 @@ export class Model {
    * @param {Model} model optional to serialize
    * @param {ModelOptions} options optional options to apply
    */
-  public $toJson(model?: Model, options: ModelOptions = {}): Element {
-    model = model ?? this
-
-    const fields = model.$fields()
-    const withRelation = options.relations ?? true
-    const record: Element = {}
-
-    for (const key in fields) {
-      const attr = fields[key]
-      const value = model[key]
-
-      if (!(attr instanceof Relation)) {
-        record[key] = this.serializeValue(value)
-        continue
-      }
-
-      if (withRelation) {
-        record[key] = this.serializeRelation(value)
-      }
-    }
-
-    return record
+  public $toJson(model: Model = this, options: ModelOptions = {}): Element {
+    return Object.entries(model.$fields()).reduce<Element>((result, [key, attr]) => {
+      result[key] =
+        attr instanceof Relation && (options.relations ?? true)
+          ? this.serializeRelation(model[key])
+          : this.serializeValue(model[key])
+      return result
+    }, {})
   }
 
   /**
@@ -489,19 +452,13 @@ export class Model {
    * @param {Element} record data to sanitize
    */
   public $sanitize(record: Element): Element {
-    const sanitizedRecord = {} as Element
-    const attrs = this.$fields()
-
-    for (const key in record) {
-      const attr = attrs[key]
-      const value = record[key]
-
+    return Object.entries(record).reduce<Element>((result, [key, value]) => {
+      const attr = this.$fields()[key]
       if (attr !== undefined && !(attr instanceof Relation)) {
-        sanitizedRecord[key] = attr.make(value)
+        result[key] = attr.make(value)
       }
-    }
-
-    return sanitizedRecord
+      return result
+    }, {})
   }
 
   /**
@@ -511,31 +468,24 @@ export class Model {
    * @param {Element} record data to sanitize
    */
   public $sanitizeAndFill(record: Element): Element {
-    const sanitizedRecord = {} as Element
-
-    const attrs = this.$fields()
-
-    for (const key in attrs) {
-      const attr = attrs[key]
+    return Object.entries(this.$fields()).reduce<Element>((result, [key, attr]) => {
       const value = record[key]
-
-      if (!(attr instanceof Relation)) {
-        sanitizedRecord[key] = attr.make(value)
+      if (attr !== undefined && !(attr instanceof Relation)) {
+        result[key] = attr.make(value)
       }
-    }
-
-    return sanitizedRecord
+      return result
+    }, {})
   }
 
   /**
    * Bootstrap this model.
    */
   protected $boot(): void {
-    if (!this.$self().booted[this.$entity()]) {
-      this.$self().booted[this.$entity()] = true
-
-      this.$initializeSchema()
+    if (this.$self().booted[this.$entity()]) {
+      return
     }
+    this.$self().booted[this.$entity()] = true
+    this.$initializeSchema()
   }
 
   /**
@@ -551,7 +501,6 @@ export class Model {
   protected $fillField(key: string, attr: Attribute<unknown>, value: any): void {
     if (value !== undefined) {
       this[key] = attr instanceof MorphTo ? attr.make(value, this[attr.getType()]) : attr.make(value)
-
       return
     }
 
@@ -564,21 +513,8 @@ export class Model {
    * Get the composite key values for the given model as an array of ids.
    */
   protected $getCompositeKey(record: Element): (string | number)[] | null {
-    let ids = [] as (string | number)[] | null
-
-    ;(this.$getKeyName() as string[]).every((key) => {
-      const id = record[key]
-
-      if (isNullish(id)) {
-        ids = null
-        return false
-      }
-
-      ;(ids as (string | number)[]).push(id)
-      return true
-    })
-
-    return ids === null ? null : ids
+    const ids = (this.$getKeyName() as string[]).map((key) => record[key])
+    return ids.some(isNullish) ? null : ids
   }
 
   /**
@@ -596,35 +532,17 @@ export class Model {
       return null
     }
 
-    if (isArray(value)) {
-      return this.serializeArray(value)
-    }
-
-    if (typeof value === 'object') {
-      return this.serializeObject(value)
+    if (isArray(value) || isUnknownRecord(value)) {
+      return Object.keys(value).reduce(
+        (result, key) => {
+          result[key] = this.serializeValue(value[key])
+          return result
+        },
+        isArray(value) ? [] : {},
+      )
     }
 
     return value
-  }
-
-  /**
-   * Serialize the given array to JSON.
-   */
-  protected serializeArray(value: any[]): any[] {
-    return value.map((v) => this.serializeValue(v))
-  }
-
-  /**
-   * Serialize the given object to JSON.
-   */
-  protected serializeObject(value: object): object {
-    const obj = {}
-
-    for (const key in value) {
-      obj[key] = this.serializeValue(value[key])
-    }
-
-    return obj
   }
 
   /**
@@ -635,12 +553,8 @@ export class Model {
   protected serializeRelation(relation: Collection): Element[]
 
   protected serializeRelation(relation: any): any {
-    if (relation === undefined) {
-      return undefined
-    }
-
-    if (relation === null) {
-      return null
+    if (isNullish(relation)) {
+      return relation
     }
 
     return isArray(relation) ? relation.map((model) => model.$toJson()) : relation.$toJson()

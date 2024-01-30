@@ -62,13 +62,6 @@ export function groupBy<T>(collection: T[], iteratee: (record: T) => string): { 
 }
 
 /**
- * Deep clone the given target object.
- */
-export function cloneDeep<T extends object>(target: T): T {
-  return JSON.parse(JSON.stringify(target))
-}
-
-/**
  * Asserts that the condition is truthy, throwing immediately if not.
  */
 export function assert(condition: boolean, message: string[]): asserts condition {

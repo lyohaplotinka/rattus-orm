@@ -1,7 +1,7 @@
 import { isUnknownRecord } from '@core-shared-utils/isUnknownRecord'
 
 import type { Element, Entities } from '@/data/types'
-import { isNullish } from '@/support/utils'
+import { isArray, isNullish } from '@/support/utils'
 
 import { isNormalizationSchema } from './schemas/guards'
 import type { Identifier, NormalizationSchema, NormalizationSchemaParam } from './schemas/types'
@@ -20,7 +20,7 @@ export class Normalizer {
       return input
     }
 
-    if (Array.isArray(schema)) {
+    if (isArray(schema)) {
       return this.visitSchemaArray(input, parent, key, schema)
     }
 

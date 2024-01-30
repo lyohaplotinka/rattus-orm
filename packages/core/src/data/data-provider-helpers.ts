@@ -21,7 +21,7 @@ export abstract class DataProviderHelpers {
   }
 
   protected getStringFromModulePath(module: ModulePath) {
-    return Array.isArray(module) ? module.join('/') : module
+    return module.join('/')
   }
 
   public abstract registerConnection(name: string): void

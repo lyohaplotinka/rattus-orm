@@ -64,5 +64,42 @@
   ],
   "simple-git-hooks": {
     "pre-commit": "./node_modules/.bin/lint-staged"
-  }
+  },
+  "size-limit": [
+    {
+      "name": "Vuex ESM",
+      "path": [
+        "./packages/core/dist/rattus-orm-core.mjs",
+        "./packages/vuex/dist/rattus-orm-vuex-provider.mjs"
+      ]
+    },
+    {
+      "name": "Pinia ESM",
+      "path": [
+        "./packages/core/dist/rattus-orm-core.mjs",
+        "./packages/pinia/dist/rattus-orm-pinia-provider.mjs"
+      ]
+    },
+    {
+      "name": "React Signals ESM",
+      "path": [
+        "./packages/core/dist/rattus-orm-core.mjs",
+        "./packages/react-signals/dist/rattus-orm-react-signals-provider.mjs"
+      ]
+    },
+    {
+      "name": "React Redux ESM",
+      "path": [
+        "./packages/core/dist/rattus-orm-core.mjs",
+        "./packages/react-redux/dist/rattus-orm-react-redux-provider.mjs"
+      ]
+    },
+    {
+      "name": "LocalStorage ESM",
+      "path": [
+        "./packages/core/dist/rattus-orm-core.mjs",
+        "./packages/local-storage/dist/rattus-orm-local-storage-provider.mjs"
+      ]
+    }
+  ]
 }

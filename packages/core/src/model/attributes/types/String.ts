@@ -1,3 +1,5 @@
+import { isString } from '@/support/utils'
+
 import type { Model } from '../../Model'
 import { Type } from './Type'
 
@@ -17,7 +19,7 @@ export class String extends Type<string | null> {
       return this.value
     }
 
-    if (typeof value === 'string') {
+    if (isString(value)) {
       return value
     }
 

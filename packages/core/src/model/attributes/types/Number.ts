@@ -1,3 +1,5 @@
+import { isNumber } from '@/support/utils'
+
 import type { Model } from '../../Model'
 import { Type } from './Type'
 
@@ -17,7 +19,7 @@ export class Number extends Type<number | null> {
       return this.value
     }
 
-    if (typeof value === 'number') {
+    if (isNumber(value)) {
       return value
     }
 

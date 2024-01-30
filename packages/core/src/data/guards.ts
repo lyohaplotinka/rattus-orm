@@ -1,4 +1,5 @@
 import { isUnknownRecord } from '../../shared-utils/isUnknownRecord'
+import { isFunction } from '../support/utils'
 import type { UnionToArray } from '../types'
 import type { DataProvider } from './types'
 
@@ -18,5 +19,5 @@ export const DataProviderKeys: UnionToArray<keyof DataProvider> = [
 ]
 
 export const isDataProvider = (value: unknown): value is DataProvider => {
-  return isUnknownRecord(value) && DataProviderKeys.every((key) => typeof value[key] === 'function')
+  return isUnknownRecord(value) && DataProviderKeys.every((key) => isFunction(value[key]))
 }
