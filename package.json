@@ -37,8 +37,8 @@
     "@size-limit/preset-big-lib": "^11.0.2",
     "@types/lodash-es": "^4.17.12",
     "@types/semver": "^7.5.6",
-    "@typescript-eslint/eslint-plugin": "^6.19.0",
-    "@typescript-eslint/parser": "^6.19.0",
+    "@typescript-eslint/eslint-plugin": "^6.20.0",
+    "@typescript-eslint/parser": "^6.20.0",
     "chalk": "^5.3.0",
     "commander": "^11.1.0",
     "enquirer": "^2.4.1",
@@ -55,14 +55,51 @@
     "size-limit": "^11.0.2",
     "tslib": "^2.6.2",
     "tsup": "^8.0.1",
-    "type-fest": "^4.10.1",
+    "type-fest": "^4.10.2",
     "typescript": "^5.3.3",
-    "vitest": "^1.2.1"
+    "vitest": "^1.2.2"
   },
   "workspaces": [
     "packages/*"
   ],
   "simple-git-hooks": {
     "pre-commit": "./node_modules/.bin/lint-staged"
-  }
+  },
+  "size-limit": [
+    {
+      "name": "Vuex ESM",
+      "path": [
+        "./packages/core/dist/rattus-orm-core.mjs",
+        "./packages/vuex/dist/rattus-orm-vuex-provider.mjs"
+      ]
+    },
+    {
+      "name": "Pinia ESM",
+      "path": [
+        "./packages/core/dist/rattus-orm-core.mjs",
+        "./packages/pinia/dist/rattus-orm-pinia-provider.mjs"
+      ]
+    },
+    {
+      "name": "React Signals ESM",
+      "path": [
+        "./packages/core/dist/rattus-orm-core.mjs",
+        "./packages/react-signals/dist/rattus-orm-react-signals-provider.mjs"
+      ]
+    },
+    {
+      "name": "React Redux ESM",
+      "path": [
+        "./packages/core/dist/rattus-orm-core.mjs",
+        "./packages/react-redux/dist/rattus-orm-react-redux-provider.mjs"
+      ]
+    },
+    {
+      "name": "LocalStorage ESM",
+      "path": [
+        "./packages/core/dist/rattus-orm-core.mjs",
+        "./packages/local-storage/dist/rattus-orm-local-storage-provider.mjs"
+      ]
+    }
+  ]
 }

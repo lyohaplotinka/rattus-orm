@@ -1,7 +1,7 @@
 import { isUnknownRecord } from '@core-shared-utils/isUnknownRecord'
 
 import { BaseSchema } from '@/normalization/schemas/base-schema'
-import { isNullish } from '@/support/utils'
+import { isArray, isNullish } from '@/support/utils'
 
 import type { Normalizer } from '../normalizer'
 import { isNormalizationSchema } from './guards'
@@ -65,7 +65,7 @@ export class ArrayNormalizationSchema extends BaseSchema<
   }
 
   protected getValues(input: unknown): unknown[] {
-    if (Array.isArray(input)) {
+    if (isArray(input)) {
       return input
     }
     if (isUnknownRecord(input)) {

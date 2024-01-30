@@ -25,39 +25,24 @@ export interface CollectionPromises {
 
 export class Query<M extends Model = Model> {
   /**
-   * The where constraints for the query.
-   */
-  protected wheres: Where[] = []
-
-  /**
-   * The orderings for the query.
-   */
-  protected orders: Order[] = []
-
-  /**
-   * The maximum number of records to return.
-   */
-  protected take: number | null = null
-
-  /**
-   * The number of records to skip.
-   */
-  protected skip: number = 0
-
-  /**
-   * The relationships that should be eager loaded.
-   */
-  protected eagerLoad: EagerLoad = {}
-
-  /**
    * Create a new query instance.
    *
    * @param {Database} database database to work with
    * @param {Model} model model to work with
+   * @param {EagerLoad} eagerLoad the relationships that should be eager loaded, default {}
+   * @param {number} skip the number of records to skip, default 0
+   * @param {number | null} take the maximum number of records to return, default null
+   * @param {Order[]} orders the orderings for the query, default []
+   * @param {Where[]} wheres the where constraints for the query, default []
    */
   constructor(
     protected readonly database: Database,
     protected readonly model: M,
+    protected eagerLoad: EagerLoad = {},
+    protected skip: number = 0,
+    protected take: number | null = null,
+    protected orders: Order[] = [],
+    protected wheres: Where[] = [],
   ) {}
 
   /**
@@ -75,16 +60,15 @@ export class Query<M extends Model = Model> {
    * @param {string} model model entity to work with
    */
   public newQueryWithConstraints(model: string): Query<Model> {
-    const newQuery = new Query(this.database, this.database.getModel(model))
-
-    // Copy query constraints
-    newQuery.eagerLoad = { ...this.eagerLoad }
-    newQuery.wheres = [...this.wheres]
-    newQuery.orders = [...this.orders]
-    newQuery.take = this.take
-    newQuery.skip = this.skip
-
-    return newQuery
+    return new Query(
+      this.database,
+      this.database.getModel(model),
+      this.eagerLoad,
+      this.skip,
+      this.take,
+      this.orders,
+      this.wheres,
+    )
   }
 
   /**
@@ -193,12 +177,9 @@ export class Query<M extends Model = Model> {
    * @param {EagerLoadConstraint} callback callback to load
    */
   public withAll(callback: EagerLoadConstraint = () => {}): Query<M> {
-    const fields = this.model.$fields()
-
-    for (const name in fields) {
-      fields[name] instanceof Relation && this.with(name, callback)
+    for (const [name, value] of Object.entries(this.model.$fields())) {
+      value instanceof Relation && this.with(name, callback)
     }
-
     return this
   }
 
@@ -230,12 +211,7 @@ export class Query<M extends Model = Model> {
    */
   public get(): Collection<M> {
     const models = this.select()
-
-    if (!isEmpty(models)) {
-      this.eagerLoadRelations(models)
-    }
-
-    return models
+    return !isEmpty(models) ? this.load(models) : models
   }
 
   /**
@@ -275,13 +251,7 @@ export class Query<M extends Model = Model> {
    * Retrieve models by processing all filters set to the query chain.
    */
   public select(): Collection<M> {
-    let models = this.all()
-
-    models = this.filterWhere(models)
-    models = this.filterOrder(models)
-    models = this.filterLimit(models)
-
-    return models
+    return this.filterLimit(this.filterOrder(this.filterWhere(this.all())))
   }
 
   /**
@@ -289,8 +259,11 @@ export class Query<M extends Model = Model> {
    *
    * @param {Collection<Model>} models models array for relations load
    */
-  public load(models: Collection<M>): void {
-    this.eagerLoadRelations(models)
+  public load(models: Collection<M>): Collection<M> {
+    for (const name in this.eagerLoad) {
+      this.eagerLoadRelation(models, name, this.eagerLoad[name])
+    }
+    return models
   }
 
   /**
@@ -317,17 +290,12 @@ export class Query<M extends Model = Model> {
    * @param {Element} schema element to revive
    */
   public reviveOne(schema: Element): Item<M> {
-    const id = this.model.$getIndexId(schema)
-
-    const item = this.getAll()[id]
+    const item = this.getAll()[this.model.$getIndexId(schema)]
     if (!item) {
       return null
     }
 
-    const model = this.hydrate(item)
-    this.reviveRelations(model, schema)
-
-    return model
+    return this.reviveRelations(this.hydrate(item), schema)
   }
 
   /**
@@ -338,7 +306,6 @@ export class Query<M extends Model = Model> {
   public reviveMany(schema: Element[]): Collection<M> {
     return schema.reduce<Collection<M>>((collection, item) => {
       const model = this.reviveOne(item)
-
       model && collection.push(model)
 
       return collection
@@ -386,17 +353,10 @@ export class Query<M extends Model = Model> {
    * @param {Elements} elements elements map to save
    */
   public saveElements(elements: Elements): void {
-    const newData = {} as Elements
-    const currentData = this.data()
-
-    for (const id in elements) {
-      const record = elements[id]
-      const existing = currentData[id]
-
-      newData[id] = existing
-        ? this.hydrate({ ...existing, ...record }).$getAttributes()
-        : this.hydrate(record).$getAttributes()
-    }
+    const newData = Object.entries(elements).reduce<Elements>((result, [id, record]) => {
+      result[id] = this.hydrate({ ...(this.data()[id] ?? {}), ...record }).$getAttributes()
+      return result
+    }, {})
 
     this.getDataProvider().save(this.getThisModulePath(), newData)
   }
@@ -415,7 +375,6 @@ export class Query<M extends Model = Model> {
   public insert(record: Element): M
   public insert(records: Element | Element[]): M | Collection<M> {
     const models = this.hydrate(records)
-
     this.getDataProvider().insert(this.getThisModulePath(), this.compile(models))
     return models
   }
@@ -434,7 +393,6 @@ export class Query<M extends Model = Model> {
   public fresh(record: Element): M
   public fresh(records: Element | Element[]): M | Collection<M> {
     const models = this.hydrate(records)
-
     this.getDataProvider().replace(this.getThisModulePath(), this.compile(models))
     return models
   }
@@ -450,7 +408,6 @@ export class Query<M extends Model = Model> {
     if (isEmpty(models)) {
       return []
     }
-
     const newModels = models.map((model) => {
       return this.hydrate({ ...model.$getAttributes(), ...record })
     })
@@ -472,7 +429,7 @@ export class Query<M extends Model = Model> {
    */
   public destroy(id: string | number): Item<M>
   public destroy(ids: any): any {
-    assert(!this.model.$hasCompositeKey(), [
+    assert(!isArray(this.model.$getKeyName()), [
       "You can't use the `destroy` method on a model with a composite key.",
       'Please use `delete` method instead.',
     ])
@@ -490,9 +447,7 @@ export class Query<M extends Model = Model> {
       return []
     }
 
-    const ids = this.getIndexIdsFromCollection(models)
-    this.getDataProvider().delete(this.getThisModulePath(), ids)
-
+    this.getDataProvider().delete(this.getThisModulePath(), this.getIndexIdsFromCollection(models))
     return models
   }
 
@@ -522,7 +477,6 @@ export class Query<M extends Model = Model> {
     }
 
     const comparator = this.getWhereComparator()
-
     return models.filter((model) => comparator(model))
   }
 
@@ -565,7 +519,7 @@ export class Query<M extends Model = Model> {
    * Filter the given collection by the registered order conditions.
    */
   protected filterOrder(models: Collection<M>): Collection<M> {
-    if (!this.orders.length) {
+    if (isEmpty(this.orders)) {
       return models
     }
 
@@ -603,15 +557,6 @@ export class Query<M extends Model = Model> {
   }
 
   /**
-   * Eager load the relationships for the models.
-   */
-  protected eagerLoadRelations(models: Collection<M>): void {
-    for (const name in this.eagerLoad) {
-      this.eagerLoadRelation(models, name, this.eagerLoad[name])
-    }
-  }
-
-  /**
    * Eagerly load the relationship on a set of models.
    */
   protected eagerLoadRelation(models: Collection<M>, name: string, constraints: EagerLoadConstraint): void {
@@ -642,36 +587,23 @@ export class Query<M extends Model = Model> {
   /**
    * Revive relations for the given schema and entity.
    */
-  protected reviveRelations(model: M, schema: Element) {
-    const fields = this.model.$fields()
+  protected reviveRelations(model: M, schema: Element): M {
+    Object.entries(this.model.$fields()).forEach(([key, attr]) => {
+      if (attr instanceof Relation && schema[key]) {
+        const relatedSchema = schema[key]
+        if (attr instanceof MorphTo) {
+          const relatedType = model[attr.getType()]
 
-    for (const key in schema) {
-      const attr = fields[key]
-
-      if (!(attr instanceof Relation)) {
-        continue
+          model[key] = this.newQuery(relatedType).reviveOne(relatedSchema)
+        } else {
+          model[key] = isArray(relatedSchema)
+            ? this.newQueryForRelation(attr).reviveMany(relatedSchema)
+            : this.newQueryForRelation(attr).reviveOne(relatedSchema)
+        }
       }
+    })
 
-      const relatedSchema = schema[key]
-
-      if (!relatedSchema) {
-        return
-      }
-
-      // Inverse polymorphic relations have the same parent and child model
-      // so we need to query using the type stored in the parent model.
-      if (attr instanceof MorphTo) {
-        const relatedType = model[attr.getType()]
-
-        model[key] = this.newQuery(relatedType).reviveOne(relatedSchema)
-
-        continue
-      }
-
-      model[key] = isArray(relatedSchema)
-        ? this.newQueryForRelation(attr).reviveMany(relatedSchema)
-        : this.newQueryForRelation(attr).reviveOne(relatedSchema)
-    }
+    return model
   }
 
   protected destroyOne(id: string | number): Item<M> {

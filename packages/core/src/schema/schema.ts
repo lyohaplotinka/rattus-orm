@@ -23,25 +23,18 @@ export class Schema {
   /**
    * Create a single schema.
    */
-  public one(model?: Model, parent?: Model): NormalizationSchema<any> {
-    model = model || this.model
-    parent = parent || this.model
-
+  public one(model: Model = this.model, parent: Model = this.model): NormalizationSchema<any> {
     const entity = `${model.$entity()}${parent.$entity()}`
 
     if (this.schemas[entity]) {
       return this.schemas[entity]
     }
 
-    const schema = this.newEntity(model, parent)
-
-    this.schemas[entity] = schema
-
+    this.schemas[entity] = this.newEntity(model, parent)
     const definition = this.definition(model)
+    this.schemas[entity].define(definition)
 
-    schema.define(definition)
-
-    return schema
+    return this.schemas[entity]
   }
 
   /**
@@ -57,7 +50,6 @@ export class Schema {
   public union(models: Model[], callback: SchemaAttributeGetter): NormalizationSchema<any> {
     const schemas = models.reduce<Schemas>((schemas, model) => {
       schemas[model.$entity()] = this.one(model)
-
       return schemas
     }, {})
 
