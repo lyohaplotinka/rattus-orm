@@ -20,18 +20,18 @@
     "javascript"
   ],
   "scripts": {
-    "test": "node scripts/test.mjs run-tests",
+    "test": "node scripts/built/test.mjs run-tests",
     "lint": "yarn workspaces foreach -A run lint",
-    "lint:scripts": "eslint -c ./scripts/.eslintrc.js ./scripts/**/*.{js,mjs} --fix",
+    "lint:scripts": "eslint -c ./scripts/.eslintrc.js ./scripts/src/**/*.{js,mjs,ts,tsx} --quiet --fix",
     "typecheck": "yarn workspaces foreach -A run typecheck",
     "build": "yarn workspaces foreach -Ap --exclude docs --topological-dev run build",
-    "clean": "yarn workspaces foreach -A run clean && rm -rf ./scripts/compilable/dist && rm -rf node_modules",
-    "release": "node ./scripts/releaser/releaser.mjs release",
+    "clean": "yarn workspaces foreach -A run clean && rm -rf ./scripts/built && rm -rf node_modules",
+    "release": "node ./scripts/built/releaser.mjs release",
     "prepare": "npx simple-git-hooks && yarn build:scripts",
-    "create-package": "node ./scripts/package/createPackage.mjs",
-    "build:scripts": "cd ./scripts/compilable && tsup",
+    "create-package": "node scripts/built/createPackage.mjs",
+    "build:scripts": "cd ./scripts/src && tsup",
     "build:docs": "yarn generate-api && yarn workspace docs run build",
-    "generate-api": "node ./scripts/compilable/dist/docsBuilder.mjs"
+    "generate-api": "node ./scripts/built/docsBuilder.mjs"
   },
   "devDependencies": {
     "@size-limit/preset-big-lib": "^11.0.2",

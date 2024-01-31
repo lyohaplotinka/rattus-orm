@@ -3,12 +3,10 @@ import { dirname as pathDirname, join, resolve } from 'node:path'
 
 import { program } from 'commander'
 
-import { asyncSpawn, dirname, getFiles, require } from '../utils.mjs'
+import { asyncSpawn, getFiles, loadPackageJson, MONOREPO_ROOT_DIR, SCRIPTS_DIR } from '../utils/utils'
 
-const currentPath = dirname(import.meta.url)
-const corePackageVersion = require(resolve(currentPath, '../../packages/core/package.json')).version
-const utilsPackageVersion = require(resolve(currentPath, '../../packages/utils/package.json')).version
-const templatesPath = resolve(currentPath, './_template')
+const corePackageVersion = loadPackageJson('core').version!
+const templatesPath = resolve(SCRIPTS_DIR, 'templates/package')
 
 program
   .name('createPackage.mjs')
@@ -16,7 +14,7 @@ program
   .argument('<name>', 'Folder name for new package')
   .action(async (name) => {
     const packageName = name.trim()
-    const newPackagePath = resolve(currentPath, `../../packages/${packageName}`)
+    const newPackagePath = resolve(MONOREPO_ROOT_DIR, `packages/${packageName}`)
 
     await mkdir(newPackagePath, { recursive: true })
     const fileWritePromises = []
@@ -28,7 +26,6 @@ program
       const fixedContent = content
         .replaceAll('{{ PACKAGE }}', packageName)
         .replaceAll('{{ CORE_VERSION }}', corePackageVersion)
-        .replaceAll('{{ UTILS_VERSION }}', utilsPackageVersion)
         .replaceAll('// @ts-ignore', '')
       fileWritePromises.push(writeFile(toSaveFile, fixedContent, 'utf8'))
     }

@@ -1,10 +1,12 @@
-import { $ } from 'execa'
-import { ChangelogElement, Commit } from './types'
-import micromatch from 'micromatch'
-import packagesMeta from '../../packagesMeta.json'
-import { findUpSync } from 'find-up'
-import { resolve, dirname } from 'node:path'
 import { readFileSync } from 'node:fs'
+import { dirname, resolve } from 'node:path'
+
+import { $ } from 'execa'
+import { findUpSync } from 'find-up'
+import micromatch from 'micromatch'
+
+import packagesMeta from '../../packagesMeta.json'
+import type { ChangelogElement, Commit } from './types'
 
 const RELEASE_COMMIT_PATTERN = 'release('
 

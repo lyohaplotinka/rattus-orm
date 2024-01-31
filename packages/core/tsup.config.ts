@@ -1,9 +1,12 @@
-import { createBuildsAndExportsForFiles, dirName, patchPackageJson } from '@scripts/nodeUtils'
+import { createBuildsAndExportsForFiles, dirName, updatePackageJson } from '@scripts/utils.mjs'
 
 import createTsupConfig from '../../tsup.config.base'
 
-const __dirname = dirName(import.meta.url)
-const { buildEntries, patchPkgJsonWith } = await createBuildsAndExportsForFiles('./shared-utils', 'utils', __dirname)
+const { buildEntries, patchPkgJsonWith } = await createBuildsAndExportsForFiles(
+  './shared-utils',
+  'utils',
+  dirName(import.meta.url),
+)
 
 export default createTsupConfig(
   {
@@ -14,7 +17,7 @@ export default createTsupConfig(
   {
     splitting: true,
     async onSuccess() {
-      await patchPackageJson('./package.json', patchPkgJsonWith, __dirname)
+      updatePackageJson('core', patchPkgJsonWith)
     },
   },
 )

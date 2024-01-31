@@ -1,5 +1,0 @@
-{
-  "*.mjs": [
-    "yarn lint:scripts"
-  ]
-}

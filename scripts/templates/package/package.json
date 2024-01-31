@@ -43,7 +43,7 @@
     "size": "run -T size-limit"
   },
   "devDependencies": {
-    "@rattus-orm/core": "workspace:^",
+    "@rattus-orm/core": "workspace:^"
   },
   "peerDependencies": {
     "@rattus-orm/core": "^{{ CORE_VERSION }}"

@@ -1,7 +1,8 @@
+import { format } from 'date-fns/format'
 import { findUp } from 'find-up'
 import { readFile, writeFile } from 'fs/promises'
-import { format } from 'date-fns/format'
-import { ChangelogElement } from './types'
+
+import type { ChangelogElement } from './types'
 
 export class ChangelogMarkdownService {
   protected changelogFilePath: string
