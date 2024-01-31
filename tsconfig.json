@@ -35,7 +35,7 @@
       "@/*": ["./packages/core/src/*"],
       "@func-test/*": ["test/*"],
       "@core-shared-utils/*": ["./packages/core/shared-utils/*"],
-      "@scripts/*": ["./scripts/*"]
+      "@scripts/*": ["./scripts/built/*"]
     },
     "types": [
       "node",
@@ -44,10 +44,10 @@
   },
   "include": [
     "src",
-    "test"
+    "test",
+    "scripts/src"
   ],
   "exclude": [
     "node_modules",
-    "./scripts/**/*.ts"
   ]
 }

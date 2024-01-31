@@ -1,8 +1,11 @@
+/* eslint-disable no-console */
+
 import chalk from 'chalk'
 import { program } from 'commander'
 
-import { isOnMainBranch, parsePackages } from '../utils.mjs'
-import { runForPackage } from './release-package.mjs'
+import { updateChangelog } from '../auto-changelogger'
+import { isOnMainBranch, parsePackages } from '../utils/utils'
+import { runForPackage } from './releasePackage'
 
 program.name('releaser.mjs').description('Release script for Rattus ORM').version('0.0.1')
 
@@ -25,6 +28,9 @@ program
     for (const packageName of forPackages) {
       await runForPackage(packageName)
     }
+
+    console.log('Updating changelog...')
+    await updateChangelog()
   })
 
 program.parse()

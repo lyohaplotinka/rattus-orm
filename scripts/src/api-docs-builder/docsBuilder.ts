@@ -1,16 +1,18 @@
+import { readFileSync, writeFileSync } from 'node:fs'
+import { resolve } from 'node:path'
+
 import type {
   ConstructorDeclaration,
   MethodDeclaration,
   MethodSignature,
-  SourceFile,
   PropertyDeclaration,
+  SourceFile,
 } from 'typescript'
 import ts from 'typescript'
-import { MethodParam, ModuleJsonDocs, PublicMethod } from './types'
-import { readFileSync, writeFileSync } from 'node:fs'
-import { resolve } from 'node:path'
-import { dirName } from '../../nodeUtils'
+
 import apiDocsFiles from '../../apiDocsFiles.json' assert { type: 'json' }
+import { dirName } from '../utils/utils'
+import type { MethodParam, ModuleJsonDocs, PublicMethod } from './types'
 
 const __dirname = dirName(import.meta.url)
 const apiDocsDir = resolve(__dirname, '../../../', 'packages/docs/src/api-docs')
@@ -50,10 +52,6 @@ function getMethodOrPropertyDescription(
   if (!isPropertyDeclaration(node) && node.parameters.length && node.parameters[0].name.getText() !== 'this') {
     const paramTags = getJSDocParameterTags(node.parameters[0])
     const parentComment = paramTags[0]?.parent?.comment
-
-    if (isMethodDeclaration(node) && node.name.getText() === 'setRegistry') {
-      console.log(getJSDocParameterTags(node.parameters[0]))
-    }
 
     return typeof parentComment === 'string' ? parentComment : 'COMPLEX'
   }

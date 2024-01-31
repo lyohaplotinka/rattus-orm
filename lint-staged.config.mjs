@@ -6,7 +6,7 @@ export default (allStagedFiles) => {
   const coreMatch = micromatch(allStagedFiles, ['**/core/**/*.{ts,tsx}'])
   const allTesting = coreMatch.length > 0
   const hasTsTsx = micromatch(allStagedFiles, ['**/*.{ts,tsx}']).length > 0
-  const hasScripts = micromatch(allStagedFiles, ['**/scripts/**/*.mjs']).length > 0
+  const hasScripts = micromatch(allStagedFiles, ['**/scripts/**/*.{ts,tsx,js,mjs}']).length > 0
 
   if (allTesting) {
     commands.push('yarn test all')

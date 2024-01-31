@@ -1,5 +1,7 @@
 {
   "core": {
+    "title": "Core",
+    "matchPattern": "packages/core/**",
     "path": "packages/core/test/provider-factory.ts",
     "exportName": "dataProviderFactory",
     "runFunctional": true,
@@ -7,31 +9,43 @@
     "order": 1
   },
   "vuex": {
+    "title": "Vuex",
+    "matchPattern": "packages/vuex/**",
     "path": "packages/vuex/test/provider-factory.ts",
     "exportName": "dataProviderFactory",
     "runFunctional": true
   },
   "pinia": {
+    "title": "Pinia",
+    "matchPattern": "packages/pinia/**",
     "path": "packages/pinia/test/provider-factory.ts",
     "exportName": "dataProviderFactory",
     "runFunctional": true
   },
   "react-signals": {
+    "title": "React Signals",
+    "matchPattern": "packages/react-signals/**",
     "path": "packages/react-signals/test/provider-factory.ts",
     "exportName": "dataProviderFactory",
     "runFunctional": true
   },
   "local-storage": {
+    "title": "LocalStorage",
+    "matchPattern": "packages/local-storage/**",
     "path": "packages/local-storage/test/provider-factory.ts",
     "exportName": "dataProviderFactory",
     "runFunctional": true
   },
   "react-redux": {
+    "title": "React Redux",
+    "matchPattern": "packages/react-redux/**",
     "path": "packages/react-redux/test/provider-factory.ts",
     "exportName": "dataProviderFactory",
     "runFunctional": true
   },
   "plugin-zod-validate": {
+    "title": "Plugin Zod Validate",
+    "matchPattern": "packages/plugin-zod-validate/**",
     "autoBump": false,
     "runFunctional": false
   }

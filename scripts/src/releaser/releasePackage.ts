@@ -1,34 +1,32 @@
-import { resolve } from 'node:path'
+/* eslint-disable no-console */
 
 import enquirer from 'enquirer'
-import fs from 'fs'
+import type { ReleaseType } from 'semver'
 import semver from 'semver'
 
-import { asyncSpawn, dirname, getPackageMeta, require } from '../utils.mjs'
+import {
+  getPackageMeta,
+  GitUtils,
+  loadPackageJson,
+  updatePackageJson,
+  writePackageJson,
+  YarnUtils,
+} from '../utils/utils'
 
-const versionIncrements = ['patch', 'minor', 'major']
+const versionIncrements: ReleaseType[] = ['patch', 'minor', 'major']
 
 process.on('unhandledRejection', (data) => {
   console.error(data)
   process.exit(1)
 })
 
-function updatePackage(packageJsonPath, version) {
-  const pkg = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'))
-
-  pkg.version = version
-
-  fs.writeFileSync(packageJsonPath, JSON.stringify(pkg, null, 2) + '\n')
-}
-
-async function bumpDependents(packageName, newVersion, exclude = ['docs']) {
+async function bumpDependents(packageName: string, newVersion: string, exclude = ['docs']) {
   const bumpingDep = `@rattus-orm/${packageName}`
-  const yarnWsListOutput = await asyncSpawn('yarn', ['workspaces', 'list', '--json'], { stdio: 'pipe' })
+  const yarnWorkspaces = await YarnUtils.listPackages()
   const allPackagesData = []
 
-  for (const line of yarnWsListOutput) {
+  for (const parsed of yarnWorkspaces) {
     try {
-      const parsed = JSON.parse(line)
       if (
         parsed.location === '.' ||
         parsed.location.endsWith(packageName) ||
@@ -39,13 +37,12 @@ async function bumpDependents(packageName, newVersion, exclude = ['docs']) {
 
       allPackagesData.push(parsed)
     } catch (e) {
-      console.log(e)
+      console.error(e)
     }
   }
 
   for (const packageData of allPackagesData) {
-    const packageJsonPath = resolve(dirname(import.meta.url), `../../${packageData.location}/package.json`)
-    const pkg = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'))
+    const pkg = loadPackageJson(packageData.location)
 
     for (const dep of ['dependencies', 'devDependencies', 'peerDependencies']) {
       if (!(dep in pkg) || Object.keys(pkg[dep]).length === 0) {
@@ -61,22 +58,17 @@ async function bumpDependents(packageName, newVersion, exclude = ['docs']) {
       }
     }
 
-    fs.writeFileSync(packageJsonPath, JSON.stringify(pkg, null, 2) + '\n', 'utf8')
+    writePackageJson(packageData.location, pkg)
   }
 }
 
-export async function runForPackage(packageName) {
+export async function runForPackage(packageName: string) {
   console.log(`\nReleasing package "${packageName}"\n`)
 
-  const packageJsonPath = resolve(dirname(import.meta.url), `../../packages/${packageName}/package.json`)
-  if (!fs.existsSync(packageJsonPath)) {
-    throw new Error(`Package ${packageName} does not exists`)
-  }
-
-  const currentVersion = require(packageJsonPath).version
+  const currentVersion = loadPackageJson(packageName).version!
   let targetVersion
 
-  const { release } = await enquirer.prompt({
+  const { release } = await enquirer.prompt<{ release: string }>({
     type: 'select',
     name: 'release',
     message: 'Select release type',
@@ -85,7 +77,7 @@ export async function runForPackage(packageName) {
 
   if (release === 'custom') {
     targetVersion = (
-      await enquirer.prompt({
+      await enquirer.prompt<{ version: string }>({
         type: 'input',
         name: 'version',
         message: 'Input custom version',
@@ -93,14 +85,14 @@ export async function runForPackage(packageName) {
       })
     ).version
   } else {
-    targetVersion = release.match(/\((.*)\)/)[1]
+    targetVersion = release.match(/\((.*)\)/)![1]
   }
 
   if (!semver.valid(targetVersion)) {
     throw new Error(`Invalid target version: ${targetVersion}`)
   }
 
-  const { yes: versionOk } = await enquirer.prompt({
+  const { yes: versionOk } = await enquirer.prompt<{ yes: boolean }>({
     type: 'confirm',
     name: 'yes',
     message: `Releasing v${targetVersion}. Confirm?`,
@@ -112,7 +104,7 @@ export async function runForPackage(packageName) {
 
   const packageMeta = getPackageMeta(packageName)
   if (packageMeta.autoBump) {
-    const { doAutoBump } = await enquirer.prompt({
+    const { doAutoBump } = await enquirer.prompt<{ doAutoBump: boolean }>({
       type: 'confirm',
       name: 'doAutoBump',
       message: "This package has dependents, maybe you should bump it's version in them too. Do bumping?",
@@ -125,27 +117,26 @@ export async function runForPackage(packageName) {
   }
 
   console.log('\nRunning tests...')
-  await asyncSpawn('yarn', ['test', packageName])
+  await YarnUtils.test(packageName)
 
   console.log('\nUpdating the package version...')
-  updatePackage(packageJsonPath, targetVersion)
+  updatePackageJson(packageName, { version: targetVersion })
 
   console.log('\nCleaning...')
-  await asyncSpawn('yarn', ['workspace', `@rattus-orm/${packageName}`, 'run', 'clean'])
+  await YarnUtils.runForPackage(packageName, 'clean')
 
   console.log('\nBuild...')
-  await asyncSpawn('yarn', ['workspace', `@rattus-orm/${packageName}`, 'run', 'build'])
+  await YarnUtils.runForPackage(packageName, 'build')
 
   console.log('\nCommitting changes...')
-  await asyncSpawn('git', ['add', '-A'])
-  await asyncSpawn('git', ['commit', '-m', `release(${packageName}): v${targetVersion}`])
+  await GitUtils.add()
+  await GitUtils.commit(`release(${packageName}): v${targetVersion}`)
 
   console.log('\nPublishing the package...')
-  await asyncSpawn('yarn', ['workspace', `@rattus-orm/${packageName}`, 'npm', 'publish', '--access', 'public'])
+  await YarnUtils.publishPackage(packageName)
 
   // Push to GitHub.
   console.log('\nPushing to GitHub...')
-  await asyncSpawn('git', ['tag', `${packageName}-v${targetVersion}`])
-  await asyncSpawn('git', ['push', 'origin', `refs/tags/${packageName}-v${targetVersion}`])
-  await asyncSpawn('git', ['push'])
+  await GitUtils.pushTag(`${packageName}-v${targetVersion}`)
+  await GitUtils.push()
 }
