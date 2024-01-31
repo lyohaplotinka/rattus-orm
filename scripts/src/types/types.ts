@@ -1,3 +1,5 @@
+export { Options as ExecaOptions } from 'execa'
+
 export type PackageMeta = {
   title: string
   matchPattern: string
@@ -7,4 +9,9 @@ export type PackageMeta = {
   runLocal?: boolean
   autoBump?: boolean
   order?: number
+}
+
+export type YarnPackageListItem = {
+  location: string
+  name: string
 }

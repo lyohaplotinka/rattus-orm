@@ -3,6 +3,7 @@
 import chalk from 'chalk'
 import { program } from 'commander'
 
+import { updateChangelog } from '../auto-changelogger'
 import { isOnMainBranch, parsePackages } from '../utils/utils'
 import { runForPackage } from './releasePackage'
 
@@ -27,6 +28,9 @@ program
     for (const packageName of forPackages) {
       await runForPackage(packageName)
     }
+
+    console.log('Updating changelog...')
+    await updateChangelog()
   })
 
 program.parse()

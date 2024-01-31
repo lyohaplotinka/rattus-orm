@@ -5,12 +5,12 @@ import type { ReleaseType } from 'semver'
 import semver from 'semver'
 
 import {
-  asyncSpawn,
   getPackageMeta,
+  GitUtils,
   loadPackageJson,
   updatePackageJson,
-  withRetry,
   writePackageJson,
+  YarnUtils,
 } from '../utils/utils'
 
 const versionIncrements: ReleaseType[] = ['patch', 'minor', 'major']
@@ -22,12 +22,11 @@ process.on('unhandledRejection', (data) => {
 
 async function bumpDependents(packageName: string, newVersion: string, exclude = ['docs']) {
   const bumpingDep = `@rattus-orm/${packageName}`
-  const yarnWsListOutput = await asyncSpawn('yarn', ['workspaces', 'list', '--json'], { stdio: 'pipe' })
+  const yarnWorkspaces = await YarnUtils.listPackages()
   const allPackagesData = []
 
-  for (const line of yarnWsListOutput) {
+  for (const parsed of yarnWorkspaces) {
     try {
-      const parsed = JSON.parse(line)
       if (
         parsed.location === '.' ||
         parsed.location.endsWith(packageName) ||
@@ -118,28 +117,26 @@ export async function runForPackage(packageName: string) {
   }
 
   console.log('\nRunning tests...')
-  // @todo with retry because of floating bug in tests
-  await withRetry(() => asyncSpawn('yarn', ['test', packageName]))
+  await YarnUtils.test(packageName)
 
   console.log('\nUpdating the package version...')
   updatePackageJson(packageName, { version: targetVersion })
 
   console.log('\nCleaning...')
-  await asyncSpawn('yarn', ['workspace', `@rattus-orm/${packageName}`, 'run', 'clean'])
+  await YarnUtils.runForPackage(packageName, 'clean')
 
   console.log('\nBuild...')
-  await asyncSpawn('yarn', ['workspace', `@rattus-orm/${packageName}`, 'run', 'build'])
+  await YarnUtils.runForPackage(packageName, 'build')
 
   console.log('\nCommitting changes...')
-  await asyncSpawn('git', ['add', '-A'])
-  await asyncSpawn('git', ['commit', '-m', `release(${packageName}): v${targetVersion}`])
+  await GitUtils.add()
+  await GitUtils.commit(`release(${packageName}): v${targetVersion}`)
 
   console.log('\nPublishing the package...')
-  await asyncSpawn('yarn', ['workspace', `@rattus-orm/${packageName}`, 'npm', 'publish', '--access', 'public'])
+  await YarnUtils.publishPackage(packageName)
 
   // Push to GitHub.
   console.log('\nPushing to GitHub...')
-  await asyncSpawn('git', ['tag', `${packageName}-v${targetVersion}`])
-  await asyncSpawn('git', ['push', 'origin', `refs/tags/${packageName}-v${targetVersion}`])
-  await asyncSpawn('git', ['push'])
+  await GitUtils.pushTag(`${packageName}-v${targetVersion}`)
+  await GitUtils.push()
 }

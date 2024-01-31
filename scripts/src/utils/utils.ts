@@ -1,17 +1,17 @@
 /* eslint-disable no-console */
 
-import { execSync, spawn } from 'node:child_process'
 import { existsSync, readFileSync, writeFileSync } from 'node:fs'
 import { readdir } from 'node:fs/promises'
 import { dirname, extname, normalize, parse, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import type { StdioOptions } from 'child_process'
+import chalk from 'chalk'
+import { $, execaCommand } from 'execa'
 import { findUpSync } from 'find-up'
 import { merge } from 'lodash-es'
 import type { PackageJson } from 'type-fest'
 
-import type { PackageMeta } from '../types/types'
+import type { ExecaOptions, PackageMeta, YarnPackageListItem } from '../types/types'
 
 export function dirName(importMetaUrl: string) {
   return dirname(fileURLToPath(importMetaUrl))
@@ -64,41 +64,6 @@ export function parsePackages(commaSeparatedString: string, filter: (pkg: Packag
   return sortPackages(packagesOption.filter((key) => filter(getPackageMeta(key))))
 }
 
-type AsyncSpawnOpts = Partial<{
-  env: Record<string, string>
-  cwd: string
-  stdio: StdioOptions
-}>
-export async function asyncSpawn(
-  command: string,
-  args: string[] = [],
-  options: AsyncSpawnOpts = {},
-): Promise<string[]> {
-  const { env = {}, stdio = 'inherit', cwd } = options
-
-  return new Promise((resolve, reject) => {
-    const spawnedProcess = spawn(command, args, { stdio, env: { ...process.env, ...env }, cwd })
-    const result: string[] = []
-
-    spawnedProcess.on('error', (error) => {
-      reject(error)
-    })
-    spawnedProcess.on('close', (code) => {
-      if (code === 0) {
-        resolve(result)
-      } else {
-        reject(`Process finished with exit code ${code}`)
-      }
-    })
-
-    if (spawnedProcess.stdout) {
-      spawnedProcess.stdout.on('data', (msg) => {
-        result.push(...msg.toString().trim().split('\n'))
-      })
-    }
-  })
-}
-
 export async function* getFiles(dir: string): AsyncGenerator<string> {
   const dirents = await readdir(dir, { withFileTypes: true })
   for (const dirent of dirents) {
@@ -112,8 +77,8 @@ export async function* getFiles(dir: string): AsyncGenerator<string> {
 }
 
 export function getGitBranchName() {
-  const res = execSync('git rev-parse --abbrev-ref HEAD')
-  return res.toString().trim()
+  const res = $.sync`git rev-parse --abbrev-ref HEAD`
+  return res.stdout.trim()
 }
 
 export function isOnMainBranch() {
@@ -145,26 +110,17 @@ export function updatePackageJson(
   return merged
 }
 
-export async function withRetry(func: () => any | Promise<any>, retries = 3) {
-  let attempts = 0
-  let lastError: any = null
-
-  const runFn = async (): Promise<any> => {
-    if (attempts >= retries) {
-      throw lastError
+export async function withRetry(func: () => any | Promise<any>, funcId = 'func', retries = 2) {
+  try {
+    console.log(chalk.yellowBright(`[withRetry] running ${funcId}, ${retries} attempts left`))
+    return await func()
+  } catch (error) {
+    if (retries <= 0) {
+      throw error
     }
-
-    try {
-      console.log(`Trying to execute func, attempt ${attempts + 1} of ${retries}`)
-      return await func()
-    } catch (e) {
-      lastError = e
-      attempts++
-      return runFn()
-    }
+    await new Promise((resolve) => setTimeout(resolve, 300))
+    return withRetry(func, funcId, retries - 1)
   }
-
-  return runFn()
 }
 
 export function fileWithoutExtension(file: string) {
@@ -210,5 +166,60 @@ export async function createBuildsAndExportsForFiles(dirPath: string, prefix?: s
   return {
     buildEntries,
     patchPkgJsonWith,
+  }
+}
+
+export class GitUtils {
+  public static async tag(tag: string) {
+    return $`git tag ${tag}`
+  }
+
+  public static async add() {
+    return $`git add -A`
+  }
+
+  public static async commit(message: string) {
+    return $`git commit -m ${message}`
+  }
+
+  public static async pushTag(tag: string) {
+    await this.tag(tag)
+    return $`git push origin refs/tags/${tag}`
+  }
+
+  public static async push() {
+    return $`git push`
+  }
+}
+
+export class YarnUtils {
+  public static async listPackages(): Promise<YarnPackageListItem[]> {
+    const result = await $`yarn workspaces list --json`
+    return result.stdout.split('\n').map((part) => JSON.parse(part))
+  }
+
+  public static async runFunctionalTests(pkg: string, pattern: string = '', options?: ExecaOptions) {
+    return execaCommand(`./node_modules/.bin/vitest run ${pattern}`, {
+      ...options,
+      env: {
+        PACKAGE_NAME: pkg,
+      },
+    })
+  }
+
+  public static async testPackage(pkg: string, pattern: string = '', options?: ExecaOptions) {
+    return execaCommand(`yarn workspace @rattus-orm/${pkg} run test ${pattern} --passWithNoTests`, options)
+  }
+
+  public static async test(pkg = 'all') {
+    return $`yarn test ${pkg}`
+  }
+
+  public static async runForPackage(pkg: string, command: string) {
+    return $`yarn workspace @rattus-orm/${pkg} run ${command}`
+  }
+
+  public static async publishPackage(pkg: string) {
+    return $`yarn workspace @rattus-orm/${pkg} npm publish --access public`
   }
 }

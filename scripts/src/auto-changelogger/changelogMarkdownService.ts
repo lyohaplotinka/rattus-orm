@@ -1,7 +1,10 @@
+import { existsSync } from 'node:fs'
+import { resolve } from 'node:path'
+
 import { format } from 'date-fns/format'
-import { findUp } from 'find-up'
 import { readFile, writeFile } from 'fs/promises'
 
+import { MONOREPO_ROOT_DIR } from '../utils/utils'
 import type { ChangelogElement } from './types'
 
 export class ChangelogMarkdownService {
@@ -11,8 +14,8 @@ export class ChangelogMarkdownService {
 
   public async boot() {
     try {
-      const filePath = await findUp('CHANGELOG.md')
-      if (!filePath) {
+      const filePath = resolve(MONOREPO_ROOT_DIR, 'CHANGELOG.md')
+      if (!existsSync(filePath)) {
         throw new Error('Changelog not found')
       }
       this.changelogFilePath = filePath

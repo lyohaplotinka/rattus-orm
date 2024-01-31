@@ -1,6 +1,8 @@
 import { ChangelogMarkdownService } from './changelogMarkdownService'
 import { getChangelogElements } from './getChangelogElements'
 
-const changes = await getChangelogElements()
-const changelog = await new ChangelogMarkdownService().boot()
-changelog.setElements(changes).write()
+export async function updateChangelog() {
+  const changes = await getChangelogElements()
+  const changelog = await new ChangelogMarkdownService().boot()
+  await changelog.setElements(changes).write()
+}

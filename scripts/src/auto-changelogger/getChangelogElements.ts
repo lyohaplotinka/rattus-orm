@@ -1,31 +1,14 @@
-import { readFileSync } from 'node:fs'
-import { dirname, resolve } from 'node:path'
-
 import { $ } from 'execa'
-import { findUpSync } from 'find-up'
 import micromatch from 'micromatch'
 
 import packagesMeta from '../../packagesMeta.json'
+import { loadPackageJson } from '../utils/utils'
 import type { ChangelogElement, Commit } from './types'
 
 const RELEASE_COMMIT_PATTERN = 'release('
 
 function getPackagePatternForFormat(pattern: string, format = '{ts,tsx,json}') {
   return `${pattern}/*.${format}`
-}
-
-function getPackageVersion(key: string) {
-  if (!(key in packagesMeta)) {
-    throw new Error(`Unknown package key "${key}"`)
-  }
-  const directory = packagesMeta[key].matchPattern.replace('/**', '')
-  const yarnrcFile = findUpSync('.yarnrc.yml')
-  if (!yarnrcFile) {
-    throw new Error('Root monorepo dir not found')
-  }
-  const rootMonorepoDir = dirname(yarnrcFile)
-  const pkgJsonPath = resolve(rootMonorepoDir, directory, 'package.json')
-  return JSON.parse(readFileSync(pkgJsonPath, 'utf8')).version
 }
 
 async function getCommitsListFromLastRelease(): Promise<Commit[]> {
@@ -65,7 +48,7 @@ export async function getChangelogElements(): Promise<ChangelogElement[]> {
       result[key] = {
         packageName: meta.title,
         packageKey: key,
-        packageVersion: getPackageVersion(key),
+        packageVersion: loadPackageJson(key).version!,
         commitMessages,
       }
 

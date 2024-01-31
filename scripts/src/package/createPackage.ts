@@ -2,8 +2,9 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { dirname as pathDirname, join, resolve } from 'node:path'
 
 import { program } from 'commander'
+import { $ } from 'execa'
 
-import { asyncSpawn, getFiles, loadPackageJson, MONOREPO_ROOT_DIR, SCRIPTS_DIR } from '../utils/utils'
+import { getFiles, loadPackageJson, MONOREPO_ROOT_DIR, SCRIPTS_DIR } from '../utils/utils'
 
 const corePackageVersion = loadPackageJson('core').version!
 const templatesPath = resolve(SCRIPTS_DIR, 'templates/package')
@@ -31,7 +32,7 @@ program
     }
 
     await Promise.all(fileWritePromises)
-    await asyncSpawn('yarn', ['link'])
+    await $`yarn link`
   })
 
 program.parse()

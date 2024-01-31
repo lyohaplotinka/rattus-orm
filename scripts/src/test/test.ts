@@ -2,17 +2,16 @@ import chalk from 'chalk'
 import { program } from 'commander'
 
 import type { PackageMeta } from '../types/types'
-import { asyncSpawn, parsePackages } from '../utils/utils'
+import { parsePackages, withRetry, YarnUtils } from '../utils/utils'
 
 async function runLocalTests(packageName: string, pattern: string, verbose: boolean) {
-  return asyncSpawn('yarn', ['workspace', `@rattus-orm/${packageName}`, 'run', 'test', pattern, '--passWithNoTests'], {
+  return YarnUtils.testPackage(packageName, pattern, {
     stdio: ['pipe', verbose ? process.stdout : 'pipe', process.stderr],
   })
 }
 
 async function runFunctionalTests(packageName: string, pattern: string, verbose: boolean) {
-  return asyncSpawn('./node_modules/.bin/vitest', ['run', pattern], {
-    env: { PACKAGE_NAME: packageName },
+  return YarnUtils.runFunctionalTests(packageName, pattern, {
     stdio: ['pipe', verbose ? process.stdout : 'pipe', process.stderr],
   })
 }
@@ -54,7 +53,8 @@ program
         const localTestsPromise = allPackagesNames.map(async (pkg: string) => {
           const resultIndicator = `${pkg} (local)`
           try {
-            await runLocalTests(pkg, localPattern, verbose)
+            // @todo with retry because of floating bug in tests
+            await withRetry(() => runLocalTests(pkg, localPattern, verbose), `local for ${pkg}`)
             results.Succeed.push(resultIndicator)
           } catch (e) {
             console.log(e)
