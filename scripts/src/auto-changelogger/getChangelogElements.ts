@@ -35,7 +35,9 @@ export async function getChangelogElements(): Promise<ChangelogElement[]> {
     (result, [key, meta]) => {
       const commitMessages = commits.reduce<string[]>((result, commit) => {
         if (micromatch(commit.affectedFiles, getPackagePatternForFormat(meta.matchPattern)).length) {
-          result.push(commit.message)
+          result.push(
+            commit.message.replace(/\(#(\d{0,5})\)$/, `([#$1](https://github.com/lyohaplotinka/rattus-orm/pull/$1))`),
+          )
         }
 
         return result

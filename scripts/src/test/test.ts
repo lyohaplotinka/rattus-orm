@@ -2,7 +2,7 @@ import chalk from 'chalk'
 import { program } from 'commander'
 
 import type { PackageMeta } from '../types/types'
-import { parsePackages, withRetry, YarnUtils } from '../utils/utils'
+import { parsePackages, YarnUtils } from '../utils/utils'
 
 async function runLocalTests(packageName: string, pattern: string, verbose: boolean) {
   return YarnUtils.testPackage(packageName, pattern, {
@@ -53,8 +53,7 @@ program
         const localTestsPromise = allPackagesNames.map(async (pkg: string) => {
           const resultIndicator = `${pkg} (local)`
           try {
-            // @todo with retry because of floating bug in tests
-            await withRetry(() => runLocalTests(pkg, localPattern, verbose), `local for ${pkg}`)
+            await runLocalTests(pkg, localPattern, verbose)
             results.Succeed.push(resultIndicator)
           } catch (e) {
             console.log(e)
