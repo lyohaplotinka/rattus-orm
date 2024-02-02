@@ -6,7 +6,7 @@ import { dirname, extname, normalize, parse, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 import chalk from 'chalk'
-import { $, execaCommand } from 'execa'
+import { $, execaCommand, execaCommandSync } from 'execa'
 import { findUpSync } from 'find-up'
 import { merge } from 'lodash-es'
 import type { PackageJson } from 'type-fest'
@@ -189,6 +189,14 @@ export class GitUtils {
 
   public static async push() {
     return $`git push`
+  }
+
+  public static readFileFromCommit(path: string, hash: string): string {
+    const { stdout } = execaCommandSync(`git --no-pager show ${hash}:${path}`, {
+      cwd: MONOREPO_ROOT_DIR,
+    })
+
+    return stdout
   }
 }
 
