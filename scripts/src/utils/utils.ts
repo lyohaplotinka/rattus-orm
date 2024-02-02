@@ -228,6 +228,9 @@ export class YarnUtils {
   }
 
   public static async publishPackage(pkg: string) {
-    return $`yarn workspace @rattus-orm/${pkg} npm publish --access public`
+    return execaCommand(`yarn workspace @rattus-orm/${pkg} npm publish --access public`, {
+      shell: true,
+      stdio: 'inherit',
+    })
   }
 }
