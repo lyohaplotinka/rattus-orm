@@ -35,7 +35,12 @@ function getPackageJsonDifference(path: string, commit: Commit) {
   const currentPkg = JSON.parse(GitUtils.readFileFromCommit(path, commit.hash)) as PackageJson.PackageJsonStandard
   const prevPkg = JSON.parse(GitUtils.readFileFromCommit(path, commit.hash)) as PackageJson.PackageJsonStandard
 
-  const checkedKeys: (keyof PackageJson.PackageJsonStandard)[] = ['dependencies', 'exports', 'version']
+  const checkedKeys: (keyof PackageJson.PackageJsonStandard)[] = [
+    'dependencies',
+    'exports',
+    'version',
+    'peerDependencies',
+  ]
   return checkedKeys.some((key) => {
     return !isEqual(currentPkg[key], prevPkg[key])
   })
