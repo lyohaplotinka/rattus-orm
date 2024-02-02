@@ -1,3 +1,7 @@
+# 2024/02/02
+### Core (0.1.1)
+* Refactor/size reduction ([#24](https://github.com/lyohaplotinka/rattus-orm/pull/24))
+
 # 2024/01/28
 ### Core (0.1.0)
 * RattusContext constructor with overload
