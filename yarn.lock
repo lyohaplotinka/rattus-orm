@@ -3117,6 +3117,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@rattus-orm/react-mobx@workspace:packages/react-mobx":
+  version: 0.0.0-use.local
+  resolution: "@rattus-orm/react-mobx@workspace:packages/react-mobx"
+  dependencies:
+    "@rattus-orm/core": "workspace:^"
+    mobx: "npm:^6.12.0"
+    mobx-react-lite: "npm:^4.0.5"
+  peerDependencies:
+    "@rattus-orm/core": ^0.1.1
+    mobx: "*"
+  languageName: unknown
+  linkType: soft
+
 "@rattus-orm/react-redux@workspace:packages/react-redux":
   version: 0.0.0-use.local
   resolution: "@rattus-orm/react-redux@workspace:packages/react-redux"
@@ -11335,6 +11348,30 @@ __metadata:
     pkg-types: "npm:^1.0.3"
     ufo: "npm:^1.3.0"
   checksum: 905e3a704c7d3bcaad55f31d6efe9f680eab5be053ab7f8b299b8dbc027041f741fa6a93db9a3c461be2552632f3831b6c43c50af530f5fb2e9cd6273bc9d642
+  languageName: node
+  linkType: hard
+
+"mobx-react-lite@npm:^4.0.5":
+  version: 4.0.5
+  resolution: "mobx-react-lite@npm:4.0.5"
+  dependencies:
+    use-sync-external-store: "npm:^1.2.0"
+  peerDependencies:
+    mobx: ^6.9.0
+    react: ^16.8.0 || ^17 || ^18
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+    react-native:
+      optional: true
+  checksum: 6c8f69646ee9fb50155062c8a43e6d222a7b9dbd28f139648dcbb2a097d9ea660d643dd94529355e7f6926561e37c0206ca9e477f01784aedafbed607daceda6
+  languageName: node
+  linkType: hard
+
+"mobx@npm:^6.12.0":
+  version: 6.12.0
+  resolution: "mobx@npm:6.12.0"
+  checksum: 18226d1120b0b21faf142c812f5e9dc670b03a3ad3fb868b9aeb9dffb72b7f0866591e50c3d07b79b01bdd4ca264b9843fb996a980b8bcb59f5a53597a8a2b90
   languageName: node
   linkType: hard
 

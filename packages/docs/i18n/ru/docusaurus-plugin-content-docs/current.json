@@ -74,5 +74,13 @@
   "sidebar.tutorialSidebar.category.Zod Validate.link.generated-index.description": {
     "message": "Валидация данных с помощью Zod",
     "description": "The generated-index page description for category Zod Validate in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.MobX integration (React)": {
+    "message": "Интеграция с MobX (React)",
+    "description": "The label for category MobX integration (React) in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.MobX integration (React).link.generated-index.description": {
+    "message": "Data provider и хелперы для React MobX",
+    "description": "The generated-index page description for category MobX integration (React) in sidebar tutorialSidebar"
   }
 }

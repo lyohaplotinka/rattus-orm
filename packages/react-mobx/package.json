@@ -1,0 +1,66 @@
+{
+  "name": "@rattus-orm/react-mobx",
+  "description": "ORM for your JS/TS apps: react-mobx bindings",
+  "homepage": "https://lyohaplotinka.github.io/rattus-orm/",
+  "author": "Lyoha Plotinka",
+  "license": "MIT",
+  "packageManager": "yarn@4.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lyohaplotinka/rattus-orm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lyohaplotinka/rattus-orm/issues"
+  },
+  "keywords": [
+    "orm",
+    "rattus",
+    "react",
+    "mobx",
+    "react-mobx",
+    "typescript",
+    "javascript"
+  ],
+  "version": "0.0.0",
+  "main": "./dist/rattus-orm-react-mobx-provider.js",
+  "browser": "./dist/rattus-orm-react-mobx-provider.mjs",
+  "module": "./dist/rattus-orm-react-mobx-provider.mjs",
+  "types": "./dist/rattus-orm-react-mobx-provider.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/rattus-orm-react-mobx-provider.mjs",
+      "require": "./dist/rattus-orm-react-mobx-provider.js",
+      "types": "./dist/rattus-orm-react-mobx-provider.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "run -T tsup",
+    "clean": "rm -rf dist && rm -rf node_modules",
+    "lint": "run -T eslint 'src/**/*.ts' --quiet --fix",
+    "test": "run -T vitest run",
+    "typecheck": "bash -c 'run -T tsc -p tsconfig.json --noEmit'",
+    "size": "run -T size-limit"
+  },
+  "devDependencies": {
+    "@rattus-orm/core": "workspace:^",
+    "mobx": "^6.12.0",
+    "mobx-react-lite": "^4.0.5"
+  },
+  "peerDependencies": {
+    "@rattus-orm/core": "^0.1.1",
+    "mobx": "*"
+  },
+  "size-limit": [
+    {
+      "name": "ESM react-mobx provider",
+      "path": "./dist/rattus-orm-react-mobx-provider.mjs"
+    },
+    {
+      "name": "CJS react-mobx provider",
+      "path": "./dist/rattus-orm-react-mobx-provider.mjs"
+    }
+  ]
+}

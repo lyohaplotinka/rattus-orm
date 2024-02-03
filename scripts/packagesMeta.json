@@ -43,6 +43,13 @@
     "exportName": "dataProviderFactory",
     "runFunctional": true
   },
+  "react-mobx": {
+    "title": "React MobX",
+    "matchPattern": "packages/react-mobx/**",
+    "path": "packages/react-mobx/test/provider-factory.ts",
+    "exportName": "dataProviderFactory",
+    "runFunctional": true
+  },
   "plugin-zod-validate": {
     "title": "Plugin Zod Validate",
     "matchPattern": "packages/plugin-zod-validate/**",
