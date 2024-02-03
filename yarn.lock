@@ -3117,6 +3117,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@rattus-orm/react-mobx@workspace:packages/react-mobx":
+  version: 0.0.0-use.local
+  resolution: "@rattus-orm/react-mobx@workspace:packages/react-mobx"
+  dependencies:
+    "@rattus-orm/core": "workspace:^"
+  peerDependencies:
+    "@rattus-orm/core": ^0.1.1
+  languageName: unknown
+  linkType: soft
+
 "@rattus-orm/react-redux@workspace:packages/react-redux":
   version: 0.0.0-use.local
   resolution: "@rattus-orm/react-redux@workspace:packages/react-redux"
