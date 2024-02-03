@@ -17,7 +17,7 @@
 ### Plugin Zod Validate (0.1.1)
 * release(core): v0.1.1
 
-### React MobX (0.0.0)
+### React MobX (0.1.0)
 * Introducing React MobX integration: data provider, context and hooks 🎉  ([#27](https://github.com/lyohaplotinka/rattus-orm/pull/27))
 
 # 2024/02/02
