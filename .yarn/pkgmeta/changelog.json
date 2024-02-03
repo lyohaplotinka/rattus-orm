@@ -47,6 +47,14 @@
       "commitMessages": [
         "release(core): v0.1.1"
       ]
+    },
+    {
+      "packageName": "React MobX",
+      "packageKey": "react-mobx",
+      "packageVersion": "0.0.0",
+      "commitMessages": [
+        "Introducing React MobX integration: data provider, context and hooks 🎉  ([#27](https://github.com/lyohaplotinka/rattus-orm/pull/27))"
+      ]
     }
   ]
 }

@@ -17,22 +17,6 @@
 ### Plugin Zod Validate (0.1.1)
 * release(core): v0.1.1
 
-# 2024/02/03
-### Vuex (0.1.1)
-* release(core): v0.1.1
-
-### Pinia (0.1.1)
-* release(core): v0.1.1
-
-### React Redux (0.1.1)
-* release(core): v0.1.1
-
-### React Signals (0.1.1)
-* release(core): v0.1.1
-
-### LocalStorage (0.1.1)
-* release(core): v0.1.1
-
 # 2024/02/02
 ### Core (0.1.1)
 * Refactor/size reduction ([#24](https://github.com/lyohaplotinka/rattus-orm/pull/24))

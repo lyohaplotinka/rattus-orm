@@ -1,3 +1,5 @@
+import { resolve } from 'node:path'
+
 import { $ } from 'execa'
 import { isEqual } from 'lodash-es'
 import micromatch from 'micromatch'
@@ -5,7 +7,7 @@ import type { PackageJson } from 'type-fest'
 
 import packagesMeta from '../../packagesMeta.json'
 import type { PackageMeta } from '../types/types'
-import { GitUtils, loadPackageJson } from '../utils/utils'
+import { GitUtils, loadPackageJson, MONOREPO_ROOT_DIR } from '../utils/utils'
 import type { ChangelogElement, Commit } from './types'
 
 const RELEASE_COMMIT_PATTERN = 'release('
@@ -18,18 +20,16 @@ function getPackagePatternForFormat(pattern: string, format = '{ts,tsx,json}') {
   return `${pattern}/*.${format}`
 }
 
-function getLastPackageReleaseHash(packageKey: string): string {
-  const { stdout } = $.sync`git log --format=format:%H --grep=${getReleaseCommitMessage(packageKey)} -n 1 main`
-  if (!stdout) {
-    return getLastPackageReleaseHash('core')
-  }
-
-  return stdout
+function getCompareRelease(packageKey: string, includeCommit = false): string {
+  return (
+    GitUtils.getLastCommitByPattern(getReleaseCommitMessage(packageKey)) ||
+    GitUtils.getCommitWherePathWasIntroduced(resolve(MONOREPO_ROOT_DIR, `packages/${packageKey}`), includeCommit)
+  )
 }
 
 async function getCommitsListFromLastRelease(packageKey: string): Promise<Commit[]> {
   const { stdout: commitsSinceReleaseString } =
-    await $`git log --pretty=format:%s::::%H ${getLastPackageReleaseHash(packageKey)}...main`
+    await $`git log --pretty=format:%s::::%H ${getCompareRelease(packageKey, true)}...main`
 
   const commits = commitsSinceReleaseString.split('\n').map<Promise<Commit>>(async (commitString) => {
     const [message, hash] = commitString.split('::::')
@@ -47,7 +47,7 @@ async function getCommitsListFromLastRelease(packageKey: string): Promise<Commit
 function getPackageJsonDifference(path: string, commit: Commit, packageKey: string) {
   const currentPkg = JSON.parse(GitUtils.readFileFromCommit(path, commit.hash)) as PackageJson.PackageJsonStandard
   const prevPkg = JSON.parse(
-    GitUtils.readFileFromCommit(path, getLastPackageReleaseHash(packageKey)),
+    GitUtils.readFileFromCommit(path, getCompareRelease(packageKey)),
   ) as PackageJson.PackageJsonStandard
 
   const checkedKeys: (keyof PackageJson.PackageJsonStandard)[] = [

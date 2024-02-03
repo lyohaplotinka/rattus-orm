@@ -198,6 +198,16 @@ export class GitUtils {
 
     return stdout
   }
+
+  public static getLastCommitByPattern(pattern: string): string | null {
+    const { stdout } = $.sync`git log --format=format:%H --grep=${pattern} -n 1 main`
+    return stdout || null
+  }
+
+  public static getCommitWherePathWasIntroduced(path: string, includeCommit = false): string {
+    const { stdout } = $.sync`git log --format=format:%H --diff-filter=A -n 1 main -- ${path}`
+    return includeCommit ? `${stdout}^` : stdout
+  }
 }
 
 export class YarnUtils {
