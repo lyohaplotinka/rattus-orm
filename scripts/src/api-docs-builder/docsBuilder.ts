@@ -11,11 +11,10 @@ import type {
 import ts from 'typescript'
 
 import apiDocsFiles from '../../apiDocsFiles.json' assert { type: 'json' }
-import { dirName } from '../utils/utils'
+import { MONOREPO_ROOT_DIR } from '../utils/utils'
 import type { MethodParam, ModuleJsonDocs, PublicMethod } from './types'
 
-const __dirname = dirName(import.meta.url)
-const apiDocsDir = resolve(__dirname, '../../../', 'packages/docs/src/api-docs')
+const apiDocsDir = resolve(MONOREPO_ROOT_DIR, 'packages/docs/src/api-docs')
 
 const {
   createSourceFile,
@@ -82,7 +81,7 @@ function getMethodParams(
 function buildDocsForFile(fileStr: string, sectionName: string) {
   const sourceFile = createSourceFile(
     'x.ts',
-    readFileSync(resolve(__dirname, '../../', fileStr), 'utf8'),
+    readFileSync(resolve(MONOREPO_ROOT_DIR, fileStr), 'utf8'),
     ScriptTarget.Latest,
     true,
   )

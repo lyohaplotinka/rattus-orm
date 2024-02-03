@@ -14,8 +14,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    env:
-      YARN_ENABLE_SCRIPTS: false
     strategy:
       matrix:
         node-version: [18]

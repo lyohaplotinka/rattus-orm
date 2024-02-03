@@ -334,7 +334,7 @@
       "typeParams": [],
       "params": [
         {
-          "declaration": "record?: Element",
+          "declaration": "record: Element = this",
           "name": "record",
           "description": "optional data of element to get key"
         }
@@ -343,18 +343,11 @@
       "description": "Get primary key value for the model. If the model has the composite key, it will return an array of ids."
     },
     {
-      "name": "$hasCompositeKey",
-      "typeParams": [],
-      "params": [],
-      "returnType": "boolean",
-      "description": "Check whether the model has composite key."
-    },
-    {
       "name": "$getIndexId",
       "typeParams": [],
       "params": [
         {
-          "declaration": "record?: Element",
+          "declaration": "record: Element = this",
           "name": "record",
           "description": "optional data of element to index id"
         }
@@ -412,7 +405,7 @@
       "typeParams": [],
       "params": [
         {
-          "declaration": "model?: Model",
+          "declaration": "model: Model = this",
           "name": "model",
           "description": "optional to serialize"
         },

@@ -14,6 +14,31 @@
           "declaration": "protected readonly model: M",
           "name": "model",
           "description": "model to work with"
+        },
+        {
+          "declaration": "protected eagerLoad: EagerLoad = {}",
+          "name": "eagerLoad",
+          "description": "the relationships that should be eager loaded, default {}"
+        },
+        {
+          "declaration": "protected skip: number = 0",
+          "name": "skip",
+          "description": "the number of records to skip, default 0"
+        },
+        {
+          "declaration": "protected take: number | null = null",
+          "name": "take",
+          "description": "the maximum number of records to return, default null"
+        },
+        {
+          "declaration": "protected orders: Order[] = []",
+          "name": "orders",
+          "description": "the orderings for the query, default []"
+        },
+        {
+          "declaration": "protected wheres: Where[] = []",
+          "name": "wheres",
+          "description": "the where constraints for the query, default []"
         }
       ],
       "returnType": "",
@@ -290,7 +315,7 @@
           "description": "models array for relations load"
         }
       ],
-      "returnType": "void",
+      "returnType": "Collection<M>",
       "description": "Eager load relations on the model."
     },
     {
