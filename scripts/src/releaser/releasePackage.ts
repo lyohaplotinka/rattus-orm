@@ -4,6 +4,7 @@ import enquirer from 'enquirer'
 import type { ReleaseType } from 'semver'
 import semver from 'semver'
 
+import { updateChangelog } from '../auto-changelogger'
 import {
   getPackageMeta,
   GitUtils,
@@ -111,32 +112,31 @@ export async function runForPackage(packageName: string) {
     })
 
     if (doAutoBump) {
-      console.log('\nAuto-bump for dependents detected, bumping...')
+      console.log('Auto-bump for dependents detected, bumping...')
       await bumpDependents(packageName, targetVersion)
     }
   }
 
-  console.log('\nRunning tests...')
+  console.log('Running tests...')
   await YarnUtils.test(packageName)
 
-  console.log('\nUpdating the package version...')
+  console.log('Updating the package version...')
   updatePackageJson(packageName, { version: targetVersion })
 
-  console.log('\nCleaning...')
+  console.log('Cleaning...')
   await YarnUtils.runForPackage(packageName, 'clean')
 
-  console.log('\nBuild...')
+  console.log('Build...')
   await YarnUtils.runForPackage(packageName, 'build')
 
-  console.log('\nCommitting changes...')
-  await GitUtils.add()
-  await GitUtils.commit(`release(${packageName}): v${targetVersion}`)
+  console.log('Updating changelog...')
+  await updateChangelog(packageName)
 
-  console.log('\nPublishing the package...')
+  console.log('Publishing the package...')
   await YarnUtils.publishPackage(packageName)
 
   // Push to GitHub.
-  console.log('\nPushing to GitHub...')
+  console.log('Pushing to GitHub...')
   await GitUtils.pushTag(`${packageName}-v${targetVersion}`)
   await GitUtils.push()
 }

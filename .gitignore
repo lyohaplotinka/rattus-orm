@@ -6,6 +6,7 @@ node_modules
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+!.yarn/pkgmeta
 .DS_Store
 
 # Swap the comments on the following lines if you wish to use zero-installs
