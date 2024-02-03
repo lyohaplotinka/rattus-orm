@@ -31,6 +31,14 @@
       "commitMessages": [
         "release(core): v0.1.1"
       ]
+    },
+    {
+      "packageName": "LocalStorage",
+      "packageKey": "local-storage",
+      "packageVersion": "0.1.1",
+      "commitMessages": [
+        "release(core): v0.1.1"
+      ]
     }
   ]
 }
