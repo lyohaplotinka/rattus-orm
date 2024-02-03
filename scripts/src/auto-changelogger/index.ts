@@ -16,7 +16,7 @@ export async function updateChangelog(forPackage: string) {
     return
   }
   const date = format(new Date(), 'yyyy/MM/dd')
-  const { default: changelogJson } = (await import(CHANGELOG_JSON_PATH)) as {
+  const { default: changelogJson } = (await import(CHANGELOG_JSON_PATH, { assert: { type: 'json' } })) as {
     default: Record<string, ChangelogElement[]>
   }
 

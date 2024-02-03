@@ -51,7 +51,6 @@
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "execa": "^8.0.1",
     "find-up": "^7.0.0",
-    "html2md": "^0.1.1",
     "jsdom": "^24.0.0",
     "lint-staged": "^15.2.0",
     "lodash-es": "^4.17.21",
