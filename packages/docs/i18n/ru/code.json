@@ -345,5 +345,8 @@
   },
   "Plugins": {
     "message": "Плагины"
+  },
+  "React + MobX integration": {
+    "message": "Rattus для React + MobX"
   }
 }
