@@ -20,6 +20,9 @@ function getPackagePatternForFormat(pattern: string, format = '{ts,tsx,json}') {
 
 function getLastPackageReleaseHash(packageKey: string): string {
   const { stdout } = $.sync`git log --format=format:%H --grep=${getReleaseCommitMessage(packageKey)} -n 1 main`
+  if (!stdout) {
+    return getLastPackageReleaseHash('core')
+  }
 
   return stdout
 }
