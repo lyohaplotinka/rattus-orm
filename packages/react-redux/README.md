@@ -2,6 +2,11 @@
   <img style="margin-right: -15px" width="192px" src="https://raw.githubusercontent.com/lyohaplotinka/rattus-orm/main/assets/logo.svg" alt="Rattus ORM">
 </p>
 
+<p align="center">
+  <img alt="bundle size" src="https://img.shields.io/bundlephobia/minzip/%40rattus-orm%2Freact-redux">
+  <img alt="npm version (core)" src="https://img.shields.io/npm/v/%40rattus-orm%2Freact-redux">
+</p>
+
 <h1 align="center">Rattus ORM – React Redux</h1>
 
 **React-redux data provider and helpers for Rattus ORM**
