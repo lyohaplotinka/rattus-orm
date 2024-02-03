@@ -132,7 +132,7 @@ export async function runForPackage(packageName: string) {
   console.log('Updating changelog...')
   await updateChangelog(packageName)
 
-  console.log('\nCommitting changes...')
+  console.log('Committing changes...')
   await GitUtils.add()
   await GitUtils.commit(`release(${packageName}): v${targetVersion}`)
 
