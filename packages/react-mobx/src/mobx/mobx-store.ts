@@ -27,11 +27,9 @@ export default class MobxStore {
   }
 
   public save(records: Elements) {
-    this.state = {
-      data: {
-        ...this.state,
-        ...records,
-      },
+    this.state.data = {
+      ...this.state.data,
+      ...records,
     }
   }
 
