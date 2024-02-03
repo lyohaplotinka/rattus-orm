@@ -2,6 +2,7 @@ import { translate } from '@docusaurus/Translate'
 import type { PackageItem } from '@site/src/components/shared/Package'
 import { PackageList } from '@site/src/components/shared/Package/packageList'
 import LsLogo from '@site/static/img/integrations/local-storage.svg'
+import MobxLogo from '@site/static/img/integrations/mobx.svg'
 import PiniaLogo from '@site/static/img/integrations/pinia.svg'
 import ReactLogo from '@site/static/img/integrations/react.svg'
 import ReduxLogo from '@site/static/img/integrations/redux.svg'
@@ -22,6 +23,13 @@ const IntegrationsList: PackageItem[] = [
     picture: PiniaLogo,
     link: '/docs/category/pinia-integration-vue',
     description: translate({ message: 'Vue + Pinia integration' }),
+  },
+  {
+    title: 'React MobX',
+    packageName: '@rattus-orm/react-mobx',
+    picture: MobxLogo,
+    link: '/docs/category/mobx-integration-react',
+    description: translate({ message: 'React + MobX integration' }),
   },
   {
     title: 'React Redux',

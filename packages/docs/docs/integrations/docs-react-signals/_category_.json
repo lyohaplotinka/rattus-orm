@@ -1,6 +1,6 @@
 {
   "label": "Signals integration (React)",
-  "position": 4,
+  "position": 6,
   "link": {
     "type": "generated-index",
     "description": "React Signals data provider and helpers"
