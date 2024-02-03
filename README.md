@@ -5,7 +5,7 @@
 <h1 align="center">Rattus ORM</h1>
 
 <p align="center">
-  <img alt="bundle size" src="https://img.shields.io/bundlephobia/minzip/%40rattus-orm%2Fcore">
+  <img alt="bundle size (core)" src="https://img.shields.io/bundlephobia/minzip/%40rattus-orm%2Fcore">
   <img alt="npm version (core)" src="https://img.shields.io/npm/v/%40rattus-orm%2Fcore">
 </p>
 
@@ -28,6 +28,7 @@ Rattus ORM is a versatile JavaScript/TypeScript package that offers an Object-Re
 * [@rattus-orm/vuex](./packages/vuex): vuex data provider (vue)
 * [@rattus-orm/pinia](./packages/pinia): pinia data provider (vue)
 * [@rattus-orm/react-redux](./packages/react-redux): redux data provider (react)
+* [@rattus-orm/react-mobx](./packages/react-mobx): mobx data provider (react)
 * [@rattus-orm/react-signals](./packages/react-signals): signals data provider (react)
 * [@rattus-orm/local-storage](./packages/local-storage): localStorage data provider
 
