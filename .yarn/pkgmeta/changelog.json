@@ -1,1 +1,12 @@
-{}
+{
+  "2024/02/03": [
+    {
+      "packageName": "Vuex",
+      "packageKey": "vuex",
+      "packageVersion": "0.1.1",
+      "commitMessages": [
+        "release(core): v0.1.1"
+      ]
+    }
+  ]
+}

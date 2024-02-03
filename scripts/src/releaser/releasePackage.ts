@@ -132,6 +132,10 @@ export async function runForPackage(packageName: string) {
   console.log('Updating changelog...')
   await updateChangelog(packageName)
 
+  console.log('\nCommitting changes...')
+  await GitUtils.add()
+  await GitUtils.commit(`release(${packageName}): v${targetVersion}`)
+
   console.log('Publishing the package...')
   await YarnUtils.publishPackage(packageName)
 
