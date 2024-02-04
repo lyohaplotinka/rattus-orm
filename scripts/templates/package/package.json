@@ -48,6 +48,13 @@
   "peerDependencies": {
     "@rattus-orm/core": "^{{ CORE_VERSION }}"
   },
+  "rattusMeta": {
+    "title": "{{ PACKAGE }}",
+    "testProvider": {
+      "path": "./test/provider-factory.ts",
+      "exportName": "dataProviderFactory"
+    }
+  },
   "size-limit": [
     {
       "name": "ESM {{ PACKAGE }} provider",

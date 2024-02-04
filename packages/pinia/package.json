@@ -53,6 +53,13 @@
     "pinia": "^2.0.0",
     "vue": "^3.0.0"
   },
+  "rattusMeta": {
+    "title": "Pinia",
+    "testProvider": {
+      "path": "./test/provider-factory.ts",
+      "exportName": "dataProviderFactory"
+    }
+  },
   "size-limit": [
     {
       "name": "ESM pinia provider",

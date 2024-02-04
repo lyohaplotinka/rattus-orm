@@ -58,6 +58,13 @@
     "@rattus-orm/core": "^0.1.1",
     "react": "*"
   },
+  "rattusMeta": {
+    "title": "React Signals",
+    "testProvider": {
+      "path": "./test/provider-factory.ts",
+      "exportName": "dataProviderFactory"
+    }
+  },
   "size-limit": [
     {
       "name": "ESM react-signals provider",

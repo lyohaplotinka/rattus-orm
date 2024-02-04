@@ -52,6 +52,9 @@
   "peerDependencies": {
     "@rattus-orm/core": "^0.1.1"
   },
+  "rattusMeta": {
+    "title": "Plugin Zod Validate"
+  },
   "size-limit": [
     {
       "name": "ESM plugin-zod-validate provider",

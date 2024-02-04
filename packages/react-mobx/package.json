@@ -53,6 +53,13 @@
     "@rattus-orm/core": "^0.1.1",
     "mobx": "*"
   },
+  "rattusMeta": {
+    "title": "React MobX",
+    "testProvider": {
+      "path": "./test/provider-factory.ts",
+      "exportName": "dataProviderFactory"
+    }
+  },
   "size-limit": [
     {
       "name": "ESM react-mobx provider",
