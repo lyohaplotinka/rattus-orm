@@ -39,11 +39,9 @@ program
       },
     ) => {
       const { skipLocal, skipFunctional, localPattern, functionalPattern, verbose } = options
-      const allPackagesNames = parsePackages(str, (pkg: PackageMeta) => {
-        return pkg.runLocal !== false
-      })
+      const allPackagesNames = parsePackages(str)
       const packagesNames = parsePackages(str, (pkg: PackageMeta) => {
-        return !!pkg.runFunctional
+        return pkg.testProvider !== false
       })
       const testsPromisesArray: Promise<void>[] = []
       const results: Record<string, string[]> = { Succeed: [], Failed: [] }

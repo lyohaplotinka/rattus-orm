@@ -22,7 +22,7 @@ process.on('unhandledRejection', (data) => {
 })
 
 async function bumpDependents(packageName: string, newVersion: string, exclude = ['docs']) {
-  const bumpingDep = `@rattus-orm/${packageName}`
+  const bumpingDep = loadPackageJson(packageName).name
   const yarnWorkspaces = await YarnUtils.listPackages()
   const allPackagesData = []
 
@@ -104,7 +104,7 @@ export async function runForPackage(packageName: string) {
   }
 
   const packageMeta = getPackageMeta(packageName)
-  if (packageMeta.autoBump) {
+  if (packageMeta.autoBumpDependents) {
     const { doAutoBump } = await enquirer.prompt<{ doAutoBump: boolean }>({
       type: 'confirm',
       name: 'doAutoBump',

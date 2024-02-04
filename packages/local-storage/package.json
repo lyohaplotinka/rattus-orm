@@ -48,6 +48,13 @@
   "peerDependencies": {
     "@rattus-orm/core": "^0.1.1"
   },
+  "rattusMeta": {
+    "title": "LocalStorage",
+    "testProvider": {
+      "path": "./test/provider-factory.ts",
+      "exportName": "dataProviderFactory"
+    }
+  },
   "size-limit": [
     {
       "name": "ESM local-storage provider",

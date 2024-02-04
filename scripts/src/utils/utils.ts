@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 
-import { existsSync, readFileSync, writeFileSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { readdir } from 'node:fs/promises'
 import { dirname, extname, normalize, parse, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -11,22 +11,58 @@ import { findUpSync } from 'find-up'
 import { merge } from 'lodash-es'
 import type { PackageJson } from 'type-fest'
 
+import { isPackageJsonWithRattusMeta } from '../types/guards'
 import type { ExecaOptions, PackageMeta, YarnPackageListItem } from '../types/types'
 
 export function dirName(importMetaUrl: string) {
   return dirname(fileURLToPath(importMetaUrl))
 }
 
-export const PACKAGES_META_PATH = findUpSync('packagesMeta.json', { cwd: dirName(import.meta.url) })!
-export const SCRIPTS_DIR = dirname(PACKAGES_META_PATH)
+export const SCRIPTS_DIR = dirname(findUpSync('apiDocsFiles.json', { cwd: dirName(import.meta.url) })!)
 export const MONOREPO_ROOT_DIR = dirname(findUpSync('.yarnrc.yml', { cwd: dirName(import.meta.url) })!)
+export const MONOREPO_PACKAGES_PATH = resolve(MONOREPO_ROOT_DIR, 'packages')
 
 export function readJson<T = any>(filePath: string): T {
   return JSON.parse(readFileSync(filePath, 'utf8'))
 }
 
-export function loadPackagesMeta(): Record<string, PackageMeta> {
-  return readJson<Record<string, PackageMeta>>(PACKAGES_META_PATH)
+export function loadPackagesMeta() {
+  return readdirSync(MONOREPO_PACKAGES_PATH, { withFileTypes: true }).reduce<Record<string, PackageMeta>>(
+    (result, entry) => {
+      if (!entry.isDirectory()) {
+        return result
+      }
+      const dirName = entry.name
+      const packagePath = resolve(MONOREPO_PACKAGES_PATH, dirName)
+      const packageJson = readJson(resolve(packagePath, 'package.json'))
+      if (!isPackageJsonWithRattusMeta(packageJson)) {
+        return result
+      }
+
+      const meta = packageJson.rattusMeta
+
+      const testProvider =
+        meta.testProvider === undefined || typeof meta.testProvider === 'boolean'
+          ? meta.testProvider
+          : {
+              exportName: meta.testProvider.exportName,
+              path: resolve(packagePath, meta.testProvider.path),
+            }
+
+      result[dirName] = {
+        title: meta.title,
+        code: dirName,
+        matchPattern: `packages/${dirName}/**`,
+        path: packagePath,
+        testProvider,
+        autoBumpDependents: meta.autoBumpDependents ?? false,
+        order: meta.order ?? 9999,
+      }
+
+      return result
+    },
+    {},
+  )
 }
 
 export function getPackageMeta(pkg: string): PackageMeta {
@@ -39,10 +75,7 @@ export function getPackageMeta(pkg: string): PackageMeta {
 
 export function sortPackages(packages: string[]) {
   return packages.sort((a, b) => {
-    const pkgAOrder = getPackageMeta(a).order ?? 9999
-    const pkgBOrder = getPackageMeta(b).order ?? 9999
-
-    return pkgAOrder - pkgBOrder
+    return getPackageMeta(a).order - getPackageMeta(b).order
   })
 }
 

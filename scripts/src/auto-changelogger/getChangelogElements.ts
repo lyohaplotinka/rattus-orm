@@ -5,9 +5,8 @@ import { isEqual } from 'lodash-es'
 import micromatch from 'micromatch'
 import type { PackageJson } from 'type-fest'
 
-import packagesMeta from '../../packagesMeta.json'
 import type { PackageMeta } from '../types/types'
-import { GitUtils, loadPackageJson, MONOREPO_ROOT_DIR } from '../utils/utils'
+import { getPackageMeta, GitUtils, loadPackageJson, MONOREPO_ROOT_DIR } from '../utils/utils'
 import type { ChangelogElement, Commit } from './types'
 
 const RELEASE_COMMIT_PATTERN = 'release('
@@ -80,7 +79,7 @@ function hasAffectedFilesForPacakge(commit: Commit, packageKey: string, meta: Pa
 
 export async function getChangelogElementsForPackage(key: string): Promise<ChangelogElement | null> {
   const commits = await getCommitsListFromLastRelease(key)
-  const meta = packagesMeta[key]
+  const meta = getPackageMeta(key)
 
   const commitMessages = commits.reduce<string[]>((result, commit) => {
     if (hasAffectedFilesForPacakge(commit, key, meta)) {
@@ -98,7 +97,7 @@ export async function getChangelogElementsForPackage(key: string): Promise<Chang
 
   return {
     packageName: meta.title,
-    packageKey: key,
+    packageKey: meta.code,
     packageVersion: loadPackageJson(key).version!,
     commitMessages,
   }

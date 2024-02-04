@@ -54,6 +54,13 @@
     "vue": "^3.0.0",
     "vuex": "^4.1.0"
   },
+  "rattusMeta": {
+    "title": "Vuex",
+    "testProvider": {
+      "path": "./test/provider-factory.ts",
+      "exportName": "dataProviderFactory"
+    }
+  },
   "size-limit": [
     {
       "name": "ESM Vuex provider",

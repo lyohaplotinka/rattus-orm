@@ -80,6 +80,15 @@
     "normalizr": "^3.6.2",
     "vue": "^3.4.15"
   },
+  "rattusMeta": {
+    "title": "Core",
+    "testProvider": {
+      "path": "./test/provider-factory.ts",
+      "exportName": "dataProviderFactory"
+    },
+    "autoBumpDependents": true,
+    "order": 1
+  },
   "size-limit": [
     {
       "name": "ESM core",
