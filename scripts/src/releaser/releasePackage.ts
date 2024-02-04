@@ -22,7 +22,7 @@ process.on('unhandledRejection', (data) => {
 })
 
 async function bumpDependents(packageName: string, newVersion: string, exclude = ['docs']) {
-  const bumpingDep = loadPackageJson(packageName).name
+  const bumpingDep = loadPackageJson(packageName).name!
   const yarnWorkspaces = await YarnUtils.listPackages()
   const allPackagesData = []
 
@@ -66,7 +66,9 @@ async function bumpDependents(packageName: string, newVersion: string, exclude =
 export async function runForPackage(packageName: string) {
   console.log(`\nReleasing package "${packageName}"\n`)
 
-  const currentVersion = loadPackageJson(packageName).version!
+  const packageMeta = getPackageMeta(packageName)
+
+  const currentVersion = packageMeta.packageJson.version!
   let targetVersion
 
   const { release } = await enquirer.prompt<{ release: string }>({
@@ -103,7 +105,6 @@ export async function runForPackage(packageName: string) {
     return
   }
 
-  const packageMeta = getPackageMeta(packageName)
   if (packageMeta.autoBumpDependents) {
     const { doAutoBump } = await enquirer.prompt<{ doAutoBump: boolean }>({
       type: 'confirm',

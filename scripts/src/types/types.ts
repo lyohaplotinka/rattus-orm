@@ -14,6 +14,7 @@ export type PackageMeta = {
   testProvider: TestProviderConfig | false
   autoBumpDependents: boolean
   order: number
+  packageJson: PackageJsonWithRattusMeta
 }
 
 export type PackageJsonWithRattusMeta = PackageJson.PackageJsonStandard & { rattusMeta: PackageMeta }

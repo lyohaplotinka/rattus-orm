@@ -34,7 +34,7 @@ export function loadPackagesMeta() {
       }
       const dirName = entry.name
       const packagePath = resolve(MONOREPO_PACKAGES_PATH, dirName)
-      const packageJson = readJson(resolve(packagePath, 'package.json'))
+      const packageJson = loadPackageJson(dirName)
       if (!isPackageJsonWithRattusMeta(packageJson)) {
         return result
       }
@@ -43,7 +43,7 @@ export function loadPackagesMeta() {
 
       const testProvider =
         meta.testProvider === undefined || typeof meta.testProvider === 'boolean'
-          ? meta.testProvider
+          ? meta.testProvider ?? false
           : {
               exportName: meta.testProvider.exportName,
               path: resolve(packagePath, meta.testProvider.path),
@@ -57,6 +57,7 @@ export function loadPackagesMeta() {
         testProvider,
         autoBumpDependents: meta.autoBumpDependents ?? false,
         order: meta.order ?? 9999,
+        packageJson,
       }
 
       return result
@@ -224,12 +225,14 @@ export class GitUtils {
     return $`git push`
   }
 
-  public static readFileFromCommit(path: string, hash: string): string {
+  public static readFileFromCommit(path: string, hash: string): string
+  public static readFileFromCommit<T>(path: string, hash: string, processor: (stdout: string) => T): T
+  public static readFileFromCommit(path: string, hash: string, processor?: (stdout: string) => any) {
     const { stdout } = execaCommandSync(`git --no-pager show ${hash}:${path}`, {
       cwd: MONOREPO_ROOT_DIR,
     })
 
-    return stdout
+    return processor ? processor(stdout) : stdout
   }
 
   public static getLastCommitByPattern(pattern: string): string | null {
@@ -240,6 +243,25 @@ export class GitUtils {
   public static getCommitWherePathWasIntroduced(path: string, includeCommit = false): string {
     const { stdout } = $.sync`git log --format=format:%H --diff-filter=A -n 1 main -- ${path}`
     return includeCommit ? `${stdout}^` : stdout
+  }
+
+  public static getCommitsSincePattern(pattern: string): string[] {
+    const { stdout } = $.sync`git log --pretty=format:%s::::%H ${pattern}...main`
+    return stdout.split('\n')
+  }
+
+  public static getCommitFilesList(hash: string): string[] {
+    const { stdout } = $.sync`git diff-tree --no-commit-id --name-only ${hash} -r`
+    return stdout.split('\n')
+  }
+
+  public static getCurrentBranchName() {
+    const res = $.sync`git rev-parse --abbrev-ref HEAD`
+    return res.stdout.trim()
+  }
+
+  public static isOnMainBranch() {
+    return this.getCurrentBranchName() === 'main'
   }
 }
 
@@ -275,5 +297,9 @@ export class YarnUtils {
       shell: true,
       stdio: 'inherit',
     })
+  }
+
+  public static async link() {
+    return $`yarn link`
   }
 }
