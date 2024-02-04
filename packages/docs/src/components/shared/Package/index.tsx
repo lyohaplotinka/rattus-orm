@@ -12,9 +12,10 @@ export type PackageItem = {
   picture: string | React.ComponentType<React.ComponentProps<'svg'>>
   link: string
   description: string
+  liveDemoUrl?: string
 }
 
-export function Package({ title, picture: PackagePicture, description, packageName, link }: PackageItem) {
+export function Package({ title, picture: PackagePicture, description, packageName, link, liveDemoUrl }: PackageItem) {
   const picComp =
     typeof PackagePicture === 'string' ? (
       <img src={PackagePicture} className={styles.packageLogo} alt={`${title} image`} />
@@ -35,9 +36,23 @@ export function Package({ title, picture: PackagePicture, description, packageNa
         <p className={styles.packageDesc}>{description}</p>
       </div>
       <div className="card__footer">
-        <Link to={link} className="button button--outline button--secondary button--block">
+        <Link
+          to={link}
+          className={clsx(
+            'button button--outline button--secondary',
+            liveDemoUrl ? styles.buttonReducedPadding : 'button--block',
+          )}
+        >
           <Translate>See docs</Translate>
         </Link>
+        {liveDemoUrl && (
+          <Link
+            to={liveDemoUrl}
+            className={clsx('button button--outline button--secondary', styles.buttonReducedPadding)}
+          >
+            <Translate>Live demo</Translate>
+          </Link>
+        )}
       </div>
     </div>
   )

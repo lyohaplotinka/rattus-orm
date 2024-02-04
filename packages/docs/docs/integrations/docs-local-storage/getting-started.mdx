@@ -3,6 +3,7 @@ sidebar_position: 1
 title: "Introduction"
 ---
 import PreviewIframe from '@site/src/components/shared/PreviewIframe'
+import { getIntegrationByTitle } from '../../../src/integrations'
 
 `@rattus-orm/local-storage` is a Data Provider that connects [LocalStorage](https://developer.mozilla.org/ru/docs/Web/API/Window/localStorage) with Rattus ORM.
 
@@ -11,4 +12,4 @@ The package includes:
 
 ### Live demo
 
-<PreviewIframe src={'https://stackblitz.com/edit/typescript-bjcfue?embed=1&file=models%2FUser.ts'} />
+<PreviewIframe src={getIntegrationByTitle('LocalStorage').liveDemoUrl} />
