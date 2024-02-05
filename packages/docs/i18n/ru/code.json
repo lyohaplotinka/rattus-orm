@@ -320,7 +320,7 @@
     "message": "Основные моменты"
   },
   "See docs": {
-    "message": "К документации"
+    "message": "Подробнее"
   },
   "Integrations": {
     "message": "Интеграции"
@@ -348,5 +348,8 @@
   },
   "React + MobX integration": {
     "message": "Rattus для React + MobX"
+  },
+  "Live demo": {
+    "message": "Демо"
   }
 }
