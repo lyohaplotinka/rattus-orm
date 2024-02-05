@@ -7,7 +7,7 @@ sidebar_position: 1
 Rattus ORM is a versatile JavaScript/TypeScript package that offers an Object-Relational Mapping (ORM) like experience for JS/TS applications. It is developed based on the source code of "vuex-orm-next", ensuring compatibility with its API while broadening its applicability beyond specific state managers.
 
 :::warning 
-Rattus ORM is currently in its early stages of development. We welcome feedback and contributions to help improve and evolve the package.
+Rattus ORM is currently in its 0.1.* stages. We welcome feedback and contributions to help improve and evolve the package.
 :::
 
 ### Features
