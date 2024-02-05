@@ -1,11 +1,15 @@
 import { translate } from '@docusaurus/Translate'
-import type { PackageItem } from '@site/src/components/shared/Package'
+import type { PackageItem } from '@site/src/types'
 import LsLogo from '@site/static/img/integrations/local-storage.svg'
 import MobxLogo from '@site/static/img/integrations/mobx.svg'
 import PiniaLogo from '@site/static/img/integrations/pinia.svg'
 import ReactLogo from '@site/static/img/integrations/react.svg'
 import ReduxLogo from '@site/static/img/integrations/redux.svg'
+import SvelteLogo from '@site/static/img/integrations/svelte.svg'
 import VuexLogo from '@site/static/img/integrations/vuex.svg'
+
+import AngularLogo from '!!file-loader!@site/static/img/integrations/angular.svg'
+import SolidLogo from '!!file-loader!@site/static/img/integrations/solidjs.svg'
 
 export const IntegrationsList: PackageItem[] = [
   {
@@ -55,6 +59,30 @@ export const IntegrationsList: PackageItem[] = [
     link: '/docs/category/localstorage-integration',
     description: translate({ message: 'localStorage integration' }),
     liveDemoUrl: 'https://stackblitz.com/edit/typescript-bjcfue?embed=1&file=models%2FUser.ts',
+  },
+  {
+    title: 'Solid.js',
+    packageName: '',
+    picture: SolidLogo,
+    link: '',
+    description: translate({ message: 'Solid integration' }),
+    comingSoon: true,
+  },
+  {
+    title: 'Svelte',
+    packageName: '',
+    picture: SvelteLogo,
+    link: '',
+    description: translate({ message: 'Svelte integration' }),
+    comingSoon: true,
+  },
+  {
+    title: 'Angular RxJS',
+    packageName: '',
+    picture: AngularLogo,
+    link: '',
+    description: translate({ message: 'Angular RxJS integration' }),
+    comingSoon: true,
   },
 ]
 

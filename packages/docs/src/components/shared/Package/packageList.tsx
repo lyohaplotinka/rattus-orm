@@ -1,5 +1,5 @@
-import type { PackageItem } from '@site/src/components/shared/Package/index'
 import { Package } from '@site/src/components/shared/Package/index'
+import type { PackageItem } from '@site/src/types'
 import Heading from '@theme/Heading'
 import clsx from 'clsx'
 import React from 'react'

@@ -1,6 +1,6 @@
 import { translate } from '@docusaurus/Translate'
-import type { PackageItem } from '@site/src/components/shared/Package'
 import { PackageList } from '@site/src/components/shared/Package/packageList'
+import type { PackageItem } from '@site/src/types'
 import ZodLogo from '@site/static/img/plugins/zod.svg'
 import React from 'react'
 

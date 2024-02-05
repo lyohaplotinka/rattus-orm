@@ -351,5 +351,20 @@
   },
   "Live demo": {
     "message": "Демо"
+  },
+  "Solid integration": {
+    "message": "Rattus для Solid"
+  },
+  "Svelte integration": {
+    "message": "Rattus для Svelte"
+  },
+  "Angular RxJS integration": {
+    "message": "Rattus для Angular RxJS"
+  },
+  "coming soon": {
+    "message": "скоро"
+  },
+  "Coming soon": {
+    "message": "Скоро"
   }
 }
