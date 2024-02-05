@@ -320,7 +320,7 @@
     "message": "Основные моменты"
   },
   "See docs": {
-    "message": "К документации"
+    "message": "Подробнее"
   },
   "Integrations": {
     "message": "Интеграции"
@@ -348,5 +348,23 @@
   },
   "React + MobX integration": {
     "message": "Rattus для React + MobX"
+  },
+  "Live demo": {
+    "message": "Демо"
+  },
+  "Solid integration": {
+    "message": "Rattus для Solid"
+  },
+  "Svelte integration": {
+    "message": "Rattus для Svelte"
+  },
+  "Angular RxJS integration": {
+    "message": "Rattus для Angular RxJS"
+  },
+  "coming soon": {
+    "message": "скоро"
+  },
+  "Coming soon": {
+    "message": "Скоро"
   }
 }

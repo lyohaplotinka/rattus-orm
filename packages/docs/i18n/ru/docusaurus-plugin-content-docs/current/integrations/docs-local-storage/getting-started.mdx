@@ -3,6 +3,7 @@ sidebar_position: 1
 title: "Введение"
 ---
 import PreviewIframe from '@site/src/components/shared/PreviewIframe'
+import { getIntegrationByTitle } from '../../../../../../src/integrations'
 
 `@rattus-orm/local-storage` это Data Provider соединяющий, [LocalStorage](https://developer.mozilla.org/ru/docs/Web/API/Window/localStorage) с Rattus ORM.
 
@@ -11,4 +12,4 @@ import PreviewIframe from '@site/src/components/shared/PreviewIframe'
 
 ### Пример
 
-<PreviewIframe src={'https://stackblitz.com/edit/typescript-bjcfue?embed=1&file=models%2FUser.ts'} />
+<PreviewIframe src={getIntegrationByTitle('LocalStorage').liveDemoUrl} />
