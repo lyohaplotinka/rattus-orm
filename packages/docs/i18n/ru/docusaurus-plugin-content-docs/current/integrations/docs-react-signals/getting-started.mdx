@@ -3,6 +3,7 @@ sidebar_position: 1
 title: "Введение"
 ---
 import PreviewIframe from '@site/src/components/shared/PreviewIframe'
+import { getIntegrationByTitle } from '../../../../../../src/integrations'
 
 `@rattus-orm/react-signals` это Data Provider, связывающий [React Signals](https://github.com/preactjs/signals/tree/main/packages/react) с Rattus ORM.
 
@@ -12,4 +13,4 @@ import PreviewIframe from '@site/src/components/shared/PreviewIframe'
 3. компонент `<RattusProvier />`.
 
 ### Пример
-<PreviewIframe src={'https://stackblitz.com/edit/vitejs-vite-ra2xlc?embed=1&file=src%2Fmodels%2FUser.ts'} />
+<PreviewIframe src={getIntegrationByTitle('React Signals').liveDemoUrl} />

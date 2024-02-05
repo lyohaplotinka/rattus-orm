@@ -3,6 +3,7 @@ sidebar_position: 1
 title: "Введение"
 ---
 import PreviewIframe from '@site/src/components/shared/PreviewIframe'
+import { getIntegrationByTitle } from '../../../../../../src/integrations'
 
 `@rattus-orm/pinia` – это Data Provider, связывающий хранилище
 [Pinia](https://pinia.vuejs.org/) с Rattus ORM.
@@ -13,4 +14,4 @@ import PreviewIframe from '@site/src/components/shared/PreviewIframe'
 3. плагин для Vue, настраивающий связь ORM с Pinia.
 
 ### Пример
-<PreviewIframe src={'https://stackblitz.com/edit/vitejs-vite-gheh5j?embed=1&file=src%2Fmodels%2FUser.ts'} />
+<PreviewIframe src={getIntegrationByTitle('Pinia').liveDemoUrl} />
