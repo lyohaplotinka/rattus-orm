@@ -3162,6 +3162,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@rattus-orm/solidjs@workspace:packages/solidjs":
+  version: 0.0.0-use.local
+  resolution: "@rattus-orm/solidjs@workspace:packages/solidjs"
+  dependencies:
+    "@rattus-orm/core": "workspace:^"
+  peerDependencies:
+    "@rattus-orm/core": ^0.1.1
+  languageName: unknown
+  linkType: soft
+
 "@rattus-orm/vuex@workspace:packages/vuex":
   version: 0.0.0-use.local
   resolution: "@rattus-orm/vuex@workspace:packages/vuex"

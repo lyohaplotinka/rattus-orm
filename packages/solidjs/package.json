@@ -1,0 +1,68 @@
+{
+  "name": "@rattus-orm/solidjs",
+  "description": "ORM for your JS/TS apps: solidjs bindings",
+  "homepage": "https://lyohaplotinka.github.io/rattus-orm/",
+  "author": "Lyoha Plotinka",
+  "license": "MIT",
+  "packageManager": "yarn@4.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lyohaplotinka/rattus-orm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lyohaplotinka/rattus-orm/issues"
+  },
+  "keywords": [
+    "orm",
+    "rattus",
+    "solidjs",
+    "typescript",
+    "javascript"
+  ],
+  "version": "0.0.0",
+  "main": "./dist/rattus-orm-solidjs-provider.js",
+  "browser": "./dist/rattus-orm-solidjs-provider.mjs",
+  "module": "./dist/rattus-orm-solidjs-provider.mjs",
+  "types": "./dist/rattus-orm-solidjs-provider.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/rattus-orm-solidjs-provider.mjs",
+      "require": "./dist/rattus-orm-solidjs-provider.js",
+      "types": "./dist/rattus-orm-solidjs-provider.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "run -T tsup",
+    "clean": "rm -rf dist && rm -rf node_modules",
+    "lint": "run -T eslint 'src/**/*.ts' --quiet --fix",
+    "test": "run -T vitest run",
+    "typecheck": "bash -c 'run -T tsc -p tsconfig.json --noEmit'",
+    "size": "run -T size-limit"
+  },
+  "devDependencies": {
+    "@rattus-orm/core": "workspace:^"
+  },
+  "peerDependencies": {
+    "@rattus-orm/core": "^0.1.1"
+  },
+  "rattusMeta": {
+    "title": "solidjs",
+    "testProvider": {
+      "path": "./test/provider-factory.ts",
+      "exportName": "dataProviderFactory"
+    }
+  },
+  "size-limit": [
+    {
+      "name": "ESM solidjs provider",
+      "path": "./dist/rattus-orm-solidjs-provider.mjs"
+    },
+    {
+      "name": "CJS solidjs provider",
+      "path": "./dist/rattus-orm-solidjs-provider.mjs"
+    }
+  ]
+}
