@@ -63,6 +63,11 @@
       "import": "./dist/utils/rattus-context.mjs",
       "require": "./dist/utils/rattus-context.js",
       "types": "./dist/utils/rattus-context.d.ts"
+    },
+    "./utils/utils": {
+      "import": "./dist/utils/utils.mjs",
+      "require": "./dist/utils/utils.js",
+      "types": "./dist/utils/utils.d.ts"
     }
   },
   "files": [
