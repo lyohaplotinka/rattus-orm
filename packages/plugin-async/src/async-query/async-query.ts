@@ -11,11 +11,13 @@ import type {
   Order,
   OrderBy,
   OrderDirection,
-  Where,
   WherePrimaryClosure,
 } from '@rattus-orm/core'
 import { Normalizer, Relation } from '@rattus-orm/core'
-import { assert, isArray, isEmpty } from '@rattus-orm/core/utils/utils'
+import { assert, isArray } from '@rattus-orm/core/utils/utils'
+
+import { QueryActions } from './const'
+import type { AsyncWhere, QueryAction, QueryConstraintsWithActionAndPayload } from './types'
 
 export class AsyncQuery<M extends Model = Model> {
   constructor(
@@ -25,7 +27,7 @@ export class AsyncQuery<M extends Model = Model> {
     protected skip = 0,
     protected take: number | null = null,
     protected orders: Order[] = [],
-    protected wheres: Where[] = [],
+    protected wheres: AsyncWhere[] = [],
   ) {}
 
   public newQuery(model: string): AsyncQuery<Model> {
@@ -102,16 +104,23 @@ export class AsyncQuery<M extends Model = Model> {
   }
 
   public all(): Promise<Collection<M>> {
+    const constraints: QueryConstraintsWithActionAndPayload = { action: QueryActions.SELECT }
+    console.log(constraints)
     // @todo how to pass it in data provider?
     return Promise.resolve([])
   }
 
   public get(): Promise<Collection<M>> {
+    const constraints = this.getConstraintsWithAction(QueryActions.SELECT)
+    console.log(constraints)
     // @todo how to pass it with all processing?
     return Promise.resolve([])
   }
 
   public first(): Promise<Item<M>> {
+    this.limit(1)
+    const constraints = this.getConstraintsWithAction(QueryActions.SELECT)
+    console.log(constraints)
     // @todo how to pass it with all processing?
     return Promise.resolve({} as M)
   }
@@ -127,6 +136,8 @@ export class AsyncQuery<M extends Model = Model> {
   }
 
   public select(): Promise<Collection<M>> {
+    const constraints = this.getConstraintsWithAction(QueryActions.SELECT)
+    console.log(constraints)
     // @todo how to pass it in data provider?
     return Promise.resolve([])
   }
@@ -135,13 +146,8 @@ export class AsyncQuery<M extends Model = Model> {
   public save(record: Element): Promise<M>
   public save(records: Element | Element[]): Promise<M | M[]> {
     const [data, entities] = this.getNormalizedEntities(records)
-
-    for (const entity in entities) {
-      const query = this.newQuery(entity)
-      const elements = entities[entity]
-
-      // @todo save?
-    }
+    const constraints: QueryConstraintsWithActionAndPayload = { action: QueryActions.SAVE, payload: { data, entities } }
+    console.log(constraints)
 
     // @todo how to pass it in data provider?
     return Promise.resolve([])
@@ -151,30 +157,30 @@ export class AsyncQuery<M extends Model = Model> {
   public insert(record: Element): Promise<M>
   public insert(records: Element | Element[]): Promise<M | Collection<M>> {
     const models = this.hydrate(records)
-    this.getDataProvider().insert(this.getThisModulePath(), this.compile(models))
-    return models
+    const constraints: QueryConstraintsWithActionAndPayload = { action: QueryActions.INSERT, payload: models }
+    console.log(constraints)
+
+    // @todo how to pass it in data provider?
+    return Promise.resolve([])
   }
 
   public fresh(records: Element[]): Promise<Collection<M>>
   public fresh(record: Element): Promise<M>
   public fresh(records: Element | Element[]): Promise<M | Collection<M>> {
     const models = this.hydrate(records)
-    this.getDataProvider().replace(this.getThisModulePath(), this.compile(models))
-    return models
+    const constraints: QueryConstraintsWithActionAndPayload = { action: QueryActions.FRESH, payload: models }
+    console.log(constraints)
+
+    // @todo how to pass it in data provider?
+    return Promise.resolve([])
   }
 
   public update(record: Element): Promise<Collection<M>> {
-    const models = this.get()
+    const constraints = this.getConstraintsWithAction(QueryActions.UPDATE, record)
+    console.log(constraints)
 
-    if (isEmpty(models)) {
-      return []
-    }
-    const newModels = models.map((model) => {
-      return this.hydrate({ ...model.$getAttributes(), ...record })
-    })
-
-    this.getDataProvider().update(this.getThisModulePath(), this.compile(newModels))
-    return newModels
+    // @todo how to pass it in data provider?
+    return Promise.resolve([])
   }
 
   public destroy(ids: (string | number)[]): Promise<Collection<M>>
@@ -185,25 +191,38 @@ export class AsyncQuery<M extends Model = Model> {
       'Please use `delete` method instead.',
     ])
 
-    return isArray(ids) ? this.destroyMany(ids) : this.destroyOne(ids)
+    const constraints: QueryConstraintsWithActionAndPayload = { action: QueryActions.DELETE, payload: ids }
+    console.log(constraints)
+
+    // @todo how to pass it in data provider?
+    return Promise.resolve([])
   }
 
   public delete(): Promise<M[]> {
-    const models = this.get()
+    const constraints = this.getConstraintsWithAction(QueryActions.DELETE)
+    console.log(constraints)
 
-    if (isEmpty(models)) {
-      return []
-    }
-
-    this.getDataProvider().delete(this.getThisModulePath(), this.getIndexIdsFromCollection(models))
-    return models
+    // @todo how to pass it in data provider?
+    return Promise.resolve([])
   }
 
   public flush(): Promise<Collection<M>> {
-    const models = this.get()
-    this.getDataProvider().flush(this.getThisModulePath())
+    const constraints: QueryConstraintsWithActionAndPayload = { action: QueryActions.FLUSH }
+    console.log(constraints)
 
-    return models
+    // @todo how to pass it in data provider?
+    return Promise.resolve([])
+  }
+
+  /**
+   * Instantiate new models with the given record.
+   */
+  protected hydrate(record: Element): M
+  protected hydrate(records: Element[]): Collection<M>
+  protected hydrate(records: Element | Element[]): M | Collection<M> {
+    return isArray(records)
+      ? records.map((record) => this.hydrate(record))
+      : this.model.$newInstance(records, { relations: false })
   }
 
   protected getNormalizedEntities(records: Element | Element[]): [data: Element | Element[], entities: Entities] {
@@ -212,5 +231,16 @@ export class AsyncQuery<M extends Model = Model> {
     const entities = new Normalizer().normalize(records, toNormalizrSchema).entities
 
     return [records, entities]
+  }
+
+  protected getConstraintsWithAction(action: QueryAction, payload?: any): QueryConstraintsWithActionAndPayload {
+    return {
+      action,
+      payload,
+      wheres: this.wheres,
+      orders: this.orders,
+      limit: this.take ?? undefined,
+      offset: this.skip,
+    }
   }
 }
