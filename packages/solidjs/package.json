@@ -1,6 +1,6 @@
 {
   "name": "@rattus-orm/solidjs",
-  "description": "ORM for your JS/TS apps: solidjs bindings",
+  "description": "ORM for your JS/TS apps: Solid.js bindings",
   "homepage": "https://lyohaplotinka.github.io/rattus-orm/",
   "author": "Lyoha Plotinka",
   "license": "MIT",
@@ -15,19 +15,20 @@
   "keywords": [
     "orm",
     "rattus",
+    "solid",
     "solidjs",
     "typescript",
     "javascript"
   ],
   "version": "0.0.0",
-  "main": "./dist/rattus-orm-solidjs-provider.js",
-  "browser": "./dist/rattus-orm-solidjs-provider.mjs",
-  "module": "./dist/rattus-orm-solidjs-provider.mjs",
+  "main": "./dist/rattus-orm-solidjs-provider.cjs.jsx",
+  "browser": "./dist/rattus-orm-solidjs-provider.esm.jsx",
+  "module": "./dist/rattus-orm-solidjs-provider.esm.jsx",
   "types": "./dist/rattus-orm-solidjs-provider.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/rattus-orm-solidjs-provider.mjs",
-      "require": "./dist/rattus-orm-solidjs-provider.js",
+      "import": "./dist/rattus-orm-solidjs-provider.esm.jsx",
+      "require": "./dist/rattus-orm-solidjs-provider.cjs.jsx",
       "types": "./dist/rattus-orm-solidjs-provider.d.ts"
     }
   },
@@ -43,13 +44,20 @@
     "size": "run -T size-limit"
   },
   "devDependencies": {
-    "@rattus-orm/core": "workspace:^"
+    "@rattus-orm/core": "workspace:^",
+    "@solidjs/testing-library": "^0.8.6",
+    "@testing-library/jest-dom": "^6.4.2",
+    "@types/jsdom": "^21.1.6",
+    "jsdom": "^24.0.0",
+    "solid-js": "^1.8.14",
+    "vite-plugin-solid": "^2.9.1"
   },
   "peerDependencies": {
-    "@rattus-orm/core": "^0.1.1"
+    "@rattus-orm/core": "^0.1.1",
+    "solid-js": "*"
   },
   "rattusMeta": {
-    "title": "solidjs",
+    "title": "Solid.js",
     "testProvider": {
       "path": "./test/provider-factory.ts",
       "exportName": "dataProviderFactory"
@@ -58,11 +66,11 @@
   "size-limit": [
     {
       "name": "ESM solidjs provider",
-      "path": "./dist/rattus-orm-solidjs-provider.mjs"
+      "path": "./dist/rattus-orm-solidjs-provider.jsx"
     },
     {
       "name": "CJS solidjs provider",
-      "path": "./dist/rattus-orm-solidjs-provider.mjs"
+      "path": "./dist/rattus-orm-solidjs-provider.js"
     }
   ]
 }
