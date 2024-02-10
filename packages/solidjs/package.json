@@ -38,15 +38,13 @@
   "scripts": {
     "build": "run -T tsup",
     "clean": "rm -rf dist && rm -rf node_modules",
-    "lint": "run -T eslint 'src/**/*.ts' --quiet --fix",
+    "lint": "run -T eslint 'src/**/*.{ts,tsx}' --quiet --fix",
     "test": "run -T vitest run",
-    "typecheck": "bash -c 'run -T tsc -p tsconfig.json --noEmit'",
-    "size": "run -T size-limit"
+    "typecheck": "bash -c 'run -T tsc -p tsconfig.json --noEmit'"
   },
   "devDependencies": {
     "@rattus-orm/core": "workspace:^",
     "@solidjs/testing-library": "^0.8.6",
-    "@testing-library/jest-dom": "^6.4.2",
     "@types/jsdom": "^21.1.6",
     "jsdom": "^24.0.0",
     "solid-js": "^1.8.14",
@@ -62,15 +60,5 @@
       "path": "./test/provider-factory.ts",
       "exportName": "dataProviderFactory"
     }
-  },
-  "size-limit": [
-    {
-      "name": "ESM solidjs provider",
-      "path": "./dist/rattus-orm-solidjs-provider.jsx"
-    },
-    {
-      "name": "CJS solidjs provider",
-      "path": "./dist/rattus-orm-solidjs-provider.js"
-    }
-  ]
+  }
 }
