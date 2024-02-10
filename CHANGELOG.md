@@ -1,3 +1,7 @@
+# 2024/02/10
+### Solid.js (0.0.1)
+* Introducing Solid.js integration: data provider, context and hooks 🔥  ([#30](https://github.com/lyohaplotinka/rattus-orm/pull/30))
+
 # 2024/02/03
 ### Vuex (0.1.1)
 * release(core): v0.1.1

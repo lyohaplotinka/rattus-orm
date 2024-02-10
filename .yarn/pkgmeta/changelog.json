@@ -56,5 +56,15 @@
         "Introducing React MobX integration: data provider, context and hooks 🎉  ([#27](https://github.com/lyohaplotinka/rattus-orm/pull/27))"
       ]
     }
+  ],
+  "2024/02/10": [
+    {
+      "packageName": "Solid.js",
+      "packageKey": "solidjs",
+      "packageVersion": "0.0.1",
+      "commitMessages": [
+        "Introducing Solid.js integration: data provider, context and hooks 🔥  ([#30](https://github.com/lyohaplotinka/rattus-orm/pull/30))"
+      ]
+    }
   ]
 }
