@@ -1,6 +1,6 @@
 {
   "label": "Интеграция с localStorage",
-  "position": 5,
+  "position": 100,
   "link": {
     "type": "generated-index",
     "description": "Data provider для localStorage"

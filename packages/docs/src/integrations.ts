@@ -53,20 +53,20 @@ export const IntegrationsList: PackageItem[] = [
     liveDemoUrl: 'https://stackblitz.com/edit/vitejs-vite-ra2xlc?embed=1&file=src%2Fmodels%2FUser.ts',
   },
   {
+    title: 'Solid.js',
+    packageName: '@rattus-orm/solidjs',
+    picture: SolidLogo,
+    link: '/docs/category/solid-integration',
+    description: translate({ message: 'Solid integration' }),
+    liveDemoUrl: 'https://stackblitz.com/edit/solidjs-templates-tyxxud?embed=1&file=src%2Fmodels%2FUser.ts',
+  },
+  {
     title: 'LocalStorage',
     packageName: '@rattus-orm/local-storage',
     picture: LsLogo,
     link: '/docs/category/localstorage-integration',
     description: translate({ message: 'localStorage integration' }),
     liveDemoUrl: 'https://stackblitz.com/edit/typescript-bjcfue?embed=1&file=models%2FUser.ts',
-  },
-  {
-    title: 'Solid.js',
-    packageName: '',
-    picture: SolidLogo,
-    link: '',
-    description: translate({ message: 'Solid integration' }),
-    comingSoon: true,
   },
   {
     title: 'Svelte',

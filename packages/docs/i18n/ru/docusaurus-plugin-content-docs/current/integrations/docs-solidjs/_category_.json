@@ -1,0 +1,8 @@
+{
+  "label": "Интеграция с Solid",
+  "position": 7,
+  "link": {
+    "type": "generated-index",
+    "description": "Data provider и хелперы для Solid.js"
+  }
+}
