@@ -1,0 +1,16 @@
+---
+sidebar_position: 1
+title: "Getting started"
+---
+import PreviewIframe from '@site/src/components/shared/PreviewIframe'
+import { getIntegrationByTitle } from '../../../src/integrations'
+
+`@rattus-orm/solidjs` is a Data Provider that links the [Solid.js Signals](https://www.solidjs.com/tutorial/introduction_signals) with Rattus ORM.
+
+The package includes:
+1. SolidjsDataProvider
+2. hooks `useRattusContext`, `useRepository`
+3. the component `<RattusProvider />`.
+
+### Live demo
+<PreviewIframe src={getIntegrationByTitle('Solid.js').liveDemoUrl} />

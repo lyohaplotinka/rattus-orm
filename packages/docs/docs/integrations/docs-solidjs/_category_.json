@@ -1,0 +1,8 @@
+{
+  "label": "Solid integration",
+  "position": 7,
+  "link": {
+    "type": "generated-index",
+    "description": "Solid.js data provider and helpers"
+  }
+}

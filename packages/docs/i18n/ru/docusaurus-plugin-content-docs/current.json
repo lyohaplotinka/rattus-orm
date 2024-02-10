@@ -82,5 +82,13 @@
   "sidebar.tutorialSidebar.category.MobX integration (React).link.generated-index.description": {
     "message": "Data provider и хелперы для React MobX",
     "description": "The generated-index page description for category MobX integration (React) in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Solid integration": {
+    "message": "Интеграция с Solid",
+    "description": "The label for category Solid integration in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Solid integration.link.generated-index.description": {
+    "message": "Data provider и хелперы для Solid.js",
+    "description": "The generated-index page description for category Solid integration in sidebar tutorialSidebar"
   }
 }
