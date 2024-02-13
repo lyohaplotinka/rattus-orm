@@ -29,6 +29,7 @@
       "dom"
     ]
   },
+  "include": ["./src", "./test"],
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
