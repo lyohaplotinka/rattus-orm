@@ -59,6 +59,7 @@
   },
   "sideEffects": false,
   "rattusMeta": {
-    "title": "Angular + RxJS"
+    "title": "Angular + RxJS",
+    "publishDir": "./dist"
   }
 }
