@@ -7,6 +7,7 @@
       "jasmine"
     ]
   },
+  "files": ["test/setup-tests.ts"],
   "include": [
     "**/*.spec.ts",
     "**/*.d.ts"
