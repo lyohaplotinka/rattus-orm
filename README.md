@@ -30,7 +30,8 @@ Rattus ORM is a versatile JavaScript/TypeScript package that offers an Object-Re
 * [@rattus-orm/react-redux](./packages/react-redux): redux data provider (react)
 * [@rattus-orm/react-mobx](./packages/react-mobx): mobx data provider (react)
 * [@rattus-orm/react-signals](./packages/react-signals): signals data provider (react)
-* [@rattus-orm/solidjs](./packages/react-signals): Solid.js data provider
+* [@rattus-orm/solidjs](./packages/solidjs): Solid.js data provider
+* [@rattus-orm/angular-rxjs](./packages/angular-rxjs): Angular + RxJS data provider
 * [@rattus-orm/local-storage](./packages/local-storage): localStorage data provider
 
 #### Plugins:
