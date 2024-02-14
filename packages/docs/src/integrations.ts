@@ -56,7 +56,7 @@ export const IntegrationsList: PackageItem[] = [
     title: 'Angular RxJS',
     packageName: '@rattus-orm/angular-rxjs',
     picture: AngularLogo,
-    link: '/docs/category/angular--rxjs-integration',
+    link: '/docs/category/angular-rxjs-integration',
     description: translate({ message: 'Angular RxJS integration' }),
     liveDemoUrl: 'https://stackblitz.com/edit/stackblitz-starters-ywtslg?embed=1&file=src%2Fmodels%2FUser.ts',
   },
