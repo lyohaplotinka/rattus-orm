@@ -30,7 +30,6 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(RattusOrmModule.forRoot())
   ],
 };
-
 ```
 
 ```typescript title="models/User.ts"
