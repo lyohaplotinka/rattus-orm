@@ -1,3 +1,7 @@
+# 2024/02/14
+### Angular + RxJS (0.0.1)
+* Introducing Angular integration: powered by RxJS ⚡  ([#31](https://github.com/lyohaplotinka/rattus-orm/pull/31))
+
 # 2024/02/10
 ### Solid.js (0.0.1)
 * Introducing Solid.js integration: data provider, context and hooks 🔥  ([#30](https://github.com/lyohaplotinka/rattus-orm/pull/30))

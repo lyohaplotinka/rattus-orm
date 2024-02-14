@@ -66,5 +66,15 @@
         "Introducing Solid.js integration: data provider, context and hooks 🔥  ([#30](https://github.com/lyohaplotinka/rattus-orm/pull/30))"
       ]
     }
+  ],
+  "2024/02/14": [
+    {
+      "packageName": "Angular + RxJS",
+      "packageKey": "angular-rxjs",
+      "packageVersion": "0.0.1",
+      "commitMessages": [
+        "Introducing Angular integration: powered by RxJS ⚡  ([#31](https://github.com/lyohaplotinka/rattus-orm/pull/31))"
+      ]
+    }
   ]
 }
