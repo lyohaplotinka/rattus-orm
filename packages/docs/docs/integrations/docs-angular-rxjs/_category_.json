@@ -1,0 +1,8 @@
+{
+  "label": "Angular RxJS integration",
+  "position": 8,
+  "link": {
+    "type": "generated-index",
+    "description": "Angular bindings for Rattus ORM"
+  }
+}

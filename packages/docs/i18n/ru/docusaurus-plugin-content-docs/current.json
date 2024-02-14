@@ -90,5 +90,13 @@
   "sidebar.tutorialSidebar.category.Solid integration.link.generated-index.description": {
     "message": "Data provider и хелперы для Solid.js",
     "description": "The generated-index page description for category Solid integration in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Angular RxJS integration": {
+    "message": "Интеграция с Angular и RxJS",
+    "description": "The label for category Angular RxJS integration in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Angular RxJS integration.link.generated-index.description": {
+    "message": "Модуль Rattus ORM для Angular",
+    "description": "The generated-index page description for category Angular RxJS integration in sidebar tutorialSidebar"
   }
 }

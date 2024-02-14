@@ -138,7 +138,12 @@ export async function runForPackage(packageName: string) {
   await GitUtils.commit(`release(${packageName}): v${targetVersion}`)
 
   console.log('Publishing the package...')
-  await YarnUtils.publishPackage(packageName)
+  if (packageMeta.publishDir) {
+    console.log(`publishDir detected, publishing from "${packageMeta.publishDir}"`)
+    await YarnUtils.publishPackageForCustomDir(packageMeta.publishDir)
+  } else {
+    await YarnUtils.publishPackage(packageName)
+  }
 
   // Push to GitHub.
   console.log('Pushing to GitHub...')

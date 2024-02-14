@@ -15,6 +15,7 @@ export type PackageMeta = {
   autoBumpDependents: boolean
   order: number
   packageJson: PackageJsonWithRattusMeta
+  publishDir: string | null
 }
 
 export type PackageJsonWithRattusMeta = PackageJson.PackageJsonStandard & { rattusMeta: PackageMeta }

@@ -53,6 +53,14 @@ export const IntegrationsList: PackageItem[] = [
     liveDemoUrl: 'https://stackblitz.com/edit/vitejs-vite-ra2xlc?embed=1&file=src%2Fmodels%2FUser.ts',
   },
   {
+    title: 'Angular RxJS',
+    packageName: '@rattus-orm/angular-rxjs',
+    picture: AngularLogo,
+    link: '/docs/category/angular-rxjs-integration',
+    description: translate({ message: 'Angular RxJS integration' }),
+    liveDemoUrl: 'https://stackblitz.com/edit/stackblitz-starters-ywtslg?embed=1&file=src%2Fmodels%2FUser.ts',
+  },
+  {
     title: 'Solid.js',
     packageName: '@rattus-orm/solidjs',
     picture: SolidLogo,
@@ -74,14 +82,6 @@ export const IntegrationsList: PackageItem[] = [
     picture: SvelteLogo,
     link: '',
     description: translate({ message: 'Svelte integration' }),
-    comingSoon: true,
-  },
-  {
-    title: 'Angular RxJS',
-    packageName: '',
-    picture: AngularLogo,
-    link: '',
-    description: translate({ message: 'Angular RxJS integration' }),
     comingSoon: true,
   },
 ]

@@ -58,6 +58,7 @@ export function loadPackagesMeta() {
         autoBumpDependents: meta.autoBumpDependents ?? false,
         order: meta.order ?? 9999,
         packageJson,
+        publishDir: meta.publishDir ? resolve(packagePath, meta.publishDir) : null,
       }
 
       return result
@@ -290,6 +291,14 @@ export class YarnUtils {
 
   public static async runForPackage(pkg: string, command: string) {
     return $`yarn workspace @rattus-orm/${pkg} run ${command}`
+  }
+
+  public static async publishPackageForCustomDir(publishDir: string) {
+    return execaCommand(`npm publish --access public`, {
+      shell: true,
+      stdio: 'inherit',
+      cwd: publishDir,
+    })
   }
 
   public static async publishPackage(pkg: string) {
