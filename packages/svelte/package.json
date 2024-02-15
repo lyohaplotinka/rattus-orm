@@ -32,7 +32,8 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "components"
   ],
   "scripts": {
     "build": "run -T tsup",
@@ -43,17 +44,14 @@
     "size": "run -T size-limit"
   },
   "devDependencies": {
-    "@rattus-orm/core": "workspace:^"
+    "@rattus-orm/core": "workspace:^",
+    "svelte": "^4.2.10"
   },
   "peerDependencies": {
     "@rattus-orm/core": "^0.1.1"
   },
   "rattusMeta": {
-    "title": "svelte",
-    "testProvider": {
-      "path": "./test/provider-factory.ts",
-      "exportName": "dataProviderFactory"
-    }
+    "title": "Svelte"
   },
   "size-limit": [
     {
