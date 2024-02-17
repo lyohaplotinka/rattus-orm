@@ -98,5 +98,13 @@
   "sidebar.tutorialSidebar.category.Angular RxJS integration.link.generated-index.description": {
     "message": "Модуль Rattus ORM для Angular",
     "description": "The generated-index page description for category Angular RxJS integration in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Svelte integration": {
+    "message": "Интеграция с Svelte",
+    "description": "The label for category Svelte integration in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Svelte integration.link.generated-index.description": {
+    "message": "Интеграция Rattus ORM с Svelte",
+    "description": "The generated-index page description for category Svelte integration in sidebar tutorialSidebar"
   }
 }

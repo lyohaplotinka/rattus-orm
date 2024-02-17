@@ -61,6 +61,14 @@ export const IntegrationsList: PackageItem[] = [
     liveDemoUrl: 'https://stackblitz.com/edit/stackblitz-starters-ywtslg?embed=1&file=src%2Fmodels%2FUser.ts',
   },
   {
+    title: 'Svelte',
+    packageName: '@rattus-orm/svelte',
+    picture: SvelteLogo,
+    link: '/docs/category/svelte-integration',
+    description: translate({ message: 'Svelte integration' }),
+    liveDemoUrl: 'https://stackblitz.com/edit/vitejs-vite-faunob?embed=1&file=src%2Fmodels%2FUser.ts',
+  },
+  {
     title: 'Solid.js',
     packageName: '@rattus-orm/solidjs',
     picture: SolidLogo,
@@ -75,14 +83,6 @@ export const IntegrationsList: PackageItem[] = [
     link: '/docs/category/localstorage-integration',
     description: translate({ message: 'localStorage integration' }),
     liveDemoUrl: 'https://stackblitz.com/edit/typescript-bjcfue?embed=1&file=models%2FUser.ts',
-  },
-  {
-    title: 'Svelte',
-    packageName: '',
-    picture: SvelteLogo,
-    link: '',
-    description: translate({ message: 'Svelte integration' }),
-    comingSoon: true,
   },
 ]
 
