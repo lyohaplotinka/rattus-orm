@@ -2,12 +2,18 @@
   <img style="margin-right: -15px" width="192px" src="https://raw.githubusercontent.com/lyohaplotinka/rattus-orm/main/assets/logo.svg" alt="Rattus ORM">
 </p>
 
-<h1 align="center">Rattus ORM – svelte</h1>
+<p align="center">
+  <img alt="bundle size" src="https://img.shields.io/bundlephobia/minzip/%40rattus-orm%2Fsvelte">
+  <img alt="npm version (core)" src="https://img.shields.io/npm/v/%40rattus-orm%2Fsvelte">
+</p>
 
-**svelte data provider and helpers for Rattus ORM**
+<h1 align="center">Rattus ORM – Svelte</h1>
+
+**Svelte bindings for Rattus ORM**
 
 ### Contents
-1. ...
+1. `<RattusProvier />` component;
+2. Hooks: `useRattusContext`, `useRepository`.
 
 ### Installation
 Use your favorite package manager. For example, yarn:

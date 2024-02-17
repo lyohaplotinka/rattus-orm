@@ -1,0 +1,8 @@
+{
+  "label": "Svelte integration",
+  "position": 9,
+  "link": {
+    "type": "generated-index",
+    "description": "Svelte bindings for Rattus ORM"
+  }
+}
