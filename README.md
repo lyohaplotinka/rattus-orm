@@ -25,13 +25,14 @@ Rattus ORM is a versatile JavaScript/TypeScript package that offers an Object-Re
 ### Packages
 #### Integrations:
 * [@rattus-orm/core](./packages/core): core of Rattus ORM
-* [@rattus-orm/vuex](./packages/vuex): vuex data provider (vue)
-* [@rattus-orm/pinia](./packages/pinia): pinia data provider (vue)
-* [@rattus-orm/react-redux](./packages/react-redux): redux data provider (react)
-* [@rattus-orm/react-mobx](./packages/react-mobx): mobx data provider (react)
-* [@rattus-orm/react-signals](./packages/react-signals): signals data provider (react)
+* [@rattus-orm/vuex](./packages/vuex): Vuex data provider (vue)
+* [@rattus-orm/pinia](./packages/pinia): Pinia data provider (vue)
+* [@rattus-orm/react-redux](./packages/react-redux): Redux data provider (react)
+* [@rattus-orm/react-mobx](./packages/react-mobx): MobX data provider (react)
+* [@rattus-orm/react-signals](./packages/react-signals): Signals data provider (react)
 * [@rattus-orm/solidjs](./packages/solidjs): Solid.js data provider
-* [@rattus-orm/angular-rxjs](./packages/angular-rxjs): Angular + RxJS data provider
+* [@rattus-orm/svelte](./packages/svelte): Svelte integration
+* [@rattus-orm/angular-rxjs](./packages/angular-rxjs): Angular + RxJS integration
 * [@rattus-orm/local-storage](./packages/local-storage): localStorage data provider
 
 #### Plugins:

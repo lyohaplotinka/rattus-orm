@@ -21,10 +21,50 @@ Use your favorite package manager. For example, yarn:
 yarn add @rattus-orm/core @rattus-orm/svelte
 ```
 ### Basic usage
-...
+```html title="App.svelte"
+<script>
+  import { RattusProvider } from '@rattus-orm/svelte'
+</script>
+
+<RattusProvider>
+  <!-- your components -->
+</RattusProvider>
+```
+```typescript title="models/User.ts"
+export class User extends Model {
+    public static entity = 'user'
+    
+    @Uid()
+    public id: string
+    
+    @Str()
+    public email: string
+}
+```
+```html title="User.svelte"
+<script>
+  import { useRepository } from "@rattus-orm/svelte";
+  import { User } from "./models/User";
+  
+  const userRepo = useRepository(User)
+  const user = userRepo.find('1')
+
+  setTimeout(() => {
+    userRepo.save({ id: '1', email: 'test@test.com' })
+  }, 1000)
+
+</script>
+
+<div>
+  {#if $user}
+    id: {$user.id}<br/>
+    email: {$user.email}
+  {/if}
+</div>
+```
 
 ### Documentation
-For detailed docs please read [documentation website](https://lyohaplotinka.github.io/rattus-orm/docs/category/vuex-integration).
+For detailed docs please read [documentation website](https://orm.rattus.dev/docs/category/svelte-integration).
 
 ### Contributing
 Contributions are welcome! Please read our [Contributing Guide](../../CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests.
