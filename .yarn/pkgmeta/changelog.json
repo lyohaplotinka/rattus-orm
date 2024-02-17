@@ -76,5 +76,15 @@
         "Introducing Angular integration: powered by RxJS ⚡  ([#31](https://github.com/lyohaplotinka/rattus-orm/pull/31))"
       ]
     }
+  ],
+  "2024/02/17": [
+    {
+      "packageName": "Svelte",
+      "packageKey": "svelte",
+      "packageVersion": "0.1.0",
+      "commitMessages": [
+        "Introducing Svelte integration 🥳  ([#32](https://github.com/lyohaplotinka/rattus-orm/pull/32))"
+      ]
+    }
   ]
 }

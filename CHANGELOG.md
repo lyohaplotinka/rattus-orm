@@ -1,3 +1,7 @@
+# 2024/02/17
+### Svelte (0.1.0)
+* Introducing Svelte integration 🥳  ([#32](https://github.com/lyohaplotinka/rattus-orm/pull/32))
+
 # 2024/02/14
 ### Angular + RxJS (0.0.1)
 * Introducing Angular integration: powered by RxJS ⚡  ([#31](https://github.com/lyohaplotinka/rattus-orm/pull/31))
