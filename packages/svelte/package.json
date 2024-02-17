@@ -1,0 +1,59 @@
+{
+  "name": "@rattus-orm/svelte",
+  "description": "ORM for your JS/TS apps: svelte bindings",
+  "homepage": "https://lyohaplotinka.github.io/rattus-orm/",
+  "author": "Lyoha Plotinka",
+  "license": "MIT",
+  "packageManager": "yarn@4.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lyohaplotinka/rattus-orm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lyohaplotinka/rattus-orm/issues"
+  },
+  "keywords": [
+    "orm",
+    "rattus",
+    "svelte",
+    "typescript",
+    "javascript"
+  ],
+  "version": "0.0.0",
+  "main": "./dist/rattus-orm-svelte-provider.js",
+  "browser": "./dist/rattus-orm-svelte-provider.mjs",
+  "module": "./dist/rattus-orm-svelte-provider.mjs",
+  "types": "./dist/rattus-orm-svelte-provider.d.ts",
+  "svelte": "./dist/rattus-orm-svelte-provider.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/rattus-orm-svelte-provider.mjs",
+      "require": "./dist/rattus-orm-svelte-provider.js",
+      "types": "./dist/rattus-orm-svelte-provider.d.ts",
+      "svelte": "./dist/rattus-orm-svelte-provider.mjs"
+    }
+  },
+  "files": [
+    "dist",
+    "components"
+  ],
+  "scripts": {
+    "build": "run -T tsup",
+    "clean": "rm -rf dist && rm -rf node_modules",
+    "lint": "run -T eslint 'src/**/*.ts' --quiet --fix",
+    "test": "yarn build && run -T vitest run",
+    "typecheck": "bash -c 'run -T tsc -p tsconfig.json --noEmit'"
+  },
+  "devDependencies": {
+    "@rattus-orm/core": "workspace:^",
+    "@sveltejs/vite-plugin-svelte": "^3.0.2",
+    "@testing-library/svelte": "4.1.0",
+    "svelte": "^4.2.10"
+  },
+  "peerDependencies": {
+    "@rattus-orm/core": "^0.1.1"
+  },
+  "rattusMeta": {
+    "title": "Svelte"
+  }
+}
