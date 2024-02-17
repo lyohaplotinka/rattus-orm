@@ -1,0 +1,15 @@
+---
+sidebar_position: 1
+title: "Введение"
+---
+import PreviewIframe from '@site/src/components/shared/PreviewIframe'
+import { getIntegrationByTitle } from '../../../../../../src/integrations'
+
+`@rattus-orm/svelte` это пакет, связывающий [Svelte](https://svelte.dev/) с Rattus ORM.
+
+В пакет выходит:
+1. хуки `useRattusContext`, `useRepository`
+2. компонент `<RattusProvier />`.
+
+### Пример
+<PreviewIframe src={getIntegrationByTitle('Svelte').liveDemoUrl} />

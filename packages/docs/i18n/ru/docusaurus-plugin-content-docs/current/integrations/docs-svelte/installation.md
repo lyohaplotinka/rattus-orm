@@ -2,16 +2,16 @@
 sidebar_position: 2
 ---
 
-# Installation and Usage
+# Установка и использование
 
-`@rattus-orm/svelte` is a separate package that does not include the core library. To start
-using ORM in your Svelte application, you need to install everything:
+`@rattus-orm/svelte` – это отдельный пакет, не включающий в себя основную библиотеку. Чтобы начать
+пользоваться ORM в вашем приложении Svelte, нужно установить всё:
 ```bash
 yarn add @rattus-orm/core @rattus-orm/svelte
 ```
 
-### Basic Usage Example
-The simplest way to set up Rattus ORM with Svelte is to use the provider:
+### Базовый пример использования
+Самый простой путь настроить Rattus ORM с Svelte – использовать провайдер:
 
 ```html title="App.svelte"
 <script>
@@ -55,11 +55,10 @@ export class User extends Model {
 </div>
 ```
 
-### Using plugins
+### Использование плагинов
 
-If you want to use [plugins](/docs/docs-core/plugins) with a database, you can
-pass an array of plugins into the provider prop. For example, a [validation plugin with Zod](/docs/category/zod-validate):
-
+Если вы хотите использовать [плагины](/docs/docs-core/plugins) с базой
+данных, вы можете передать массив плагинов в пропс провайдера. К примеру, [плагин для валидации с Zod](/docs/category/zod-validate):
 ```html
 <script>
   import { RattusProvider } from '@rattus-orm/svelte'
