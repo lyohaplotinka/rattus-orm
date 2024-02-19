@@ -78,7 +78,7 @@
   },
   "devDependencies": {
     "normalizr": "^3.6.2",
-    "vue": "^3.4.15"
+    "vue": "^3.4.19"
   },
   "rattusMeta": {
     "title": "Core",

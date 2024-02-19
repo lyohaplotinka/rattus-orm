@@ -47,8 +47,8 @@
     "@solidjs/testing-library": "^0.8.6",
     "@types/jsdom": "^21.1.6",
     "jsdom": "^24.0.0",
-    "solid-js": "^1.8.14",
-    "vite-plugin-solid": "^2.9.1"
+    "solid-js": "^1.8.15",
+    "vite-plugin-solid": "^2.10.1"
   },
   "peerDependencies": {
     "@rattus-orm/core": "^0.1.1",

@@ -47,8 +47,8 @@
   "devDependencies": {
     "@rattus-orm/core": "workspace:^",
     "@sveltejs/vite-plugin-svelte": "^3.0.2",
-    "@testing-library/svelte": "4.1.0",
-    "svelte": "^4.2.10"
+    "@testing-library/svelte": "4.2.0",
+    "svelte": "^4.2.11"
   },
   "peerDependencies": {
     "@rattus-orm/core": "^0.1.1"
