@@ -2,12 +2,12 @@ import React from 'react'
 import { describe, expect, it } from 'vitest'
 import { RattusProvider, ReactMobxDataProvider, useRattusContext } from '../src'
 import { cleanup, render } from '@testing-library/react'
-import { isInitializedContext } from '../src/utils'
 import { Database } from '@rattus-orm/core'
 import { isUnknownRecord } from '@rattus-orm/core/utils/isUnknownRecord'
 import { renderWithResultAndContext, TestComponent } from './test-utils'
 import { RattusContext } from '@rattus-orm/core/utils/rattus-context'
 import '@testing-library/jest-dom/vitest'
+import { isInitializedContext } from '@rattus-orm/core/utils/integrationsHelpers'
 
 describe('react-mobx: context', () => {
   it('Context valid', () => {

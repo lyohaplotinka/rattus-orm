@@ -2,24 +2,15 @@ import '@testing-library/jest-dom/vitest'
 
 import React from 'react'
 import { describe, expect } from 'vitest'
-import { Attr, Model, Num, Repository } from '@rattus-orm/core'
+import { Repository } from '@rattus-orm/core'
 import { renderWithResultAndContext, TestComponent } from './test-utils'
 import { useRepository } from '../src'
 import { pullRepositoryKeys } from '@rattus-orm/core/utils/integrationsHelpers'
 import { act } from '@testing-library/react'
-
-class User extends Model {
-  static entity = 'users'
-
-  @Attr()
-  public id: string
-
-  @Num(0)
-  public age: number
-}
+import { TestUser } from '@rattus-orm/core/utils/testUtils'
 
 const ReactivityTestComponent = () => {
-  const { find } = useRepository(User)
+  const { find } = useRepository(TestUser)
   const user = find('1')
 
   return <div data-testid={'reactivity'}>{user && user.age}</div>
@@ -41,7 +32,7 @@ describe('react-hooks: useRepository', () => {
     })
 
     const { result } = renderWithResultAndContext(<TestComponent />, () => {
-      return useRepository(User)
+      return useRepository(TestUser)
     })
 
     it.each(pullRepositoryKeys)('%s has correct context', (methodName) => {
@@ -54,7 +45,7 @@ describe('react-hooks: useRepository', () => {
   it('useRepository: methods are not ruined', () => {
     const { insert, fresh, destroy, find, save, all, flush, query }: Repository = renderWithResultAndContext(
       <TestComponent />,
-      () => useRepository(User),
+      () => useRepository(TestUser),
     ).result
     expect(() => act(() => insert({ id: '2', age: 22 }))).not.toThrowError()
     expect(() => act(() => fresh([{ id: '1', age: 11 }]))).not.toThrowError()
@@ -70,7 +61,7 @@ describe('react-hooks: useRepository', () => {
     const {
       result: { save },
       renderResult,
-    } = renderWithResultAndContext(<ReactivityTestComponent />, () => useRepository(User))
+    } = renderWithResultAndContext(<ReactivityTestComponent />, () => useRepository(TestUser))
     const elem = renderResult.getByTestId('reactivity')
     expect(elem).toHaveTextContent('')
 

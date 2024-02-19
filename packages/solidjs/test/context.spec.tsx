@@ -1,12 +1,12 @@
 import { describe, expect, it } from 'vitest'
 import { RattusProvider, SolidjsDataProvider, useRattusContext } from '../src'
-import { isInitializedContext } from '../src/utils'
 import { Database } from '@rattus-orm/core'
 import { isUnknownRecord } from '@rattus-orm/core/utils/isUnknownRecord'
 import { TestComponent } from './test-utils'
 import { RattusContext } from '@rattus-orm/core/utils/rattus-context'
 import '@testing-library/jest-dom/vitest'
 import { render, renderHook, cleanup } from '@solidjs/testing-library'
+import { isInitializedContext } from '@rattus-orm/core/utils/integrationsHelpers'
 
 describe('solid: context', () => {
   it('Context valid', () => {

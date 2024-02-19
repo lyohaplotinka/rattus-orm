@@ -7,13 +7,14 @@ import { ObjectDataProvider } from '@rattus-orm/core/object-data-provider'
 import { render } from '@testing-library/svelte'
 import FuncExecutor from './components/FuncExecutor.svelte'
 import { useRattusContext } from '../dist/rattus-orm-svelte-provider'
+import { isInitializedContext } from '@rattus-orm/core/utils/integrationsHelpers'
 
 class TestDataProvider extends ObjectDataProvider {}
 
 describe('svelte: context', () => {
   it('Context valid', async () => {
     const res = renderAndGetContext()
-    expect(res instanceof RattusContext).toEqual(true)
+    expect(isInitializedContext(res)).toEqual(true)
     expect(res.$database).toBeInstanceOf(Database)
     expect(isUnknownRecord(res.$databases)).toEqual(true)
     expect(res.$databases.entities).toBeInstanceOf(Database)

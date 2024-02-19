@@ -2,18 +2,9 @@ import { App, createApp } from 'vue'
 import { createStore } from 'vuex'
 import { installRattusORM, VuexDataProvider } from '../src'
 import { beforeEach, expect, vi } from 'vitest'
-import { Model, Num, Uid, Database } from '@rattus-orm/core'
+import { Database } from '@rattus-orm/core'
 import { RattusContext } from '@rattus-orm/core/utils/rattus-context'
-
-class User extends Model {
-  public static entity = 'user'
-
-  @Uid()
-  public id: string
-
-  @Num(0)
-  public age: number
-}
+import { TestUser } from '@rattus-orm/core/utils/testUtils'
 
 const createMockStore = (): Record<string, any> & { $rattusContext: RattusContext } => ({
   registerModule() {},
@@ -61,8 +52,8 @@ describe('plugin: vuex', () => {
 
     expect(store.state).toEqual(expected)
     expect(store.$rattusContext.$database.isStarted()).toBe(true)
-    expect(store.$rattusContext.$repo(User).database.getConnection()).toEqual('entities')
-    expect(store.$rattusContext.$repo(User).getModel()).toBeInstanceOf(User)
+    expect(store.$rattusContext.$repo(TestUser).database.getConnection()).toEqual('entities')
+    expect(store.$rattusContext.$repo(TestUser).getModel()).toBeInstanceOf(TestUser)
     expect(spyRepo).toHaveBeenCalledOnce()
   })
 

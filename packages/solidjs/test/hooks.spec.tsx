@@ -3,27 +3,15 @@
 import '@testing-library/jest-dom/vitest'
 
 import { describe, expect } from 'vitest'
-import { Model, Repository } from '@rattus-orm/core'
+import { Repository } from '@rattus-orm/core'
 import { useRepository, RattusProvider } from '../src'
 import { renderHook } from '@solidjs/testing-library'
 import { renderWithResultAndContext } from './test-utils'
 import { pullRepositoryGettersKeys, pullRepositoryKeys } from '@rattus-orm/core/utils/integrationsHelpers'
-
-class User extends Model {
-  static entity = 'users'
-
-  declare age: number
-
-  static fields() {
-    return {
-      id: this.string(''),
-      age: this.number(0),
-    }
-  }
-}
+import { TestUser } from '@rattus-orm/core/utils/testUtils'
 
 const ReactivityTestComponent = () => {
-  const { find } = useRepository(User)
+  const { find } = useRepository(TestUser)
   const user = find('1')
 
   return <div data-testid={'reactivity'}>{user()?.age ?? ''}</div>
@@ -44,7 +32,7 @@ describe('react-mobx hooks: useRepository', () => {
       return boundFunction
     })
 
-    const { result } = renderHook(() => useRepository(User), {
+    const { result } = renderHook(() => useRepository(TestUser), {
       wrapper: RattusProvider,
     })
 
@@ -58,7 +46,7 @@ describe('react-mobx hooks: useRepository', () => {
   })
 
   it('useRepository: methods are not ruined', () => {
-    const { insert, fresh, destroy, find, save, all, flush, query } = renderHook(() => useRepository(User), {
+    const { insert, fresh, destroy, find, save, all, flush, query } = renderHook(() => useRepository(TestUser), {
       wrapper: RattusProvider,
     }).result
     expect(() => insert({ id: '2', age: 22 })).not.toThrowError()
@@ -75,7 +63,7 @@ describe('react-mobx hooks: useRepository', () => {
     const {
       result: { save },
       renderResult,
-    } = renderWithResultAndContext(ReactivityTestComponent, () => useRepository(User))
+    } = renderWithResultAndContext(ReactivityTestComponent, () => useRepository(TestUser))
     const elem = renderResult.getByTestId('reactivity')
     expect(elem).toHaveTextContent('')
 
@@ -87,7 +75,7 @@ describe('react-mobx hooks: useRepository', () => {
   })
 
   it('withQuery returns computed property', () => {
-    const { withQuery } = renderHook(() => useRepository(User), {
+    const { withQuery } = renderHook(() => useRepository(TestUser), {
       wrapper: RattusProvider,
     }).result
 

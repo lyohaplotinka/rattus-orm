@@ -1,10 +1,5 @@
 import { isUnknownRecord } from '@rattus-orm/core/utils/isUnknownRecord'
-import { RattusContext } from '@rattus-orm/core/utils/rattus-context'
 import React from 'react'
-
-export const isInitializedContext = (value: unknown): value is RattusContext => {
-  return value instanceof RattusContext
-}
 
 export const isCalledInComponent = () => {
   for (const key in React as Record<string, any>) {

@@ -1,21 +1,12 @@
 import { describe, expect, it } from 'vitest'
 import { renderFunction, renderWithContext } from './test-utils'
-import { Attr, Database, Model, Num, Repository } from '@rattus-orm/core'
+import { Database, Repository } from '@rattus-orm/core'
 import { useRepository, useRattusContext } from '../dist/rattus-orm-svelte-provider'
 import { RattusContext } from '@rattus-orm/core/utils/rattus-context'
 import { pullRepositoryGettersKeys, pullRepositoryKeys } from '@rattus-orm/core/utils/integrationsHelpers'
 import { act } from '@testing-library/svelte'
 import ReactivityTest from './components/ReactivityTest.svelte'
-
-class User extends Model {
-  static entity = 'users'
-
-  @Attr()
-  public id: string
-
-  @Num(0)
-  public age: number
-}
+import { TestUser } from '@rattus-orm/core/utils/testUtils'
 
 describe('svelte: hooks', () => {
   it('has correct context', () => {
@@ -39,7 +30,7 @@ describe('svelte: hooks', () => {
       return boundFunction
     })
 
-    const result = renderFunction(() => useRepository(User))
+    const result = renderFunction(() => useRepository(TestUser))
 
     it.each(pullRepositoryKeys)('%s has correct context', (methodName) => {
       if (!pullRepositoryGettersKeys.includes(methodName as any)) {
@@ -51,7 +42,7 @@ describe('svelte: hooks', () => {
   })
 
   it('useRepository: methods are not ruined', () => {
-    const { insert, fresh, destroy, find, save, all, flush } = renderFunction(() => useRepository(User))
+    const { insert, fresh, destroy, find, save, all, flush } = renderFunction(() => useRepository(TestUser))
 
     expect(() => insert({ id: '2', age: 22 })).not.toThrowError()
     expect(() => fresh([{ id: '1', age: 11 }])).not.toThrowError()

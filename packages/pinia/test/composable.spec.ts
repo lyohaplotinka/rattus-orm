@@ -1,20 +1,11 @@
 import { describe, expect, vi } from 'vitest'
 import { Component, ComponentOptions, computed, nextTick } from 'vue'
 import { mount } from '@vue/test-utils'
-import { Attr, Model, Num, Repository } from '@rattus-orm/core'
+import { Repository } from '@rattus-orm/core'
 import { installRattusORM, useRattusContext, useRepository } from '../src'
 import { pullRepositoryGettersKeys, pullRepositoryKeys } from '@rattus-orm/core/utils/integrationsHelpers'
 import { createPinia } from 'pinia'
-
-class User extends Model {
-  static entity = 'users'
-
-  @Attr()
-  public id: string
-
-  @Num(0)
-  public age: number
-}
+import { TestUser } from '@rattus-orm/core/utils/testUtils'
 
 const componentTemplate: Component = {
   template: `<div>Age: {{ age }}</div>`,
@@ -24,7 +15,7 @@ const attachSetup = (setup: ComponentOptions['setup']): Component => ({
   ...componentTemplate,
   setup(props, context) {
     useRattusContext()
-      .$repo(User)
+      .$repo(TestUser)
       .insert([{ id: '1', age: 23 }])
 
     return setup!(props, context)
@@ -47,7 +38,7 @@ describe('composable: pinia', () => {
         template: '<div />',
         setup() {
           useRattusContext()
-            .$repo(User)
+            .$repo(TestUser)
             .insert([{ id: '1', age: 23 }])
           result = hook()
         },
@@ -78,7 +69,7 @@ describe('composable: pinia', () => {
     })
 
     const result = withSetup(() => {
-      return useRepository(User)
+      return useRepository(TestUser)
     })
 
     it.each(pullRepositoryKeys)('%s has correct context', (methodName) => {
@@ -91,7 +82,7 @@ describe('composable: pinia', () => {
   })
 
   it('useRepository: methods are not ruined', () => {
-    const { insert, fresh, destroy, find, save, all, flush } = withSetup(() => useRepository(User))
+    const { insert, fresh, destroy, find, save, all, flush } = withSetup(() => useRepository(TestUser))
     expect(() => insert({ id: '2', age: 22 })).not.toThrowError()
     expect(() => fresh([{ id: '1', age: 11 }])).not.toThrowError()
     expect(() => destroy('1')).not.toThrowError()
@@ -103,7 +94,7 @@ describe('composable: pinia', () => {
 
   it('useRepository: returns reactive data', async () => {
     const wrapper = mountSetup(() => {
-      const { find } = useRepository(User)
+      const { find } = useRepository(TestUser)
       const user = find('1')
 
       return {
@@ -111,7 +102,7 @@ describe('composable: pinia', () => {
       }
     })
     const rattusContext = wrapper.getCurrentComponent().appContext.config.globalProperties.$rattusContext
-    const repo = rattusContext.$repo(User)
+    const repo = rattusContext.$repo(TestUser)
 
     expect(wrapper.text()).toStrictEqual('Age: 23')
     repo.query().update({ id: '1', age: 25 })

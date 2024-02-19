@@ -1,20 +1,10 @@
 import { beforeEach, describe, expect } from 'vitest'
-import { Attr, Model, Num } from '@rattus-orm/core'
 import { createStore, Store } from 'vuex'
 import { installRattusORM } from '../src'
 import { mount } from '@vue/test-utils'
 import { useRepository } from '../src'
 import { isComputed } from '@rattus-orm/core/utils/vueComposableUtils'
-
-class User extends Model {
-  static entity = 'users'
-
-  @Attr()
-  public id: string
-
-  @Num(0)
-  public age: number
-}
+import { TestUser } from '@rattus-orm/core/utils/testUtils'
 
 describe('composable-query', () => {
   let store: Store<any>
@@ -41,7 +31,7 @@ describe('composable-query', () => {
       plugins: [installRattusORM()],
     })
 
-    store.$rattusContext.$database.getRepository(User).insert([
+    store.$rattusContext.$database.getRepository(TestUser).insert([
       { id: '1', age: 22 },
       { id: '2', age: 33 },
       { id: '3', age: 44 },
@@ -49,7 +39,7 @@ describe('composable-query', () => {
   })
 
   it('withQuery returns computed property', () => {
-    const repo = withSetup(() => useRepository(User))
+    const repo = withSetup(() => useRepository(TestUser))
     const result = repo.withQuery((query) => query.where('age', (v: number) => v > 25))
     expect(isComputed(result)).toEqual(true)
   })

@@ -1,20 +1,10 @@
 import { describe, expect } from 'vitest'
-import { Attr, Model, Num } from '@rattus-orm/core'
 import { installRattusORM, useRattusContext } from '../src'
 import { mount } from '@vue/test-utils'
 import { useRepository } from '../src'
 import { isComputed } from '@rattus-orm/core/utils/vueComposableUtils'
 import { createPinia } from 'pinia'
-
-class User extends Model {
-  static entity = 'users'
-
-  @Attr()
-  public id: string
-
-  @Num(0)
-  public age: number
-}
+import { TestUser } from '@rattus-orm/core/utils/testUtils'
 
 describe('composable-query', () => {
   const pinia = createPinia()
@@ -27,7 +17,7 @@ describe('composable-query', () => {
         template: '<div />',
         setup() {
           useRattusContext()
-            .$repo(User)
+            .$repo(TestUser)
             .insert([{ id: '1', age: 23 }])
           result = hook()
         },
@@ -44,7 +34,7 @@ describe('composable-query', () => {
   }
 
   it('withQuery returns computed property', () => {
-    const repo = withSetup(() => useRepository(User))
+    const repo = withSetup(() => useRepository(TestUser))
     const result = repo.withQuery((query) => query.where('age', (v: number) => v > 25))
     expect(isComputed(result)).toEqual(true)
   })

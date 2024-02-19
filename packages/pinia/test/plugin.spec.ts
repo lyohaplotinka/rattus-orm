@@ -1,20 +1,11 @@
 import '../src/types/pinia'
 import { App, createApp, nextTick } from 'vue'
 import { beforeEach, expect, vi } from 'vitest'
-import { Database, Model, Num, Uid } from '@rattus-orm/core'
+import { Database } from '@rattus-orm/core'
 import { createPinia } from 'pinia'
 import { installRattusORM, PiniaDataProvider } from '../src'
 import { RattusContext } from '@rattus-orm/core/utils/rattus-context'
-
-class User extends Model {
-  public static entity = 'user'
-
-  @Uid()
-  public id: string
-
-  @Num(0)
-  public age: number
-}
+import { TestUser } from '@rattus-orm/core/utils/testUtils'
 
 const createMockApp = () => ({
   _context: {
@@ -78,8 +69,8 @@ describe('plugin: pinia', () => {
 
     expect(pinia.state.value).toEqual(expected)
     expect(db.isStarted()).toBe(true)
-    expect(globalProps.$rattusContext.$repo(User).database.getConnection()).toEqual('entities')
-    expect(globalProps.$rattusContext.$repo(User).getModel()).toBeInstanceOf(User)
+    expect(globalProps.$rattusContext.$repo(TestUser).database.getConnection()).toEqual('entities')
+    expect(globalProps.$rattusContext.$repo(TestUser).getModel()).toBeInstanceOf(TestUser)
     expect(spyRepo).toHaveBeenCalledOnce()
   })
 
@@ -91,7 +82,7 @@ describe('plugin: pinia', () => {
     await nextTick()
 
     const expected = {
-      ['database/user']: {
+      ['database/testUser']: {
         data: {
           '1': { id: '1', age: 27 },
         },
@@ -99,7 +90,7 @@ describe('plugin: pinia', () => {
     }
 
     await nextTick()
-    globalProps.$rattusContext.$repo(User).save([{ id: '1', age: 27 }])
+    globalProps.$rattusContext.$repo(TestUser).save([{ id: '1', age: 27 }])
 
     expect(pinia.state.value).toEqual(expected)
   })
