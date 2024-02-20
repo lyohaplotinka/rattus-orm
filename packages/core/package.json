@@ -73,6 +73,11 @@
       "import": "./dist/utils/reactTestUtils.mjs",
       "require": "./dist/utils/reactTestUtils.js",
       "types": "./dist/utils/reactTestUtils.d.ts"
+    },
+    "./utils/vueTestUtils": {
+      "import": "./dist/utils/vueTestUtils.mjs",
+      "require": "./dist/utils/vueTestUtils.js",
+      "types": "./dist/utils/vueTestUtils.d.ts"
     }
   },
   "files": [

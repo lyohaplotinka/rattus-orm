@@ -1,75 +1,23 @@
-import { describe, expect, vi } from 'vitest'
-import { Component, ComponentOptions, computed, nextTick } from 'vue'
-import { mount } from '@vue/test-utils'
+import { describe, expect } from 'vitest'
+import { computed, nextTick } from 'vue'
 import { Repository } from '@rattus-orm/core'
-import { installRattusORM, useRattusContext, useRepository } from '../src'
+import { installRattusORM, useRepository } from '../src'
 import { pullRepositoryGettersKeys, pullRepositoryKeys } from '@rattus-orm/core/utils/integrationsHelpers'
 import { createPinia } from 'pinia'
-import { TestUser } from '@rattus-orm/core/utils/testUtils'
-
-const componentTemplate: Component = {
-  template: `<div>Age: {{ age }}</div>`,
-}
-
-const attachSetup = (setup: ComponentOptions['setup']): Component => ({
-  ...componentTemplate,
-  setup(props, context) {
-    useRattusContext()
-      .$repo(TestUser)
-      .insert([{ id: '1', age: 23 }])
-
-    return setup!(props, context)
-  },
-})
+import { createBindSpy, TestUser } from '@rattus-orm/core/utils/testUtils'
+import { renderHookWithContext, renderWithContext } from '@rattus-orm/core/utils/vueTestUtils'
 
 describe('composable: pinia', () => {
   const pinia = createPinia()
 
-  const mountSetup = (setup: ComponentOptions['setup']) => {
-    const component = attachSetup(setup)
-    return mount(component, { global: { plugins: [pinia, installRattusORM()] } })
-  }
-
-  const withSetup = <T extends () => any>(hook: T) => {
-    let result: ReturnType<T>
-
-    mount(
-      {
-        template: '<div />',
-        setup() {
-          useRattusContext()
-            .$repo(TestUser)
-            .insert([{ id: '1', age: 23 }])
-          result = hook()
-        },
-      },
-      {
-        global: {
-          plugins: [pinia, installRattusORM()],
-        },
-      },
-    )
-
-    // @ts-ignore
-    return result as ReturnType<T>
-  }
-
   describe('useRepository returns correctly bound methods', () => {
-    const mocked = vi.spyOn(Function.prototype, 'bind').mockImplementation(function (
-      this: any,
-      thisArg: any,
-      ...args: any[]
-    ) {
-      const func = this
-      const boundFunction = function (...newArgs: any[]): any {
-        return func.apply(thisArg, args.concat(newArgs))
-      }
-      boundFunction.boundTo = thisArg
-      return boundFunction
-    })
+    using _ = createBindSpy()
 
-    const result = withSetup(() => {
-      return useRepository(TestUser)
+    const result = renderHookWithContext({
+      hook: () => {
+        return useRepository(TestUser)
+      },
+      plugins: [pinia, installRattusORM()],
     })
 
     it.each(pullRepositoryKeys)('%s has correct context', (methodName) => {
@@ -77,12 +25,13 @@ describe('composable: pinia', () => {
         expect((result[methodName] as any).boundTo).toBeInstanceOf(Repository)
       }
     })
-
-    mocked.mockRestore()
   })
 
   it('useRepository: methods are not ruined', () => {
-    const { insert, fresh, destroy, find, save, all, flush } = withSetup(() => useRepository(TestUser))
+    const { insert, fresh, destroy, find, save, all, flush } = renderHookWithContext({
+      hook: () => useRepository(TestUser),
+      plugins: [pinia, installRattusORM()],
+    })
     expect(() => insert({ id: '2', age: 22 })).not.toThrowError()
     expect(() => fresh([{ id: '1', age: 11 }])).not.toThrowError()
     expect(() => destroy('1')).not.toThrowError()
@@ -93,14 +42,19 @@ describe('composable: pinia', () => {
   })
 
   it('useRepository: returns reactive data', async () => {
-    const wrapper = mountSetup(() => {
-      const { find } = useRepository(TestUser)
-      const user = find('1')
+    const wrapper = renderWithContext({
+      setup() {
+        const { find, insert } = useRepository(TestUser)
+        insert([{ id: '1', age: 23 }])
+        const user = find('1')
 
-      return {
-        age: computed(() => user.value?.age),
-      }
+        return {
+          age: computed(() => user.value?.age),
+        }
+      },
+      plugins: [pinia, installRattusORM()],
     })
+
     const rattusContext = wrapper.getCurrentComponent().appContext.config.globalProperties.$rattusContext
     const repo = rattusContext.$repo(TestUser)
 
