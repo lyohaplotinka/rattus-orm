@@ -74,8 +74,9 @@ export class RattusContext {
     model: M,
     connection?: string,
   ): R {
-    if (this.storedRepos.has(model.entity)) {
-      return this.storedRepos.get(model.entity) as R
+    const cacheKey = [connection, model.entity].join('::')
+    if (this.storedRepos.has(cacheKey)) {
+      return this.storedRepos.get(cacheKey) as R
     }
 
     let localDb: Database
@@ -92,7 +93,7 @@ export class RattusContext {
     }
 
     const repo = localDb.getRepository<R>(model)
-    this.storedRepos.set(model.entity, repo)
+    this.storedRepos.set(cacheKey, repo)
 
     return repo
   }

@@ -11,7 +11,7 @@ import type { DataProvider, RattusOrmInstallerOptions } from '../src'
 import { Database } from '../src'
 import type { RattusContext } from '../src/context/rattus-context'
 import type { UseRepository } from './integrationsHelpers'
-import { testContext, testMethodsBound, testMethodsNotRuined, TestUser } from './testUtils'
+import { testContext, testCustomConnection, testMethodsBound, testMethodsNotRuined, TestUser } from './testUtils'
 
 type RattusRenderProps<T> = {
   ContextComp: JSXElementConstructor<any>
@@ -103,16 +103,16 @@ export function createReactIntegrationTest({
   componentsWrapper,
 }: ReactIntegrationTestParams) {
   describe(`${name} react integration test`, () => {
-    describe(`${name}: context`, () => {
-      function renderHook<T>(hook: () => T, props?: RattusOrmInstallerOptions): T {
-        return renderHookWithContext({
-          hook,
-          ContextComp: Provider,
-          contextProps: props,
-          bootstrap,
-        })
-      }
+    function renderHook<T>(hook: () => T, props?: RattusOrmInstallerOptions): T {
+      return renderHookWithContext({
+        hook,
+        ContextComp: Provider,
+        contextProps: props,
+        bootstrap,
+      })
+    }
 
+    describe(`${name}: context`, () => {
       const TestComponent = componentsWrapper
         ? componentsWrapper(createTestComponent(useRattusContextHook))
         : createTestComponent(useRattusContextHook)
@@ -181,6 +181,8 @@ export function createReactIntegrationTest({
         }).result,
         act,
       )
+
+      testCustomConnection(name, renderHook(useRattusContextHook))
 
       it(`${name}: useRepository returns reactive data`, async () => {
         const {

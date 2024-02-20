@@ -2,8 +2,9 @@ import { uniq } from 'lodash-es'
 import type { Constructor } from 'type-fest'
 import { expect, vi } from 'vitest'
 
-import type { DataProvider } from '../src'
+import type { DataProvider, RawModel } from '../src'
 import { Database, Model, Num, Repository, Str } from '../src'
+import type { RattusContext } from '../src/context/rattus-context'
 import { ObjectDataProvider } from '../src/object-data-provider'
 import type { UseRepository } from './integrationsHelpers'
 import { pullRepositoryKeys } from './integrationsHelpers'
@@ -107,5 +108,18 @@ export function testMethodsNotRuined(name: string, useRepo: UseRepository<any>, 
     expect(() => act(() => save({ id: '2', age: 22 }))).not.toThrowError()
     expect(() => act(() => all())).not.toThrowError()
     expect(() => act(() => flush())).not.toThrowError()
+  })
+}
+
+export function testCustomConnection(name: string, context: RattusContext) {
+  it(`${name}: custom connection works`, () => {
+    context.$repo(TestUser).save({ id: '333', age: 20 } satisfies RawModel<TestUser>)
+    const dataProvider = (context.$database.getDataProvider() as any).provider
+
+    context.createDatabase('custom30').setDataProvider(dataProvider).start()
+    context.$repo(TestUser, 'custom30').save({ id: '333', age: 30 } satisfies RawModel<TestUser>)
+
+    expect(context.$repo(TestUser).find('333')?.age).toEqual(20)
+    expect(context.$repo(TestUser, 'custom30').find('333')?.age).toEqual(30)
   })
 }
