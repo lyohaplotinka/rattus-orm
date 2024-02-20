@@ -36,5 +36,5 @@ export function computifyUseRepository<R extends Repository<InstanceType<M>>, M 
 }
 
 export const isComputed = (value: unknown): value is ComputedRef<any> => {
-  return isUnknownRecord(value) && !!value.effect && !!value.value
+  return isUnknownRecord(value) && 'effect' in value && 'value' in value
 }

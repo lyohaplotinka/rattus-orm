@@ -15,4 +15,9 @@ export default defineConfig(({ mode }) => ({
   define: {
     'import.meta.vitest': mode !== 'production',
   },
+  esbuild: {
+    target: 'es2022',
+    include: /\.(m?[jt]s|[jt]sx)$/,
+    exclude: []
+  }
 }))

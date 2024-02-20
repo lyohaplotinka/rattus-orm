@@ -1,7 +1,7 @@
 import '../types/vuex'
 
 import type { Model, Repository } from '@rattus-orm/core'
-import { useRepositoryForDynamicContext } from '@rattus-orm/core/utils/integrationsHelpers'
+import { isInitializedContext, useRepositoryForDynamicContext } from '@rattus-orm/core/utils/integrationsHelpers'
 import type { RattusContext } from '@rattus-orm/core/utils/rattus-context'
 import type { UseComputedRepository } from '@rattus-orm/core/utils/vueComposableUtils'
 import { computifyUseRepository } from '@rattus-orm/core/utils/vueComposableUtils'
@@ -10,7 +10,7 @@ import { type Store, useStore } from 'vuex'
 
 export function useRattusContext(injectKey?: InjectionKey<Store<any>>): RattusContext {
   const context = useStore(injectKey).$rattusContext
-  if (!context) {
+  if (!isInitializedContext(context)) {
     throw new Error('[useRattusContext] rattus context not found. Did you use plugin correctly?')
   }
 

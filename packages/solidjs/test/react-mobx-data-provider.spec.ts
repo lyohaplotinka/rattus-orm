@@ -1,6 +1,6 @@
 import { describe } from 'vitest'
 import { createBasicProviderTest } from '@rattus-orm/core/utils/createBasicProviderTest'
-import { SolidjsDataProvider } from '../src/data-provider/solidjs-data-provider'
+import { SolidjsDataProvider } from '../src'
 
 describe('solidjs-data-provider', () => {
   createBasicProviderTest({

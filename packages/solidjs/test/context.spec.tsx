@@ -1,21 +1,16 @@
 import { describe, expect, it } from 'vitest'
 import { RattusProvider, SolidjsDataProvider, useRattusContext } from '../src'
-import { isInitializedContext } from '../src/utils'
 import { Database } from '@rattus-orm/core'
-import { isUnknownRecord } from '@rattus-orm/core/utils/isUnknownRecord'
 import { TestComponent } from './test-utils'
-import { RattusContext } from '@rattus-orm/core/utils/rattus-context'
 import '@testing-library/jest-dom/vitest'
 import { render, renderHook, cleanup } from '@solidjs/testing-library'
+import { testContext } from '@rattus-orm/core/utils/testUtils'
 
 describe('solid: context', () => {
   it('Context valid', () => {
     const { result } = renderHook(useRattusContext, { wrapper: RattusProvider })
 
-    expect(isInitializedContext(result)).toEqual(true)
-    expect(result.$database).toBeInstanceOf(Database)
-    expect(isUnknownRecord(result.$databases)).toEqual(true)
-    expect(result.$databases.entities).toBeInstanceOf(Database)
+    testContext(result, SolidjsDataProvider)
   })
 
   it('Context params respect custom databases', () => {
@@ -23,11 +18,9 @@ describe('solid: context', () => {
     database.start()
 
     const { result } = renderHook(useRattusContext, {
-      wrapper: (props) => <RattusProvider database={database}>{props.children}</RattusProvider>,
+      wrapper: (props) => <RattusProvider database={database} {...props} />,
     })
-    expect(result).toBeInstanceOf(RattusContext)
-    expect(result.$database.isStarted()).toEqual(true)
-    expect(result.$database.getConnection()).toEqual('custom')
+    testContext(result, SolidjsDataProvider, 'custom')
   })
 
   it('Does not throw an error when wrapped and throws when not', () => {

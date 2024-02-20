@@ -1,47 +1,16 @@
 import '../src/types/pinia'
-import { App, createApp, nextTick } from 'vue'
-import { beforeEach, expect, vi } from 'vitest'
-import { Database, Model, Num, Uid } from '@rattus-orm/core'
+import { nextTick } from 'vue'
+import { expect, vi } from 'vitest'
+import { Database } from '@rattus-orm/core'
 import { createPinia } from 'pinia'
 import { installRattusORM, PiniaDataProvider } from '../src'
 import { RattusContext } from '@rattus-orm/core/utils/rattus-context'
-
-class User extends Model {
-  public static entity = 'user'
-
-  @Uid()
-  public id: string
-
-  @Num(0)
-  public age: number
-}
-
-const createMockApp = () => ({
-  _context: {
-    config: {
-      globalProperties: {
-        $pinia: createPinia(),
-        $rattusContext: null as unknown as RattusContext,
-      },
-    },
-  },
-  provide() {},
-})
+import { TestUser } from '@rattus-orm/core/utils/testUtils'
+import { createAppWithPlugins, createMockApp } from '@rattus-orm/core/utils/vueTestUtils'
 
 describe('plugin: pinia', () => {
-  let app: App
-
-  const initPinia = () => {
-    const pinia = createPinia()
-    return pinia
-  }
-
-  beforeEach(() => {
-    app = createApp({ template: '<div />' })
-  })
-
   it('context works correctly with default parameters', () => {
-    const mockApp = createMockApp()
+    const mockApp = createMockApp({ $pinia: createPinia() })
     installRattusORM().install!(mockApp as any)
     const context = mockApp._context.config.globalProperties.$rattusContext
 
@@ -52,7 +21,7 @@ describe('plugin: pinia', () => {
   })
 
   it('plugin params respect custom databases', () => {
-    const mockApp = createMockApp()
+    const mockApp = createMockApp({ $pinia: createPinia() })
     const database = new Database().setConnection('custom').setDataProvider(new PiniaDataProvider(createPinia()))
     installRattusORM({ database }).install!(mockApp as any)
 
@@ -64,9 +33,7 @@ describe('plugin: pinia', () => {
   })
 
   it('installs Vuex ORM to the store', () => {
-    const pinia = initPinia()
-    app.use(pinia).use(installRattusORM())
-
+    const app = createAppWithPlugins([createPinia(), installRattusORM()])
     const expected = {}
 
     const globalProps = app._context.config.globalProperties
@@ -76,22 +43,21 @@ describe('plugin: pinia', () => {
 
     const spyRepo = vi.spyOn(db, 'getRepository')
 
-    expect(pinia.state.value).toEqual(expected)
+    expect(app._context.config.globalProperties.$pinia.state.value).toEqual(expected)
     expect(db.isStarted()).toBe(true)
-    expect(globalProps.$rattusContext.$repo(User).database.getConnection()).toEqual('entities')
-    expect(globalProps.$rattusContext.$repo(User).getModel()).toBeInstanceOf(User)
+    expect(globalProps.$rattusContext.$repo(TestUser).database.getConnection()).toEqual('entities')
+    expect(globalProps.$rattusContext.$repo(TestUser).getModel()).toBeInstanceOf(TestUser)
     expect(spyRepo).toHaveBeenCalledOnce()
   })
 
   it('can customize the namespace', async () => {
-    const pinia = createPinia()
-    app.use(pinia).use(installRattusORM({ connection: 'database' }))
+    const app = createAppWithPlugins([createPinia(), installRattusORM({ connection: 'database' })])
     const globalProps = app._context.config.globalProperties
 
     await nextTick()
 
     const expected = {
-      ['database/user']: {
+      ['database/testUser']: {
         data: {
           '1': { id: '1', age: 27 },
         },
@@ -99,8 +65,8 @@ describe('plugin: pinia', () => {
     }
 
     await nextTick()
-    globalProps.$rattusContext.$repo(User).save([{ id: '1', age: 27 }])
+    globalProps.$rattusContext.$repo(TestUser).save([{ id: '1', age: 27 }])
 
-    expect(pinia.state.value).toEqual(expected)
+    expect(app._context.config.globalProperties.$pinia.state.value).toEqual(expected)
   })
 })

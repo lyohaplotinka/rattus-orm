@@ -6,4 +6,9 @@ export default defineConfig({
     environment: 'jsdom',
     fileParallelism: false,
   },
+  esbuild: {
+    target: 'es2020',
+    include: /\.(m?[jt]s|[jt]sx)$/,
+    exclude: []
+  }
 })

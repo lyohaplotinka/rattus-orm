@@ -16,4 +16,9 @@ export default defineConfig({
       '@scripts': path.resolve(__dirname, './scripts/built')
     },
   },
+  esbuild: {
+    target: 'es2022',
+    include: /\.(m?[jt]s|[jt]sx)$/,
+    exclude: []
+  },
 })

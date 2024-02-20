@@ -2,25 +2,11 @@ import { TestBed } from '@angular/core/testing'
 import { describe, beforeEach, it, expect } from 'vitest'
 
 import { RattusContextService } from '../src/context/rattus-context.service'
-import { Model, Repository, Str } from '@rattus-orm/core'
 import { RattusOrmModule } from '../src/public-api'
 import { RattusBehaviorSubject } from '../src/rxjs/rattus-behavior-subject'
 import { Database } from '@rattus-orm/core'
-import { ObjectDataProvider } from '@rattus-orm/core/object-data-provider'
 import { RattusZodValidationPlugin } from '@rattus-orm/plugin-zod-validate'
-
-class CustomDataProvider extends ObjectDataProvider {}
-
-class User extends Model {
-  public static override entity = 'user'
-  public static override dataTypeCasting = false
-
-  @Str('')
-  declare id: string
-
-  @Str('')
-  declare email: string
-}
+import { TestUserNoCasting, TestUserNoCastingCustomRepo, TestDataProvider } from '@rattus-orm/core/utils/testUtils'
 
 describe('RattusContextService', () => {
   describe('basic', () => {
@@ -36,27 +22,19 @@ describe('RattusContextService', () => {
     })
 
     it('getRepository returns repository with "observe" method', () => {
-      const repo = service.getRepository(User)
+      const repo = service.getRepository(TestUserNoCasting)
       expect(typeof repo.observe).toBe('function')
       expect(repo.observe((r) => r.all())).toBeInstanceOf(RattusBehaviorSubject)
     })
 
     it('database.getRepository returns repository with "observe" method', () => {
-      const repo = service.getDatabase().getRepository(User)
+      const repo = service.getDatabase().getRepository(TestUserNoCasting)
       expect(typeof repo.observe).toBe('function')
       expect(repo.observe((r) => r.all())).toBeInstanceOf(RattusBehaviorSubject)
     })
   })
 
   describe('custom settings', () => {
-    class UserCustomRepo extends Repository {
-      public override use = User
-
-      public getAllButCool() {
-        return this.all()
-      }
-    }
-
     it('respects custom connection', () => {
       TestBed.configureTestingModule(RattusOrmModule.forRoot({ connection: 'custom' }))
       const service = TestBed.inject(RattusContextService)
@@ -65,20 +43,20 @@ describe('RattusContextService', () => {
     })
 
     it('respects custom database', () => {
-      const database = new Database().setConnection('third').setDataProvider(new CustomDataProvider()).start()
+      const database = new Database().setConnection('third').setDataProvider(new TestDataProvider()).start()
       TestBed.configureTestingModule(RattusOrmModule.forRoot({ database }))
       const service = TestBed.inject(RattusContextService)
 
       expect(service.getDatabase().getConnection()).toEqual('third')
-      expect((service.getDatabase().getDataProvider() as any).provider).toBeInstanceOf(CustomDataProvider)
+      expect((service.getDatabase().getDataProvider() as any).provider).toBeInstanceOf(TestDataProvider)
     })
 
     it('respects custom repositories, they have observe method', () => {
-      TestBed.configureTestingModule(RattusOrmModule.forRoot({ customRepositories: [UserCustomRepo] }))
+      TestBed.configureTestingModule(RattusOrmModule.forRoot({ customRepositories: [TestUserNoCastingCustomRepo] }))
       const service = TestBed.inject(RattusContextService)
-      const repo = service.getRepository<UserCustomRepo>(User)
+      const repo = service.getRepository<TestUserNoCastingCustomRepo>(TestUserNoCasting)
 
-      expect(repo).toBeInstanceOf(UserCustomRepo)
+      expect(repo).toBeInstanceOf(TestUserNoCastingCustomRepo)
       expect(typeof repo.getAllButCool).toBe('function')
       expect(repo.observe((r) => r.all())).toBeInstanceOf(RattusBehaviorSubject)
     })
@@ -88,7 +66,7 @@ describe('RattusContextService', () => {
         RattusOrmModule.forRoot({ plugins: [RattusZodValidationPlugin({ strict: true })] }),
       )
       const service = TestBed.inject(RattusContextService)
-      const repo = service.getRepository<UserCustomRepo>(User)
+      const repo = service.getRepository<TestUserNoCastingCustomRepo>(TestUserNoCasting)
 
       try {
         repo.insert({ id: 1, email: 'test' })

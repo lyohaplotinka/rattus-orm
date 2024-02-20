@@ -1,5 +1,5 @@
 import type { Model, Repository } from '../src'
-import type { RattusContext } from '../src/context/rattus-context'
+import { RattusContext } from '../src/context/rattus-context'
 import { isFunction, isString } from '../src/support/utils'
 
 const useRepositorySkippedKeys = ['database', 'use', 'model', 'constructor'] as const
@@ -69,3 +69,7 @@ export const pullRepositoryKeys = [
   ...pullRepositoryGettersKeys,
 ] satisfies Array<keyof Repository>
 export type RepositoryGettersKeys = (typeof pullRepositoryGettersKeys)[number]
+
+export const isInitializedContext = (value: unknown): value is RattusContext => {
+  return value instanceof RattusContext
+}

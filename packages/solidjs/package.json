@@ -43,6 +43,7 @@
     "typecheck": "bash -c 'run -T tsc -p tsconfig.json --noEmit'"
   },
   "devDependencies": {
+    "@babel/plugin-syntax-explicit-resource-management": "^7.23.3",
     "@rattus-orm/core": "workspace:^",
     "@solidjs/testing-library": "^0.8.6",
     "@types/jsdom": "^21.1.6",

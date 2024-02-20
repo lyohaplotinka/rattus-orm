@@ -2,7 +2,13 @@ import { defineConfig } from 'vitest/config'
 import solidPlugin from 'vite-plugin-solid';
 
 export default defineConfig({
-  plugins: [solidPlugin()],
+  plugins: [
+    solidPlugin({
+      babel: {
+        plugins: ["@babel/plugin-syntax-explicit-resource-management"],
+      },
+    }),
+  ],
   test: {
     globals: true,
     environment: 'jsdom',
@@ -11,5 +17,10 @@ export default defineConfig({
   },
   optimizeDeps: {
     disabled: "dev",
-  }
+  },
+  esbuild: {
+    target: 'es2020',
+    include: /\.(m?[jt]s|[jt]sx)$/,
+    exclude: []
+  },
 })
