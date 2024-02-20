@@ -94,6 +94,7 @@ type ReactIntegrationTestParams = {
   ProviderConstructor: Constructor<DataProvider>
   providerArgsGetter?: () => any[]
   bootstrap?: () => Record<string, any>
+  componentsWrapper?: (cmp: JSXElementConstructor<any>) => JSXElementConstructor<any>
 }
 export function createReactIntegrationTest({
   name,
@@ -103,6 +104,7 @@ export function createReactIntegrationTest({
   useRepositoryHook,
   ProviderConstructor,
   providerArgsGetter,
+  componentsWrapper,
 }: ReactIntegrationTestParams) {
   describe(`${name} react integration test`, () => {
     describe(`${name}: context`, () => {
@@ -115,7 +117,9 @@ export function createReactIntegrationTest({
         })
       }
 
-      const TestComponent = createTestComponent(useRattusContextHook)
+      const TestComponent = componentsWrapper
+        ? componentsWrapper(createTestComponent(useRattusContextHook))
+        : createTestComponent(useRattusContextHook)
 
       it(`${name}: context valid`, () => {
         const res = renderHook(useRattusContextHook)
@@ -154,7 +158,9 @@ export function createReactIntegrationTest({
     })
 
     describe(`${name}: hooks`, () => {
-      const ReactivityTestComponent = createReactivityTestComponent(useRepositoryHook)
+      const ReactivityTestComponent = componentsWrapper
+        ? componentsWrapper(createReactivityTestComponent(useRepositoryHook))
+        : createReactivityTestComponent(useRepositoryHook)
 
       function renderHookWithComp<T>(
         Comp: JSXElementConstructor<any>,
