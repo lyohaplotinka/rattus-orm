@@ -12,6 +12,7 @@ export default function createTsupConfig(entries: Record<string, string>, mixinO
     dts: {
       entry: entries,
     },
+    skipNodeModulesBundle: true,
     external: ['vue', 'vuex', '@rattus-orm/core', '@vue/reactivity', 'vitest'],
   }
 

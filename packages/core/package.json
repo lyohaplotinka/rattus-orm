@@ -68,6 +68,11 @@
       "import": "./dist/utils/testUtils.mjs",
       "require": "./dist/utils/testUtils.js",
       "types": "./dist/utils/testUtils.d.ts"
+    },
+    "./utils/reactTestUtils": {
+      "import": "./dist/utils/reactTestUtils.mjs",
+      "require": "./dist/utils/reactTestUtils.js",
+      "types": "./dist/utils/reactTestUtils.d.ts"
     }
   },
   "files": [
@@ -82,7 +87,9 @@
     "size": "run -T size-limit"
   },
   "devDependencies": {
+    "@types/react": "^18.2.56",
     "normalizr": "^3.6.2",
+    "react": "^18.2.0",
     "vue": "^3.4.19"
   },
   "rattusMeta": {

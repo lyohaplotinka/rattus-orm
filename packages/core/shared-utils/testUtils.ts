@@ -1,3 +1,5 @@
+import { vi } from 'vitest'
+
 import { Model, Num, Repository, Str } from '../src'
 
 export class TestUser extends Model {
@@ -15,5 +17,28 @@ export class TestUserCustomRepo extends Repository<TestUser> {
 
   public getAllButCool() {
     return this.all()
+  }
+}
+
+export function createBindSpy() {
+  const mocked = vi.spyOn(Function.prototype, 'bind').mockImplementation(function (
+    this: any,
+    thisArg: any,
+    ...args: any[]
+  ) {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const func = this
+    const boundFunction = function (...newArgs: any[]): any {
+      return func.apply(thisArg, args.concat(newArgs))
+    }
+    boundFunction.boundTo = thisArg
+    return boundFunction
+  })
+
+  return {
+    ...mocked,
+    [Symbol.dispose]: () => {
+      mocked.mockRestore()
+    },
   }
 }
