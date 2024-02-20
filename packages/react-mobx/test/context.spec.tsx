@@ -2,18 +2,26 @@ import React from 'react'
 import { describe, expect, it } from 'vitest'
 import { RattusProvider, ReactMobxDataProvider, useRattusContext } from '../src'
 import { cleanup, render } from '@testing-library/react'
-import { Database } from '@rattus-orm/core'
+import { Database, RattusOrmInstallerOptions } from '@rattus-orm/core'
 import { isUnknownRecord } from '@rattus-orm/core/utils/isUnknownRecord'
-import { renderWithResultAndContext, TestComponent } from './test-utils'
 import { RattusContext } from '@rattus-orm/core/utils/rattus-context'
 import '@testing-library/jest-dom/vitest'
 import { isInitializedContext } from '@rattus-orm/core/utils/integrationsHelpers'
+import { createTestComponent, REACT_TEST_ID, renderHookWithContext } from '@rattus-orm/core/utils/reactTestUtils'
+
+function renderHookMobx<T>(hook: () => T, props?: RattusOrmInstallerOptions): T {
+  return renderHookWithContext({
+    hook,
+    ContextComp: RattusProvider,
+    contextProps: props,
+  })
+}
+
+const ReduxTestComponent = createTestComponent(useRattusContext)
 
 describe('react-mobx: context', () => {
   it('Context valid', () => {
-    const { result: res } = renderWithResultAndContext(undefined, () => {
-      return useRattusContext()
-    })
+    const res = renderHookMobx(useRattusContext)
 
     expect(isInitializedContext(res)).toEqual(true)
     expect(res.$database).toBeInstanceOf(Database)
@@ -25,7 +33,7 @@ describe('react-mobx: context', () => {
     const database = new Database().setDataProvider(new ReactMobxDataProvider()).setConnection('custom')
     database.start()
 
-    const { result } = renderWithResultAndContext(undefined, () => useRattusContext(), { database })
+    const result = renderHookMobx(useRattusContext, { database })
     expect(result).toBeInstanceOf(RattusContext)
     expect(result.$database.isStarted()).toEqual(true)
     expect(result.$database.getConnection()).toEqual('custom')
@@ -35,13 +43,13 @@ describe('react-mobx: context', () => {
     expect(
       render(
         <RattusProvider>
-          <TestComponent />
+          <ReduxTestComponent />
         </RattusProvider>,
-      ).getByTestId('test-block'),
-    ).toHaveTextContent('TestComp')
+      ).getByTestId(REACT_TEST_ID),
+    ).toHaveTextContent('Success')
 
     cleanup()
 
-    expect(render(<TestComponent />).getByTestId('test-block')).toHaveTextContent('Error')
+    expect(render(<ReduxTestComponent />).getByTestId(REACT_TEST_ID)).toHaveTextContent('Error')
   })
 })
