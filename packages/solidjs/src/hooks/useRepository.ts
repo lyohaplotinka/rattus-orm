@@ -26,6 +26,12 @@ function computed<T>(cb: () => T): Accessor<T> {
     setter(() => newValue)
   })
 
+  Object.defineProperty(value, '__rattus__accessor', {
+    writable: false,
+    enumerable: false,
+    value: true,
+  })
+
   return value
 }
 

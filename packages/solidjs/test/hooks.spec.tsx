@@ -3,12 +3,11 @@
 import '@testing-library/jest-dom/vitest'
 
 import { describe, expect } from 'vitest'
-import { Repository } from '@rattus-orm/core'
 import { useRepository, RattusProvider } from '../src'
 import { renderHook } from '@solidjs/testing-library'
 import { renderWithResultAndContext } from './test-utils'
-import { pullRepositoryGettersKeys, pullRepositoryKeys } from '@rattus-orm/core/utils/integrationsHelpers'
-import { createBindSpy, TestUser } from '@rattus-orm/core/utils/testUtils'
+import { pullRepositoryGettersKeys } from '@rattus-orm/core/utils/integrationsHelpers'
+import { testMethodsBound, testMethodsNotRuined, TestUser } from '@rattus-orm/core/utils/testUtils'
 
 const ReactivityTestComponent = () => {
   const { find } = useRepository(TestUser)
@@ -18,32 +17,22 @@ const ReactivityTestComponent = () => {
 }
 
 describe('react-mobx hooks: useRepository', () => {
-  describe('useRepository returns correctly bound methods', () => {
-    using _ = createBindSpy()
-    const { result } = renderHook(() => useRepository(TestUser), {
-      wrapper: RattusProvider,
-    })
+  testMethodsBound(
+    'Solid',
+    () =>
+      renderHook(() => useRepository(TestUser), {
+        wrapper: RattusProvider,
+      }).result,
+    [...pullRepositoryGettersKeys, 'withQuery'],
+    (v: any) => v.__rattus__accessor === true,
+  )
 
-    it.each(pullRepositoryKeys)('%s has correct context', (methodName) => {
-      if (!pullRepositoryGettersKeys.includes(methodName as any)) {
-        expect((result[methodName] as any).boundTo).toBeInstanceOf(Repository)
-      }
-    })
-  })
-
-  it('useRepository: methods are not ruined', () => {
-    const { insert, fresh, destroy, find, save, all, flush, query } = renderHook(() => useRepository(TestUser), {
+  testMethodsNotRuined(
+    'Solid',
+    renderHook(() => useRepository(TestUser), {
       wrapper: RattusProvider,
-    }).result
-    expect(() => insert({ id: '2', age: 22 })).not.toThrowError()
-    expect(() => fresh([{ id: '1', age: 11 }])).not.toThrowError()
-    expect(() => destroy('1')).not.toThrowError()
-    expect(() => find('1')).not.toThrowError()
-    expect(() => save({ id: '2', age: 22 })).not.toThrowError()
-    expect(() => all()).not.toThrowError()
-    expect(() => flush()).not.toThrowError()
-    expect(() => query().where('id', '1').first()).not.toThrowError()
-  })
+    }).result,
+  )
 
   it('useRepository returns reactive data', async () => {
     const {
@@ -58,14 +47,5 @@ describe('react-mobx hooks: useRepository', () => {
 
     save({ id: '1', age: 23 })
     expect(elem).toHaveTextContent('23')
-  })
-
-  it('withQuery returns computed property', () => {
-    const { withQuery } = renderHook(() => useRepository(TestUser), {
-      wrapper: RattusProvider,
-    }).result
-
-    expect(typeof withQuery((query) => query.all())).toEqual('function')
-    expect(withQuery((query) => query.all())()).toEqual([])
   })
 })

@@ -1,3 +1,4 @@
+import { uniq } from 'lodash-es'
 import type { Constructor } from 'type-fest'
 import { expect, vi } from 'vitest'
 
@@ -80,9 +81,9 @@ export function testMethodsBound<T extends UseRepository<any>>(
     using _ = createBindSpy()
 
     const useRepoResult = useRepo()
-    it.each(pullRepositoryKeys)('%s has correct context', (methodName) => {
+    it.each(uniq([...pullRepositoryKeys, ...keysInstanceof]))('%s has correct context', (methodName) => {
       if (keysInstanceof.includes(methodName)) {
-        expect(checker(useRepoResult[methodName]())).toBe(true)
+        expect(checker(useRepoResult[methodName](() => {}))).toBe(true)
       } else {
         expect((useRepoResult[methodName] as any).boundTo).toBeInstanceOf(Repository)
       }
