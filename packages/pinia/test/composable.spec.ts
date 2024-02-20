@@ -8,8 +8,6 @@ import { createBindSpy, TestUser } from '@rattus-orm/core/utils/testUtils'
 import { renderHookWithContext, renderWithContext } from '@rattus-orm/core/utils/vueTestUtils'
 
 describe('composable: pinia', () => {
-  const pinia = createPinia()
-
   describe('useRepository returns correctly bound methods', () => {
     using _ = createBindSpy()
 
@@ -17,7 +15,7 @@ describe('composable: pinia', () => {
       hook: () => {
         return useRepository(TestUser)
       },
-      plugins: [pinia, installRattusORM()],
+      plugins: [createPinia(), installRattusORM()],
     })
 
     it.each(pullRepositoryKeys)('%s has correct context', (methodName) => {
@@ -30,7 +28,7 @@ describe('composable: pinia', () => {
   it('useRepository: methods are not ruined', () => {
     const { insert, fresh, destroy, find, save, all, flush } = renderHookWithContext({
       hook: () => useRepository(TestUser),
-      plugins: [pinia, installRattusORM()],
+      plugins: [createPinia(), installRattusORM()],
     })
     expect(() => insert({ id: '2', age: 22 })).not.toThrowError()
     expect(() => fresh([{ id: '1', age: 11 }])).not.toThrowError()
@@ -52,7 +50,7 @@ describe('composable: pinia', () => {
           age: computed(() => user.value?.age),
         }
       },
-      plugins: [pinia, installRattusORM()],
+      plugins: [createPinia(), installRattusORM()],
     })
 
     const rattusContext = wrapper.getCurrentComponent().appContext.config.globalProperties.$rattusContext
