@@ -25,7 +25,8 @@ export function useRattusContext(): RattusContext {
 
 export function useRepository<R extends Repository<InstanceType<M>>, M extends typeof Model = typeof Model>(
   model: M,
+  connection?: string,
 ): UseComputedRepository<R, M> {
-  const repo = useRepositoryForDynamicContext<R, M>(useRattusContext, model)
+  const repo = useRepositoryForDynamicContext<R, M>(useRattusContext, model, connection)
   return computifyUseRepository<R, M>(repo)
 }

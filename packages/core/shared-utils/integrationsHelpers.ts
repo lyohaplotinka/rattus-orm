@@ -29,9 +29,9 @@ function getAllKeys<T extends Record<any, any>>(obj: T): Array<keyof T> {
 export function useRepositoryForDynamicContext<
   R extends Repository<InstanceType<M>>,
   M extends typeof Model = typeof Model,
->(contextRetriever: ContextRetriever, model: M): UseRepository<R> {
+>(contextRetriever: ContextRetriever, model: M, connection: string = 'entities'): UseRepository<R> {
   const context = contextRetriever()
-  const repo = context.$repo<R, M>(model)
+  const repo = context.$repo<R, M>(model, connection)
   const allRepoKeys = getAllKeys(repo)
   const result = {} as UseRepository<R>
 
