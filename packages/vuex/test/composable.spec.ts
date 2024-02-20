@@ -1,65 +1,39 @@
 import { describe, expect } from 'vitest'
 import { computed, nextTick } from 'vue'
-import { Repository, Database } from '@rattus-orm/core'
 import { createStore } from 'vuex'
-import { installRattusORM, useRepository } from '../src'
-import { pullRepositoryGettersKeys, pullRepositoryKeys } from '@rattus-orm/core/utils/integrationsHelpers'
+import { installRattusORM, useRepository, VuexDataProvider } from '../src'
 import { useRattusContext } from '../src'
-import { RattusContext } from '@rattus-orm/core/utils/rattus-context'
 import { renderHookWithContext, renderWithContext } from '@rattus-orm/core/utils/vueTestUtils'
-import { createBindSpy, TestUser } from '@rattus-orm/core/utils/testUtils'
+import { isComputed } from '@rattus-orm/core/utils/vueComposableUtils'
+import { testContext, testMethodsBound, testMethodsNotRuined, TestUser } from '@rattus-orm/core/utils/testUtils'
+
+const renderVuexHook = <T>(hook: () => T): T => {
+  return renderHookWithContext({
+    hook,
+    plugins: [
+      createStore({
+        plugins: [installRattusORM()],
+      }),
+    ],
+  })
+}
 
 describe('composable: vuex', () => {
   it('has correct context', () => {
-    const result = renderHookWithContext({
-      hook: useRattusContext,
-      plugins: [
-        createStore({
-          plugins: [installRattusORM()],
-        }),
-      ],
-    })
-
-    expect(result).toBeInstanceOf(RattusContext)
-    expect(result.$database).toBeInstanceOf(Database)
+    testContext(renderVuexHook(useRattusContext), VuexDataProvider)
   })
 
-  describe('useRepository returns correctly bound methods', () => {
-    using _ = createBindSpy()
+  testMethodsBound(
+    'vuex',
+    () => renderVuexHook(() => useRepository(TestUser)),
+    ['all', 'find', 'withQuery'],
+    (v: any) => isComputed(v),
+  )
 
-    const result = renderHookWithContext({
-      hook: () => useRepository(TestUser),
-      plugins: [
-        createStore({
-          plugins: [installRattusORM()],
-        }),
-      ],
-    })
-
-    it.each(pullRepositoryKeys)('%s has correct context', (methodName) => {
-      if (!pullRepositoryGettersKeys.includes(methodName as any)) {
-        expect((result[methodName] as any).boundTo).toBeInstanceOf(Repository)
-      }
-    })
-  })
-
-  it('useRepository: methods are not ruined', () => {
-    const { insert, fresh, destroy, find, save, all, flush } = renderHookWithContext({
-      hook: () => useRepository(TestUser),
-      plugins: [
-        createStore({
-          plugins: [installRattusORM()],
-        }),
-      ],
-    })
-    expect(() => insert({ id: '2', age: 22 })).not.toThrowError()
-    expect(() => fresh([{ id: '1', age: 11 }])).not.toThrowError()
-    expect(() => destroy('1')).not.toThrowError()
-    expect(() => find('1')).not.toThrowError()
-    expect(() => save({ id: '2', age: 22 })).not.toThrowError()
-    expect(() => all()).not.toThrowError()
-    expect(() => flush()).not.toThrowError()
-  })
+  testMethodsNotRuined(
+    'vuex',
+    renderVuexHook(() => useRepository(TestUser)),
+  )
 
   it('useRepository: returns reactive data', async () => {
     const wrapper = renderWithContext({
