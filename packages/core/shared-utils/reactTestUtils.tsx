@@ -8,14 +8,10 @@ import type { Constructor } from 'type-fest'
 import { describe } from 'vitest'
 
 import type { DataProvider, RattusOrmInstallerOptions } from '../src'
-import { Repository } from '../src'
 import { Database } from '../src'
-import { RattusContext } from '../src/context/rattus-context'
+import type { RattusContext } from '../src/context/rattus-context'
 import type { UseRepository } from './integrationsHelpers'
-import { pullRepositoryKeys } from './integrationsHelpers'
-import { isInitializedContext } from './integrationsHelpers'
-import { isUnknownRecord } from './isUnknownRecord'
-import { createBindSpy, TestUser } from './testUtils'
+import { testContext, testMethodsBound, testMethodsNotRuined, TestUser } from './testUtils'
 
 type RattusRenderProps<T> = {
   ContextComp: JSXElementConstructor<any>
@@ -123,11 +119,7 @@ export function createReactIntegrationTest({
 
       it(`${name}: context valid`, () => {
         const res = renderHook(useRattusContextHook)
-
-        expect(isInitializedContext(res)).toEqual(true)
-        expect(res.$database).toBeInstanceOf(Database)
-        expect(isUnknownRecord(res.$databases)).toEqual(true)
-        expect(res.$databases.entities).toBeInstanceOf(Database)
+        testContext(res, ProviderConstructor)
       })
 
       it(`${name}: context params respect custom databases`, () => {
@@ -137,9 +129,7 @@ export function createReactIntegrationTest({
         database.start()
 
         const result = renderHook(useRattusContextHook, { database })
-        expect(result).toBeInstanceOf(RattusContext)
-        expect(result.$database.isStarted()).toEqual(true)
-        expect(result.$database.getConnection()).toEqual('custom')
+        testContext(result, ProviderConstructor, 'custom')
       })
 
       it(`${name}: does not throw an error when wrapped and throws when not`, () => {
@@ -176,32 +166,21 @@ export function createReactIntegrationTest({
         })
       }
 
-      describe(`${name}: useRepository returns correctly bound methods`, () => {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        using _ = createBindSpy()
+      testMethodsBound(
+        name,
+        () =>
+          renderHookWithComp(ReactivityTestComponent, () => {
+            return useRepositoryHook(TestUser)
+          }).result,
+      )
 
-        const { result } = renderHookWithComp(ReactivityTestComponent, () => {
+      testMethodsNotRuined(
+        name,
+        renderHookWithComp(ReactivityTestComponent, () => {
           return useRepositoryHook(TestUser)
-        })
-
-        it.each(pullRepositoryKeys)('%s has correct context', (methodName) => {
-          expect((result[methodName] as any).boundTo).toBeInstanceOf(Repository)
-        })
-      })
-
-      it(`${name}: useRepository: methods are not ruined`, () => {
-        const { result } = renderHookWithComp(ReactivityTestComponent, () => useRepositoryHook(TestUser))
-        const { insert, fresh, destroy, find, save, all, flush, query } = result
-
-        expect(() => act(() => insert({ id: '2', age: 22 }))).not.toThrowError()
-        expect(() => act(() => fresh([{ id: '1', age: 11 }]))).not.toThrowError()
-        expect(() => act(() => destroy('1'))).not.toThrowError()
-        expect(() => act(() => find('1'))).not.toThrowError()
-        expect(() => act(() => save({ id: '2', age: 22 }))).not.toThrowError()
-        expect(() => act(() => all())).not.toThrowError()
-        expect(() => act(() => flush())).not.toThrowError()
-        expect(() => act(() => query().where('id', '1').first())).not.toThrowError()
-      })
+        }).result,
+        act,
+      )
 
       it(`${name}: useRepository returns reactive data`, async () => {
         const {

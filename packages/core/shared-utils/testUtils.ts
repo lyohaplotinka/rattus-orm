@@ -90,7 +90,7 @@ export function testMethodsBound<T extends UseRepository<any>>(
   })
 }
 
-export function testMethodsNotRuined(name: string, useRepo: UseRepository<any>, _act?: (f: CallableFunction) => any) {
+export function testMethodsNotRuined(name: string, useRepo: UseRepository<any>, _act?: (f: any) => any) {
   const act =
     _act ??
     ((func: CallableFunction) => {
