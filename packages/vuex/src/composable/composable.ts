@@ -19,8 +19,9 @@ export function useRattusContext(injectKey?: InjectionKey<Store<any>>): RattusCo
 
 export function useRepository<R extends Repository<InstanceType<M>>, M extends typeof Model = typeof Model>(
   model: M,
+  connection?: string,
   injectKey?: InjectionKey<Store<any>>,
 ): UseComputedRepository<R, M> {
-  const repo = useRepositoryForDynamicContext<R, M>(() => useRattusContext(injectKey), model)
+  const repo = useRepositoryForDynamicContext<R, M>(() => useRattusContext(injectKey), model, connection)
   return computifyUseRepository<R, M>(repo)
 }

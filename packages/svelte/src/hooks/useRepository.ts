@@ -45,8 +45,9 @@ function computed<R>(cb: () => R, database: Database, modelEntity: string): Svel
 
 export function useRepository<R extends Repository<InstanceType<M>>, M extends typeof Model = typeof Model>(
   model: M,
+  connection?: string,
 ): UseComputedRepository<R, M> {
-  const repo = useRepositoryForDynamicContext(useRattusContext, model)
+  const repo = useRepositoryForDynamicContext(useRattusContext, model, connection)
   const db = useRattusContext().$database
 
   return {

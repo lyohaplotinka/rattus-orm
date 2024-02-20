@@ -5,7 +5,13 @@ import { installRattusORM, useRepository, VuexDataProvider } from '../src'
 import { useRattusContext } from '../src'
 import { renderHookWithContext, renderWithContext } from '@rattus-orm/core/utils/vueTestUtils'
 import { isComputed } from '@rattus-orm/core/utils/vueComposableUtils'
-import { testContext, testMethodsBound, testMethodsNotRuined, TestUser } from '@rattus-orm/core/utils/testUtils'
+import {
+  testContext,
+  testMethodsBound,
+  testMethodsNotRuined,
+  TestUser,
+  testCustomConnection,
+} from '@rattus-orm/core/utils/testUtils'
 
 const renderVuexHook = <T>(hook: () => T): T => {
   return renderHookWithContext({
@@ -34,6 +40,8 @@ describe('composable: vuex', () => {
     'vuex',
     renderVuexHook(() => useRepository(TestUser)),
   )
+
+  testCustomConnection('vuex', renderVuexHook(useRattusContext))
 
   it('useRepository: returns reactive data', async () => {
     const wrapper = renderWithContext({

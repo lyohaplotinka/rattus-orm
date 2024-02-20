@@ -6,6 +6,7 @@ import { useRattusContext } from './useRattusContext'
 
 export function useRepository<R extends Repository<InstanceType<M>>, M extends typeof Model = typeof Model>(
   model: M,
+  connection?: string,
 ): UseRepository<R, M> {
-  return useRepositoryForDynamicContext(useRattusContext, model)
+  return useRepositoryForDynamicContext(useRattusContext, model, connection)
 }

@@ -3,11 +3,16 @@
 import '@testing-library/jest-dom/vitest'
 
 import { describe, expect } from 'vitest'
-import { useRepository, RattusProvider } from '../src'
+import { useRepository, RattusProvider, useRattusContext } from '../src'
 import { renderHook } from '@solidjs/testing-library'
 import { renderWithResultAndContext } from './test-utils'
 import { pullRepositoryGettersKeys } from '@rattus-orm/core/utils/integrationsHelpers'
-import { testMethodsBound, testMethodsNotRuined, TestUser } from '@rattus-orm/core/utils/testUtils'
+import {
+  testCustomConnection,
+  testMethodsBound,
+  testMethodsNotRuined,
+  TestUser,
+} from '@rattus-orm/core/utils/testUtils'
 
 const ReactivityTestComponent = () => {
   const { find } = useRepository(TestUser)
@@ -33,6 +38,8 @@ describe('react-mobx hooks: useRepository', () => {
       wrapper: RattusProvider,
     }).result,
   )
+
+  testCustomConnection('Solid', renderHook(useRattusContext, { wrapper: RattusProvider }).result)
 
   it('useRepository returns reactive data', async () => {
     const {

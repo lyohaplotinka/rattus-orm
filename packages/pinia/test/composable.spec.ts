@@ -2,7 +2,13 @@ import { describe, expect } from 'vitest'
 import { computed, nextTick } from 'vue'
 import { installRattusORM, useRepository, useRattusContext, PiniaDataProvider } from '../src'
 import { createPinia } from 'pinia'
-import { testContext, testMethodsBound, testMethodsNotRuined, TestUser } from '@rattus-orm/core/utils/testUtils'
+import {
+  testContext,
+  testCustomConnection,
+  testMethodsBound,
+  testMethodsNotRuined,
+  TestUser,
+} from '@rattus-orm/core/utils/testUtils'
 import { renderHookWithContext, renderWithContext } from '@rattus-orm/core/utils/vueTestUtils'
 import { isComputed } from '@rattus-orm/core/utils/vueComposableUtils'
 
@@ -29,6 +35,8 @@ describe('composable: pinia', () => {
     'pinia',
     renderPiniaHook(() => useRepository(TestUser)),
   )
+
+  testCustomConnection('pinia', renderPiniaHook(useRattusContext))
 
   it('useRepository: returns reactive data', async () => {
     const wrapper = renderWithContext({
