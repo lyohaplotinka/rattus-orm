@@ -8,7 +8,11 @@ import { pullRepositoryKeys } from '@rattus-orm/core/utils/integrationsHelpers'
 import { act } from '@testing-library/react'
 import { observer } from 'mobx-react-lite'
 import { createBindSpy, TestUser } from '@rattus-orm/core/utils/testUtils'
-import { createReactivityTestComponent, renderComponentWithContextAndHook } from '@rattus-orm/core/utils/reactTestUtils'
+import {
+  createReactivityTestComponent,
+  REACT_REACTIVITY_TEST_ID,
+  renderComponentWithContextAndHook,
+} from '@rattus-orm/core/utils/reactTestUtils'
 
 const ReactivityTestComponent = observer(createReactivityTestComponent(useRepository))
 
@@ -52,7 +56,7 @@ describe('react-mobx hooks: useRepository', () => {
       result: { save },
       renderResult,
     } = renderHookWithCompMobx(ReactivityTestComponent, () => useRepository(TestUser))
-    const elem = renderResult.getByTestId('reactivity')
+    const elem = renderResult.getByTestId(REACT_REACTIVITY_TEST_ID)
     expect(elem).toHaveTextContent('')
 
     act(() => save({ id: '1', age: 32 }))

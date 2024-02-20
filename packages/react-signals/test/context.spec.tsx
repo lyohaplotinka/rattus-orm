@@ -2,18 +2,26 @@ import React from 'react'
 import { describe, expect, it } from 'vitest'
 import { RattusProvider, ReactSignalsDataProvider, useRattusContext } from '../src'
 import { cleanup, render } from '@testing-library/react'
-import { Database } from '@rattus-orm/core'
+import { Database, RattusOrmInstallerOptions } from '@rattus-orm/core'
 import { isUnknownRecord } from '@rattus-orm/core/utils/isUnknownRecord'
-import { renderWithResultAndContext, TestComponent } from './test-utils'
 import { RattusContext } from '@rattus-orm/core/utils/rattus-context'
 import '@testing-library/jest-dom/vitest'
 import { isInitializedContext } from '@rattus-orm/core/utils/integrationsHelpers'
+import { createTestComponent, REACT_TEST_ID, renderHookWithContext } from '@rattus-orm/core/utils/reactTestUtils'
+
+function renderHookSignals<T>(hook: () => T, props?: RattusOrmInstallerOptions): T {
+  return renderHookWithContext({
+    hook,
+    ContextComp: RattusProvider,
+    contextProps: props,
+  })
+}
+
+const SignalsTestComponent = createTestComponent(useRattusContext)
 
 describe('react-signals: context', () => {
   it('Context valid', () => {
-    const { result: res } = renderWithResultAndContext(undefined, () => {
-      return useRattusContext()
-    })
+    const res = renderHookSignals(useRattusContext)
 
     expect(isInitializedContext(res)).toEqual(true)
     expect(res.$database).toBeInstanceOf(Database)
@@ -25,7 +33,7 @@ describe('react-signals: context', () => {
     const database = new Database().setDataProvider(new ReactSignalsDataProvider()).setConnection('custom')
     database.start()
 
-    const { result } = renderWithResultAndContext(undefined, () => useRattusContext(), { database })
+    const result = renderHookSignals(useRattusContext, { database })
     expect(result).toBeInstanceOf(RattusContext)
     expect(result.$database.isStarted()).toEqual(true)
     expect(result.$database.getConnection()).toEqual('custom')
@@ -35,13 +43,13 @@ describe('react-signals: context', () => {
     expect(
       render(
         <RattusProvider>
-          <TestComponent />
+          <SignalsTestComponent />
         </RattusProvider>,
-      ).getByTestId('test-block'),
-    ).toHaveTextContent('TestComp')
+      ).getByTestId(REACT_TEST_ID),
+    ).toHaveTextContent('Success')
 
     cleanup()
 
-    expect(render(<TestComponent />).getByTestId('test-block')).toHaveTextContent('Error')
+    expect(render(<SignalsTestComponent />).getByTestId(REACT_TEST_ID)).toHaveTextContent('Error')
   })
 })

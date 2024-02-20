@@ -1,49 +1,48 @@
-import React from 'react'
+import { JSXElementConstructor } from 'react'
 import { describe, expect } from 'vitest'
-import { Repository } from '@rattus-orm/core'
-import { renderWithResultAndContext, TestComponent } from './test-utils'
-import { useRepository } from '../src'
+import { RattusOrmInstallerOptions, Repository } from '@rattus-orm/core'
+import { useRepository, RattusProvider } from '../src'
 import { pullRepositoryKeys } from '@rattus-orm/core/utils/integrationsHelpers'
 import '@testing-library/jest-dom/vitest'
 import { act } from '@testing-library/react'
-import { TestUser } from '@rattus-orm/core/utils/testUtils'
+import { createBindSpy, TestUser } from '@rattus-orm/core/utils/testUtils'
+import {
+  createReactivityTestComponent,
+  REACT_REACTIVITY_TEST_ID,
+  renderComponentWithContextAndHook,
+} from '@rattus-orm/core/utils/reactTestUtils'
 
-const ReactivityTestComponent = () => {
-  const { find } = useRepository(TestUser)
-  const user = find('1')
+const ReactivityTestComponent = createReactivityTestComponent(useRepository)
 
-  return <div data-testid={'reactivity'}>{user && user.age}</div>
+function renderHookWithCompSignals<T>(
+  Comp: JSXElementConstructor<any>,
+  hook: () => T,
+  props?: RattusOrmInstallerOptions,
+) {
+  return renderComponentWithContextAndHook({
+    UiComponent: Comp,
+    hook,
+    ContextComp: RattusProvider,
+    contextProps: props,
+  })
 }
 
 describe('react-hooks: useRepository', () => {
   describe('useRepository returns correctly bound methods', () => {
-    const mocked = vi.spyOn(Function.prototype, 'bind').mockImplementation(function (
-      this: any,
-      thisArg: any,
-      ...args: any[]
-    ) {
-      const func = this
-      const boundFunction = function (...newArgs: any[]): any {
-        return func.apply(thisArg, args.concat(newArgs))
-      }
-      boundFunction.boundTo = thisArg
-      return boundFunction
-    })
+    using _ = createBindSpy()
 
-    const { result } = renderWithResultAndContext(<TestComponent />, () => {
+    const { result } = renderHookWithCompSignals(ReactivityTestComponent, () => {
       return useRepository(TestUser)
     })
 
     it.each(pullRepositoryKeys)('%s has correct context', (methodName) => {
       expect((result[methodName] as any).boundTo).toBeInstanceOf(Repository)
     })
-
-    mocked.mockRestore()
   })
 
   it('useRepository: methods are not ruined', () => {
-    const { insert, fresh, destroy, find, save, all, flush, query }: Repository = renderWithResultAndContext(
-      <TestComponent />,
+    const { insert, fresh, destroy, find, save, all, flush, query } = renderHookWithCompSignals(
+      ReactivityTestComponent,
       () => useRepository(TestUser),
     ).result
     expect(() => act(() => insert({ id: '2', age: 22 }))).not.toThrowError()
@@ -60,8 +59,8 @@ describe('react-hooks: useRepository', () => {
     const {
       result: { save },
       renderResult,
-    } = renderWithResultAndContext(<ReactivityTestComponent />, () => useRepository(TestUser))
-    const elem = renderResult.getByTestId('reactivity')
+    } = renderHookWithCompSignals(ReactivityTestComponent, () => useRepository(TestUser))
+    const elem = renderResult.getByTestId(REACT_REACTIVITY_TEST_ID)
     expect(elem).toHaveTextContent('')
 
     act(() => save({ id: '1', age: 32 }))
