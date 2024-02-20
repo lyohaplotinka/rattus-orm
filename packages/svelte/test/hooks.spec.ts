@@ -6,7 +6,7 @@ import { RattusContext } from '@rattus-orm/core/utils/rattus-context'
 import { pullRepositoryGettersKeys, pullRepositoryKeys } from '@rattus-orm/core/utils/integrationsHelpers'
 import { act } from '@testing-library/svelte'
 import ReactivityTest from './components/ReactivityTest.svelte'
-import { TestUser } from '@rattus-orm/core/utils/testUtils'
+import { createBindSpy, TestUser } from '@rattus-orm/core/utils/testUtils'
 
 describe('svelte: hooks', () => {
   it('has correct context', () => {
@@ -17,19 +17,7 @@ describe('svelte: hooks', () => {
   })
 
   describe('useRepository returns correctly bound methods', () => {
-    const mocked = vi.spyOn(Function.prototype, 'bind').mockImplementation(function (
-      this: any,
-      thisArg: any,
-      ...args: any[]
-    ) {
-      const func = this
-      const boundFunction = function (...newArgs: any[]): any {
-        return func.apply(thisArg, args.concat(newArgs))
-      }
-      boundFunction.boundTo = thisArg
-      return boundFunction
-    })
-
+    using _ = createBindSpy()
     const result = renderFunction(() => useRepository(TestUser))
 
     it.each(pullRepositoryKeys)('%s has correct context', (methodName) => {
@@ -37,8 +25,6 @@ describe('svelte: hooks', () => {
         expect((result[methodName] as any).boundTo).toBeInstanceOf(Repository)
       }
     })
-
-    mocked.mockRestore()
   })
 
   it('useRepository: methods are not ruined', () => {

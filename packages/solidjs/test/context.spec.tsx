@@ -23,7 +23,7 @@ describe('solid: context', () => {
     database.start()
 
     const { result } = renderHook(useRattusContext, {
-      wrapper: (props) => <RattusProvider database={database}>{props.children}</RattusProvider>,
+      wrapper: (props) => <RattusProvider database={database} {...props} />,
     })
     expect(result).toBeInstanceOf(RattusContext)
     expect(result.$database.isStarted()).toEqual(true)

@@ -8,7 +8,7 @@ import { useRepository, RattusProvider } from '../src'
 import { renderHook } from '@solidjs/testing-library'
 import { renderWithResultAndContext } from './test-utils'
 import { pullRepositoryGettersKeys, pullRepositoryKeys } from '@rattus-orm/core/utils/integrationsHelpers'
-import { TestUser } from '@rattus-orm/core/utils/testUtils'
+import { createBindSpy, TestUser } from '@rattus-orm/core/utils/testUtils'
 
 const ReactivityTestComponent = () => {
   const { find } = useRepository(TestUser)
@@ -19,19 +19,7 @@ const ReactivityTestComponent = () => {
 
 describe('react-mobx hooks: useRepository', () => {
   describe('useRepository returns correctly bound methods', () => {
-    const mocked = vi.spyOn(Function.prototype, 'bind').mockImplementation(function (
-      this: any,
-      thisArg: any,
-      ...args: any[]
-    ) {
-      const func = this
-      const boundFunction = function (...newArgs: any[]): any {
-        return func.apply(thisArg, args.concat(newArgs))
-      }
-      boundFunction.boundTo = thisArg
-      return boundFunction
-    })
-
+    using _ = createBindSpy()
     const { result } = renderHook(() => useRepository(TestUser), {
       wrapper: RattusProvider,
     })
@@ -41,8 +29,6 @@ describe('react-mobx hooks: useRepository', () => {
         expect((result[methodName] as any).boundTo).toBeInstanceOf(Repository)
       }
     })
-
-    mocked.mockRestore()
   })
 
   it('useRepository: methods are not ruined', () => {

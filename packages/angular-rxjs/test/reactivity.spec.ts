@@ -1,44 +1,37 @@
 import { beforeEach, describe, expect, it } from 'vitest'
-import { Item, Model, Str } from '@rattus-orm/core'
+import { Item } from '@rattus-orm/core'
 import { TestBed } from '@angular/core/testing'
 import { RattusOrmModule, RattusContextService } from '../src/public-api'
 import { Component } from '@angular/core'
-import { AsyncPipe } from '@angular/common'
+import { AsyncPipe, NgIf } from '@angular/common'
 import { BehaviorSubject } from 'rxjs'
-
-class User extends Model {
-  public static override entity = 'user'
-  public static override dataTypeCasting = false
-
-  @Str('')
-  declare id: string
-
-  @Str('')
-  declare email: string
-}
+import { TestUser } from '@rattus-orm/core/utils/testUtils'
 
 @Component({
   standalone: true,
   selector: 'test-component',
-  template: '<div class="id">{{ (user | async)?.id }}</div><div class="email">{{ (user | async)?.email }}</div>',
-  imports: [AsyncPipe],
+  template: `<div *ngIf="user | async as user">
+    <div class="id">{{ user.id }}</div>
+    <div class="age">{{ user.age }}</div>
+  </div>`,
+  imports: [AsyncPipe, NgIf],
 })
 export class TestComponent {
-  public user: BehaviorSubject<Item<User>>
+  public user: BehaviorSubject<Item<TestUser>>
 
   constructor(protected readonly contextService: RattusContextService) {
     this.user = this.getUserRepository().observe((repo) => repo.query().where('id', '1').first())
   }
 
   public getUserRepository() {
-    return this.contextService.getRepository(User)
+    return this.contextService.getRepository(TestUser)
   }
 }
 
 describe('angular: reactivity', () => {
   beforeEach(() => {
     TestBed.configureTestingModule(RattusOrmModule.forRoot())
-    TestBed.inject(RattusContextService).getRepository(User).save({ id: '1', email: 'test@test.com' })
+    TestBed.inject(RattusContextService).getRepository(TestUser).save({ id: '1', age: 23 })
   })
 
   it('renders component with initial data', () => {
@@ -46,7 +39,7 @@ describe('angular: reactivity', () => {
     fixture.detectChanges()
 
     expect(fixture.nativeElement.querySelector('.id').innerHTML).toEqual('1')
-    expect(fixture.nativeElement.querySelector('.email').innerHTML).toEqual('test@test.com')
+    expect(fixture.nativeElement.querySelector('.age').innerHTML).toEqual('23')
   })
 
   it('data reactively changes', () => {
@@ -54,12 +47,12 @@ describe('angular: reactivity', () => {
     fixture.detectChanges()
 
     expect(fixture.nativeElement.querySelector('.id').innerHTML).toEqual('1')
-    expect(fixture.nativeElement.querySelector('.email').innerHTML).toEqual('test@test.com')
+    expect(fixture.nativeElement.querySelector('.age').innerHTML).toEqual('23')
 
-    fixture.componentInstance.getUserRepository().save({ id: '1', email: 'changed@test.com' })
+    fixture.componentInstance.getUserRepository().save({ id: '1', age: 25 })
     fixture.detectChanges()
 
     expect(fixture.nativeElement.querySelector('.id').innerHTML).toEqual('1')
-    expect(fixture.nativeElement.querySelector('.email').innerHTML).toEqual('changed@test.com')
+    expect(fixture.nativeElement.querySelector('.age').innerHTML).toEqual('25')
   })
 })

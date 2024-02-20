@@ -1,6 +1,7 @@
 import { vi } from 'vitest'
 
 import { Model, Num, Repository, Str } from '../src'
+import { ObjectDataProvider } from '../src/object-data-provider'
 
 export class TestUser extends Model {
   public static entity = 'testUser'
@@ -12,12 +13,20 @@ export class TestUser extends Model {
   public declare age: number
 }
 
+export class TestUserNoCasting extends TestUser {
+  public static dataTypeCasting = false
+}
+
 export class TestUserCustomRepo extends Repository<TestUser> {
   public use = TestUser
 
   public getAllButCool() {
     return this.all()
   }
+}
+
+export class TestUserNoCastingCustomRepo extends TestUserCustomRepo {
+  public use = TestUserNoCasting
 }
 
 export function createBindSpy() {
@@ -42,3 +51,5 @@ export function createBindSpy() {
     },
   }
 }
+
+export class TestDataProvider extends ObjectDataProvider {}
