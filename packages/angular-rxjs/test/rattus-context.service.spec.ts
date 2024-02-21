@@ -48,7 +48,7 @@ describe('RattusContextService', () => {
       const service = TestBed.inject(RattusContextService)
 
       expect(service.getDatabase().getConnection()).toEqual('third')
-      expect((service.getDatabase().getDataProvider() as any).provider).toBeInstanceOf(TestDataProvider)
+      expect(service.getDatabase().getDataProvider()).toBeInstanceOf(TestDataProvider)
     })
 
     it('respects custom repositories, they have observe method', () => {

@@ -68,7 +68,7 @@ export function testContext(context: any, provider: Constructor<DataProvider>, c
   expect(isUnknownRecord(context.$databases)).toEqual(true)
   expect(context.$databases[connection]).toBeInstanceOf(Database)
   expect(context.$database.getConnection()).toEqual(connection)
-  expect((context.$database.getDataProvider() as any).provider).toBeInstanceOf(provider)
+  expect(context.$database.getDataProvider()).toBeInstanceOf(provider)
 }
 
 export function testMethodsBound<T extends UseRepository<any>>(
@@ -114,7 +114,7 @@ export function testMethodsNotRuined(name: string, useRepo: UseRepository<any>, 
 export function testCustomConnection(name: string, context: RattusContext) {
   it(`${name}: custom connection works`, () => {
     context.$repo(TestUser).save({ id: '333', age: 20 } satisfies RawModel<TestUser>)
-    const dataProvider = (context.$database.getDataProvider() as any).provider
+    const dataProvider = context.$database.getDataProvider()
 
     context.createDatabase('custom30').setDataProvider(dataProvider).start()
     context.$repo(TestUser, 'custom30').save({ id: '333', age: 30 } satisfies RawModel<TestUser>)

@@ -6,12 +6,11 @@ import { ObjectDataProvider } from '@rattus-orm/core/object-data-provider'
 import { z } from 'zod'
 
 export const createDb = (strict: boolean | string[] = true) => {
-  const db = new Database()
+  return new Database()
     .setDataProvider(new ObjectDataProvider())
     .setConnection('entities')
     .use(RattusZodValidationPlugin({ strict }))
-  db.start()
-  return db
+    .start()
 }
 
 type JobType = {

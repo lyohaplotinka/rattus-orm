@@ -1,4 +1,4 @@
-import type { DataProvider, Elements, State } from '@/data/types'
+import type { DataProvider, Elements, SerializedStorage, State } from '@/data/types'
 import type { DatabasePlugin } from '@/database/types'
 import { EventsDataProviderWrapper } from '@/events/events-data-provider-wrapper'
 import type {
@@ -90,9 +90,19 @@ export class Database {
   }
 
   /**
-   * Get current database DataProvider
+   * Get current database DataProvider.
+   * Returns initial DataProvider, not wrapped with
+   * EventsDataProviderWrapper.
    */
   public getDataProvider() {
+    return this.dataProvider.getWrappedProvider()
+  }
+
+  /**
+   * Get current DataProvider wrapped in
+   * EventsDataProviderWraper
+   */
+  public getWrappedDataProvider() {
     return this.dataProvider
   }
 
@@ -240,6 +250,26 @@ export class Database {
   }
 
   /**
+   * Export all data from current connection
+   * as JavaScript object
+   */
+  public dump(): SerializedStorage {
+    const connection = this.getConnection()
+    return {
+      [connection]: this.dataProvider.dump()[connection],
+    }
+  }
+
+  /**
+   * Import data into database
+   *
+   * @param {SerializedStorage} data data to import
+   */
+  public restore(data: SerializedStorage) {
+    this.dataProvider.restore(data)
+  }
+
+  /**
    * Register all related models.
    */
   protected registerRelatedModels<M extends Model>(model: M): void {
@@ -268,7 +298,7 @@ export class Database {
   }
 
   /**
-   * Create sub state.
+   * Create sub-state.
    */
   protected createState(): State {
     return {
