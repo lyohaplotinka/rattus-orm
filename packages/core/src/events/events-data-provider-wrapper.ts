@@ -101,6 +101,10 @@ export class EventsDataProviderWrapper implements DataProvider {
     }
   }
 
+  public getWrappedProvider(): DataProvider {
+    return this.provider
+  }
+
   protected dispatchVoidEvent<T = string>(event: RattusEvent, param: T, modulePath: ModulePath) {
     this.getListenersForEvent(event).forEach((listener) => listener(param, modulePath))
   }

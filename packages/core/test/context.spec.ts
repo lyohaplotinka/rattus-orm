@@ -36,7 +36,7 @@ describe('context.spec.ts', () => {
   })
 
   it('respects custom created database', () => {
-    const db = new Database().setConnection('third')
+    const db = new Database().setConnection('third').setDataProvider(new ObjectDataProvider())
     const context = createRattusContext({ database: db })
 
     expect(context.$database).toEqual(db)
