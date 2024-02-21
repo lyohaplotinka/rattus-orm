@@ -668,7 +668,7 @@ export class Query<M extends Model = Model> {
   }
 
   protected getDataProvider() {
-    return this.database.getDataProvider()
+    return this.database.getWrappedDataProvider()
   }
 
   protected getDatabaseConnection() {

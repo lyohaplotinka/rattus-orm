@@ -99,6 +99,14 @@ export class Database {
   }
 
   /**
+   * Get current DataProvider wrapped in
+   * EventsDataProviderWraper
+   */
+  public getWrappedDataProvider() {
+    return this.dataProvider
+  }
+
+  /**
    * Set the connection.
    *
    * @param {string} connection connection name
