@@ -5,14 +5,8 @@ import type { ReleaseType } from 'semver'
 import semver from 'semver'
 
 import { updateChangelog } from '../auto-changelogger'
-import {
-  getPackageMeta,
-  GitUtils,
-  loadPackageJson,
-  updatePackageJson,
-  writePackageJson,
-  YarnUtils,
-} from '../utils/utils'
+import { GitUtils } from '../utils/git'
+import { getPackageMeta, loadPackageJson, updatePackageJson, writePackageJson, YarnUtils } from '../utils/utils'
 
 const versionIncrements: ReleaseType[] = ['patch', 'minor', 'major']
 
