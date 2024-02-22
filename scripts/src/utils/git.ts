@@ -125,7 +125,10 @@ export class GitUtils {
     return stdout.split('\n')
   }
 
-  public static getCommitFilesList(hash: string): string[] {
+  public static getCommitFilesList(hash?: string): string[] {
+    if (!hash) {
+      return []
+    }
     const { stdout } = $.sync`git diff-tree --no-commit-id --name-only ${hash} -r`
     return stdout.split('\n')
   }
