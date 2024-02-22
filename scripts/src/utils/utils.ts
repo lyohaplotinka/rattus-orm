@@ -6,13 +6,14 @@ import { dirname, extname, normalize, parse, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 import chalk from 'chalk'
-import { $, execaCommand, execaCommandSync } from 'execa'
+import { $, execaCommand } from 'execa'
 import { findUpSync } from 'find-up'
 import { merge } from 'lodash-es'
 import type { PackageJson } from 'type-fest'
 
 import { isPackageJsonWithRattusMeta } from '../types/guards'
 import type { ExecaOptions, PackageMeta, YarnPackageListItem } from '../types/types'
+import { getCommitsListFromLastRelease, hasAffectedFilesForPackage } from './git'
 
 export function dirName(importMetaUrl: string) {
   return dirname(fileURLToPath(importMetaUrl))
@@ -52,7 +53,7 @@ export function loadPackagesMeta() {
       result[dirName] = {
         title: meta.title,
         code: dirName,
-        matchPattern: `packages/${dirName}/**`,
+        matchPattern: `packages/${dirName}/src/**`,
         path: packagePath,
         testProvider,
         autoBumpDependents: meta.autoBumpDependents ?? false,
@@ -204,66 +205,23 @@ export async function createBuildsAndExportsForFiles(dirPath: string, prefix?: s
   }
 }
 
-export class GitUtils {
-  public static async tag(tag: string) {
-    return $`git tag ${tag}`
+export async function isPackageAffectedSinceLastRelease(packageKey: string): Promise<boolean> {
+  const commits = await getCommitsListFromLastRelease(packageKey)
+  return commits.some((commit) => hasAffectedFilesForPackage(commit, packageKey))
+}
+
+export async function getAffectedPackages() {
+  if (await isPackageAffectedSinceLastRelease('core')) {
+    return parsePackages('all')
   }
 
-  public static async add() {
-    return $`git add -A`
+  const affected: string[] = []
+  for (const pkg of parsePackages('all')) {
+    if (await isPackageAffectedSinceLastRelease(pkg)) {
+      affected.push(pkg)
+    }
   }
-
-  public static async commit(message: string) {
-    return $`git commit -m ${message}`
-  }
-
-  public static async pushTag(tag: string) {
-    await this.tag(tag)
-    return $`git push origin refs/tags/${tag}`
-  }
-
-  public static async push() {
-    return $`git push`
-  }
-
-  public static readFileFromCommit(path: string, hash: string): string
-  public static readFileFromCommit<T>(path: string, hash: string, processor: (stdout: string) => T): T
-  public static readFileFromCommit(path: string, hash: string, processor?: (stdout: string) => any) {
-    const { stdout } = execaCommandSync(`git --no-pager show ${hash}:${path}`, {
-      cwd: MONOREPO_ROOT_DIR,
-    })
-
-    return processor ? processor(stdout) : stdout
-  }
-
-  public static getLastCommitByPattern(pattern: string): string | null {
-    const { stdout } = $.sync`git log --format=format:%H --grep=${pattern} -n 1 main`
-    return stdout || null
-  }
-
-  public static getCommitWherePathWasIntroduced(path: string, includeCommit = false): string {
-    const { stdout } = $.sync`git log --format=format:%H --diff-filter=A -n 1 main -- ${path}`
-    return includeCommit ? `${stdout}^` : stdout
-  }
-
-  public static getCommitsSincePattern(pattern: string): string[] {
-    const { stdout } = $.sync`git log --pretty=format:%s::::%H ${pattern}...main`
-    return stdout.split('\n')
-  }
-
-  public static getCommitFilesList(hash: string): string[] {
-    const { stdout } = $.sync`git diff-tree --no-commit-id --name-only ${hash} -r`
-    return stdout.split('\n')
-  }
-
-  public static getCurrentBranchName() {
-    const res = $.sync`git rev-parse --abbrev-ref HEAD`
-    return res.stdout.trim()
-  }
-
-  public static isOnMainBranch() {
-    return this.getCurrentBranchName() === 'main'
-  }
+  return affected
 }
 
 export class YarnUtils {
