@@ -21,6 +21,7 @@ const getHeading = (str: string): Heading => {
 }
 
 export async function generateChangelogFromJson(changelogJson: Record<string, ChangelogElement[]>, dateStr: string) {
+  HEADING_REGEX.lastIndex = 0
   let changelogFileContent = await readFile(filePath, 'utf8')
   const firstBlock = getHeading(changelogFileContent)
   const secondBlock = getHeading(changelogFileContent)
@@ -28,9 +29,6 @@ export async function generateChangelogFromJson(changelogJson: Record<string, Ch
 
   if (hasCurrentDate) {
     changelogFileContent = changelogFileContent.slice(secondBlock.indexStart, changelogFileContent.length)
-  } else {
-    // eslint-disable-next-line
-    console.log(`"${firstBlock.text}", "${dateStr}"`)
   }
 
   const changelogElements = changelogJson[dateStr]
