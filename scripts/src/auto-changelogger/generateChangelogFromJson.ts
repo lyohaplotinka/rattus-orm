@@ -36,10 +36,10 @@ export async function generateChangelogFromJson(changelogJson: Record<string, Ch
   for (const changelogEl of changelogElements) {
     newBlock.push(
       `### ${changelogEl.packageName} (${changelogEl.packageVersion})`,
-      ...changelogEl.commitMessages.map((commit) => `* ${commit}\n`),
+      ...changelogEl.commitMessages.map((commit) => `* ${commit}`),
     )
   }
 
-  changelogFileContent = newBlock.join('\n') + '\n' + changelogFileContent
+  changelogFileContent = newBlock.join('\n') + '\n\n' + changelogFileContent
   await writeFile(filePath, changelogFileContent, 'utf8')
 }

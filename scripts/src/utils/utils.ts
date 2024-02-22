@@ -53,7 +53,7 @@ export function loadPackagesMeta() {
       result[dirName] = {
         title: meta.title,
         code: dirName,
-        matchPattern: `packages/${dirName}/src/**`,
+        matchPattern: `packages/${dirName}/**`,
         path: packagePath,
         testProvider,
         autoBumpDependents: meta.autoBumpDependents ?? false,

@@ -63,7 +63,7 @@ export async function getCommitsListFromLastRelease(packageKey: string): Promise
 export function hasAffectedFilesForPackage(commit: Commit, packageKey: string) {
   const meta = getPackageMeta(packageKey)
   const isMatch = micromatch.matcher(getPackagePatternForFormat(meta.matchPattern), {
-    ignore: ['**/(tsup)*', 'scripts/*'],
+    ignore: ['**/(tsup)*', 'scripts/*', 'test/*'],
   })
   const matched = commit.affectedFiles.filter((file) => {
     if (!isMatch(file)) {
