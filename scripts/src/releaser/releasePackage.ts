@@ -127,6 +127,16 @@ export async function runForPackage(packageName: string) {
   console.log('Updating changelog...')
   await updateChangelog(packageName)
 
+  const { yes: changelogOk } = await enquirer.prompt<{ yes: boolean }>({
+    type: 'confirm',
+    name: 'yes',
+    message: `Is changelog OK?`,
+  })
+
+  if (!changelogOk) {
+    return
+  }
+
   console.log('Committing changes...')
   await GitUtils.add()
   await GitUtils.commit(`release(${packageName}): v${targetVersion}`)
