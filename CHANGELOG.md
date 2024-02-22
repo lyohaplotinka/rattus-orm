@@ -3,6 +3,10 @@
 * ⚙️ Refactor database: dump, restore and DataProvider adjustments ([#35](https://github.com/lyohaplotinka/rattus-orm/pull/35))
 * 🐞 Bugfix: all hooks/composables/etc support retrieving repositories for custom connections ([#34](https://github.com/lyohaplotinka/rattus-orm/pull/34))
 * ⚙️ Refactor tests and utils: common test cases, react test factory, vue test factory, common test cases ([#33](https://github.com/lyohaplotinka/rattus-orm/pull/33))
+### Angular + RxJS (0.0.2)
+* release(core): v0.1.2
+* ⚙️ Refactor database: dump, restore and DataProvider adjustments ([#35](https://github.com/lyohaplotinka/rattus-orm/pull/35))
+* ⚙️ Refactor tests and utils: common test cases, react test factory, vue test factory, common test cases ([#33](https://github.com/lyohaplotinka/rattus-orm/pull/33))
 
 # 2024/02/17
 ### Svelte (0.1.0)
