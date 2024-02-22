@@ -20,7 +20,7 @@
     "typescript",
     "javascript"
   ],
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "./dist/rattus-orm-solidjs-provider.cjs.jsx",
   "browser": "./dist/rattus-orm-solidjs-provider.esm.jsx",
   "module": "./dist/rattus-orm-solidjs-provider.esm.jsx",
