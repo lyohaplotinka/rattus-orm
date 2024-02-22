@@ -52,7 +52,7 @@
     "vite-plugin-solid": "^2.10.1"
   },
   "peerDependencies": {
-    "@rattus-orm/core": "^0.1.1",
+    "@rattus-orm/core": "^0.1.2",
     "solid-js": "*"
   },
   "rattusMeta": {

@@ -55,7 +55,7 @@
   },
   "peerDependencies": {
     "@preact/signals-react": "*",
-    "@rattus-orm/core": "^0.1.1",
+    "@rattus-orm/core": "^0.1.2",
     "react": "*"
   },
   "rattusMeta": {
