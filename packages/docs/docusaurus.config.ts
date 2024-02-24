@@ -41,7 +41,7 @@ const config: Config = {
           editUrl: 'https://github.com/lyohaplotinka/rattus-orm/tree/main/packages/docs',
         },
         theme: {
-          customCss: './src/css/custom.scss',
+          customCss: ['./src/css/custom.scss'],
         },
       } satisfies Preset.Options,
     ],
@@ -49,7 +49,7 @@ const config: Config = {
 
   themeConfig: {
     // Replace with your project's social card
-    image: 'img/docusaurus-social-card.jpg',
+    image: 'img/social-card-v2.jpg',
     navbar: {
       title: 'Rattus ORM',
       logo: {
@@ -114,7 +114,7 @@ const config: Config = {
       respectPrefersColorScheme: false,
     },
   } satisfies Preset.ThemeConfig,
-  plugins: ['docusaurus-plugin-sass'],
+  plugins: ['docusaurus-plugin-sass', './src/plugins/unocss-plugin.ts'],
 }
 
 export default config

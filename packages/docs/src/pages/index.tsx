@@ -1,3 +1,6 @@
+// main.ts
+import 'uno.css'
+
 import Link from '@docusaurus/Link'
 import Translate, { translate } from '@docusaurus/Translate'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
@@ -5,6 +8,7 @@ import HomepageFeatures from '@site/src/components/views/HomepageFeatures'
 import HomepageIntegrations from '@site/src/components/views/HomepageIntegrations'
 import HomepagePlugins from '@site/src/components/views/HomepagePlugins'
 import Logo from '@site/static/img/logo.svg'
+import threeLibsDemo from '@site/static/img/three-libs-demo.png'
 import Heading from '@theme/Heading'
 import Layout from '@theme/Layout'
 import clsx from 'clsx'
@@ -44,6 +48,11 @@ export default function Home(): JSX.Element {
     >
       <HomepageHeader />
       <main>
+        <div className="flex flex-col items-center mt-10">
+          <Heading as={'h1'}>Framework-agnostic</Heading>
+          <p className={'hero__subtitle text-center'}>ORM-like experience for any state management library</p>
+          <img src={threeLibsDemo} alt={'React, Vue and Angular demo'} className={'w-220'} />
+        </div>
         <HomepageIntegrations />
         <HomepagePlugins />
         <HomepageFeatures />
