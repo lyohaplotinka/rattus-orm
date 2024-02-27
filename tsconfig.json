@@ -49,5 +49,16 @@
   ],
   "exclude": [
     "node_modules",
-  ]
+  ],
+  "ts-node": {
+    "require": ["tsconfig-paths/register"],
+    "transpileOnly": true,
+    "compilerOptions": {
+      "strict": false,
+      "target": "es6",
+      "module": "commonjs",
+      "esModuleInterop": true,
+      "moduleResolution": "node"
+    }
+  }
 }
