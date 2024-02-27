@@ -1,14 +1,13 @@
 import { uniq } from 'lodash-es'
 import type { Constructor } from 'type-fest'
-import { expect, vi } from 'vitest'
+import { afterAll, expect, vi } from 'vitest'
 
 import type { DataProvider, RawModel } from '../src'
 import { Database, Model, Num, Repository, Str } from '../src'
 import type { RattusContext } from '../src/context/rattus-context'
 import { ObjectDataProvider } from '../src/object-data-provider'
 import type { UseRepository } from './integrationsHelpers'
-import { pullRepositoryKeys } from './integrationsHelpers'
-import { isInitializedContext } from './integrationsHelpers'
+import { isInitializedContext, pullRepositoryKeys } from './integrationsHelpers'
 import { isUnknownRecord } from './isUnknownRecord'
 
 export class TestUser extends Model {
@@ -38,11 +37,7 @@ export class TestUserNoCastingCustomRepo extends TestUserCustomRepo {
 }
 
 export function createBindSpy() {
-  const mocked = vi.spyOn(Function.prototype, 'bind').mockImplementation(function (
-    this: any,
-    thisArg: any,
-    ...args: any[]
-  ) {
+  return vi.spyOn(Function.prototype, 'bind').mockImplementation(function (this: any, thisArg: any, ...args: any[]) {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const func = this
     const boundFunction = function (...newArgs: any[]): any {
@@ -51,13 +46,6 @@ export function createBindSpy() {
     boundFunction.boundTo = thisArg
     return boundFunction
   })
-
-  return {
-    ...mocked,
-    [Symbol.dispose]: () => {
-      mocked.mockRestore()
-    },
-  }
 }
 
 export class TestDataProvider extends ObjectDataProvider {}
@@ -78,8 +66,11 @@ export function testMethodsBound<T extends UseRepository<any>>(
   checker: (v: any) => boolean = () => true,
 ) {
   describe(`${name}: useRepository returns correctly bound methods`, () => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    using _ = createBindSpy()
+    const mock = createBindSpy()
+
+    afterAll(() => {
+      mock.mockRestore()
+    })
 
     const useRepoResult = useRepo()
     it.each(uniq([...pullRepositoryKeys, ...keysInstanceof]))('%s has correct context', (methodName) => {

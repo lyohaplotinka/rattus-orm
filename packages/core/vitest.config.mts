@@ -13,10 +13,5 @@ export default defineConfig({
       '@func-test': path.resolve(__dirname, '../../test'),
       '@core-shared-utils': path.resolve(__dirname, './shared-utils')
     },
-  },
-  esbuild: {
-    target: 'es2022',
-    include: /\.(m?[jt]s|[jt]sx)$/,
-    exclude: []
   }
 })
