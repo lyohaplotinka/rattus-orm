@@ -7,7 +7,7 @@ export class String extends Type<string | null> {
   /**
    * Create a new String attribute instance.
    */
-  constructor(model: Model, value: string | null) {
+  constructor(model: typeof Model, value: string | null) {
     super(model, value)
   }
 

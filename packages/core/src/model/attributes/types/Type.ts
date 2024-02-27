@@ -1,7 +1,7 @@
 import type { Model } from '../../Model'
 import { Attribute } from '../attribute'
 
-export abstract class Type<MakeValue> extends Attribute<MakeValue> {
+export abstract class Type<MakeValue> extends Attribute<MakeValue, typeof Model> {
   /**
    * The default value for the attribute.
    */
@@ -15,7 +15,7 @@ export abstract class Type<MakeValue> extends Attribute<MakeValue> {
   /**
    * Create a new Type attribute instance.
    */
-  constructor(model: Model, value: any = null) {
+  constructor(model: typeof Model, value: any = null) {
     super(model)
     this.value = value
   }
@@ -31,6 +31,13 @@ export abstract class Type<MakeValue> extends Attribute<MakeValue> {
     this.isNullable = true
 
     return this
+  }
+
+  public make(value?: any): MakeValue {
+    if (this.model.dataTypeCasting) {
+      return this.makeCasted(value)
+    }
+    return this.makeRaw(value)
   }
 
   protected makeRaw(value?: any): MakeValue {

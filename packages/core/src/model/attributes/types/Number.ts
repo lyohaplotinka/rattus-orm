@@ -7,7 +7,7 @@ export class Number extends Type<number | null> {
   /**
    * Create a new Number attribute instance.
    */
-  constructor(model: Model, value: number | null) {
+  constructor(model: typeof Model, value: number | null) {
     super(model, value)
   }
 

@@ -7,7 +7,7 @@ export class Boolean extends Type<boolean | null> {
   /**
    * Create a new Boolean attribute instance.
    */
-  constructor(model: Model, value: boolean | null) {
+  constructor(model: typeof Model, value: boolean | null) {
     super(model, value)
   }
 

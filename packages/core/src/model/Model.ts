@@ -20,10 +20,10 @@ import { Number as Num } from './attributes/types/Number'
 import { String as Str } from './attributes/types/String'
 import { Uid } from './attributes/types/Uid'
 
-export type ModelFields = Record<string, Attribute<unknown>>
+export type ModelFields = Record<string, Attribute<unknown, unknown>>
 export type ModelSchemas = Record<string, ModelFields>
 export type ModelRegistries = Record<string, ModelRegistry>
-export type ModelRegistry = Record<string, () => Attribute<unknown>>
+export type ModelRegistry = Record<string, () => Attribute<unknown, unknown>>
 
 export interface ModelOptions {
   fill?: boolean
@@ -87,7 +87,11 @@ export class Model {
    * @param {string} key model field name
    * @param {() => Attribute<unknown>} attribute attribute factory
    */
-  public static setRegistry<M extends typeof Model>(this: M, key: string, attribute: () => Attribute<unknown>): M {
+  public static setRegistry<M extends typeof Model>(
+    this: M,
+    key: string,
+    attribute: () => Attribute<unknown, unknown>,
+  ): M {
     this.registries[this.entity] = {
       ...(this.registries[this.entity] ?? {}),
       [key]: attribute,
@@ -259,7 +263,7 @@ export class Model {
   }
 
   protected static createType<T extends Type<any>>(TypeCtor: Constructor<T>, value?: any) {
-    return new TypeCtor(this.thisAsModelConstructor().newRawInstance(), value)
+    return new TypeCtor(this.thisAsModelConstructor(), value)
   }
 
   protected static thisAsModelConstructor() {
@@ -498,7 +502,7 @@ export class Model {
   /**
    * Fill the given attribute with a given value specified by the given key.
    */
-  protected $fillField(key: string, attr: Attribute<unknown>, value: any): void {
+  protected $fillField(key: string, attr: Attribute<unknown, unknown>, value: any): void {
     if (value !== undefined) {
       this[key] = attr instanceof MorphTo ? attr.make(value, this[attr.getType()]) : attr.make(value)
       return

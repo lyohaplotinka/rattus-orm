@@ -1,30 +1,20 @@
-import type { ModelConstructor } from '@/model/types'
-
-import type { Model } from '../Model'
-
-export abstract class Attribute<MakeValue> {
+export abstract class Attribute<MakeValue, ModelType> {
   /**
    * The model instance.
    */
-  protected model: Model
+  protected model: ModelType
 
   /**
    * Create a new Attribute instance.
    */
-  constructor(model: ModelConstructor<any>) {
+  constructor(model: ModelType) {
     this.model = model
   }
 
   /**
    * Make the value for the attribute.
    */
-  public make(value?: any): MakeValue {
-    if (this.model.$self().dataTypeCasting) {
-      return this.makeCasted(value)
-    }
-    return this.makeRaw(value)
-  }
-
+  public abstract make(value?: any): MakeValue
   protected abstract makeCasted(value?: any): MakeValue
   protected abstract makeRaw(value?: any): MakeValue
 }

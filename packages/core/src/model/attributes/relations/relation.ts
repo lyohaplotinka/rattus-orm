@@ -10,7 +10,7 @@ export interface Dictionary {
   [id: string]: Model[]
 }
 
-export abstract class Relation extends Attribute<any> {
+export abstract class Relation extends Attribute<any, Model> {
   /**
    * Create a new relation instance.
    */
