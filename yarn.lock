@@ -4967,6 +4967,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@rattus-orm/experimental-es23-decorators@workspace:packages/experimental-es23-decorators":
+  version: 0.0.0-use.local
+  resolution: "@rattus-orm/experimental-es23-decorators@workspace:packages/experimental-es23-decorators"
+  dependencies:
+    "@rattus-orm/core": "workspace:^"
+  peerDependencies:
+    "@rattus-orm/core": ^0.1.2
+  languageName: unknown
+  linkType: soft
+
 "@rattus-orm/local-storage@workspace:packages/local-storage":
   version: 0.0.0-use.local
   resolution: "@rattus-orm/local-storage@workspace:packages/local-storage"

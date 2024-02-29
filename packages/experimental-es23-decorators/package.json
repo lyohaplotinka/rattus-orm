@@ -1,0 +1,69 @@
+{
+  "name": "@rattus-orm/experimental-es23-decorators",
+  "description": "ORM for your JS/TS apps: experimental modern decorators",
+  "homepage": "https://lyohaplotinka.github.io/rattus-orm/",
+  "author": "Lyoha Plotinka",
+  "license": "MIT",
+  "packageManager": "yarn@4.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lyohaplotinka/rattus-orm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lyohaplotinka/rattus-orm/issues"
+  },
+  "keywords": [
+    "orm",
+    "rattus",
+    "decorators",
+    "es2023",
+    "typescript",
+    "javascript"
+  ],
+  "version": "0.0.0",
+  "main": "./dist/rattus-orm-experimental-es23-decorators-provider.js",
+  "browser": "./dist/rattus-orm-experimental-es23-decorators-provider.mjs",
+  "module": "./dist/rattus-orm-experimental-es23-decorators-provider.mjs",
+  "types": "./dist/rattus-orm-experimental-es23-decorators-provider.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/rattus-orm-experimental-es23-decorators-provider.mjs",
+      "require": "./dist/rattus-orm-experimental-es23-decorators-provider.js",
+      "types": "./dist/rattus-orm-experimental-es23-decorators-provider.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "run -T tsup",
+    "clean": "rm -rf dist && rm -rf node_modules",
+    "lint": "run -T eslint 'src/**/*.ts' --quiet --fix",
+    "test": "run -T vitest run",
+    "typecheck": "bash -c 'run -T tsc -p tsconfig.json --noEmit'",
+    "size": "run -T size-limit"
+  },
+  "devDependencies": {
+    "@rattus-orm/core": "workspace:^"
+  },
+  "peerDependencies": {
+    "@rattus-orm/core": "^0.1.2"
+  },
+  "rattusMeta": {
+    "title": "experimental-es23-decorators",
+    "testProvider": {
+      "path": "./test/provider-factory.ts",
+      "exportName": "dataProviderFactory"
+    }
+  },
+  "size-limit": [
+    {
+      "name": "ESM experimental-es23-decorators provider",
+      "path": "./dist/rattus-orm-experimental-es23-decorators-provider.mjs"
+    },
+    {
+      "name": "CJS experimental-es23-decorators provider",
+      "path": "./dist/rattus-orm-experimental-es23-decorators-provider.mjs"
+    }
+  ]
+}
