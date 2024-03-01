@@ -1,7 +1,8 @@
-import { mockUid } from '../../../../test/utils/Helpers'
-
-import { Uid } from '@/model/decorators/attributes/types/Uid'
-import { Model } from '@/model/Model'
+import { mockUid } from '../../../test/utils/Helpers'
+import { Model } from '@rattus-orm/core'
+import { Uid } from '../src'
+import { vi } from 'vitest'
+;(globalThis as any).crypto.randomUUID = vi.fn()
 
 describe('unit/model/Model_Attrs_UID', () => {
   it('returns `null` when the model is instantiated', () => {

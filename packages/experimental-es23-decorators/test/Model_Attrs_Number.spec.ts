@@ -1,5 +1,5 @@
-import { Num } from '@/model/decorators/attributes/types/Num'
-import { Model } from '@/model/Model'
+import { Model } from '@rattus-orm/core'
+import { Num } from '../src'
 
 describe('unit/model/Model_Attrs_Number', () => {
   it('casts the value to `Number` when instantiating the model', () => {

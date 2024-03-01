@@ -1,5 +1,5 @@
-import { Attr } from '@/model/decorators/attributes/types/Attr'
-import { Model } from '@/model/Model'
+import { Attr } from '../src'
+import { Model } from '@rattus-orm/core'
 
 describe('unit/model/Model', () => {
   class User extends Model {

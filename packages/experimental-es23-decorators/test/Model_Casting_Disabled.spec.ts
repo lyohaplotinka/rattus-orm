@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { Model, Num, Str, Bool } from '../../src'
+import { Num, Str, Bool } from '../src'
+import { Model } from '@rattus-orm/core'
 
 describe('Disabling casting for model', () => {
   class User extends Model {

@@ -1,5 +1,5 @@
-import { Str } from '@/model/decorators/attributes/types/Str'
-import { Model } from '@/model/Model'
+import { Model } from '@rattus-orm/core'
+import { Str } from '../src'
 
 describe('unit/model/Model_Attrs_String', () => {
   it('casts the value to `String` when instantiating the model', () => {

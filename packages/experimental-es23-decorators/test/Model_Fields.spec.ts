@@ -1,4 +1,4 @@
-import { Model } from '@/model/Model'
+import { Model } from '@rattus-orm/core'
 
 describe('unit/model/Model_Fields', () => {
   it('can define model fields as a static function', () => {
