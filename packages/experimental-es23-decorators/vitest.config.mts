@@ -1,5 +1,5 @@
 import { defineConfig } from 'vitest/config'
-import { vitePluginTypescriptTransform } from './vite-plugin/index.mjs';
+import { vitePluginTypescriptTransform } from './vite-plugin/index.js';
 
 export default defineConfig({
   plugins: [
