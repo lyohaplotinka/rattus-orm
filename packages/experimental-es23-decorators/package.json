@@ -50,11 +50,7 @@
     "@rattus-orm/core": "^0.1.2"
   },
   "rattusMeta": {
-    "title": "experimental-es23-decorators",
-    "testProvider": {
-      "path": "./test/provider-factory.ts",
-      "exportName": "dataProviderFactory"
-    }
+    "title": "experimental-es23-decorators"
   },
   "size-limit": [
     {

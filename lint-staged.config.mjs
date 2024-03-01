@@ -19,12 +19,17 @@ export default (allStagedFiles) => {
     ])
 
     const result = new Set()
-    for (const filePath of hasLibs) {
-      const pkgDir = filePath.match(/.*\/packages\/([a-z-]+)\/.+$/)[1]
-      result.add(`yarn test ${pkgDir}`)
-    }
+    try {
+      for (const filePath of hasLibs) {
+        const pkgDir = filePath.match(/.*\/packages\/([a-z-0-9-]+)\/.+$/)[1]
+        result.add(`yarn test ${pkgDir}`)
+      }
 
-    commands.push(...result)
+      commands.push(...result)
+    } catch (e) {
+      console.error(e)
+      process.exit(1)
+    }
   }
 
   if (hasTsTsx) {

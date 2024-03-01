@@ -1,6 +1,3 @@
 import './model/monkey-patch'
-export { Attr } from './decorators/Attr'
-export { Bool } from './decorators/Bool'
-export { Num } from './decorators/Num'
-export { Str } from './decorators/Str'
-export { Uid } from './decorators/Uid'
+
+export * from './decorators/type-decorators'
