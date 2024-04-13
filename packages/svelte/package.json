@@ -51,7 +51,7 @@
     "svelte": "^4.2.14"
   },
   "peerDependencies": {
-    "@rattus-orm/core": "^0.1.2"
+    "@rattus-orm/core": "^0.2.0"
   },
   "rattusMeta": {
     "title": "Svelte"

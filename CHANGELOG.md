@@ -1,3 +1,8 @@
+# 2024/04/13
+### Core (0.2.0)
+* 🎉  Feature: update method for Repository ([#39](https://github.com/lyohaplotinka/rattus-orm/pull/39))
+* ⚙️ Feature: new RawModel generic type ([#38](https://github.com/lyohaplotinka/rattus-orm/pull/38))
+
 # 2024/02/22
 ### Core (0.1.2)
 * ⚙️ Refactor database: dump, restore and DataProvider adjustments ([#35](https://github.com/lyohaplotinka/rattus-orm/pull/35))

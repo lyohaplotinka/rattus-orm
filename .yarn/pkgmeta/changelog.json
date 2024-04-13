@@ -195,5 +195,16 @@
         "⚙️ Refactor tests and utils: common test cases, react test factory, vue test factory, common test cases ([#33](https://github.com/lyohaplotinka/rattus-orm/pull/33))"
       ]
     }
+  ],
+  "2024/04/13": [
+    {
+      "packageName": "Core",
+      "packageKey": "core",
+      "packageVersion": "0.2.0",
+      "commitMessages": [
+        "🎉  Feature: update method for Repository ([#39](https://github.com/lyohaplotinka/rattus-orm/pull/39))",
+        "⚙️ Feature: new RawModel generic type ([#38](https://github.com/lyohaplotinka/rattus-orm/pull/38))"
+      ]
+    }
   ]
 }
