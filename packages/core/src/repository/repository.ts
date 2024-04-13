@@ -1,4 +1,6 @@
-import type { Collection, Element, Item } from '@/data/types'
+import { isUnknownRecord } from '@core-shared-utils/isUnknownRecord'
+
+import type { Collection, Element, Item, RawModel } from '@/data/types'
 import type { Database } from '@/database/database'
 import type { Model } from '@/model/Model'
 import type { ModelConstructor } from '@/model/types'
@@ -10,7 +12,7 @@ import type {
   WherePrimaryClosure,
   WhereSecondaryClosure,
 } from '@/query/types'
-import { assert } from '@/support/utils'
+import { assert, isArray } from '@/support/utils'
 
 export class Repository<M extends Model = Model> {
   /**
@@ -239,6 +241,49 @@ export class Repository<M extends Model = Model> {
   public save(record: Element): M
   public save(records: Element | Element[]): M | M[] {
     return this.query().save(records)
+  }
+
+  /**
+   * Update record by partial new data
+   * @param {Partial<RawModel<M>>} record
+   */
+  public update(record: Partial<RawModel<M>>): M
+  /**
+   * Update record by specific primaryKeyValue and partial new data
+   *
+   * @param {string | number} primaryKeyValue
+   * @param {Partial<RawModel<M>>} record
+   */
+  public update(primaryKeyValue: string | number, record: Partial<RawModel<M>>): M
+  /**
+   * Update multiple records by  partial new data
+   *
+   * @param {Array<Partial<RawModel<M>>>} records
+   */
+  public update(records: Partial<RawModel<M>>[]): M[]
+  public update(
+    arg1: Partial<RawModel<M>>[] | Partial<RawModel<M>> | (string | number),
+    arg2?: Partial<RawModel<M>>,
+  ): M | M[] {
+    const primaryKeyName = this.getModel().$getLocalKey()
+
+    if (isArray(arg1)) {
+      assert(
+        arg1.every((record) => record[primaryKeyName] !== undefined),
+        [`missing primary key value while updating record in "${this.getModel().$entity()}"`],
+      )
+      return arg1.map((record) => this.update(record))
+    }
+
+    if (isUnknownRecord(arg1)) {
+      assert(arg1[primaryKeyName] !== undefined, [
+        `missing primary key value while updating record in "${this.getModel().$entity()}"`,
+      ])
+      return this.query().whereId(arg1[primaryKeyName]).update(arg1)
+    }
+
+    assert(arg2 !== undefined, ['missing update body'])
+    return this.query().whereId(arg1).update(arg2)
   }
 
   /**
