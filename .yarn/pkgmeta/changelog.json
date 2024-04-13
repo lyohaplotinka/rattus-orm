@@ -269,6 +269,14 @@
       "commitMessages": [
         "release(core): v0.2.0"
       ]
+    },
+    {
+      "packageName": "Svelte",
+      "packageKey": "svelte",
+      "packageVersion": "0.1.2",
+      "commitMessages": [
+        "release(core): v0.2.0"
+      ]
     }
   ]
 }
