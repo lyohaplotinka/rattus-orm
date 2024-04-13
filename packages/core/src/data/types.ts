@@ -5,20 +5,11 @@ export type Item<M extends Model = Model> = M | null
 
 export type Collection<M extends Model = Model> = M[]
 
-export type RawModel<
-  T extends Model,
-  PK extends string = 'id',
-  PKV extends string | number | string[] | number[] = string,
-> = Omit<T, keyof Model | RecordKeysByValueType<T, (...args: any) => any>> & { [key in PK]: PKV }
-
-export type RawModelWithRelations<
-  T extends Model,
-  PK extends string = 'id',
-  PKV extends string | number | string[] | number[] = string,
-> = {
-  [key in keyof RawModel<T, PK, PKV>]: RawModel<T, PK, PKV>[key] extends Model
-    ? RawModelWithRelations<RawModel<T, PK, PKV>[key], PK, PKV>
-    : RawModel<T, PK, PKV>[key]
+export type RawModel<T extends Model> = Omit<
+  T,
+  keyof Model | RecordKeysByValueType<T, (...args: any) => any> | RecordKeysByValueType<T, Model>
+> & {
+  [key in RecordKeysByValueType<T, Model>]?: T[key] extends Model ? RawModel<T[key]> : never
 }
 
 export type ModulePath = [connection: string, module: string]
