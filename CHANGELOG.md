@@ -10,6 +10,8 @@
 * release(core): v0.2.0
 ### Plugin Zod Validate (0.1.3)
 * release(core): v0.2.0
+### React MobX (0.1.2)
+* release(core): v0.2.0
 
 # 2024/02/22
 ### Core (0.1.2)

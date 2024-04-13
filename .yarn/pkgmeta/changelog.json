@@ -237,6 +237,14 @@
       "commitMessages": [
         "release(core): v0.2.0"
       ]
+    },
+    {
+      "packageName": "React MobX",
+      "packageKey": "react-mobx",
+      "packageVersion": "0.1.2",
+      "commitMessages": [
+        "release(core): v0.2.0"
+      ]
     }
   ]
 }
