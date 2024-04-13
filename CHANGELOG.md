@@ -20,6 +20,8 @@
 * release(core): v0.2.0
 ### Svelte (0.1.2)
 * release(core): v0.2.0
+### Vuex (0.1.3)
+* release(core): v0.2.0
 
 # 2024/02/22
 ### Core (0.1.2)
