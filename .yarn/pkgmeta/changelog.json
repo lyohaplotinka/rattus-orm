@@ -261,6 +261,14 @@
       "commitMessages": [
         "release(core): v0.2.0"
       ]
+    },
+    {
+      "packageName": "Solid.js",
+      "packageKey": "solidjs",
+      "packageVersion": "0.0.3",
+      "commitMessages": [
+        "release(core): v0.2.0"
+      ]
     }
   ]
 }
