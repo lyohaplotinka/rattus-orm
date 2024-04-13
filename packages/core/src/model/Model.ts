@@ -1,6 +1,6 @@
 import { isUnknownRecord } from '@core-shared-utils/isUnknownRecord'
 
-import type { Collection, Element, Item } from '@/data/types'
+import type { Collection, Element, Item, RawModel } from '@/data/types'
 import type { Type } from '@/model/attributes/types/Type'
 import type { ModelConstructor } from '@/model/types'
 import { assert, isArray, isFunction, isNullish } from '@/support/utils'
@@ -418,23 +418,22 @@ export class Model {
    * Get the serialized model attributes.
    */
   public $getAttributes(): Element {
-    return this.$toJson(this, { relations: false })
+    return this.$toJson({ relations: false })
   }
 
   /**
    * Serialize this model, or the given model, as POJO.
    *
-   * @param {Model} model optional to serialize
    * @param {ModelOptions} options optional options to apply
    */
-  public $toJson(model: Model = this, options: ModelOptions = {}): Element {
-    return Object.entries(model.$fields()).reduce<Element>((result, [key, attr]) => {
+  public $toJson(options: ModelOptions = { relations: true }): RawModel<this> {
+    return Object.entries(this.$fields()).reduce((result, [key, attr]) => {
       result[key] =
-        attr instanceof Relation && (options.relations ?? true)
-          ? this.serializeRelation(model[key])
-          : this.serializeValue(model[key])
+        attr instanceof Relation && options.relations
+          ? this.serializeRelation(this[key])
+          : this.serializeValue(this[key])
       return result
-    }, {})
+    }, {}) as RawModel<this>
   }
 
   /**
