@@ -4,6 +4,8 @@
 * ⚙️ Feature: new RawModel generic type ([#38](https://github.com/lyohaplotinka/rattus-orm/pull/38))
 ### Angular + RxJS (0.0.3)
 * release(core): v0.2.0
+### LocalStorage (0.1.3)
+* release(core): v0.2.0
 
 # 2024/02/22
 ### Core (0.1.2)
