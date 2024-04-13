@@ -66,6 +66,7 @@ export const pullRepositoryKeys = [
   'fresh',
   'destroy',
   'flush',
+  'update',
   ...pullRepositoryGettersKeys,
 ] satisfies Array<keyof Repository>
 export type RepositoryGettersKeys = (typeof pullRepositoryGettersKeys)[number]
