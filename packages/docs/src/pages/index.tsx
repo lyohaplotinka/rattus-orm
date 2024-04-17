@@ -1,6 +1,3 @@
-// main.ts
-import 'uno.css'
-
 import Link from '@docusaurus/Link'
 import Translate, { translate } from '@docusaurus/Translate'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'

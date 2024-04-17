@@ -114,7 +114,7 @@ const config: Config = {
       respectPrefersColorScheme: false,
     },
   } satisfies Preset.ThemeConfig,
-  plugins: ['docusaurus-plugin-sass', './src/plugins/unocss-plugin.ts'],
+  plugins: ['docusaurus-plugin-sass'],
 }
 
 export default config
