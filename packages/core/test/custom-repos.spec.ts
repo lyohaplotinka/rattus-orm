@@ -1,5 +1,5 @@
 import { describe, expect } from 'vitest'
-import { Database, Model, Repository, Str } from '../src'
+import { createDatabase, Model, Repository, Str } from '../src'
 import { ObjectDataProvider } from '../src/data/object-data-provider'
 
 class User extends Model {
@@ -25,11 +25,10 @@ class EmailRepository extends Repository<Email> {
 }
 
 const createDb = () => {
-  return new Database()
-    .setConnection('entities')
-    .setDataProvider(new ObjectDataProvider())
-    .registerCustomRepository(EmailRepository)
-    .start()
+  return createDatabase({
+    dataProvider: new ObjectDataProvider(),
+    customRepositories: [EmailRepository],
+  }).start()
 }
 
 describe('custom-repositories', () => {

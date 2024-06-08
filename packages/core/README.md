@@ -45,23 +45,24 @@ class User extends Model {
 ### Basic usage
 
 ```typescript
-import { Database, Model, Uid, Str } from '@rattus-orm/core'
+import { Model, Uid, Str } from '@rattus-orm/core'
 import { ObjectDataProvider } from '@rattus-orm/core/object-data-provider'
+import { createDatabase } from '@rattus-orm/core/src'
 
 class User extends Model {
   public static entity = 'user'
-  
+
   @Uid()
   public id: string
-  
+
   @Str()
   public email: string
 }
 
-const database = new Database()
-  .setDataProvider(new ObjectDataProvider())
-  .setConnection('entities')
-  .start()
+const database = createDatabase({
+  dataProvider: new ObjectDataProvider(),
+  connection: 'entities'
+}).start()
 
 const userRepo = database.getRepository(User)
 userRepo.save([{ id: '1', email: 'test@test.com' }, { id: '2', email: 'test2@test.com' }])

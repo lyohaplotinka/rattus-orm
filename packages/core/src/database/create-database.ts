@@ -7,6 +7,9 @@ export function createDatabase(params: CreateDatabaseFunctionParameters): Databa
   assert(!!params.dataProvider, ['dataProvider is required in parameters'])
 
   const db = new Database().setDataProvider(params.dataProvider).setConnection(params.connection ?? 'entities')
+  for (const customRepo of params.customRepositories ?? []) {
+    db.registerCustomRepository(customRepo)
+  }
   for (const plugin of params.plugins ?? []) {
     db.use(plugin)
   }
