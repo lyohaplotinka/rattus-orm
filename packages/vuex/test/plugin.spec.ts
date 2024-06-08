@@ -1,7 +1,7 @@
 import { createStore } from 'vuex'
 import { installRattusORM, VuexDataProvider } from '../src'
 import { expect, vi } from 'vitest'
-import { Database } from '@rattus-orm/core'
+import { createDatabase } from '@rattus-orm/core'
 import { RattusContext } from '@rattus-orm/core/utils/rattus-context'
 import { TestUser } from '@rattus-orm/core/utils/testUtils'
 import { createAppWithPlugins } from '@rattus-orm/core/utils/vueTestUtils'
@@ -23,7 +23,7 @@ describe('plugin: vuex', () => {
 
   it('plugin params respect custom databases', () => {
     const store = createStore({})
-    const database = new Database().setConnection('custom').setDataProvider(new VuexDataProvider(store as any))
+    const database = createDatabase({ connection: 'custom', dataProvider: new VuexDataProvider(store as any) })
     installRattusORM({ database })(store)
     const app = createAppWithPlugins([store])
     const { $rattusContext } = app._context.config.globalProperties.$store

@@ -1,7 +1,7 @@
 import '../src/types/pinia'
 import { nextTick } from 'vue'
 import { expect, vi } from 'vitest'
-import { Database } from '@rattus-orm/core'
+import { createDatabase, Database } from '@rattus-orm/core'
 import { createPinia } from 'pinia'
 import { installRattusORM, PiniaDataProvider } from '../src'
 import { RattusContext } from '@rattus-orm/core/utils/rattus-context'
@@ -22,7 +22,7 @@ describe('plugin: pinia', () => {
 
   it('plugin params respect custom databases', () => {
     const mockApp = createMockApp({ $pinia: createPinia() })
-    const database = new Database().setConnection('custom').setDataProvider(new PiniaDataProvider(createPinia()))
+    const database = createDatabase({ connection: 'custom', dataProvider: new PiniaDataProvider(createPinia()) })
     installRattusORM({ database }).install!(mockApp as any)
 
     const context = mockApp._context.config.globalProperties.$rattusContext

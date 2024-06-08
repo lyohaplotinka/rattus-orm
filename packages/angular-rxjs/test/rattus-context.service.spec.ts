@@ -4,7 +4,7 @@ import { describe, beforeEach, it, expect } from 'vitest'
 import { RattusContextService } from '../src/context/rattus-context.service'
 import { RattusOrmModule } from '../src/public-api'
 import { RattusBehaviorSubject } from '../src/rxjs/rattus-behavior-subject'
-import { Database } from '@rattus-orm/core'
+import { createDatabase } from '@rattus-orm/core'
 import { RattusZodValidationPlugin } from '@rattus-orm/plugin-zod-validate'
 import { TestUserNoCasting, TestUserNoCastingCustomRepo, TestDataProvider } from '@rattus-orm/core/utils/testUtils'
 
@@ -43,7 +43,7 @@ describe('RattusContextService', () => {
     })
 
     it('respects custom database', () => {
-      const database = new Database().setConnection('third').setDataProvider(new TestDataProvider()).start()
+      const database = createDatabase({ connection: 'third', dataProvider: new TestDataProvider() }).start()
       TestBed.configureTestingModule(RattusOrmModule.forRoot({ database }))
       const service = TestBed.inject(RattusContextService)
 

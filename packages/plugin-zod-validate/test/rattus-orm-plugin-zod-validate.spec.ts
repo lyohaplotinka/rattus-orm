@@ -1,16 +1,16 @@
 import { describe, expect, vi } from 'vitest'
-import { Attr, Database, Model, Num, Str } from '@rattus-orm/core'
+import { Attr, createDatabase, Model, Num, Str } from '@rattus-orm/core'
 import { RattusZodValidationError } from '../src/exceptions/exceptions'
 import { isRattusZodValidationError, RattusZodValidationPlugin, ZodFieldType } from '../src'
 import { ObjectDataProvider } from '@rattus-orm/core/object-data-provider'
 import { z } from 'zod'
 
 export const createDb = (strict: boolean | string[] = true) => {
-  return new Database()
-    .setDataProvider(new ObjectDataProvider())
-    .setConnection('entities')
-    .use(RattusZodValidationPlugin({ strict }))
-    .start()
+  return createDatabase({
+    connection: 'entities',
+    dataProvider: new ObjectDataProvider(),
+    plugins: [RattusZodValidationPlugin({ strict })],
+  }).start()
 }
 
 type JobType = {
