@@ -13,15 +13,12 @@ sidebar_position: 3
 специфичный data provider. Однако, если вы хотите использовать другой DataProvider, вы можете
 делать это как обычно:
 ```typescript
-import { Database } from '@rattus-orm/core'
-import { ObjectDataProvider } from '@rattus-orm/core/object-data-provider'
+import { createDatabase } from '@rattus-orm/core'
 
-const database = new Database()
-  .setDataProvider(new ObjectDataProvider())
-  // или
-  // .setDataProvider(new MyCustomDataProvider())
-  .setConnection('entities')
-  .start()
+const database = createDatabase({
+  connection: 'entities',
+  dataProvider: new MyDataProvider()
+}).start()
 ```
 
 Затем, передайте базу данных в параметры модуля:

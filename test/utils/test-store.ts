@@ -1,7 +1,8 @@
-import { Database } from '@/database/database'
+import { createDatabase } from '@/database/create-database'
 import { Repository } from '@/repository/repository'
 import { Entities, TestingStore } from '@func-test/utils/types'
 import { DataProvider, ModulePath, State } from '@/data/types'
+import type { Database } from '@/database/database'
 
 export class TestStore implements TestingStore {
   public $database: Database
@@ -48,8 +49,7 @@ export class TestStore implements TestingStore {
   }
 
   protected createDatabase(connection: string, setToThis = false) {
-    const db = new Database().setDataProvider(this.dataProvider).setConnection(connection)
-    db.start()
+    const db = createDatabase({ dataProvider: this.dataProvider, connection }).start()
     this.$databases[connection] = db
     if (setToThis) {
       this.$database = db

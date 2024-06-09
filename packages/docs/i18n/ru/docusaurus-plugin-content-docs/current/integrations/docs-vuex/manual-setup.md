@@ -13,14 +13,14 @@ sidebar_position: 3
 Аргументом его конструктора является экземпляр вашего Vuex хранилища: 
 
 ```typescript
-import { Database } from '@rattus-orm/core'
+import { createDatabase } from '@rattus-orm/core'
 import { VuexDataProvider } from '@rattus-orm/vuex'
 import { store } from './store'
 
-const database = new Database()
-  .setDataProvider(new VuexDataProvider(store))
-  .setConnection('entities')
-  .start()
+const database = createDatabase({
+  connection: 'entities',
+  dataProvider: new VuexDataProvider(store)
+}).start()
 ```
 
 После этого вы можете использовать базу данных как обычно: она связана с хранилищем

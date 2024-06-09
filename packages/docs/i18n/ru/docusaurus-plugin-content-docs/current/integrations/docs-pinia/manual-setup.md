@@ -12,16 +12,16 @@ sidebar_position: 3
 Аргументом его конструктора является экземпляр Pinia:
 
 ```typescript
-import { Database } from '@rattus-orm/core'
+import { createDatabase } from '@rattus-orm/core'
 import { PiniaDataProvider } from '@rattus-orm/pinia'
 import { createPinia } from "pinia";
 
 const pinia = createPinia()
 
-const database = new Database()
-  .setDataProvider(new PiniaDataProvider(pinia))
-  .setConnection('entities')
-  .start()
+const database = createDatabase({
+  connection: 'entities',
+  dataProvider: new PiniaDataProvider(pinia)
+}).start()
 ```
 
 После этого вы можете использовать базу данных как обычно: она связана с хранилищем

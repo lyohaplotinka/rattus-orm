@@ -37,6 +37,7 @@ export interface DataProvider {
 Data provider связывается с базой данных при создании:
 
 ```typescript
-const database = new Database()
-  .setDataProvider(new ObjectDataProvider())
+const database = createDatabase({
+  dataProvider: new ObjectDataProvider()
+})
 ```

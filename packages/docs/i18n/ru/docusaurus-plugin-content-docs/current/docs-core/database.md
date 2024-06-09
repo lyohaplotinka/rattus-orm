@@ -16,13 +16,15 @@ sidebar_position: 3
 
 ### Создание базы данных
 
-Для того, чтобы создать базу данных, достаточно сделать следующее:
+Использование функции `createDatabase` - предпочтительный способ создать инстанс базы данных, однако, при желании, вы можете создавать экземпляр класса вручную.
 
 ```typescript
-const database = new Database()
-  .setDataProvider(new MyDataProvider())
-  .setConnection('entities')
-  .start()
+import { createDatabase } from '@rattus-orm/core'
+
+const database = createDatabase({
+  dataProvider: new MyDataProvider(),
+  connection: 'entities'
+}).start()
 ```
 
 Как видите, сперва в базу данных передается data provider, 
@@ -35,17 +37,12 @@ const database = new Database()
 "подключений":
 
 ```typescript
+import { createDatabase } from '@rattus-orm/core'
+
 const myDataProvider = new MyDataProvider()
 
-const db1 = new Database()
-  .setDataProvider(myDataProvider)
-  .setConnection('entities')
-  .start()
-
-const db2 = new Database()
-  .setDataProvider(myDataProvider)
-  .setConnection('otherEntities')
-  .start()
+const db1 = createDatabase({ dataProvider: myDataProvider, connection: 'entities' }).start()
+const db2 = createDatabase({ dataProvider: myDataProvider, connection: 'otherEntities' }).start()
 ```
 
 ### Регистрация моделей
@@ -58,10 +55,10 @@ const db2 = new Database()
 ```typescript
 import { User } from '@/models'
 
-const database = new Database()
-  .setDataProvider(new MyDataProvider())
-  .setConnection('entities')
-  .start()
+const database = createDatabase({
+  dataProvider: new MyDataProvider(),
+  connection: 'entities'
+}).start()
 
 database.register(User)
 ```
@@ -85,10 +82,10 @@ database.register(User)
 ```typescript
 import { User } from '@/models'
 
-const database = new Database()
-  .setDataProvider(new MyDataProvider())
-  .setConnection('entities')
-  .start()
+const database = createDatabase({
+  dataProvider: new MyDataProvider(),
+  connection: 'entities'
+}).start()
 
 const userRepo = database.getRepository(User)
 const users = userRepo.all()

@@ -11,13 +11,13 @@ sidebar_position: 3
 В процессе создания нужно передать в базу данных правильно настроенный Data provider:
 
 ```typescript
-import { Database } from '@rattus-orm/core'
+import { createDatabase } from '@rattus-orm/core'
 import { SolidjsDataProvider } from '@rattus-orm/solidjs'
 
-const database = new Database()
-  .setDataProvider(new SolidjsDataProvider())
-  .setConnection('entities')
-  .start()
+const database = createDatabase({
+  connection: 'entities',
+  dataProvider: new SolidjsDataProvider()
+}).start()
 ```
 
 После этого вы можете использовать базу данных как обычно: она связана с Solid

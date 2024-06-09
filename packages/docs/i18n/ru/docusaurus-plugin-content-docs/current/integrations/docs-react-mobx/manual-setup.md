@@ -11,13 +11,13 @@ sidebar_position: 3
 В процессе создания нужно передать в базу данных правильно настроенный Data provider:
 
 ```typescript
-import { Database } from '@rattus-orm/core'
+import { createDatabase } from '@rattus-orm/core'
 import { ReactMobxDataProvider } from '@rattus-orm/react-mobx'
 
-const database = new Database()
-  .setDataProvider(new ReactMobxDataProvider())
-  .setConnection('entities')
-  .start()
+const database = createDatabase({
+  connection: 'entities',
+  dataProvider: new ReactMobxDataProvider()
+}).start()
 ```
 
 После этого вы можете использовать базу данных как обычно: она связана с хранилищем

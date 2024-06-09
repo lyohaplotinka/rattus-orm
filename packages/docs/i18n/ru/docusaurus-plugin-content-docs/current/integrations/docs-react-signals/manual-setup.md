@@ -11,13 +11,13 @@ sidebar_position: 3
 В процессе создания нужно передать в базу данных правильно настроенный Data provider:
 
 ```typescript
-import { Database } from '@rattus-orm/core'
+import { createDatabase } from '@rattus-orm/core'
 import { ReactSignalsDataProvider } from '@rattus-orm/react-signals'
 
-const database = new Database()
-  .setDataProvider(new ReactSignalsDataProvider())
-  .setConnection('entities')
-  .start()
+const database = createDatabase({
+  connection: 'entities',
+  dataProvider: new ReactSignalsDataProvider()
+}).start()
 ```
 
 После этого вы можете использовать базу данных как обычно: она связана с хранилищем

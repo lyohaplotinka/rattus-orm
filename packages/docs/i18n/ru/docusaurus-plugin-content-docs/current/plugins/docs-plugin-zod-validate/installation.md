@@ -16,10 +16,13 @@ yarn add @rattus-orm/plugin-zod-validate
 включить валидацию, вызовите фабрику плагина в методе `use` базы данных:
 
 ```typescript
-const db = new Database()
-  .setDataProvider(new ObjectDataProvider())
-  .setConnection('entities')
-  .use(RattusZodValidationPlugin())
+import { createDatabase } from '@rattus-orm/core'
+
+const db = createDatabase({
+  connection: 'entities',
+  dataProvider: new ObjectDataProvider(),
+  plugins: [RattusZodValidationPlugin()]
+})
 
 db.start()
 ```
