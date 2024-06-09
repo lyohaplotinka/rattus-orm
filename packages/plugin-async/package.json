@@ -1,0 +1,68 @@
+{
+  "name": "@rattus-orm/plugin-async",
+  "description": "ORM for your JS/TS apps: plugin-async bindings",
+  "homepage": "https://lyohaplotinka.github.io/rattus-orm/",
+  "author": "Lyoha Plotinka",
+  "license": "MIT",
+  "packageManager": "yarn@4.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lyohaplotinka/rattus-orm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lyohaplotinka/rattus-orm/issues"
+  },
+  "keywords": [
+    "orm",
+    "rattus",
+    "plugin-async",
+    "typescript",
+    "javascript"
+  ],
+  "version": "0.0.0",
+  "main": "./dist/rattus-orm-plugin-async-provider.js",
+  "browser": "./dist/rattus-orm-plugin-async-provider.mjs",
+  "module": "./dist/rattus-orm-plugin-async-provider.mjs",
+  "types": "./dist/rattus-orm-plugin-async-provider.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/rattus-orm-plugin-async-provider.mjs",
+      "require": "./dist/rattus-orm-plugin-async-provider.js",
+      "types": "./dist/rattus-orm-plugin-async-provider.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "run -T tsup",
+    "clean": "rm -rf dist && rm -rf node_modules",
+    "lint": "run -T eslint 'src/**/*.ts' --quiet --fix",
+    "test": "run -T vitest run",
+    "typecheck": "bash -c 'run -T tsc -p tsconfig.json --noEmit'",
+    "size": "run -T size-limit"
+  },
+  "devDependencies": {
+    "@rattus-orm/core": "workspace:^"
+  },
+  "peerDependencies": {
+    "@rattus-orm/core": "^0.2.0"
+  },
+  "rattusMeta": {
+    "title": "plugin-async",
+    "testProvider": {
+      "path": "./test/provider-factory.ts",
+      "exportName": "dataProviderFactory"
+    }
+  },
+  "size-limit": [
+    {
+      "name": "ESM plugin-async provider",
+      "path": "./dist/rattus-orm-plugin-async-provider.mjs"
+    },
+    {
+      "name": "CJS plugin-async provider",
+      "path": "./dist/rattus-orm-plugin-async-provider.mjs"
+    }
+  ]
+}

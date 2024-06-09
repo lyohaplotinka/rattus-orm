@@ -4636,6 +4636,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@rattus-orm/plugin-async@workspace:packages/plugin-async":
+  version: 0.0.0-use.local
+  resolution: "@rattus-orm/plugin-async@workspace:packages/plugin-async"
+  dependencies:
+    "@rattus-orm/core": "workspace:^"
+  peerDependencies:
+    "@rattus-orm/core": ^0.2.0
+  languageName: unknown
+  linkType: soft
+
 "@rattus-orm/plugin-zod-validate@workspace:^, @rattus-orm/plugin-zod-validate@workspace:packages/plugin-zod-validate":
   version: 0.0.0-use.local
   resolution: "@rattus-orm/plugin-zod-validate@workspace:packages/plugin-zod-validate"
