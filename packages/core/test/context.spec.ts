@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { createRattusContext, RattusContext } from '../src/context/rattus-context'
 import { ObjectDataProvider } from '../src/data/object-data-provider'
-import { Database, Model, Repository, Str } from '../src'
+import { createDatabase, Model, Repository, Str } from '../src'
 
 class Email extends Model {
   public static entity = 'email'
@@ -36,7 +36,7 @@ describe('context.spec.ts', () => {
   })
 
   it('respects custom created database', () => {
-    const db = new Database().setConnection('third').setDataProvider(new ObjectDataProvider())
+    const db = createDatabase({ connection: 'third', dataProvider: new ObjectDataProvider() })
     const context = createRattusContext({ database: db })
 
     expect(context.$database).toEqual(db)
@@ -48,11 +48,10 @@ describe('context.spec.ts', () => {
   })
 
   it('$repo method allows retrieve custom repos', () => {
-    const db = new Database()
-      .setConnection('entities')
-      .setDataProvider(new ObjectDataProvider())
-      .registerCustomRepository(EmailRepository)
-      .start()
+    const db = createDatabase({
+      dataProvider: new ObjectDataProvider(),
+      customRepositories: [EmailRepository],
+    }).start()
     const context = createRattusContext({ database: db })
 
     const repo = context.$repo<EmailRepository>(Email)

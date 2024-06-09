@@ -12,14 +12,14 @@ sidebar_position: 3
 В процессе создания нужно передать в базу данных правильно настроенный Data provider:
 
 ```typescript
-import { Database } from '@rattus-orm/core'
+import { createDatabase } from '@rattus-orm/core'
 import { ReactReduxDataProvider } from '@rattus-orm/react-redux'
 import { store } from './store'
 
-const database = new Database()
-  .setDataProvider(new ReactReduxDataProvider(store))
-  .setConnection('entities')
-  .start()
+const database = createDatabase({
+  connection: 'entities',
+  dataProvider: new ReactReduxDataProvider(store)
+}).start()
 ```
 
 После этого вы можете использовать базу данных как обычно: она связана с хранилищем

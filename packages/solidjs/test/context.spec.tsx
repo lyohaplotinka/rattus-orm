@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { RattusProvider, SolidjsDataProvider, useRattusContext } from '../src'
-import { Database } from '@rattus-orm/core'
+import { createDatabase } from '@rattus-orm/core'
 import { TestComponent } from './test-utils'
 import '@testing-library/jest-dom/vitest'
 import { render, renderHook, cleanup } from '@solidjs/testing-library'
@@ -14,7 +14,7 @@ describe('solid: context', () => {
   })
 
   it('Context params respect custom databases', () => {
-    const database = new Database().setDataProvider(new SolidjsDataProvider()).setConnection('custom')
+    const database = createDatabase({ dataProvider: new SolidjsDataProvider(), connection: 'custom' })
     database.start()
 
     const { result } = renderHook(useRattusContext, {

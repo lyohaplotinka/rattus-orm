@@ -36,9 +36,9 @@ To subscribe to events, you can use the `on` method in the database instance.
 For convenience, the core package provides the `RattusEvents` enum. It is recommended to use it in case the events change or expand.
 
 ```typescript
-import { type RattusEvents, Database } from '@rattus-orm/core'
+import { type RattusEvents, createDatabase } from '@rattus-orm/core'
 
-const db = new Database()
+const db = createDatabase()
 // ...
 
 db.on(RattusEvents.CONNECTION_REGISTER, (name) => {

@@ -10,13 +10,13 @@ First of all, you need to create a database [(more details here)](/docs/docs-cor
 During the creation process, you need to pass a correctly configured Data provider to the database:
 
 ```typescript
-import { Database } from '@rattus-orm/core'
+import { createDatabase } from '@rattus-orm/core'
 import { ReactSignalsDataProvider } from '@rattus-orm/react-signals'
 
-const database = new Database()
-  .setDataProvider(new ReactSignalsDataProvider())
-  .setConnection('entities')
-  .start()
+const database = createDatabase({
+  connection: 'entities',
+  dataProvider: new ReactSignalsDataProvider()
+}).start()
 ```
 
 After this, you can use the database as usual: it's linked to the storage

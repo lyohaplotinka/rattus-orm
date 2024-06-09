@@ -9,14 +9,14 @@ Sometimes using a plugin might be inconvenient. If this is your case, everything
 First of all, you need to create a database [(more details here)](/docs/docs-core/database). Also, don't forget to create an instance of Redux store. During the creation process, you need to pass the correctly configured Data provider to the database:
 
 ```typescript
-import { Database } from '@rattus-orm/core'
+import { createDatabase } from '@rattus-orm/core'
 import { ReactReduxDataProvider } from '@rattus-orm/react-redux'
 import { store } from './store'
 
-const database = new Database()
-  .setDataProvider(new ReactReduxDataProvider(store))
-  .setConnection('entities')
-  .start()
+const database = createDatabase({
+  connection: 'entities',
+  dataProvider: new ReactReduxDataProvider(store)
+}).start()
 ```
 
 After this, you can use the database as usual: it is linked to the store through the provider.

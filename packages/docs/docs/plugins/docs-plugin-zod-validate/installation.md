@@ -16,10 +16,13 @@ yarn add @rattus-orm/plugin-zod-validate
 `@rattus-orm/plugin-zod-validate` uses [database events](/docs/docs-core/events) for type checking implementation, so it can be used with any Data Provider. To enable validation, invoke the plugin factory in the `use` method of your database:
 
 ```typescript
-const db = new Database()
-  .setDataProvider(new ObjectDataProvider())
-  .setConnection('entities')
-  .use(RattusZodValidationPlugin())
+import { createDatabase } from '@rattus-orm/core'
+
+const db = createDatabase({
+  connection: 'entities',
+  dataProvider: new ObjectDataProvider(),
+  plugins: [RattusZodValidationPlugin()]
+})
 
 db.start()
 ```

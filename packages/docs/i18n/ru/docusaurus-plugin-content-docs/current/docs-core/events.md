@@ -39,9 +39,9 @@ export const RattusEvents = {
 им, на случай, если события поменяются или расширятся.
 
 ```typescript
-import { type RattusEvents, Database } from '@rattus-orm/core'
+import { type RattusEvents, createDatabase } from '@rattus-orm/core'
 
-const db = new Database()
+const db = createDatabase()
 // ...
 
 db.on(RattusEvents.CONNECTION_REGISTER, (name) => {

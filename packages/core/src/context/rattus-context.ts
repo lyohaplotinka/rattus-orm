@@ -1,5 +1,6 @@
 import { isDataProvider } from '../data/guards'
 import type { DataProvider } from '../data/types'
+import { createDatabase } from '../database/create-database'
 import { Database } from '../database/database'
 import type { Model } from '../model/Model'
 import type { Repository } from '../repository/repository'
@@ -52,7 +53,10 @@ export class RattusContext {
    * @param {Boolean} isPrimary should new database become "main" database
    */
   public createDatabase(connection: string = 'entities', isPrimary = false): Database {
-    const newDb = new Database().setConnection(connection).setDataProvider(this.dataProvider)
+    const newDb = createDatabase({
+      connection,
+      dataProvider: this.dataProvider,
+    })
     newDb.start()
 
     if (isPrimary && !this.$database) {

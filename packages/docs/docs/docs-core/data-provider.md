@@ -34,6 +34,7 @@ own provider, you may use it.
 The Data Provider is linked to the database upon creation:
 
 ```typescript
-const database = new Database()
-  .setDataProvider(new ObjectDataProvider())
+const database = createDatabase({
+  dataProvider: new ObjectDataProvider()
+})
 ```

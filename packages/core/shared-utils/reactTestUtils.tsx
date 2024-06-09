@@ -8,7 +8,7 @@ import type { Constructor } from 'type-fest'
 import { describe } from 'vitest'
 
 import type { DataProvider, RattusOrmInstallerOptions } from '../src'
-import { Database } from '../src'
+import { createDatabase } from '../src'
 import type { RattusContext } from '../src/context/rattus-context'
 import type { UseRepository } from './integrationsHelpers'
 import { testContext, testCustomConnection, testMethodsBound, testMethodsNotRuined, TestUser } from './testUtils'
@@ -123,10 +123,10 @@ export function createReactIntegrationTest({
       })
 
       it(`${name}: context params respect custom databases`, () => {
-        const database = new Database()
-          .setDataProvider(new ProviderConstructor(...(providerArgsGetter?.() ?? [])))
-          .setConnection('custom')
-        database.start()
+        const database = createDatabase({
+          dataProvider: new ProviderConstructor(...(providerArgsGetter?.() ?? [])),
+          connection: 'custom',
+        })
 
         const result = renderHook(useRattusContextHook, { database })
         testContext(result, ProviderConstructor, 'custom')

@@ -11,13 +11,15 @@ For managing connections in models, normalization service is used (as Normalizr.
 
 ### Creating a Database
 
-To create a database, you can do the following:
+Using the `createDatabase` function is the preferred method to create a database instance, however, if desired, you can manually create an instance of the class.
 
 ```typescript
-const database = new Database()
-  .setDataProvider(new MyDataProvider())
-  .setConnection('entities')
-  .start()
+import { createDatabase } from '@rattus-orm/core'
+
+const database = createDatabase({
+  dataProvider: new MyDataProvider(),
+  connection: 'entities'
+}).start()
 ```
 
 As you can see, the data provider is first passed to the database, then a connection is specified. A connection is the name of the "root" module in your database. The returning instance will be linked with this module. The `start` method creates a root module for the connection.
@@ -25,17 +27,12 @@ As you can see, the data provider is first passed to the database, then a connec
 Within a single data provider, you can create multiple "connections":
 
 ```typescript
+import { createDatabase } from '@rattus-orm/core'
+
 const myDataProvider = new MyDataProvider()
 
-const db1 = new Database()
-  .setDataProvider(myDataProvider)
-  .setConnection('entities')
-  .start()
-
-const db2 = new Database()
-  .setDataProvider(myDataProvider)
-  .setConnection('otherEntities')
-  .start()
+const db1 = createDatabase({ dataProvider: myDataProvider, connection: 'entities' }).start()
+const db2 = createDatabase({ dataProvider: myDataProvider, connection: 'otherEntities' }).start()
 ```
 
 ### Registering Models
@@ -45,10 +42,10 @@ To interact with the data of a specific model, it must be registered in a partic
 ```typescript
 import { User } from '@/models'
 
-const database = new Database()
-  .setDataProvider(new MyDataProvider())
-  .setConnection('entities')
-  .start()
+const database = createDatabase({
+  dataProvider: new MyDataProvider(),
+  connection: 'entities'
+}).start()
 
 database.register(User)
 ```
@@ -69,10 +66,10 @@ You can get a service instance from the database:
 ```typescript
 import { User } from '@/models'
 
-const database = new Database()
-  .setDataProvider(new MyDataProvider())
-  .setConnection('entities')
-  .start()
+const database = createDatabase({
+  dataProvider: new MyDataProvider(),
+  connection: 'entities'
+}).start()
 
 const userRepo = database.getRepository(User)
 const users = userRepo.all()

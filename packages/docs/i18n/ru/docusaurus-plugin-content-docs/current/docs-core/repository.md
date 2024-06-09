@@ -76,11 +76,14 @@ postRepository.myMethod()
 
 Второй - зарегистрировать репозиторий в базе данных, чтобы автоматически получать нужный класс при вызове метода `getRepository`:
 ```typescript
-const db = new Database()
-  .setConnection('entities')
-  .setDataProvider(...)
-  .registerCustomRepository(PostRepository)
-  .start()
+const db = createDatabase({
+  dataProvider: new MyDataProvider(),
+  connection: 'entities',
+  customRepositories: [PostRepository]
+}).start()
+
+// or dynamically
+database.registerCustomRepository(PostRepository)
 
 const postRepository = db.getRepository<PostRepository>(Post)
 postRepository.myMethod()

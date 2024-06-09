@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { renderAndGetContext } from './test-utils'
-import { Database } from '@rattus-orm/core'
+import { createDatabase } from '@rattus-orm/core'
 import { ObjectDataProvider } from '@rattus-orm/core/object-data-provider'
 import { render } from '@testing-library/svelte'
 import FuncExecutor from './components/FuncExecutor.svelte'
@@ -16,7 +16,7 @@ describe('svelte: context', () => {
   })
 
   it('Context params respect custom databases', () => {
-    const database = new Database().setDataProvider(new TestDataProvider()).setConnection('custom')
+    const database = createDatabase({ dataProvider: new TestDataProvider(), connection: 'custom' })
     database.start()
 
     const result = renderAndGetContext({ database })

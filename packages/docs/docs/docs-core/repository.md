@@ -80,11 +80,14 @@ The second option is to register the repository in the database, so
 that you automatically get the desired class when calling the 
 `getRepository` method:
 ```typescript
-const db = new Database()
-  .setConnection('entities')
-  .setDataProvider(...)
-  .registerCustomRepository(PostRepository)
-  .start()
+const db = createDatabase({
+  dataProvider: new MyDataProvider(),
+  connection: 'entities',
+  customRepositories: [PostRepository]
+}).start()
+
+// or dynamically
+database.registerCustomRepository(PostRepository)
 
 const postRepository = db.getRepository<PostRepository>(Post)
 postRepository.myMethod()
