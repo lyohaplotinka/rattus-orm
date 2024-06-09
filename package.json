@@ -64,6 +64,9 @@
     "typescript": "^5.4.5",
     "vitest": "^1.5.0"
   },
+  "resolutions": {
+    "esbuild": "0.20.1"
+  },
   "workspaces": [
     "packages/*"
   ],
