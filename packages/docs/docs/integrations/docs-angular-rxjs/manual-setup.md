@@ -14,15 +14,12 @@ Database events, not any special state management related adapter. If you want
 to use different provider, you can use it normally:
 
 ```typescript
-import { Database } from '@rattus-orm/core'
-import { ObjectDataProvider } from '@rattus-orm/core/object-data-provider'
+import { createDatabase } from '@rattus-orm/core'
 
-const database = new Database()
-  .setDataProvider(new ObjectDataProvider())
-  // or
-  // .setDataProvider(new MyCustomDataProvider())
-  .setConnection('entities')
-  .start()
+const database = createDatabase({
+  connection: 'entities',
+  dataProvider: new MyDataProvider()
+}).start()
 ```
 
 Then, pass database to module parameters: 

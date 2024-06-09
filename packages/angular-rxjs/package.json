@@ -25,7 +25,7 @@
   "scripts": {
     "ng": "ng",
     "build": "ng build",
-    "clean": "rm -rf dist && rm -rf node_modules",
+    "clean": "rm -rf dist && rm -rf node_modules && rm -rf .angular",
     "lint": "run -T eslint 'src/**/*.{ts,tsx}' --quiet --fix",
     "test": "run -T vitest run",
     "typecheck": "bash -c 'run -T tsc -p tsconfig.json --noEmit'"

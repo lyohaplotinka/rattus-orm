@@ -21,7 +21,7 @@ yarn add @rattus-orm/core @rattus-orm/local-storage
 ```
 ### Basic usage
 ```typescript
-import { Database, Model, Uid, Str } from '@rattus-orm/core'
+import { createDatabase, Model, Uid, Str } from '@rattus-orm/core'
 import { LocalStorageDataProvider } from '@rattus-orm/local-storage'
 
 class User extends Model {
@@ -34,10 +34,10 @@ class User extends Model {
   public email: string
 }
 
-const database = new Database()
-  .setDataProvider(new LocalStorageDataProvider())
-  .setConnection('entities')
-  .start()
+const database = createDatabase({
+  connection: 'entities',
+  dataProvider: new LocalStorageDataProvider()
+}).start()
 
 const userRepo = database.getRepository(User)
 userRepo.save([{ id: '1', email: 'test@test.com' }, { id: '2', email: 'test2@test.com' }])

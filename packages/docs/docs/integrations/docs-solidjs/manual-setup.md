@@ -12,13 +12,13 @@ First of all, you need to create a database [(more details here)](/docs/docs-cor
 During the creation process, you need to pass the correctly configured Data provider to the database:
 
 ```typescript
-import { Database } from '@rattus-orm/core'
+import { createDatabase } from '@rattus-orm/core'
 import { SolidjsDataProvider } from '@rattus-orm/solidjs'
 
-const database = new Database()
-  .setDataProvider(new SolidjsDataProvider())
-  .setConnection('entities')
-  .start()
+const database = createDatabase({
+  connection: 'entities',
+  dataProvider: new SolidjsDataProvider()
+}).start()
 ```
 
 After that, you can use the database as usual: it is linked to the Solid

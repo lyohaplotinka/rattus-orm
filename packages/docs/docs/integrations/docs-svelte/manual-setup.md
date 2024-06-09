@@ -15,15 +15,13 @@ Database events, not any special state management related adapter. If you want
 to use different provider, you can use it normally:
 
 ```typescript
-import { Database } from '@rattus-orm/core'
+import { createDatabase } from '@rattus-orm/core'
 import { ObjectDataProvider } from '@rattus-orm/core/object-data-provider'
 
-const database = new Database()
-  .setDataProvider(new ObjectDataProvider())
-  // or
-  // .setDataProvider(new MyCustomDataProvider())
-  .setConnection('entities')
-  .start()
+const database = createDatabase({
+  connection: 'entities',
+  dataProvider: new ObjectDataProvider()
+}).start()
 ```
 
 After that, you can use the database as usual: it is linked to Svelte
