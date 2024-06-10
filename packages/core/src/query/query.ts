@@ -1,3 +1,4 @@
+import { Constraintor } from '@/constraintor/constraintor'
 import type { Collection, Element, Elements, Entities, Item, ModulePath } from '@/data/types'
 import type { Database } from '@/database/database'
 import { MorphTo } from '@/model/attributes/relations/morph-to'
@@ -13,17 +14,13 @@ import type {
   Order,
   OrderBy,
   OrderDirection,
+  QueryInterface,
   Where,
   WherePrimaryClosure,
   WhereSecondaryClosure,
 } from './types'
 
-export interface CollectionPromises {
-  indexes: string[]
-  promises: Promise<Collection<Model>>[]
-}
-
-export class Query<M extends Model = Model> {
+export class Query<M extends Model = Model> extends Constraintor<M> implements QueryInterface<M> {
   /**
    * Create a new query instance.
    *
@@ -37,13 +34,15 @@ export class Query<M extends Model = Model> {
    */
   constructor(
     protected readonly database: Database,
-    protected readonly model: M,
-    protected eagerLoad: EagerLoad = {},
-    protected skip: number = 0,
-    protected take: number | null = null,
-    protected orders: Order[] = [],
-    protected wheres: Where[] = [],
-  ) {}
+    model: M,
+    eagerLoad: EagerLoad = {},
+    skip: number = 0,
+    take: number | null = null,
+    orders: Order[] = [],
+    wheres: Where[] = [],
+  ) {
+    super(model, eagerLoad, skip, take, orders, wheres)
+  }
 
   /**
    * Create a new query instance for the given model.
@@ -87,8 +86,7 @@ export class Query<M extends Model = Model> {
    * @param {WhereSecondaryClosure | any} value optional value to match
    */
   public where(field: WherePrimaryClosure | string, value?: WhereSecondaryClosure | any): this {
-    this.wheres.push({ field, value, boolean: 'and' })
-
+    super.where(field, value)
     return this
   }
 
@@ -99,8 +97,7 @@ export class Query<M extends Model = Model> {
    * @param {any[]} values values to match
    */
   public whereIn(field: string, values: any[]): this {
-    this.wheres.push({ field, value: values, boolean: 'and' })
-
+    super.whereIn(field, values)
     return this
   }
 
@@ -120,8 +117,7 @@ export class Query<M extends Model = Model> {
    * @param {WhereSecondaryClosure | any} value optional value to match
    */
   public orWhere(field: WherePrimaryClosure | string, value?: WhereSecondaryClosure | any): this {
-    this.wheres.push({ field, value, boolean: 'or' })
-
+    super.orWhere(field, value)
     return this
   }
 
@@ -131,9 +127,8 @@ export class Query<M extends Model = Model> {
    * @param {OrderBy} field field name to work with
    * @param {OrderDirection} direction direction of order (asc | desc)
    */
-  public orderBy(field: OrderBy, direction: OrderDirection = 'asc'): Query<M> {
-    this.orders.push({ field, direction })
-
+  public orderBy(field: OrderBy, direction: OrderDirection = 'asc'): this {
+    super.orderBy(field, direction)
     return this
   }
 
@@ -143,8 +138,7 @@ export class Query<M extends Model = Model> {
    * @param {number} value limit records to count
    */
   public limit(value: number): this {
-    this.take = value
-
+    super.limit(value)
     return this
   }
 
@@ -154,8 +148,7 @@ export class Query<M extends Model = Model> {
    * @param {number} value offset for records
    */
   public offset(value: number): this {
-    this.skip = value
-
+    super.offset(value)
     return this
   }
 
@@ -165,9 +158,8 @@ export class Query<M extends Model = Model> {
    * @param {string} name relation name
    * @param {EagerLoadConstraint} callback callback to load
    */
-  public with(name: string, callback: EagerLoadConstraint = () => {}): Query<M> {
-    this.eagerLoad[name] = callback
-
+  public with(name: string, callback: EagerLoadConstraint = () => {}): this {
+    super.with(name, callback)
     return this
   }
 
@@ -176,10 +168,8 @@ export class Query<M extends Model = Model> {
    *
    * @param {EagerLoadConstraint} callback callback to load
    */
-  public withAll(callback: EagerLoadConstraint = () => {}): Query<M> {
-    for (const [name, value] of Object.entries(this.model.$fields())) {
-      value instanceof Relation && this.with(name, callback)
-    }
+  public withAll(callback: EagerLoadConstraint = () => {}): this {
+    super.withAll(callback)
     return this
   }
 
@@ -188,7 +178,7 @@ export class Query<M extends Model = Model> {
    *
    * @param {number} depth relations depth to load
    */
-  public withAllRecursive(depth: number = 3): Query<M> {
+  public withAllRecursive(depth: number = 3): this {
     this.withAll((query) => {
       depth > 0 && query.withAllRecursive(depth - 1)
     })
