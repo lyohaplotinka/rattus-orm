@@ -56,7 +56,7 @@ export function size(collection: any[] | object): number {
 export function groupBy<T>(collection: T[], iteratee: (record: T) => string): { [key: string]: T[] } {
   return collection.reduce((records, record) => {
     const key = iteratee(record)
-    records[key] ? records[key].push(record) : (records[key] = [record])
+    ;(records as any)[key] ? (records as any)[key].push(record) : ((records as any)[key] = [record])
     return records
   }, {})
 }

@@ -42,7 +42,7 @@ export function useRepositoryForDynamicContext<
     const repoValue = repo[key]
 
     if (isFunction(repoValue)) {
-      result[key as string] = repoValue.bind(repo)
+      ;(result as any)[key as string] = repoValue.bind(repo)
       continue
     }
 

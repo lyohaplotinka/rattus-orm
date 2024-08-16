@@ -97,7 +97,7 @@ export class PiniaDataProvider extends DataProviderHelpers implements DataProvid
           this.data = records
         },
         destroy(ids: string[]) {
-          const data = {}
+          const data: Record<string, any> = {}
 
           for (const id in this.data) {
             if (!ids.includes(id)) {

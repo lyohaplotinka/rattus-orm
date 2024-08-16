@@ -28,7 +28,7 @@ export function fresh(state: State, records: Elements): void {
  * Commit `destroy` change to the store.
  */
 export function destroy(state: State, ids: string[]): void {
-  const data = {}
+  const data: Record<string, any> = {}
 
   for (const id in state.data) {
     if (!ids.includes(id)) {

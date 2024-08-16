@@ -495,14 +495,14 @@ export class Query<M extends Model = Model> extends Constraintor<M> implements Q
     }
 
     if (isArray(where.value)) {
-      return where.value.includes(model[where.field])
+      return where.value.includes(model.getThisNonStrict()[where.field])
     }
 
     if (isFunction<boolean>(where.value)) {
-      return where.value(model[where.field])
+      return where.value(model.getThisNonStrict()[where.field])
     }
 
-    return model[where.field] === where.value
+    return model.getThisNonStrict()[where.field] === where.value
   }
 
   /**
@@ -516,8 +516,8 @@ export class Query<M extends Model = Model> extends Constraintor<M> implements Q
     return models.sort((elemA, elemB) => {
       for (const order of this.orders) {
         const isAsc = order.direction === 'asc'
-        const aValue: unknown = isFunction(order.field) ? order.field(elemA) : elemA[order.field]
-        const bValue: unknown = isFunction(order.field) ? order.field(elemB) : elemB[order.field]
+        const aValue: unknown = isFunction(order.field) ? order.field(elemA) : elemA.getThisNonStrict()[order.field]
+        const bValue: unknown = isFunction(order.field) ? order.field(elemB) : elemB.getThisNonStrict()[order.field]
 
         if (isString(aValue) && isString(bValue)) {
           const result = (isAsc ? aValue : bValue).localeCompare(isAsc ? bValue : aValue, undefined, { numeric: true })
@@ -582,11 +582,11 @@ export class Query<M extends Model = Model> extends Constraintor<M> implements Q
       if (attr instanceof Relation && schema[key]) {
         const relatedSchema = schema[key]
         if (attr instanceof MorphTo) {
-          const relatedType = model[attr.getType()]
+          const relatedType = model.getThisNonStrict()[attr.getType()]
 
-          model[key] = this.newQuery(relatedType).reviveOne(relatedSchema)
+          model.getThisNonStrict()[key] = this.newQuery(relatedType).reviveOne(relatedSchema)
         } else {
-          model[key] = isArray(relatedSchema)
+          model.getThisNonStrict()[key] = isArray(relatedSchema)
             ? this.newQueryForRelation(attr).reviveMany(relatedSchema)
             : this.newQueryForRelation(attr).reviveOne(relatedSchema)
         }

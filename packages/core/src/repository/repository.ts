@@ -265,7 +265,7 @@ export class Repository<M extends Model = Model> {
     arg1: Partial<RawModel<M>>[] | Partial<RawModel<M>> | (string | number),
     arg2?: Partial<RawModel<M>>,
   ): M | M[] {
-    const primaryKeyName = this.getModel().$getLocalKey()
+    const primaryKeyName = this.getModel().$getLocalKey() as keyof RawModel<M>
 
     if (isArray(arg1)) {
       assert(
@@ -279,7 +279,9 @@ export class Repository<M extends Model = Model> {
       assert(arg1[primaryKeyName] !== undefined, [
         `missing primary key value while updating record in "${this.getModel().$entity()}"`,
       ])
-      return this.query().whereId(arg1[primaryKeyName]).update(arg1)
+      return this.query()
+        .whereId(arg1[primaryKeyName] as any)
+        .update(arg1)
     }
 
     assert(arg2 !== undefined, ['missing update body'])

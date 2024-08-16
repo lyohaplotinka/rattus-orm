@@ -40,16 +40,16 @@ async function bumpDependents(packageName: string, newVersion: string, exclude =
     const pkg = loadPackageJson(packageData.location)
 
     for (const dep of ['dependencies', 'devDependencies', 'peerDependencies']) {
-      if (!(dep in pkg) || Object.keys(pkg[dep]).length === 0) {
+      if (!(dep in pkg) || Object.keys((pkg as any)[dep]).length === 0) {
         continue
       }
-      const deps = pkg[dep]
+      const deps = (pkg as any)[dep]
       for (const [depName, depVer] of Object.entries(deps)) {
         if (depName !== bumpingDep || depVer === 'workspace:^') {
           continue
         }
 
-        pkg[dep][depName] = `^${newVersion}`
+        ;(pkg as any)[dep][depName] = `^${newVersion}`
       }
     }
 

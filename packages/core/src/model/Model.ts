@@ -409,7 +409,7 @@ export class Model {
    * @param {Model | Model[] | null} model model to set relation
    */
   public $setRelation(relation: string, model: Model | Model[] | null): this {
-    this[relation] = model
+    this.getThisNonStrict()[relation] = model
 
     return this
   }
@@ -428,10 +428,10 @@ export class Model {
    */
   public $toJson(options: ModelOptions = { relations: true }): RawModel<this> {
     return Object.entries(this.$fields()).reduce((result, [key, attr]) => {
-      result[key] =
+      ;(result as any)[key] =
         attr instanceof Relation && options.relations
-          ? this.serializeRelation(this[key])
-          : this.serializeValue(this[key])
+          ? this.serializeRelation(this.getThisNonStrict()[key])
+          : this.serializeValue(this.getThisNonStrict()[key])
       return result
     }, {}) as RawModel<this>
   }
@@ -476,6 +476,10 @@ export class Model {
     }, {})
   }
 
+  public getThisNonStrict() {
+    return this as Record<string, any>
+  }
+
   /**
    * Bootstrap this model.
    */
@@ -499,12 +503,13 @@ export class Model {
    */
   protected $fillField(key: string, attr: Attribute<unknown>, value: any): void {
     if (value !== undefined) {
-      this[key] = attr instanceof MorphTo ? attr.make(value, this[attr.getType()]) : attr.make(value)
+      this.getThisNonStrict()[key] =
+        attr instanceof MorphTo ? attr.make(value, this.getThisNonStrict()[attr.getType()]) : attr.make(value)
       return
     }
 
-    if (this[key] === undefined) {
-      this[key] = attr.make()
+    if (this.getThisNonStrict()[key] === undefined) {
+      this.getThisNonStrict()[key] = attr.make()
     }
   }
 
@@ -534,7 +539,7 @@ export class Model {
     if (isArray(value) || isUnknownRecord(value)) {
       return Object.keys(value).reduce(
         (result, key) => {
-          result[key] = this.serializeValue(value[key])
+          ;(result as any)[key] = this.serializeValue((value as any)[key])
           return result
         },
         isArray(value) ? [] : {},
