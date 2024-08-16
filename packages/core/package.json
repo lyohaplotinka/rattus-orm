@@ -95,7 +95,7 @@
     "@types/react": "^18.3.3",
     "normalizr": "^3.6.2",
     "react": "^18.3.1",
-    "vue": "^3.4.27"
+    "vue": "^3.4.38"
   },
   "rattusMeta": {
     "title": "Core",

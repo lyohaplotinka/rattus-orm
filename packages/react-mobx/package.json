@@ -46,7 +46,7 @@
   },
   "devDependencies": {
     "@rattus-orm/core": "workspace:^",
-    "mobx": "^6.12.3",
+    "mobx": "^6.13.1",
     "mobx-react-lite": "^4.0.7"
   },
   "peerDependencies": {

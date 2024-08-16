@@ -46,7 +46,7 @@
   "devDependencies": {
     "@rattus-orm/core": "workspace:^",
     "@vue/test-utils": "^2.4.6",
-    "vue": "^3.4.27",
+    "vue": "^3.4.38",
     "vuex": "patch:vuex@npm%3A4.1.0#~/.yarn/patches/vuex-npm-4.1.0-c1d51099be.patch"
   },
   "peerDependencies": {
