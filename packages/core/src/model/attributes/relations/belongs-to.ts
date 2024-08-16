@@ -54,7 +54,7 @@ export class BelongsTo extends Relation {
     const dictionary = this.buildDictionary(query.get())
 
     models.forEach((model) => {
-      const key = model[this.foreignKey]
+      const key = model.getThisNonStrict()[this.foreignKey]
 
       dictionary[key] ? model.$setRelation(relation, dictionary[key]) : model.$setRelation(relation, null)
     })
@@ -72,8 +72,8 @@ export class BelongsTo extends Relation {
    */
   protected getEagerModelKeys(models: Collection): (string | number)[] {
     return models.reduce<(string | number)[]>((keys, model) => {
-      if (model[this.foreignKey] !== null) {
-        keys.push(model[this.foreignKey])
+      if (model.getThisNonStrict()[this.foreignKey] !== null) {
+        keys.push(model.getThisNonStrict()[this.foreignKey])
       }
 
       return keys
@@ -85,7 +85,7 @@ export class BelongsTo extends Relation {
    */
   protected buildDictionary(models: Collection): Record<string, Model> {
     return models.reduce<Record<string, Model>>((dictionary, model) => {
-      dictionary[model[this.ownerKey]] = model
+      dictionary[model.getThisNonStrict()[this.ownerKey]] = model
 
       return dictionary
     }, {})

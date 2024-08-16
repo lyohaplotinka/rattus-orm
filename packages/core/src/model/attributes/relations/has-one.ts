@@ -55,7 +55,7 @@ export class HasOne extends Relation {
     const dictionary = this.buildDictionary(query.get())
 
     models.forEach((model) => {
-      const key = model[this.localKey]
+      const key = model.getThisNonStrict()[this.localKey]
 
       dictionary[key] ? model.$setRelation(relation, dictionary[key][0]) : model.$setRelation(relation, null)
     })
@@ -73,7 +73,7 @@ export class HasOne extends Relation {
    */
   protected buildDictionary(results: Collection): Dictionary {
     return this.mapToDictionary(results, (result) => {
-      return [result[this.foreignKey], result]
+      return [result.getThisNonStrict()[this.foreignKey], result]
     })
   }
 }

@@ -13,9 +13,8 @@ export function createState(entities: Entities): State {
   const state = {} as State
 
   for (const entity in entities) {
-    state[entity] = { data: {} }
-
-    state[entity].data = entities[entity]
+    ;(state as any)[entity] = { data: {} }
+    ;(state as any)[entity].data = entities[entity]
   }
 
   return state

@@ -45,7 +45,7 @@ export class ReducerStore<MP extends ModulePath> {
 
         case this.getModuleAction(rattusReduxActions.DESTROY): {
           const currentElements = state?.data ?? {}
-          const updated = {}
+          const updated: Record<string, any> = {}
           for (const key in currentElements) {
             if (action.payload.includes(key)) {
               continue

@@ -88,8 +88,8 @@ export class MorphTo extends Relation {
     const dictionary = this.buildDictionary(query, models)
 
     models.forEach((model) => {
-      const type = model[this.morphType]
-      const id = model[this.morphId]
+      const type = model.getThisNonStrict()[this.morphType]
+      const id = model.getThisNonStrict()[this.morphId]
 
       const related = dictionary[type]?.[id] ?? null
 
@@ -139,7 +139,7 @@ export class MorphTo extends Relation {
       const results = query.newQueryWithConstraints(entity).whereIn(ownerKey, keys[entity]).get()
 
       dictionary[entity] = results.reduce<Record<string, Model>>((dic, result) => {
-        dic[result[ownerKey]] = result
+        dic[result.getThisNonStrict()[ownerKey]] = result
 
         return dic
       }, {})
@@ -153,8 +153,8 @@ export class MorphTo extends Relation {
    */
   protected getKeysByEntity(models: Collection): Record<string, (string | number)[]> {
     return models.reduce<Record<string, (string | number)[]>>((keys, model) => {
-      const type = model[this.morphType]
-      const id = model[this.morphId]
+      const type = model.getThisNonStrict()[this.morphType]
+      const id = model.getThisNonStrict()[this.morphId]
 
       if (id !== null && this.relatedTypes[type] !== undefined) {
         if (!keys[type]) {

@@ -61,7 +61,7 @@ export class ArrayNormalizationSchema extends BaseSchema<
       throw new Error('No schema attribute')
     }
     const attr = this.schemaAttribute(input, input)
-    return this.definition[attr]
+    return (this.definition as any)[attr]
   }
 
   protected getValues(input: unknown): unknown[] {

@@ -26,7 +26,7 @@ export class RattusZodValidationError extends Error {
     this.zodErrors.forEach((error, index) => {
       const failedValue = error.path.reduce<any>((result, current) => {
         if (Array.isArray(result) || isUnknownRecord(result)) {
-          result = result[current]
+          result = (result as any)[current]
         }
         return result
       }, error.data)

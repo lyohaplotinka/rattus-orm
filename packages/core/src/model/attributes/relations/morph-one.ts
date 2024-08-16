@@ -56,7 +56,7 @@ export class MorphOne extends Relation {
     const dictionary = this.buildDictionary(query.get())
 
     models.forEach((model) => {
-      const key = model[this.localKey]
+      const key = model.getThisNonStrict()[this.localKey]
 
       dictionary[key] ? model.$setRelation(relation, dictionary[key]) : model.$setRelation(relation, null)
     })
@@ -74,7 +74,7 @@ export class MorphOne extends Relation {
    */
   protected buildDictionary(models: Collection): Record<string, Model> {
     return models.reduce<Record<string, Model>>((dictionary, model) => {
-      dictionary[model[this.morphId]] = model
+      dictionary[model.getThisNonStrict()[this.morphId]] = model
 
       return dictionary
     }, {})
