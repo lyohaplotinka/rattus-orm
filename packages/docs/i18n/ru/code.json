@@ -366,5 +366,8 @@
   },
   "Coming soon": {
     "message": "Скоро"
+  },
+  "ORM-like experience for any state management library": {
+    "message": "Опыт использования ORM для любой библиотеки управления состоянием"
   }
 }
