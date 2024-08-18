@@ -1,6 +1,7 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
-import { Model, MorphOne, Num, Str } from '@/index'
+import { Model } from '@/index'
+import { MorphOne, NumberField, StringField } from '@/decorators'
 
 describe('feature/relations/morph_one_save_custom_key', () => {
   beforeEach(() => {
@@ -11,10 +12,10 @@ describe('feature/relations/morph_one_save_custom_key', () => {
     class Image extends Model {
       static entity = 'images'
 
-      @Num(0) id!: number
-      @Str('') url!: string
-      @Str('') imageableId!: number
-      @Str('') imageableType!: string
+      @NumberField(0) id!: number
+      @StringField('') url!: string
+      @StringField('') imageableId!: number
+      @StringField('') imageableType!: string
     }
 
     class User extends Model {
@@ -22,8 +23,8 @@ describe('feature/relations/morph_one_save_custom_key', () => {
 
       static primaryKey = 'userId'
 
-      @Str('') userId!: string
-      @Str('') name!: string
+      @StringField('') userId!: string
+      @StringField('') name!: string
 
       @MorphOne(() => Image, 'imageableId', 'imageableType')
       image!: Image | null
@@ -60,18 +61,18 @@ describe('feature/relations/morph_one_save_custom_key', () => {
     class Image extends Model {
       static entity = 'images'
 
-      @Num(0) id!: number
-      @Str('') url!: string
-      @Str('') imageableId!: string
-      @Str('') imageableType!: string
+      @NumberField(0) id!: number
+      @StringField('') url!: string
+      @StringField('') imageableId!: string
+      @StringField('') imageableType!: string
     }
 
     class User extends Model {
       static entity = 'users'
 
-      @Num(0) id!: number
-      @Str('') userId!: string
-      @Str('') name!: string
+      @NumberField(0) id!: number
+      @StringField('') userId!: string
+      @StringField('') name!: string
 
       @MorphOne(() => Image, 'imageableId', 'imageableType', 'userId')
       image!: Image | null

@@ -1,6 +1,7 @@
 import { isUnknownRecord } from '@core-shared-utils/isUnknownRecord'
 
 import type { Collection, Element, Item, RawModel } from '@/data/types'
+import { DateField } from '@/model/attributes/types/DateField'
 import type { Type } from '@/model/attributes/types/Type'
 import type { ModelConstructor } from '@/model/types'
 import { assert, isArray, isFunction, isNullish } from '@/support/utils'
@@ -131,7 +132,7 @@ export class Model {
    *
    * @param {any} value initial attribute value
    */
-  public static attr(value: any): Attr {
+  public static attrField(value: any): Attr {
     return this.createType(Attr, value)
   }
 
@@ -140,7 +141,7 @@ export class Model {
    *
    * @param {string | null} value initial value, null if nullable
    */
-  public static string(value: string | null): Str {
+  public static stringField(value: string | null): Str {
     return this.createType(Str, value)
   }
 
@@ -149,7 +150,7 @@ export class Model {
    *
    * @param {number | null} value initial value, null if nullable
    */
-  public static number(value: number | null): Num {
+  public static numberField(value: number | null): Num {
     return this.createType(Num, value)
   }
 
@@ -158,15 +159,24 @@ export class Model {
    *
    * @param {boolean | null} value initial value, null if nullable
    */
-  public static boolean(value: boolean | null): Bool {
+  public static booleanField(value: boolean | null): Bool {
     return this.createType(Bool, value)
   }
 
   /**
    * Create a new Uid attribute instance.
    */
-  public static uid(): Uid {
+  public static uidField(): Uid {
     return this.createType(Uid)
+  }
+
+  /**
+   * Create a new Date attribute instance.
+   *
+   * @param {Date | string | number | null} value initial value, null if nullable.
+   */
+  public static dateField(value: Date | string | number | null): DateField {
+    return this.createType(DateField, value)
   }
 
   /**
@@ -534,6 +544,10 @@ export class Model {
   protected serializeValue(value: any): any {
     if (value === null) {
       return null
+    }
+
+    if (value instanceof Date) {
+      return value.toISOString()
     }
 
     if (isArray(value) || isUnknownRecord(value)) {

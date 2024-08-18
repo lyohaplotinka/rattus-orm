@@ -11,32 +11,32 @@
           "description": "database to work with"
         },
         {
-          "declaration": "protected readonly model: M",
+          "declaration": "model: M",
           "name": "model",
           "description": "model to work with"
         },
         {
-          "declaration": "protected eagerLoad: EagerLoad = {}",
+          "declaration": "eagerLoad: EagerLoad = {}",
           "name": "eagerLoad",
           "description": "the relationships that should be eager loaded, default {}"
         },
         {
-          "declaration": "protected skip: number = 0",
+          "declaration": "skip: number = 0",
           "name": "skip",
           "description": "the number of records to skip, default 0"
         },
         {
-          "declaration": "protected take: number | null = null",
+          "declaration": "take: number | null = null",
           "name": "take",
           "description": "the maximum number of records to return, default null"
         },
         {
-          "declaration": "protected orders: Order[] = []",
+          "declaration": "orders: Order[] = []",
           "name": "orders",
           "description": "the orderings for the query, default []"
         },
         {
-          "declaration": "protected wheres: Where[] = []",
+          "declaration": "wheres: Where[] = []",
           "name": "wheres",
           "description": "the where constraints for the query, default []"
         }
@@ -165,7 +165,7 @@
           "description": "direction of order (asc | desc)"
         }
       ],
-      "returnType": "Query<M>",
+      "returnType": "this",
       "description": "Add an \"order by\" clause to the query."
     },
     {
@@ -209,7 +209,7 @@
           "description": "callback to load"
         }
       ],
-      "returnType": "Query<M>",
+      "returnType": "this",
       "description": "Set the relationships that should be eager loaded."
     },
     {
@@ -222,7 +222,7 @@
           "description": "callback to load"
         }
       ],
-      "returnType": "Query<M>",
+      "returnType": "this",
       "description": "Set to eager load all top-level relationships. Constraint is set for all relationships."
     },
     {
@@ -235,7 +235,7 @@
           "description": "relations depth to load"
         }
       ],
-      "returnType": "Query<M>",
+      "returnType": "this",
       "description": "Set to eager load all relationships recursively."
     },
     {

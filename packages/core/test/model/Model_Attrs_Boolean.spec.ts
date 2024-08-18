@@ -1,4 +1,4 @@
-import { Bool } from '@/model/decorators/attributes/types/Bool'
+import { BooleanField } from '../../src/model/decorators/attributes/types/BooleanField'
 import { Model } from '@/model/Model'
 
 describe('unit/model/Model_Attrs_Boolean', () => {
@@ -6,7 +6,7 @@ describe('unit/model/Model_Attrs_Boolean', () => {
     class User extends Model {
       static entity = 'users'
 
-      @Bool(true)
+      @BooleanField(true)
       bool!: number
     }
 
@@ -24,7 +24,7 @@ describe('unit/model/Model_Attrs_Boolean', () => {
     class User extends Model {
       static entity = 'users'
 
-      @Bool(null, { nullable: true })
+      @BooleanField(null, { nullable: true })
       bool!: boolean | null
     }
 

@@ -46,8 +46,12 @@ export default function Home(): JSX.Element {
       <HomepageHeader />
       <main>
         <div className="flex flex-col items-center mt-10">
-          <Heading as={'h1'}>Framework-agnostic</Heading>
-          <p className={'hero__subtitle text-center'}>ORM-like experience for any state management library</p>
+          <Heading as={'h1'}>
+            <Translate>Framework-agnostic</Translate>
+          </Heading>
+          <p className={'hero__subtitle text-center'}>
+            <Translate>ORM-like experience for any state management library</Translate>
+          </p>
           <img src={threeLibsDemo} alt={'React, Vue and Angular demo'} className={'w-220'} />
         </div>
         <HomepageIntegrations />

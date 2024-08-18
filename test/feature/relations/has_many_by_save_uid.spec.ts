@@ -1,6 +1,7 @@
 import { assertState, createStore, mockUid } from '@func-test/utils/Helpers'
 
-import { Attr, HasManyBy, Model, Str, Uid } from '@/index'
+import { Model } from '@/index'
+import { AttrField, HasManyBy, StringField, UidField } from '@/decorators'
 
 describe('feature/relations/has_many_by_insert_uid', () => {
   beforeEach(() => {
@@ -11,16 +12,16 @@ describe('feature/relations/has_many_by_insert_uid', () => {
     class Node extends Model {
       static entity = 'nodes'
 
-      @Attr() id!: number
-      @Str('') name!: string
+      @AttrField() id!: number
+      @StringField('') name!: string
     }
 
     class Cluster extends Model {
       static entity = 'clusters'
 
-      @Uid() id!: number
-      @Attr() nodeIds!: number[]
-      @Str('') name!: string
+      @UidField() id!: number
+      @AttrField() nodeIds!: number[]
+      @StringField('') name!: string
 
       @HasManyBy(() => Node, 'nodeIds')
       nodes!: Node[]
@@ -53,16 +54,16 @@ describe('feature/relations/has_many_by_insert_uid', () => {
     class Node extends Model {
       static entity = 'nodes'
 
-      @Uid() id!: number
-      @Str('') name!: string
+      @UidField() id!: number
+      @StringField('') name!: string
     }
 
     class Cluster extends Model {
       static entity = 'clusters'
 
-      @Uid() id!: number
-      @Attr() nodeIds!: number[]
-      @Str('') name!: string
+      @UidField() id!: number
+      @AttrField() nodeIds!: number[]
+      @StringField('') name!: string
 
       @HasManyBy(() => Node, 'nodeIds')
       nodes!: Node[]

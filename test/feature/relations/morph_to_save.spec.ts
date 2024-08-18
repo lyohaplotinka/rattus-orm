@@ -1,15 +1,16 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
-import { Attr, Model, MorphTo, Num, Str } from '@/index'
+import { Model } from '@/index'
+import { AttrField, MorphTo, NumberField, StringField } from '@/decorators'
 
 describe('feature/relations/morph_to_save', () => {
   class Image extends Model {
     static entity = 'images'
 
-    @Num(0) id!: number
-    @Str('') url!: string
-    @Attr() imageableId!: number
-    @Attr() imageableType!: string
+    @NumberField(0) id!: number
+    @StringField('') url!: string
+    @AttrField() imageableId!: number
+    @AttrField() imageableType!: string
     @MorphTo(() => [User], 'imageableId', 'imageableType')
     imageable!: User | null
   }
@@ -17,8 +18,8 @@ describe('feature/relations/morph_to_save', () => {
   class User extends Model {
     static entity = 'users'
 
-    @Num(0) id!: number
-    @Str('') name!: string
+    @NumberField(0) id!: number
+    @StringField('') name!: string
   }
 
   it('inserts a record to the store with "morph to" relation', () => {

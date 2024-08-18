@@ -24,18 +24,19 @@ from the `Model` class:
 <Tabs>
     <TabItem value={'ts'} label={'TypeScript'}>
         ```typescript title="src/data/User.ts"
-        import { Model, Str, Num, Uid } from '@rattus-orm/core'
+        import { Model } from '@rattus-orm/core'
+        import { StringField, UidField, NumberField } from '@rattus-orm/core/decorators'
 
         export class User extends Model {
             public static entity = 'user'
 
-            @Uid()
+            @UidField()
             public id: string
 
-            @Str('')
+            @StringField('')
             public name: string
 
-            @Num(0)
+            @NumberField(0)
             public age: number
         }
         ```
@@ -49,9 +50,9 @@ from the `Model` class:
 
             static fields () {
                 return {
-                    id: this.uid(),
-                    name: this.string(''),
-                    age: this.number(0)
+                    id: this.uidField(),
+                    name: this.stringField(''),
+                    age: this.numberField(0)
                 }
             }
         }
@@ -81,7 +82,7 @@ the following syntax:
 class User extends Model {
   public static entity = 'users'
 
-  @Str('')
+  @StringField('')
   // public id: string - will not work,
   // all fields of your models will be "null"
   declare id: string
@@ -105,7 +106,7 @@ export default defineConfig({
 
 #### General Type
 
-Use the decorator `@Attr(value)` (or the method `this.attr()`) to define the most
+Use the decorator `@AttrField(value)` (or the method `this.attrField()`) to define the most
 general field. The argument is the default value of the field,
 which will be used when creating new data if the field is missing.
 
@@ -113,32 +114,32 @@ which will be used when creating new data if the field is missing.
 export class User extends Model {
     public static entity = 'user'
 
-    @Attr(null)
+    @AttrField(null)
     public anyField: any
 }
 ```
 
 #### Primitive Types
 You can use primitive type attributes:
-`@Str('')`, `@Num(0)`, or `@Bool(false)`
-(for JS - `this.string()`, `this.number()`, and `this.boolean()`).
+`@StringField('')`, `@NumberField(0)`, or `@BooleanField(false)`
+(for JS - `this.stringField()`, `this.numberField()`, and `this.booleanField()`).
 These attributes ensure casting by default, which
 converts the given value to the specified type.
 For example, `'0'` is converted to `0`, and `1` to `true`.
-As with `this.attr()`, the argument is the
+As with `this.attrField()`, the argument is the
 default value.
 
 ```typescript
 export class User extends Model {
     public static entity = 'user'
 
-    @Str('')
+    @StringField('')
     public name: string
 
-    @Num(0)
+    @NumberField(0)
     public age: number
 
-    @Bool(true)
+    @BooleanField(true)
     public isAwesome: boolean
 }
 ```
@@ -153,7 +154,7 @@ converted to `true`.
 You can disable type casting for a specific model. To do this, you
 need to declare a public static property `dataTypeCasting` and set
 its value to `false`. In such a case, even if a field is marked
-with the `@Bool` decorator, and a one (1) is entered into the model,
+with the `@BooleanField` decorator, and a one (1) is entered into the model,
 it will not be converted to `true`, but will remain a one (1).
 There will also be no validation. If you need to validate values,
 consider looking at [Zod Validate plugin](/docs/plugins/docs-plugin-zod-validate/getting-started).
@@ -164,26 +165,26 @@ export class User extends Model {
     // type casting of fields is disabled
     public static dataTypeCasting = false
 
-    @Str('')
+    @StringField('')
     public name: string
 
-    @Num(0)
+    @NumberField(0)
     public age: number
 
-    @Bool(true)
+    @BooleanField(true)
     public isAwesome: boolean
 }
 ```
 
 #### UID Type
-`@Uid()`  (or `this.uid()` in JS) generates a unique
+`@UidField()`  (or `this.uidField()` in JS) generates a unique
 identifier if the value for this field is missing.
 
 ```typescript
 export class User extends Model {
     public static entity = 'user'
 
-    @Uid()
+    @UidField()
     public id: string
 }
 ```
@@ -195,8 +196,24 @@ the ID:
 export class User extends Model {
     public static entity = 'user'
 
-    @Uid(() => myIdGenerator())
+    @UidField(() => myIdGenerator())
     public id: string
+}
+```
+
+#### Date type
+Starting from version **0.3.0**, the Date type is available. It converts
+an incoming string or number into an instance of the Date class.
+If the date turns out to be invalid, a value with the zero date (`new Date(0)`)
+will be set. By default, the type does not accept null, but
+it can be made nullable using a setting.
+
+```typescript
+export class User extends Model {
+    public static entity = 'user'
+
+    @DateField(null, { nullable: true })
+    public createdAt: Date
 }
 ```
 
@@ -212,7 +229,7 @@ export class User extends Model {
     // You can also specify an array
     public static primaryKey = ['myId', 'otherId']
 
-    @Uid(() => myIdGenerator())
+    @UidField(() => myIdGenerator())
     public myId: string
 }
 ```

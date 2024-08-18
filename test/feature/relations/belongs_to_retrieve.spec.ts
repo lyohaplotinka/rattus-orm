@@ -1,21 +1,22 @@
 import { assertModel, createStore, fillState } from '@func-test/utils/Helpers'
 
-import { Attr, BelongsTo, Model, Str } from '@/index'
+import { AttrField, BelongsTo, StringField } from '@/decorators'
+import { Model } from '@/index'
 
 describe('feature/relations/belongs_to_retrieve', () => {
   class User extends Model {
     static entity = 'users'
 
-    @Attr() id!: number
-    @Str('') name!: string
+    @AttrField() id!: number
+    @StringField('') name!: string
   }
 
   class Post extends Model {
     static entity = 'posts'
 
-    @Attr() id!: number
-    @Attr() userId!: number | null
-    @Str('') title!: string
+    @AttrField() id!: number
+    @AttrField() userId!: number | null
+    @StringField('') title!: string
 
     @BelongsTo(() => User, 'userId')
     author!: User | null

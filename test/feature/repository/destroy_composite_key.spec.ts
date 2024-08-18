@@ -1,6 +1,7 @@
 import { createStore, fillState } from '@func-test/utils/Helpers'
 
-import { Attr, Model, Str } from '@/index'
+import { Model } from '@/index'
+import { AttrField, StringField } from '@/decorators'
 
 describe('feature/repository/destroy_composite_key', () => {
   class User extends Model {
@@ -8,9 +9,9 @@ describe('feature/repository/destroy_composite_key', () => {
 
     static primaryKey = ['idA', 'idB']
 
-    @Attr() idA!: any
-    @Attr() idB!: any
-    @Str('') name!: string
+    @AttrField() idA!: any
+    @AttrField() idB!: any
+    @StringField('') name!: string
   }
 
   it('throws if the model has composite key', () => {

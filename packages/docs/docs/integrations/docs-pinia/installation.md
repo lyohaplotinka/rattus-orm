@@ -37,16 +37,17 @@ app
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { Model, Uid, Str } from '@rattus-orm/core'
+import { Model } from '@rattus-orm/core'
+import { UidField, StringField } from '@rattus-orm/core/decorators'
 import { useRepositoryComputed } from '@rattus-orm/pinia'
 
 class User extends Model {
     public static entity = 'user'
     
-    @Uid()
+    @UidField()
     public id: string
     
-    @Str()
+    @StringField()
     public email: string
 }
 

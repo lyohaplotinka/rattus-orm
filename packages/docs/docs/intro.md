@@ -7,7 +7,7 @@ sidebar_position: 1
 Rattus ORM is a versatile JavaScript/TypeScript package that offers an Object-Relational Mapping (ORM) like experience for JS/TS applications. It is developed based on the source code of "vuex-orm-next", ensuring compatibility with its API while broadening its applicability beyond specific state managers.
 
 :::warning 
-Rattus ORM is currently in its 0.1.* stages. We welcome feedback and contributions to help improve and evolve the package.
+Rattus ORM is currently in its 0.\*.* stages. We welcome feedback and contributions to help improve and evolve the package.
 :::
 
 ### Features
@@ -21,11 +21,6 @@ Rattus ORM is currently in its 0.1.* stages. We welcome feedback and contributio
 ### Before start
 
 If you're new or need help with the basics, check out the ["vuex-orm-next"](https://next.vuex-orm.org/) documentation. It's got everything you need to start - simple explanations and examples that show you how to use it. This guide is great for beginners and anyone who wants to learn more about how it works. It's easy to follow and will help you get the hang of things quickly.
-
-### Packages:
-* [@rattus-orm/core](/docs/category/core-package): core of Rattus ORM
-* [@rattus-orm/vuex](/docs/category/vuex-integration-vue): Vuex data provider
-* [@rattus-orm/pinia](/docs/category/pinia-integration-vue): Pinia data provider
 
 ### Contributing
 Contributions are welcome! Please read our [Contributing Guide](https://github.com/lyohaplotinka/rattus-orm/blob/main/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests.

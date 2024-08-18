@@ -1,13 +1,14 @@
 import { assertState, createStore, fillState } from '@func-test/utils/Helpers'
 
-import { HasMany, Model, Num, Str } from '@/index'
+import { Model } from '@/index'
+import { HasMany, NumberField, StringField } from '@/decorators'
 
 describe('feature/relations/has_many_save', () => {
   class User extends Model {
     static entity = 'users'
 
-    @Num(0) id!: number
-    @Str('') name!: string
+    @NumberField(0) id!: number
+    @StringField('') name!: string
 
     @HasMany(() => Post, 'userId')
     posts!: Post[]
@@ -16,9 +17,9 @@ describe('feature/relations/has_many_save', () => {
   class Post extends Model {
     static entity = 'posts'
 
-    @Num(0) id!: number
-    @Num(0) userId!: number
-    @Str('') title!: string
+    @NumberField(0) id!: number
+    @NumberField(0) userId!: number
+    @StringField('') title!: string
   }
 
   it('saves a model to the store with "has many" relation', () => {

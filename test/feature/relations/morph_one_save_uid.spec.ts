@@ -1,6 +1,7 @@
 import { assertState, createStore, mockUid } from '@func-test/utils/Helpers'
 
-import { Model, MorphOne, Num, Str, Uid } from '@/index'
+import { Model } from '@/index'
+import { MorphOne, NumberField, StringField, UidField } from '@/decorators'
 
 describe('feature/relations/morph_one_save_uid', () => {
   beforeEach(() => {
@@ -11,17 +12,17 @@ describe('feature/relations/morph_one_save_uid', () => {
     class Image extends Model {
       static entity = 'images'
 
-      @Num(0) id!: number
-      @Str('') url!: string
-      @Uid() imageableId!: string
-      @Str('') imageableType!: string
+      @NumberField(0) id!: number
+      @StringField('') url!: string
+      @UidField() imageableId!: string
+      @StringField('') imageableType!: string
     }
 
     class User extends Model {
       static entity = 'users'
 
-      @Uid() id!: string
-      @Str('') name!: string
+      @UidField() id!: string
+      @StringField('') name!: string
 
       @MorphOne(() => Image, 'imageableId', 'imageableType')
       image!: Image | null
@@ -59,17 +60,17 @@ describe('feature/relations/morph_one_save_uid', () => {
     class Image extends Model {
       static entity = 'images'
 
-      @Uid() id!: string
-      @Str('') url!: string
-      @Uid() imageableId!: string
-      @Str('') imageableType!: string
+      @UidField() id!: string
+      @StringField('') url!: string
+      @UidField() imageableId!: string
+      @StringField('') imageableType!: string
     }
 
     class User extends Model {
       static entity = 'users'
 
-      @Uid() id!: string
-      @Str('') name!: string
+      @UidField() id!: string
+      @StringField('') name!: string
 
       @MorphOne(() => Image, 'imageableId', 'imageableType')
       image!: Image | null
@@ -106,16 +107,16 @@ describe('feature/relations/morph_one_save_uid', () => {
       static entity = 'images'
       static primaryKey = ['imageableId', 'imageableType']
 
-      @Str('') url!: string
-      @Uid() imageableId!: number
-      @Str('') imageableType!: string
+      @StringField('') url!: string
+      @UidField() imageableId!: number
+      @StringField('') imageableType!: string
     }
 
     class User extends Model {
       static entity = 'users'
 
-      @Uid() id!: string
-      @Str('') name!: string
+      @UidField() id!: string
+      @StringField('') name!: string
 
       @MorphOne(() => Image, 'imageableId', 'imageableType')
       image!: Image | null

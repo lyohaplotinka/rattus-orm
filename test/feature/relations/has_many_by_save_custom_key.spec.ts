@@ -1,6 +1,7 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
-import { Attr, HasManyBy, Model, Str } from '@/index'
+import { Model } from '@/index'
+import { AttrField, HasManyBy, StringField } from '@/decorators'
 
 describe('feature/relations/has_many_by_save_custom_key', () => {
   beforeEach(() => {
@@ -11,8 +12,8 @@ describe('feature/relations/has_many_by_save_custom_key', () => {
     class Node extends Model {
       static entity = 'nodes'
 
-      @Attr() id!: number
-      @Str('') name!: string
+      @AttrField() id!: number
+      @StringField('') name!: string
     }
 
     class Cluster extends Model {
@@ -20,9 +21,9 @@ describe('feature/relations/has_many_by_save_custom_key', () => {
 
       static primaryKey = 'clusterId'
 
-      @Attr() clusterId!: number
-      @Attr() nodeIds!: number[]
-      @Str('') name!: string
+      @AttrField() clusterId!: number
+      @AttrField() nodeIds!: number[]
+      @StringField('') name!: string
 
       @HasManyBy(() => Node, 'nodeIds')
       nodes!: Node[]
@@ -54,17 +55,17 @@ describe('feature/relations/has_many_by_save_custom_key', () => {
     class Node extends Model {
       static entity = 'nodes'
 
-      @Attr() id!: number
-      @Attr() nodeId!: number
-      @Str('') name!: string
+      @AttrField() id!: number
+      @AttrField() nodeId!: number
+      @StringField('') name!: string
     }
 
     class Cluster extends Model {
       static entity = 'clusters'
 
-      @Attr() id!: number
-      @Attr() nodeIds!: number[]
-      @Str('') name!: string
+      @AttrField() id!: number
+      @AttrField() nodeIds!: number[]
+      @StringField('') name!: string
 
       @HasManyBy(() => Node, 'nodeIds', 'nodeId')
       nodes!: Node[]

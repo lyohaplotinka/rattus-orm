@@ -1,20 +1,21 @@
 import { assertModel, createStore } from '@func-test/utils/Helpers'
 
-import { Attr, Model, Str } from '@/index'
+import { Model } from '@/index'
+import { AttrField, StringField } from '@/decorators'
 
 describe('unit/repository/Repository', () => {
   class User extends Model {
     static entity = 'users'
 
-    @Attr() id!: any
-    @Str('John Doe') name!: string
+    @AttrField() id!: any
+    @StringField('John Doe') name!: string
   }
 
   class Post extends Model {
     public static entity = 'posts'
 
-    @Attr() public id!: any
-    @Str('Title 001') public title!: string
+    @AttrField() public id!: any
+    @StringField('Title 001') public title!: string
   }
 
   it('creates a new model instance', () => {

@@ -1,13 +1,14 @@
 import { assertInstanceOf, assertModel, createStore, fillState } from '@func-test/utils/Helpers'
 
-import { Attr, HasMany, Model, Str } from '@/index'
+import { Model } from '@/index'
+import { AttrField, HasMany, StringField } from '@/decorators'
 
 describe('feature/relations/has_many_retrieve', () => {
   class User extends Model {
     static entity = 'users'
 
-    @Attr() id!: number
-    @Str('') name!: string
+    @AttrField() id!: number
+    @StringField('') name!: string
 
     @HasMany(() => Post, 'userId')
     posts!: Post[]
@@ -16,9 +17,9 @@ describe('feature/relations/has_many_retrieve', () => {
   class Post extends Model {
     static entity = 'posts'
 
-    @Attr() id!: number
-    @Attr() userId!: number
-    @Str('') title!: string
+    @AttrField() id!: number
+    @AttrField() userId!: number
+    @StringField('') title!: string
   }
 
   it('can eager load has many relation', async () => {

@@ -26,10 +26,10 @@ The simplest way to set up Rattus ORM with Svelte is to use the provider:
 export class User extends Model {
     public static entity = 'user'
     
-    @Uid()
+    @UidField()
     public id: string
     
-    @Str()
+    @StringField()
     public email: string
 }
 ```

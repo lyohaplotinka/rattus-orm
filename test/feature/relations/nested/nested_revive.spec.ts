@@ -1,12 +1,13 @@
 import { createStore, fillState } from '@func-test/utils/Helpers'
 
-import { Attr, BelongsTo, HasMany, Model } from '@/index'
+import { Model } from '@/index'
+import { AttrField, BelongsTo, HasMany } from '@/decorators'
 
 describe('feature/relations/nested/nested_revive', () => {
   class User extends Model {
     static entity = 'users'
 
-    @Attr() id!: number
+    @AttrField() id!: number
 
     @HasMany(() => Post, 'userId')
     posts!: Post[]
@@ -15,8 +16,8 @@ describe('feature/relations/nested/nested_revive', () => {
   class Post extends Model {
     static entity = 'posts'
 
-    @Attr() id!: number
-    @Attr() userId!: number | null
+    @AttrField() id!: number
+    @AttrField() userId!: number | null
 
     @BelongsTo(() => User, 'userId')
     author!: User | null
@@ -28,9 +29,9 @@ describe('feature/relations/nested/nested_revive', () => {
   class Comment extends Model {
     static entity = 'comments'
 
-    @Attr() id!: number
-    @Attr() postId!: number
-    @Attr() userId!: number
+    @AttrField() id!: number
+    @AttrField() postId!: number
+    @AttrField() userId!: number
 
     @BelongsTo(() => User, 'userId')
     author!: User | null

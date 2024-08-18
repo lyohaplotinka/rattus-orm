@@ -1,13 +1,14 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
-import { Attr, HasOne, Model, Str } from '@/index'
+import { Model } from '@/index'
+import { AttrField, HasOne, StringField } from '@/decorators'
 
 describe('feature/relations/has_one_save', () => {
   class User extends Model {
     static entity = 'users'
 
-    @Attr() id!: number
-    @Str('') name!: string
+    @AttrField() id!: number
+    @StringField('') name!: string
 
     @HasOne(() => Phone, 'userId')
     phone!: Phone | null
@@ -16,9 +17,9 @@ describe('feature/relations/has_one_save', () => {
   class Phone extends Model {
     static entity = 'phones'
 
-    @Attr() id!: number
-    @Attr() userId!: number
-    @Str('') number!: string
+    @AttrField() id!: number
+    @AttrField() userId!: number
+    @StringField('') number!: string
   }
 
   it('inserts a record to the store with "has one" relation', () => {

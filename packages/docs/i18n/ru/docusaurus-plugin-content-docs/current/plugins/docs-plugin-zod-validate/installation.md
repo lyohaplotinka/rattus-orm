@@ -36,10 +36,10 @@ db.start()
 class User extends Model {
   public static entity = 'user'
 
-  @Num(0)
+  @NumberField(0)
   public id: number
 
-  @Str('')
+  @StringField('')
   public name: string
 }
 
@@ -65,10 +65,10 @@ db.use(RattusZodValidationPlugin({ strict: [User.entity] }))
 class User extends Model {
   public static entity = 'user'
 
-  @Num(0)
+  @NumberField(0)
   public id: number
 
-  @Str('')
+  @StringField('')
   public name: string
 }
 

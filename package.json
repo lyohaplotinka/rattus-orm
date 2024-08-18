@@ -20,6 +20,7 @@
     "javascript"
   ],
   "scripts": {
+    "dev:docs": "yarn workspace docs run start",
     "test": "node scripts/built/test.mjs run-tests",
     "lint": "yarn workspaces foreach -A run lint",
     "lint:scripts": "eslint -c ./scripts/.eslintrc.js ./scripts/src/**/*.{js,mjs,ts,tsx} --quiet --fix",

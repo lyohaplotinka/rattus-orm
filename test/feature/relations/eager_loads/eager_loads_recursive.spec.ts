@@ -1,13 +1,14 @@
 import { assertModel, createStore, fillState } from '@func-test/utils/Helpers'
 
-import { Attr, BelongsTo, HasOne, Model, Str } from '@/index'
+import { Model } from '@/index'
+import { AttrField, BelongsTo, HasOne, StringField } from '@/decorators'
 
 describe('feature/relations/eager_loads_recursive', () => {
   class User extends Model {
     static entity = 'users'
 
-    @Attr() id!: number
-    @Str('') name!: string
+    @AttrField() id!: number
+    @StringField('') name!: string
 
     @HasOne(() => Phone, 'userId')
     phone!: Phone
@@ -16,9 +17,9 @@ describe('feature/relations/eager_loads_recursive', () => {
   class Phone extends Model {
     static entity = 'phones'
 
-    @Attr() id!: number
-    @Attr() userId!: number
-    @Str('') number!: string
+    @AttrField() id!: number
+    @AttrField() userId!: number
+    @StringField('') number!: string
 
     @BelongsTo(() => User, 'userId')
     user!: User

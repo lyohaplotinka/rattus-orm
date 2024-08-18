@@ -35,10 +35,10 @@ By default, the validator operates in **non-strict** mode, meaning no exception 
 class User extends Model {
   public static entity = 'user'
 
-  @Num(0)
+  @NumberField(0)
   public id: number
 
-  @Str('')
+  @StringField('')
   public name: string
 }
 
@@ -63,10 +63,10 @@ In this case, the above warning will turn into an error message:
 class User extends Model {
   public static entity = 'user'
 
-  @Num(0)
+  @NumberField(0)
   public id: number
 
-  @Str('')
+  @StringField('')
   public name: string
 }
 

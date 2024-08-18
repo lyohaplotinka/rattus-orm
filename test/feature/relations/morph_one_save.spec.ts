@@ -1,22 +1,23 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
-import { Model, MorphOne, Num, Str } from '@/index'
+import { Model } from '@/index'
+import { MorphOne, NumberField, StringField } from '@/decorators'
 
 describe('feature/relations/morph_one_save', () => {
   class Image extends Model {
     static entity = 'images'
 
-    @Num(0) id!: number
-    @Str('') url!: string
-    @Num(0) imageableId!: number
-    @Str('') imageableType!: string
+    @NumberField(0) id!: number
+    @StringField('') url!: string
+    @NumberField(0) imageableId!: number
+    @StringField('') imageableType!: string
   }
 
   class User extends Model {
     static entity = 'users'
 
-    @Num(0) id!: number
-    @Str('') name!: string
+    @NumberField(0) id!: number
+    @StringField('') name!: string
 
     @MorphOne(() => Image, 'imageableId', 'imageableType')
     image!: Image | null

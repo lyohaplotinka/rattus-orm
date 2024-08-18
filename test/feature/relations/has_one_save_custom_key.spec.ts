@@ -1,6 +1,7 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
-import { Attr, HasOne, Model, Str } from '@/index'
+import { Model } from '@/index'
+import { AttrField, HasOne, StringField } from '@/decorators'
 
 describe('feature/relations/has_one_save_custom_key', () => {
   beforeEach(() => {
@@ -13,8 +14,8 @@ describe('feature/relations/has_one_save_custom_key', () => {
 
       static primaryKey = 'userId'
 
-      @Attr() userId!: string
-      @Str('') name!: string
+      @AttrField() userId!: string
+      @StringField('') name!: string
 
       @HasOne(() => Phone, 'userId')
       phone!: Phone | null
@@ -23,9 +24,9 @@ describe('feature/relations/has_one_save_custom_key', () => {
     class Phone extends Model {
       static entity = 'phones'
 
-      @Attr() id!: number
-      @Attr() userId!: string
-      @Str('') number!: string
+      @AttrField() id!: number
+      @AttrField() userId!: string
+      @StringField('') number!: string
     }
 
     const store = createStore()
@@ -53,9 +54,9 @@ describe('feature/relations/has_one_save_custom_key', () => {
     class User extends Model {
       static entity = 'users'
 
-      @Attr() id!: number
-      @Attr() userId!: string
-      @Str('') name!: string
+      @AttrField() id!: number
+      @AttrField() userId!: string
+      @StringField('') name!: string
 
       @HasOne(() => Phone, 'userId', 'userId')
       phone!: Phone | null
@@ -64,9 +65,9 @@ describe('feature/relations/has_one_save_custom_key', () => {
     class Phone extends Model {
       static entity = 'phones'
 
-      @Attr() id!: number
-      @Attr() userId!: string
-      @Str('') number!: string
+      @AttrField() id!: number
+      @AttrField() userId!: string
+      @StringField('') number!: string
     }
 
     const store = createStore()

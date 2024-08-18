@@ -1,6 +1,7 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
-import { BelongsTo, HasMany, Model, Num, Str } from '@/index'
+import { Model } from '@/index'
+import { BelongsTo, HasMany, NumberField, StringField } from '@/decorators'
 
 // A model with more than 2 related models related to the same model was
 // causing a normalization error. It was due to the Schema class was caching
@@ -22,7 +23,7 @@ describe('regression/normalizing_nested_relations_multiple_same_parent_model', (
   class Opportunity extends Model {
     static entity = 'opportunities'
 
-    @Num(null, { nullable: true }) id!: number | null
+    @NumberField(null, { nullable: true }) id!: number | null
 
     @HasMany(() => ProposalTemplate, 'opportunityId')
     proposalTemplates!: ProposalTemplate[]
@@ -36,8 +37,8 @@ describe('regression/normalizing_nested_relations_multiple_same_parent_model', (
 
     static primaryKey = ['opportunityId', 'proposalId']
 
-    @Num(null, { nullable: true }) opportunityId!: number | null
-    @Num(null, { nullable: true }) proposalId!: number | null
+    @NumberField(null, { nullable: true }) opportunityId!: number | null
+    @NumberField(null, { nullable: true }) proposalId!: number | null
 
     @BelongsTo(() => ProposalSetting, 'proposalId')
     proposal!: ProposalSetting
@@ -46,9 +47,9 @@ describe('regression/normalizing_nested_relations_multiple_same_parent_model', (
   class Proposal extends Model {
     static entity = 'proposals'
 
-    @Num(null, { nullable: true }) id!: number | null
-    @Num(null, { nullable: true }) opportunityId!: number | null
-    @Num(null, { nullable: true }) templateId!: number | null
+    @NumberField(null, { nullable: true }) id!: number | null
+    @NumberField(null, { nullable: true }) opportunityId!: number | null
+    @NumberField(null, { nullable: true }) templateId!: number | null
 
     @BelongsTo(() => ProposalSetting, 'templateId')
     template!: ProposalSetting | null
@@ -57,8 +58,8 @@ describe('regression/normalizing_nested_relations_multiple_same_parent_model', (
   class ProposalSetting extends Model {
     static entity = 'proposal_settings'
 
-    @Num(null, { nullable: true }) id!: number | null
-    @Str('') name!: string
+    @NumberField(null, { nullable: true }) id!: number | null
+    @StringField('') name!: string
   }
 
   it('should normalize nested relationships with multiple same parent model', () => {

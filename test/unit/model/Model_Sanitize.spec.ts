@@ -1,17 +1,17 @@
 import { createStore } from '@func-test/utils/Helpers'
 
 import { HasMany } from '@/model/decorators/attributes/relations/HasMany'
-import { Num } from '@/model/decorators/attributes/types/Num'
-import { Str } from '@/model/decorators/attributes/types/Str'
+import { NumberField } from '@/model/decorators/attributes/types/NumberField'
+import { StringField } from '@/model/decorators/attributes/types/StringField'
 import { Model } from '@/model/Model'
 
 describe('unit/model/Model_Sanitize', () => {
   class User extends Model {
     static entity = 'users'
 
-    @Num(null, { nullable: true }) id!: number
-    @Str('Unknown') name!: string
-    @Num(0) age!: number
+    @NumberField(null, { nullable: true }) id!: number
+    @StringField('Unknown') name!: string
+    @NumberField(0) age!: number
 
     @HasMany(() => Post, 'postId')
     posts!: Post[]

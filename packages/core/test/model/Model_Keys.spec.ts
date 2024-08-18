@@ -1,4 +1,4 @@
-import { Attr } from '@/model/decorators/attributes/types/Attr'
+import { AttrField } from '../../src/model/decorators/attributes/types/AttrField'
 import { Model } from '@/model/Model'
 
 describe('unit/model/Model_Keys', () => {
@@ -10,7 +10,7 @@ describe('unit/model/Model_Keys', () => {
     class User extends Model {
       static entity = 'users'
 
-      @Attr() id!: any
+      @AttrField() id!: any
     }
 
     const userA = new User({ id: 1 })
@@ -24,7 +24,7 @@ describe('unit/model/Model_Keys', () => {
     class User extends Model {
       static entity = 'users'
 
-      @Attr() id!: any
+      @AttrField() id!: any
     }
 
     const user = new User()
@@ -39,8 +39,8 @@ describe('unit/model/Model_Keys', () => {
 
       static primaryKey = ['idA', 'idB']
 
-      @Attr() idA!: any
-      @Attr() idB!: any
+      @AttrField() idA!: any
+      @AttrField() idB!: any
     }
 
     const userA = new User({ idA: 1, idB: 2 })
@@ -56,8 +56,8 @@ describe('unit/model/Model_Keys', () => {
 
       static primaryKey = ['idA', 'idB']
 
-      @Attr() idA!: any
-      @Attr() idB!: any
+      @AttrField() idA!: any
+      @AttrField() idB!: any
     }
 
     const user = new User()

@@ -3,8 +3,9 @@ import type { Constructor } from 'type-fest'
 import { expect, vi } from 'vitest'
 
 import type { DataProvider, RawModel } from '../src'
-import { Database, Model, Num, Repository, Str } from '../src'
+import { Database, Model, Repository } from '../src'
 import type { RattusContext } from '../src/context/rattus-context'
+import { NumberField, StringField } from '../src/decorators'
 import { ObjectDataProvider } from '../src/object-data-provider'
 import type { UseRepository } from './integrationsHelpers'
 import { pullRepositoryKeys } from './integrationsHelpers'
@@ -14,10 +15,10 @@ import { isUnknownRecord } from './isUnknownRecord'
 export class TestUser extends Model {
   public static entity = 'testUser'
 
-  @Str('')
+  @StringField('')
   public declare id: string
 
-  @Num(0)
+  @NumberField(0)
   public declare age: number
 }
 

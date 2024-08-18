@@ -1,6 +1,7 @@
 import { assertState, createStore, mockUid } from '@func-test/utils/Helpers'
 
-import { Attr, BelongsTo, Model, Str, Uid } from '@/index'
+import { Model } from '@/index'
+import { AttrField, BelongsTo, StringField, UidField } from '@/decorators'
 
 describe('feature/relations/belongs_to_save_uid', () => {
   beforeEach(() => {
@@ -11,16 +12,16 @@ describe('feature/relations/belongs_to_save_uid', () => {
     class User extends Model {
       static entity = 'users'
 
-      @Attr() id!: number
-      @Str('') name!: string
+      @AttrField() id!: number
+      @StringField('') name!: string
     }
 
     class Post extends Model {
       static entity = 'posts'
 
-      @Uid() id!: string
-      @Attr() userId!: number | null
-      @Str('') title!: string
+      @UidField() id!: string
+      @AttrField() userId!: number | null
+      @StringField('') title!: string
 
       @BelongsTo(() => User, 'userId')
       author!: User | null
@@ -49,16 +50,16 @@ describe('feature/relations/belongs_to_save_uid', () => {
     class User extends Model {
       static entity = 'users'
 
-      @Uid() id!: string
-      @Str('') name!: string
+      @UidField() id!: string
+      @StringField('') name!: string
     }
 
     class Post extends Model {
       static entity = 'posts'
 
-      @Uid() id!: number
-      @Attr() userId!: number | null
-      @Str('') title!: string
+      @UidField() id!: number
+      @AttrField() userId!: number | null
+      @StringField('') title!: string
 
       @BelongsTo(() => User, 'userId')
       author!: User | null
