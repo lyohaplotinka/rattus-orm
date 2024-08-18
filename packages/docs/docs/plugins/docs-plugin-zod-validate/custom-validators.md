@@ -30,7 +30,7 @@ export class User extends Model {
     age: z.number().gt(18)
   }
   
-  @Num(0)
+  @NumberField(0)
   public age: number
 }
 ```
@@ -48,7 +48,7 @@ export class User extends Model {
   public static entity = 'user'
 
   @ZodFieldType(z.number().gt(18))
-  @Num(0)
+  @NumberField(0)
   public age: number
 }
 ```
