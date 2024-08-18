@@ -5,7 +5,11 @@ import { RattusContext } from '@rattus-orm/core/utils/rattus-context'
 import FuncExecutor from './components/FuncExecutor.svelte'
 import { useRattusContext } from '../dist/rattus-orm-svelte-provider'
 
-export const renderWithContext = (component: any, contextProps: RattusOrmInstallerOptions = {}, slotProps = {}) => {
+export const renderWithContext = (
+  component: any,
+  contextProps: RattusOrmInstallerOptions = {},
+  slotProps = {},
+): any => {
   return render(RattusProviderTest, { props: { slotContent: component, slotProps, ...contextProps } as any })
 }
 
