@@ -171,7 +171,9 @@ export class Model {
   }
 
   /**
-   * Create a new Date attribute instance
+   * Create a new Date attribute instance.
+   *
+   * @param {Date | string | number | null} value initial value, null if nullable.
    */
   public static dateField(value: Date | string | number | null): DateField {
     return this.createType(DateField, value)

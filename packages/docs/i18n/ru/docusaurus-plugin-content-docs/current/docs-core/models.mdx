@@ -24,18 +24,19 @@ TypeScript и декораторами.
 <Tabs>
     <TabItem value={'ts'} label={'TypeScript'}>
         ```typescript title="src/data/User.ts"
-        import { Model, Str, Num, Uid } from '@rattus-orm/core'
+        import { Model } from '@rattus-orm/core'
+        import { StringField, UidField, NumberField } from '@rattus-orm/core/decorators'
 
         export class User extends Model {
             public static entity = 'user'
 
-            @Uid()
+            @UidField()
             public id: string
 
-            @Str('')
+            @StringField('')
             public name: string
 
-            @Num(0)
+            @NumberField(0)
             public age: number
         }
         ```
@@ -49,9 +50,9 @@ TypeScript и декораторами.
 
             static fields () {
                 return {
-                    id: this.uid(),
-                    name: this.string(''),
-                    age: this.number(0)
+                    id: this.uidField(),
+                    name: this.stringField(''),
+                    age: this.numberField(0)
                 }
             }
         }
@@ -81,7 +82,7 @@ TypeScript и декораторами.
 class User extends Model {
   public static entity = 'users'
 
-  @Str('')
+  @StringField('')
   // public id: string - может не сработать,
   // все поля модели могут быть "null"
   declare id: string
@@ -106,7 +107,7 @@ export default defineConfig({
 
 #### Общий тип
 
-Используйте декоратор `@Attr(value)` (или метод `this.attr()`) для определения наиболее
+Используйте декоратор `@AttrField(value)` (или метод `this.attrField()`) для определения наиболее
 общего поля. Аргументом является значение поля по
 умолчанию, которое будет использоваться при создании
 новых данных, если поле отсутствует.
@@ -115,32 +116,32 @@ export default defineConfig({
 export class User extends Model {
     public static entity = 'user'
 
-    @Attr(null)
+    @AttrField(null)
     public anyField: any
 }
 ```
 
 #### Примитивные типы
 Вы можете использовать атрибуты примитивного типа:
-`@Str('')`, `@Num(0)` или `@Bool(false)`
-(для JS - `this.string()`, `this.number()` и `this.boolean()`).
+`@StringField('')`, `@NumberField(0)` или `@BooleanFeild(false)`
+(для JS - `this.stringField()`, `this.numberField()` и `this.booleanField()`).
 Эти атрибуты по умолчанию обеспечивают приведение, которое
 преобразует данное значение в указанный тип.
 Например, `'0'` преобразуется в `0`, а `1`, в `true`.
-Как и в случае с `this.attr()`, аргументом является
+Как и в случае с `this.attrField()`, аргументом является
 значение по умолчанию.
 
 ```typescript
 export class User extends Model {
     public static entity = 'user'
 
-    @Str('')
+    @StringField('')
     public name: string
 
-    @Num(0)
+    @NumberField(0)
     public age: number
 
-    @Bool(true)
+    @BooleanField(true)
     public isAwesome: boolean
 }
 ```
@@ -155,7 +156,7 @@ Rattus ORM не будет **валидировать** значения, поп
 Вы можете отключить приведение типов для конкретной модели. Для этого
 ей нужно объявить публичное статическое свойство `dataTypeCasting` и
 установить его значение в `false`. В таком случае, даже если поле
-помечено декоратором `@Bool`, а на вход в модель попадает единица --
+помечено декоратором `@BooleanField`, а на вход в модель попадает единица --
 она не будет преобразована в `true`, а останется единицей.
 Валидации также не будет. Если вам нужно валидировать значения, предлагаем
 рассмотреть [плагин Zod Validate](/docs/plugins/docs-plugin-zod-validate/getting-started).
@@ -166,26 +167,26 @@ export class User extends Model {
     // приведение типов полей отключено
     public static dataTypeCasting = false
 
-    @Str('')
+    @StringField('')
     public name: string
 
-    @Num(0)
+    @NumberField(0)
     public age: number
 
-    @Bool(true)
+    @BooleanField(true)
     public isAwesome: boolean
 }
 ```
 
 #### UID тип
-`@Uid()`  (или `this.uid()` в JS) генерирует уникальный
+`@UidField()`  (или `this.uidField()` в JS) генерирует уникальный
 идентификатор, если значение для этого поля отсутствует.
 
 ```typescript
 export class User extends Model {
     public static entity = 'user'
 
-    @Uid()
+    @UidField()
     public id: string
 }
 ```
@@ -197,8 +198,23 @@ ID:
 export class User extends Model {
     public static entity = 'user'
 
-    @Uid(() => myIdGenerator())
+    @UidField(() => myIdGenerator())
     public id: string
+}
+```
+
+#### Даты
+Начиная с версии 0.3.0 доступен тип Date. Он преобразует
+входящую строку или число в экземпляр класса Date. Если
+дата получается невалидной, будет установлено значение
+с нулевой датой (`new Date(0)`). По умолчанию тип не принимает
+null, но его можно сделать nullable при помощи настройки.
+```typescript
+export class User extends Model {
+    public static entity = 'user'
+
+    @DateField(null, { nullable: true })
+    public createdAt: Date
 }
 ```
 
@@ -214,7 +230,7 @@ export class User extends Model {
     // Также можно указать массив
     public static primaryKey = ['myId', 'otherId']
 
-    @Uid(() => myIdGenerator())
+    @UidField(() => myIdGenerator())
     public myId: string
 }
 ```

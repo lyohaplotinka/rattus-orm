@@ -52,7 +52,7 @@
       "description": "Create a new model instance without field values being populated.  This method is mainly for the internal use when registering models to the database. Since all pre-registered models are for referencing its model setting during the various process, but the fields are not required.  Use this method when you want create a new model instance for: - Registering model to a component (eg. Repository, Query, etc.) - Registering model to attributes (String, Has Many, etc.)"
     },
     {
-      "name": "static attr",
+      "name": "static attrField",
       "typeParams": [],
       "params": [
         {
@@ -65,7 +65,7 @@
       "description": "Create a new Attr attribute instance."
     },
     {
-      "name": "static string",
+      "name": "static stringField",
       "typeParams": [],
       "params": [
         {
@@ -78,7 +78,7 @@
       "description": "Create a new String attribute instance."
     },
     {
-      "name": "static number",
+      "name": "static numberField",
       "typeParams": [],
       "params": [
         {
@@ -91,7 +91,7 @@
       "description": "Create a new Number attribute instance."
     },
     {
-      "name": "static boolean",
+      "name": "static booleanField",
       "typeParams": [],
       "params": [
         {
@@ -104,11 +104,24 @@
       "description": "Create a new Boolean attribute instance."
     },
     {
-      "name": "static uid",
+      "name": "static uidField",
       "typeParams": [],
       "params": [],
       "returnType": "Uid",
       "description": "Create a new Uid attribute instance."
+    },
+    {
+      "name": "static dateField",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "value: Date | string | number | null",
+          "name": "value",
+          "description": "initial value, null if nullable."
+        }
+      ],
+      "returnType": "DateField",
+      "description": "Create a new Date attribute instance."
     },
     {
       "name": "static hasOne",
@@ -405,17 +418,12 @@
       "typeParams": [],
       "params": [
         {
-          "declaration": "model: Model = this",
-          "name": "model",
-          "description": "optional to serialize"
-        },
-        {
-          "declaration": "options: ModelOptions = {}",
+          "declaration": "options: ModelOptions = { relations: true }",
           "name": "options",
           "description": "optional options to apply"
         }
       ],
-      "returnType": "Element",
+      "returnType": "RawModel<this>",
       "description": "Serialize this model, or the given model, as POJO."
     },
     {
@@ -443,6 +451,13 @@
       ],
       "returnType": "Element",
       "description": "Same as `$sanitize` method, but it produces missing model fields with its default value."
+    },
+    {
+      "name": "getThisNonStrict",
+      "typeParams": [],
+      "params": [],
+      "returnType": "",
+      "description": ""
     }
   ],
   "publicProperties": [

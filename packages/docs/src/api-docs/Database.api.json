@@ -57,7 +57,14 @@
       "typeParams": [],
       "params": [],
       "returnType": "",
-      "description": "Get current database DataProvider"
+      "description": "Get current database DataProvider. Returns initial DataProvider, not wrapped with EventsDataProviderWrapper."
+    },
+    {
+      "name": "getWrappedDataProvider",
+      "typeParams": [],
+      "params": [],
+      "returnType": "",
+      "description": "Get current DataProvider wrapped in EventsDataProviderWraper"
     },
     {
       "name": "setConnection",
@@ -262,6 +269,26 @@
       ],
       "returnType": "this",
       "description": "Use plugin"
+    },
+    {
+      "name": "dump",
+      "typeParams": [],
+      "params": [],
+      "returnType": "SerializedStorage",
+      "description": "Export all data from current connection as JavaScript object"
+    },
+    {
+      "name": "restore",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "data: SerializedStorage",
+          "name": "data",
+          "description": "data to import"
+        }
+      ],
+      "returnType": "",
+      "description": "Import data into database"
     }
   ],
   "publicProperties": []
