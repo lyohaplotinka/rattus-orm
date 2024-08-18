@@ -7,8 +7,8 @@
 
     static fields() {
       return {
-        id: this.string(''),
-        age: this.number(0)
+        id: this.stringField(''),
+        age: this.numberField(0)
       }
     }
   }

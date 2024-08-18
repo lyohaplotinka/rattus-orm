@@ -1,9 +1,10 @@
 import { describe, expect, vi } from 'vitest'
-import { Attr, createDatabase, Model, Num, Str } from '@rattus-orm/core'
+import { createDatabase, Model } from '@rattus-orm/core'
 import { RattusZodValidationError } from '../src/exceptions/exceptions'
 import { isRattusZodValidationError, RattusZodValidationPlugin, ZodFieldType } from '../src'
 import { ObjectDataProvider } from '@rattus-orm/core/object-data-provider'
 import { z } from 'zod'
+import { AttrField, NumberField, StringField } from '@rattus-orm/core/decorators'
 
 export const createDb = (strict: boolean | string[] = true) => {
   return createDatabase({
@@ -21,10 +22,10 @@ type JobType = {
 class User extends Model {
   public static entity = 'user'
 
-  @Num(0)
+  @NumberField(0)
   public id: string
 
-  @Str('')
+  @StringField('')
   public name: string
 }
 
@@ -34,21 +35,21 @@ class UserProp extends Model {
     age: z.number().gt(18),
   }
 
-  @Str('')
+  @StringField('')
   public id: string
 
-  @Num(0)
+  @NumberField(0)
   public age: number
 }
 
 class UserDecorators extends Model {
   public static entity = 'userDecorators'
 
-  @Str('')
+  @StringField('')
   public id: string
 
   @ZodFieldType(z.object({ title: z.string(), seniority: z.number() }))
-  @Attr()
+  @AttrField()
   public job: JobType
 }
 

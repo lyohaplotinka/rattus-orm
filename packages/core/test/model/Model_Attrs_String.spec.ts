@@ -1,4 +1,4 @@
-import { Str } from '@/model/decorators/attributes/types/Str'
+import { StringField } from '../../src/model/decorators/attributes/types/StringField'
 import { Model } from '@/model/Model'
 
 describe('unit/model/Model_Attrs_String', () => {
@@ -6,7 +6,7 @@ describe('unit/model/Model_Attrs_String', () => {
     class User extends Model {
       static entity = 'users'
 
-      @Str('default')
+      @StringField('default')
       str!: string
     }
 
@@ -21,7 +21,7 @@ describe('unit/model/Model_Attrs_String', () => {
     class User extends Model {
       static entity = 'users'
 
-      @Str(null, { nullable: true })
+      @StringField(null, { nullable: true })
       str!: string | null
     }
 

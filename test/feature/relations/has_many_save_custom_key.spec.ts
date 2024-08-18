@@ -1,6 +1,7 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
-import { Attr, HasMany, Model, Str } from '@/index'
+import { Model } from '@/index'
+import { AttrField, HasMany, StringField } from '@/decorators'
 
 describe('feature/relations/has_many_save_custom_key', () => {
   beforeEach(() => {
@@ -13,8 +14,8 @@ describe('feature/relations/has_many_save_custom_key', () => {
 
       static primaryKey = 'userId'
 
-      @Attr() userId!: string
-      @Str('') name!: string
+      @AttrField() userId!: string
+      @StringField('') name!: string
 
       @HasMany(() => Post, 'userId')
       posts!: Post[]
@@ -23,9 +24,9 @@ describe('feature/relations/has_many_save_custom_key', () => {
     class Post extends Model {
       static entity = 'posts'
 
-      @Attr() id!: number
-      @Attr() userId!: number
-      @Str('') title!: string
+      @AttrField() id!: number
+      @AttrField() userId!: number
+      @StringField('') title!: string
     }
 
     const store = createStore()
@@ -54,9 +55,9 @@ describe('feature/relations/has_many_save_custom_key', () => {
     class User extends Model {
       static entity = 'users'
 
-      @Attr() id!: number
-      @Attr() userId!: number
-      @Str('') name!: string
+      @AttrField() id!: number
+      @AttrField() userId!: number
+      @StringField('') name!: string
 
       @HasMany(() => Post, 'userId', 'userId')
       posts!: Post[]
@@ -65,9 +66,9 @@ describe('feature/relations/has_many_save_custom_key', () => {
     class Post extends Model {
       static entity = 'posts'
 
-      @Attr() id!: number
-      @Attr() userId!: string
-      @Str('') title!: string
+      @AttrField() id!: number
+      @AttrField() userId!: string
+      @StringField('') title!: string
     }
 
     const store = createStore()

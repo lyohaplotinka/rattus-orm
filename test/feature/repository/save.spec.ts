@@ -7,15 +7,16 @@ import {
   fillState,
 } from '@func-test/utils/Helpers'
 
-import { Model, Num, Str } from '@/index'
+import { Model } from '@/index'
+import { NumberField, StringField } from '@/decorators'
 
 describe('feature/repository/save', () => {
   class User extends Model {
     static entity = 'users'
 
-    @Num(0) id!: number
-    @Str('') name!: string
-    @Num(0) age!: number
+    @NumberField(0) id!: number
+    @StringField('') name!: string
+    @NumberField(0) age!: number
   }
 
   it('does nothing when passing in an empty array', () => {

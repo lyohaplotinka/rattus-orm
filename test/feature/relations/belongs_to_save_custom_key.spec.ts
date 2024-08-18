@@ -1,6 +1,7 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
-import { Attr, BelongsTo, Model, Str } from '@/index'
+import { Model } from '@/index'
+import { AttrField, BelongsTo, StringField } from '@/decorators'
 
 describe('feature/relations/belongs_to_save_custome_key', () => {
   beforeEach(() => {
@@ -13,16 +14,16 @@ describe('feature/relations/belongs_to_save_custome_key', () => {
 
       static primaryKey = 'userId'
 
-      @Attr() userId!: number
-      @Str('') name!: string
+      @AttrField() userId!: number
+      @StringField('') name!: string
     }
 
     class Post extends Model {
       static entity = 'posts'
 
-      @Attr() id!: string
-      @Attr() userId!: number | null
-      @Str('') title!: string
+      @AttrField() id!: string
+      @AttrField() userId!: number | null
+      @StringField('') title!: string
 
       @BelongsTo(() => User, 'userId')
       author!: User | null
@@ -50,17 +51,17 @@ describe('feature/relations/belongs_to_save_custome_key', () => {
     class User extends Model {
       static entity = 'users'
 
-      @Attr() id!: number
-      @Attr() userId!: number
-      @Str('') name!: string
+      @AttrField() id!: number
+      @AttrField() userId!: number
+      @StringField('') name!: string
     }
 
     class Post extends Model {
       static entity = 'posts'
 
-      @Attr() id!: string
-      @Attr() userId!: number | null
-      @Str('') title!: string
+      @AttrField() id!: string
+      @AttrField() userId!: number | null
+      @StringField('') title!: string
 
       @BelongsTo(() => User, 'userId', 'userId')
       author!: User | null

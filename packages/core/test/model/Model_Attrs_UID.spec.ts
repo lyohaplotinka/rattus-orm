@@ -1,6 +1,6 @@
 import { mockUid } from '../../../../test/utils/Helpers'
 
-import { Uid } from '@/model/decorators/attributes/types/Uid'
+import { UidField } from '../../src/model/decorators/attributes/types/UidField'
 import { Model } from '@/model/Model'
 
 describe('unit/model/Model_Attrs_UID', () => {
@@ -8,7 +8,7 @@ describe('unit/model/Model_Attrs_UID', () => {
     class User extends Model {
       static entity = 'users'
 
-      @Uid()
+      @UidField()
       id!: string
     }
 

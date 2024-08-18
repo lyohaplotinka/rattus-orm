@@ -1,14 +1,15 @@
 import { assertInstanceOf, assertModels, createStore, fillState } from '@func-test/utils/Helpers'
 
-import { Attr, Model, Num, Str } from '@/index'
+import { Model } from '@/index'
+import { AttrField, NumberField, StringField } from '@/decorators'
 
 describe('feature/repository/retrieves_order_by', () => {
   class User extends Model {
     static entity = 'users'
 
-    @Attr() id!: any
-    @Str('') name!: string
-    @Num(0) age!: number
+    @AttrField() id!: any
+    @StringField('') name!: string
+    @NumberField(0) age!: number
   }
 
   it('can sort records using the `orderBy` modifier', () => {

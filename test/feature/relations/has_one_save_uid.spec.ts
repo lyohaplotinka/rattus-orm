@@ -1,6 +1,7 @@
 import { assertState, createStore, mockUid } from '@func-test/utils/Helpers'
 
-import { Attr, HasOne, Model, Str, Uid } from '@/index'
+import { Model } from '@/index'
+import { AttrField, HasOne, StringField, UidField } from '@/decorators'
 
 describe('feature/relations/has_one_save_uid', () => {
   beforeEach(() => {
@@ -11,8 +12,8 @@ describe('feature/relations/has_one_save_uid', () => {
     class User extends Model {
       static entity = 'users'
 
-      @Uid() id!: string
-      @Str('') name!: string
+      @UidField() id!: string
+      @StringField('') name!: string
 
       @HasOne(() => Phone, 'userId')
       phone!: Phone | null
@@ -21,9 +22,9 @@ describe('feature/relations/has_one_save_uid', () => {
     class Phone extends Model {
       static entity = 'phones'
 
-      @Attr() id!: number
-      @Attr() userId!: string
-      @Str('') number!: string
+      @AttrField() id!: number
+      @AttrField() userId!: string
+      @StringField('') number!: string
     }
 
     mockUid(['uid1'])
@@ -52,8 +53,8 @@ describe('feature/relations/has_one_save_uid', () => {
     class User extends Model {
       static entity = 'users'
 
-      @Uid() id!: string
-      @Str('') name!: string
+      @UidField() id!: string
+      @StringField('') name!: string
 
       @HasOne(() => Phone, 'userId')
       phone!: Phone | null
@@ -62,9 +63,9 @@ describe('feature/relations/has_one_save_uid', () => {
     class Phone extends Model {
       static entity = 'phones'
 
-      @Uid() id!: string
-      @Uid() userId!: string
-      @Str('') number!: string
+      @UidField() id!: string
+      @UidField() userId!: string
+      @StringField('') number!: string
     }
 
     mockUid(['uid1', 'uid2'])
@@ -92,8 +93,8 @@ describe('feature/relations/has_one_save_uid', () => {
     class User extends Model {
       static entity = 'users'
 
-      @Uid() id!: string
-      @Str('') name!: string
+      @UidField() id!: string
+      @StringField('') name!: string
 
       @HasOne(() => Phone, 'userId')
       phone!: Phone | null
@@ -104,8 +105,8 @@ describe('feature/relations/has_one_save_uid', () => {
 
       static primaryKey = 'userId'
 
-      @Uid() userId!: string
-      @Str('') number!: string
+      @UidField() userId!: string
+      @StringField('') number!: string
     }
 
     mockUid(['uid1', 'uid2'])

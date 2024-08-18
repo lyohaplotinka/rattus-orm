@@ -1,18 +1,19 @@
 import { describe, expect } from 'vitest'
-import { createDatabase, Model, Repository, Str } from '../src'
+import { createDatabase, Model, Repository } from '../src'
 import { ObjectDataProvider } from '../src/data/object-data-provider'
+import { StringField } from '../src/decorators'
 
 class User extends Model {
   public static entity = 'user'
 
-  @Str('')
+  @StringField('')
   public id: string
 }
 
 class Email extends Model {
   public static entity = 'email'
 
-  @Str('')
+  @StringField('')
   public id: string
 }
 

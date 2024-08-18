@@ -1,14 +1,15 @@
 import { createStore } from '@func-test/utils/Helpers'
 
-import { Attr, BelongsTo, HasMany, HasManyBy, HasOne, Model, MorphOne, MorphTo } from '@/index'
+import { Model } from '@/index'
+import { AttrField, BelongsTo, HasMany, HasManyBy, HasOne, MorphOne, MorphTo } from '@/decorators'
 
 describe('unit/model/Model_Relations', () => {
   class User extends Model {
     static entity = 'users'
 
-    @Attr() id!: number
-    @Attr() countryId!: number
-    @Attr() nameIds!: number[]
+    @AttrField() id!: number
+    @AttrField() countryId!: number
+    @AttrField() nameIds!: number[]
 
     @HasOne(() => Phone, 'userId')
     phone!: Phone | null
@@ -29,35 +30,35 @@ describe('unit/model/Model_Relations', () => {
   class Phone extends Model {
     static entity = 'phones'
 
-    @Attr() id!: number
-    @Attr() userId!: number
+    @AttrField() id!: number
+    @AttrField() userId!: number
   }
 
   class Country extends Model {
     static entity = 'countries'
 
-    @Attr() id!: number
+    @AttrField() id!: number
   }
 
   class Post extends Model {
     static entity = 'posts'
 
-    @Attr() id!: number
-    @Attr() userId!: number
+    @AttrField() id!: number
+    @AttrField() userId!: number
   }
 
   class Name extends Model {
     static entity = 'names'
 
-    @Attr() id!: number
+    @AttrField() id!: number
   }
 
   class Image extends Model {
     static entity = 'images'
 
-    @Attr() id!: number
-    @Attr() imageableId!: number
-    @Attr() imageableType!: string
+    @AttrField() id!: number
+    @AttrField() imageableId!: number
+    @AttrField() imageableType!: string
 
     @MorphTo(() => [User], 'imageableId', 'imageableType')
     imageable!: User | null

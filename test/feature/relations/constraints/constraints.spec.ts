@@ -1,14 +1,15 @@
 import { createStore, fillState } from '@func-test/utils/Helpers'
 
 import type { Query } from '@/index'
-import { Attr, HasOne, Model, Str } from '@/index'
+import { Model } from '@/index'
+import { AttrField, HasOne, StringField } from '@/decorators'
 
 describe('feature/relations/constraints/constraints', () => {
   class User extends Model {
     static entity = 'users'
 
-    @Attr() id!: number
-    @Str('') name!: string
+    @AttrField() id!: number
+    @StringField('') name!: string
 
     @HasOne(() => Phone, 'userId')
     phone!: Phone | null
@@ -17,9 +18,9 @@ describe('feature/relations/constraints/constraints', () => {
   class Phone extends Model {
     static entity = 'phones'
 
-    @Attr() id!: number
-    @Attr() userId!: number
-    @Str('') number!: string
+    @AttrField() id!: number
+    @AttrField() userId!: number
+    @StringField('') number!: string
 
     @HasOne(() => Type, 'phoneId')
     type!: Type | null
@@ -28,9 +29,9 @@ describe('feature/relations/constraints/constraints', () => {
   class Type extends Model {
     static entity = 'types'
 
-    @Attr() id!: number
-    @Attr() phoneId!: number
-    @Str('') name!: string
+    @AttrField() id!: number
+    @AttrField() phoneId!: number
+    @StringField('') name!: string
   }
 
   it('can add constraints to the relationship query', () => {

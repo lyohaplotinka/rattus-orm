@@ -1,21 +1,22 @@
 import { assertInstanceOf, assertModel, createStore, fillState } from '@func-test/utils/Helpers'
 
-import { Attr, BelongsTo, HasMany, Model, Str } from '@/index'
+import { Model } from '@/index'
+import { AttrField, BelongsTo, HasMany, StringField } from '@/decorators'
 
 describe('feature/relations/eager_loads_all', () => {
   class User extends Model {
     static entity = 'users'
 
-    @Attr() id!: number
-    @Str('') name!: string
+    @AttrField() id!: number
+    @StringField('') name!: string
   }
 
   class Post extends Model {
     static entity = 'posts'
 
-    @Attr() id!: number
-    @Attr() userId!: number
-    @Str('') title!: string
+    @AttrField() id!: number
+    @AttrField() userId!: number
+    @StringField('') title!: string
 
     @BelongsTo(() => User, 'userId')
     author!: User | null
@@ -27,9 +28,9 @@ describe('feature/relations/eager_loads_all', () => {
   class Comment extends Model {
     static entity = 'comments'
 
-    @Attr() id!: number
-    @Attr() postId!: number
-    @Str('') content!: string
+    @AttrField() id!: number
+    @AttrField() postId!: number
+    @StringField('') content!: string
   }
 
   it('eager loads all top level relations', () => {

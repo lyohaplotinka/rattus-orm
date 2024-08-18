@@ -1,13 +1,14 @@
 import { createStore, fillState } from '@func-test/utils/Helpers'
 
-import { Model, Num, Str } from '@/index'
+import { Model } from '@/index'
+import { NumberField, StringField } from '@/decorators'
 
 describe('feature/repository/retrieves_revive', () => {
   class User extends Model {
     static entity = 'users'
 
-    @Num(0) id!: number
-    @Str('') name!: string
+    @NumberField(0) id!: number
+    @StringField('') name!: string
   }
 
   it('retrieves a model from the store by the given schema', () => {

@@ -1,13 +1,14 @@
 import { assertState, createStore, mockUid } from '@func-test/utils/Helpers'
 
-import { Model, Str, Uid } from '@/index'
+import { Model } from '@/index'
+import { StringField, UidField } from '@/decorators'
 
 describe('feature/repository/insert_uid', () => {
   class User extends Model {
     static entity = 'users'
 
-    @Uid() id!: string | null
-    @Str('') name!: string
+    @UidField() id!: string | null
+    @StringField('') name!: string
   }
 
   it('generates a unique id for a `uid` attribute', () => {

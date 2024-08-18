@@ -29,15 +29,15 @@
       "require": "./dist/rattus-orm-core.js",
       "types": "./dist/rattus-orm-core.d.ts"
     },
+    "./decorators": {
+      "import": "./dist/decorators.mjs",
+      "require": "./dist/decorators.js",
+      "types": "./dist/decorators.d.ts"
+    },
     "./object-data-provider": {
       "import": "./dist/object-data-provider.mjs",
       "require": "./dist/object-data-provider.js",
       "types": "./dist/object-data-provider.d.ts"
-    },
-    "./rattus-context": {
-      "import": "./dist/rattus-context.mjs",
-      "require": "./dist/rattus-context.js",
-      "types": "./dist/rattus-context.d.ts"
     },
     "./utils/createBasicProviderTest": {
       "import": "./dist/utils/createBasicProviderTest.mjs",

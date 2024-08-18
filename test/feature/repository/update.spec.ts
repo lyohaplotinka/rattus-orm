@@ -1,6 +1,7 @@
 import { assertState, createStore, fillState } from '@func-test/utils/Helpers'
 
-import { Attr, Model, Num, Repository, Str } from '@/index'
+import { Model, Repository } from '@/index'
+import { AttrField, NumberField, StringField } from '@/decorators'
 import { TestingStore } from '@func-test/utils/types'
 import { describe, expect } from 'vitest'
 
@@ -8,9 +9,9 @@ describe('feature/repository/update', () => {
   class User extends Model {
     static entity = 'users'
 
-    @Attr() id!: number
-    @Str('') name!: string
-    @Num(0) age!: number
+    @AttrField() id!: number
+    @StringField('') name!: string
+    @NumberField(0) age!: number
   }
 
   const getRepository = (store: TestingStore): Repository<User> => store.$repo(User)

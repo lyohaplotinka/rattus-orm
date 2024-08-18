@@ -1,6 +1,7 @@
 import { assertState, createStore, mockUid } from '@func-test/utils/Helpers'
 
-import { Attr, HasMany, Model, Str, Uid } from '@/index'
+import { Model } from '@/index'
+import { AttrField, HasMany, StringField, UidField } from '@/decorators'
 
 describe('feature/relations/has_many_insert_uid', () => {
   beforeEach(() => {
@@ -11,8 +12,8 @@ describe('feature/relations/has_many_insert_uid', () => {
     class User extends Model {
       static entity = 'users'
 
-      @Uid() id!: string
-      @Str('') name!: string
+      @UidField() id!: string
+      @StringField('') name!: string
 
       @HasMany(() => Post, 'userId')
       posts!: Post[]
@@ -21,9 +22,9 @@ describe('feature/relations/has_many_insert_uid', () => {
     class Post extends Model {
       static entity = 'posts'
 
-      @Attr() id!: number
-      @Attr() userId!: number
-      @Str('') title!: string
+      @AttrField() id!: number
+      @AttrField() userId!: number
+      @StringField('') title!: string
     }
 
     mockUid(['uid1'])
@@ -53,8 +54,8 @@ describe('feature/relations/has_many_insert_uid', () => {
     class User extends Model {
       static entity = 'users'
 
-      @Uid() id!: string
-      @Str('') name!: string
+      @UidField() id!: string
+      @StringField('') name!: string
 
       @HasMany(() => Post, 'userId')
       posts!: Post[]
@@ -63,9 +64,9 @@ describe('feature/relations/has_many_insert_uid', () => {
     class Post extends Model {
       static entity = 'posts'
 
-      @Attr() id!: number
-      @Uid() userId!: string
-      @Str('') title!: string
+      @AttrField() id!: number
+      @UidField() userId!: string
+      @StringField('') title!: string
     }
 
     mockUid(['uid1', 'uid2', 'uid3'])

@@ -1,21 +1,22 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
-import { Attr, HasManyBy, Model, Str } from '@/index'
+import { Model } from '@/index'
+import { AttrField, HasManyBy, StringField } from '@/decorators'
 
 describe('feature/relations/has_many_by_save', () => {
   class Node extends Model {
     static entity = 'nodes'
 
-    @Attr() id!: number
-    @Str('') name!: string
+    @AttrField() id!: number
+    @StringField('') name!: string
   }
 
   class Cluster extends Model {
     static entity = 'clusters'
 
-    @Attr() id!: number
-    @Attr() nodeIds!: number[]
-    @Str('') name!: string
+    @AttrField() id!: number
+    @AttrField() nodeIds!: number[]
+    @StringField('') name!: string
 
     @HasManyBy(() => Node, 'nodeIds')
     nodes!: Node[]

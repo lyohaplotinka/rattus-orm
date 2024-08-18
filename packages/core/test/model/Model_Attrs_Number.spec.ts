@@ -1,4 +1,4 @@
-import { Num } from '@/model/decorators/attributes/types/Num'
+import { NumberField } from '../../src/model/decorators/attributes/types/NumberField'
 import { Model } from '@/model/Model'
 
 describe('unit/model/Model_Attrs_Number', () => {
@@ -6,7 +6,7 @@ describe('unit/model/Model_Attrs_Number', () => {
     class User extends Model {
       static entity = 'users'
 
-      @Num(0)
+      @NumberField(0)
       num!: number
     }
 
@@ -22,7 +22,7 @@ describe('unit/model/Model_Attrs_Number', () => {
     class User extends Model {
       static entity = 'users'
 
-      @Num(null, { nullable: true })
+      @NumberField(null, { nullable: true })
       num!: number | null
     }
 

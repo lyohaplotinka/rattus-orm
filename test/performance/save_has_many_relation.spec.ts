@@ -1,13 +1,14 @@
 import { createStore } from '@func-test/utils/Helpers'
 
-import { HasMany, Model, Num, Str } from '@/index'
+import { Model } from '@/index'
+import { HasMany, NumberField, StringField } from '@/decorators'
 
 describe('performance/save_has_many_relation', () => {
   class User extends Model {
     public static entity = 'users'
 
-    @Num(0) public id!: number
-    @Str('') public name!: string
+    @NumberField(0) public id!: number
+    @StringField('') public name!: string
 
     @HasMany(() => Post, 'userId')
     public posts!: Post[]
@@ -16,9 +17,9 @@ describe('performance/save_has_many_relation', () => {
   class Post extends Model {
     public static entity = 'posts'
 
-    @Num(0) public id!: number
-    @Num(0) public userId!: number
-    @Str('') public title!: string
+    @NumberField(0) public id!: number
+    @NumberField(0) public userId!: number
+    @StringField('') public title!: string
   }
 
   it('saves data with has many relation within decent time', () => {

@@ -1,6 +1,7 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
-import { Attr, Model, MorphTo, Num, Str } from '@/index'
+import { Model } from '@/index'
+import { AttrField, MorphTo, NumberField, StringField } from '@/decorators'
 
 describe('feature/relations/morph_to_save_custom_key', () => {
   beforeEach(() => {
@@ -11,10 +12,10 @@ describe('feature/relations/morph_to_save_custom_key', () => {
     class Image extends Model {
       static entity = 'images'
 
-      @Num(0) id!: number
-      @Str('') url!: string
-      @Attr() imageableId!: number
-      @Attr() imageableType!: string
+      @NumberField(0) id!: number
+      @StringField('') url!: string
+      @AttrField() imageableId!: number
+      @AttrField() imageableType!: string
       @MorphTo(() => [User], 'imageableId', 'imageableType')
       imageable!: User | null
     }
@@ -24,8 +25,8 @@ describe('feature/relations/morph_to_save_custom_key', () => {
 
       static primaryKey = 'userId'
 
-      @Num(0) userId!: number
-      @Str('') name!: string
+      @NumberField(0) userId!: number
+      @StringField('') name!: string
     }
 
     const store = createStore()
@@ -54,10 +55,10 @@ describe('feature/relations/morph_to_save_custom_key', () => {
     class Image extends Model {
       static entity = 'images'
 
-      @Num(0) id!: number
-      @Str('') url!: string
-      @Attr() imageableId!: number
-      @Attr() imageableType!: string
+      @NumberField(0) id!: number
+      @StringField('') url!: string
+      @AttrField() imageableId!: number
+      @AttrField() imageableType!: string
       @MorphTo(() => [User], 'imageableId', 'imageableType', 'imageableId')
       imageable!: User | null
     }
@@ -65,9 +66,9 @@ describe('feature/relations/morph_to_save_custom_key', () => {
     class User extends Model {
       static entity = 'users'
 
-      @Num(0) id!: number
-      @Attr() imageableId!: number
-      @Str('') name!: string
+      @NumberField(0) id!: number
+      @AttrField() imageableId!: number
+      @StringField('') name!: string
     }
 
     const store = createStore()

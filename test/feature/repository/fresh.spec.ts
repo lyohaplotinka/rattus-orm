@@ -1,13 +1,14 @@
 import { assertState, createStore, fillState } from '@func-test/utils/Helpers'
 
-import { Attr, Model, Str } from '@/index'
+import { Model } from '@/index'
+import { AttrField, StringField } from '@/decorators'
 
 describe('feature/repository/fresh', () => {
   class User extends Model {
     static entity = 'users'
 
-    @Attr() id!: any
-    @Str('') name!: string
+    @AttrField() id!: any
+    @StringField('') name!: string
   }
 
   it('inserts a new record to the store', () => {

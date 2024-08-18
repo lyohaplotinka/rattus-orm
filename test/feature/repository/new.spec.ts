@@ -1,16 +1,17 @@
 import { assertState, createStore, mockUid } from '@func-test/utils/Helpers'
 
-import { Attr, Bool, Model, Num, Str, Uid } from '@/index'
+import { Model } from '@/index'
+import { AttrField, BooleanField, NumberField, StringField, UidField } from '@/decorators'
 
 describe('feature/repository/new', () => {
   it('inserts with a models default values', () => {
     class User extends Model {
       static entity = 'users'
 
-      @Uid() id!: string
-      @Str('John Doe') name!: string
-      @Num(21) age!: number
-      @Bool(true) active!: boolean
+      @UidField() id!: string
+      @StringField('John Doe') name!: string
+      @NumberField(21) age!: number
+      @BooleanField(true) active!: boolean
     }
 
     mockUid(['uid1'])
@@ -30,8 +31,8 @@ describe('feature/repository/new', () => {
     class User extends Model {
       static entity = 'users'
 
-      @Attr() id!: any
-      @Str('John Doe') name!: string
+      @AttrField() id!: any
+      @StringField('John Doe') name!: string
     }
 
     const store = createStore()

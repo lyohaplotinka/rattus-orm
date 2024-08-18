@@ -1,11 +1,11 @@
-import { Attr } from '@/model/decorators/attributes/types/Attr'
+import { AttrField } from '../../src/model/decorators/attributes/types/AttrField'
 import { Model } from '@/model/Model'
 
 describe('unit/model/Model', () => {
   class User extends Model {
     static entity = 'users'
 
-    @Attr() id!: number
+    @AttrField() id!: number
   }
 
   it('ignores unkown field when filling the model', () => {

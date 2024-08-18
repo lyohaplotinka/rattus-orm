@@ -1,6 +1,7 @@
 import { assertState, createStore, mockUid } from '@func-test/utils/Helpers'
 
-import { Attr, Model, MorphTo, Num, Str, Uid } from '@/index'
+import { Model } from '@/index'
+import { AttrField, MorphTo, NumberField, StringField, UidField } from '@/decorators'
 
 describe('feature/relations/morph_to_save_uid', () => {
   beforeEach(() => {
@@ -11,10 +12,10 @@ describe('feature/relations/morph_to_save_uid', () => {
     class Image extends Model {
       static entity = 'images'
 
-      @Uid() id!: number
-      @Str('') url!: string
-      @Attr() imageableId!: number
-      @Attr() imageableType!: string
+      @UidField() id!: number
+      @StringField('') url!: string
+      @AttrField() imageableId!: number
+      @AttrField() imageableType!: string
       @MorphTo(() => [User], 'imageableId', 'imageableType')
       imageable!: User | null
     }
@@ -22,8 +23,8 @@ describe('feature/relations/morph_to_save_uid', () => {
     class User extends Model {
       static entity = 'users'
 
-      @Num(0) id!: number
-      @Str('') name!: string
+      @NumberField(0) id!: number
+      @StringField('') name!: string
     }
 
     mockUid(['uid1'])
@@ -54,10 +55,10 @@ describe('feature/relations/morph_to_save_uid', () => {
     class Image extends Model {
       static entity = 'images'
 
-      @Uid() id!: string
-      @Str('') url!: string
-      @Attr() imageableId!: string
-      @Attr() imageableType!: string
+      @UidField() id!: string
+      @StringField('') url!: string
+      @AttrField() imageableId!: string
+      @AttrField() imageableType!: string
       @MorphTo(() => [User], 'imageableId', 'imageableType')
       imageable!: User | null
     }
@@ -65,8 +66,8 @@ describe('feature/relations/morph_to_save_uid', () => {
     class User extends Model {
       static entity = 'users'
 
-      @Uid() id!: string
-      @Str('') name!: string
+      @UidField() id!: string
+      @StringField('') name!: string
     }
 
     mockUid(['uid1', 'uid2'])
