@@ -32,7 +32,7 @@ export abstract class Relation extends Attribute<any> {
    * Get all of the primary keys for an array of models.
    */
   protected getKeys(models: Collection, key: string): (string | number)[] {
-    return models.map((model) => model.getThisNonStrict()[key])
+    return models.map((model) => model.$getThisNonStrict()[key])
   }
 
   /**

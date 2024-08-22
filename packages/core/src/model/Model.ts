@@ -419,7 +419,7 @@ export class Model {
    * @param {Model | Model[] | null} model model to set relation
    */
   public $setRelation(relation: string, model: Model | Model[] | null): this {
-    this.getThisNonStrict()[relation] = model
+    this.$getThisNonStrict()[relation] = model
 
     return this
   }
@@ -440,8 +440,8 @@ export class Model {
     return Object.entries(this.$fields()).reduce((result, [key, attr]) => {
       ;(result as any)[key] =
         attr instanceof Relation && options.relations
-          ? this.serializeRelation(this.getThisNonStrict()[key])
-          : this.serializeValue(this.getThisNonStrict()[key])
+          ? this.serializeRelation(this.$getThisNonStrict()[key])
+          : this.serializeValue(this.$getThisNonStrict()[key])
       return result
     }, {}) as RawModel<this>
   }
@@ -486,7 +486,12 @@ export class Model {
     }, {})
   }
 
-  public getThisNonStrict() {
+  /**
+   * Returns `this` object as a non-strictly typed record with string keys and values of any type.
+   *
+   * @return {Record<string, any>} - The `this` object as a non-strictly typed record.
+   */
+  public $getThisNonStrict(): Record<string, any> {
     return this as Record<string, any>
   }
 
@@ -513,13 +518,13 @@ export class Model {
    */
   protected $fillField(key: string, attr: Attribute<unknown>, value: any): void {
     if (value !== undefined) {
-      this.getThisNonStrict()[key] =
-        attr instanceof MorphTo ? attr.make(value, this.getThisNonStrict()[attr.getType()]) : attr.make(value)
+      this.$getThisNonStrict()[key] =
+        attr instanceof MorphTo ? attr.make(value, this.$getThisNonStrict()[attr.getType()]) : attr.make(value)
       return
     }
 
-    if (this.getThisNonStrict()[key] === undefined) {
-      this.getThisNonStrict()[key] = attr.make()
+    if (this.$getThisNonStrict()[key] === undefined) {
+      this.$getThisNonStrict()[key] = attr.make()
     }
   }
 
