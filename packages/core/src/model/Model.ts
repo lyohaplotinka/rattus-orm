@@ -341,7 +341,7 @@ export class Model {
       if (attr instanceof Relation && !(options.relations ?? true)) {
         continue
       }
-      this.$fillField(key, attr, value)
+      this.$getThisNonStrict()[key] = value
     }
 
     return this
@@ -495,36 +495,59 @@ export class Model {
     return this as Record<string, any>
   }
 
+  protected $processValue(attribute: Attribute<unknown>, value?: any) {
+    return attribute instanceof MorphTo
+      ? attribute.make(value, this.$getThisNonStrict()[attribute.getType()])
+      : attribute.make(value)
+  }
+
+  protected $createFieldProperty(attribute: Attribute<unknown>): PropertyDescriptor {
+    let internalValue: any = undefined
+    return {
+      configurable: false,
+      enumerable: true,
+      get() {
+        return internalValue
+      },
+      set: (value) => {
+        if (value !== undefined) {
+          internalValue = this.$processValue(attribute, value)
+        }
+
+        if (internalValue === undefined) {
+          internalValue = attribute.make()
+        }
+      },
+    }
+  }
+
+  protected $initFieldProperties() {
+    const schema = this.$self().schemas[this.$entity()]
+    for (const key in schema) {
+      Object.defineProperty(this, key, this.$createFieldProperty(schema[key]))
+    }
+  }
+
   /**
    * Bootstrap this model.
    */
   protected $boot(): void {
-    if (this.$self().booted[this.$entity()]) {
-      return
+    if (!this.$self().booted[this.$entity()]) {
+      this.$self().booted[this.$entity()] = true
+      this.$initializeSchema()
     }
-    this.$self().booted[this.$entity()] = true
-    this.$initializeSchema()
+    this.$initFieldProperties()
   }
 
   /**
    * Build the schema by evaluating fields and registry.
    */
   protected $initializeSchema(): void {
-    this.$self().initializeSchema()
-  }
+    const entity = this.$self().entity
+    this.$self().schemas[entity] = {}
 
-  /**
-   * Fill the given attribute with a given value specified by the given key.
-   */
-  protected $fillField(key: string, attr: Attribute<unknown>, value: any): void {
-    if (value !== undefined) {
-      this.$getThisNonStrict()[key] =
-        attr instanceof MorphTo ? attr.make(value, this.$getThisNonStrict()[attr.getType()]) : attr.make(value)
-      return
-    }
-
-    if (this.$getThisNonStrict()[key] === undefined) {
-      this.$getThisNonStrict()[key] = attr.make()
+    for (const [key, attribute] of Object.entries({ ...this.$self().fields(), ...this.$self().registries[entity] })) {
+      this.$self().schemas[entity][key] = isFunction(attribute) ? attribute() : attribute
     }
   }
 

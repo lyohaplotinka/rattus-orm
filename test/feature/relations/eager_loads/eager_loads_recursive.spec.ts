@@ -45,6 +45,7 @@ describe('feature/relations/eager_loads_recursive', () => {
     assertModel(user.phone.user.phone.user, {
       id: 1,
       name: 'John Doe',
+      phone: null,
     })
   })
 
@@ -66,6 +67,7 @@ describe('feature/relations/eager_loads_recursive', () => {
     assertModel(user.phone.user, {
       id: 1,
       name: 'John Doe',
+      phone: null,
     })
   })
 })
