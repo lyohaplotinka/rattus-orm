@@ -1,9 +1,10 @@
-import { isDataProvider } from '../data/guards'
-import type { DataProvider } from '../data/types'
-import { createDatabase } from '../database/create-database'
-import { Database } from '../database/database'
-import type { Model } from '../model/Model'
-import type { Repository } from '../repository/repository'
+import { isDataProvider } from '@/data/guards'
+import type { DataProvider } from '@/data/types'
+import { createDatabase } from '@/database/create-database'
+import { Database } from '@/database/database'
+import type { Model } from '@/model/Model'
+import type { Repository } from '@/repository/repository'
+
 import type { RattusOrmInstallerOptions } from './types'
 
 export class RattusContext {

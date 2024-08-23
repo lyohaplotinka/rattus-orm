@@ -414,50 +414,10 @@ export class Model {
     return Object.entries(this.$fields()).reduce((result, [key, attr]) => {
       ;(result as any)[key] =
         attr instanceof Relation && options.relations
-          ? this.serializeRelation(this.$getThisNonStrict()[key])
-          : this.serializeValue(this.$getThisNonStrict()[key])
+          ? this.$serializeRelation(this.$getThisNonStrict()[key])
+          : this.$serializeValue(this.$getThisNonStrict()[key])
       return result
     }, {}) as RawModel<this>
-  }
-
-  /**
-   * Sanitize the given record. This method is similar to `$toJson` method, but
-   * the difference is that it doesn't instantiate the full model. The method
-   * is used to sanitize the record before persisting to the store.
-   *
-   * It removes fields that don't exist in the model field schema or if the
-   * field is relationship fields.
-   *
-   * Note that this method only sanitizes existing fields in the given record.
-   * It will not generate missing model fields. If you need to generate all
-   * model fields, use `$sanitizeAndFill` method instead.
-   *
-   * @param {Element} record data to sanitize
-   */
-  public $sanitize(record: Element): Element {
-    return Object.entries(record).reduce<Element>((result, [key, value]) => {
-      const attr = this.$fields()[key]
-      if (attr !== undefined && !(attr instanceof Relation)) {
-        result[key] = attr.make(value)
-      }
-      return result
-    }, {})
-  }
-
-  /**
-   * Same as `$sanitize` method, but it produces missing model fields with its
-   * default value.
-   *
-   * @param {Element} record data to sanitize
-   */
-  public $sanitizeAndFill(record: Element): Element {
-    return Object.entries(this.$fields()).reduce<Element>((result, [key, attr]) => {
-      const value = record[key]
-      if (attr !== undefined && !(attr instanceof Relation)) {
-        result[key] = attr.make(value)
-      }
-      return result
-    }, {})
   }
 
   /**
@@ -559,7 +519,7 @@ export class Model {
   /**
    * Serialize the given value.
    */
-  protected serializeValue(value: any): any {
+  protected $serializeValue(value: any): any {
     if (value === null) {
       return null
     }
@@ -571,7 +531,7 @@ export class Model {
     if (isArray(value) || isUnknownRecord(value)) {
       return Object.keys(value).reduce(
         (result, key) => {
-          ;(result as any)[key] = this.serializeValue((value as any)[key])
+          ;(result as any)[key] = this.$serializeValue((value as any)[key])
           return result
         },
         isArray(value) ? [] : {},
@@ -584,11 +544,11 @@ export class Model {
   /**
    * Serialize the given relation to JSON.
    */
-  protected serializeRelation(relation: Item): Element | null
+  protected $serializeRelation(relation: Item): Element | null
 
-  protected serializeRelation(relation: Collection): Element[]
+  protected $serializeRelation(relation: Collection): Element[]
 
-  protected serializeRelation(relation: any): any {
+  protected $serializeRelation(relation: any): any {
     if (isNullish(relation)) {
       return relation
     }
