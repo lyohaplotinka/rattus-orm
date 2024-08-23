@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest'
-import { Model } from '../../src'
 import { NumberField, StringField, BooleanField, DateField } from '../../src/decorators'
+import { ModelTestEdition } from '../../shared-utils/testUtils'
 
 describe('Disabling casting for model', () => {
-  class User extends Model {
+  class User extends ModelTestEdition {
     static dataTypeCasting = false
     static entity = 'users'
 

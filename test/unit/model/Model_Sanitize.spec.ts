@@ -3,10 +3,10 @@ import { createStore } from '@func-test/utils/Helpers'
 import { HasMany } from '@/model/decorators/attributes/relations/HasMany'
 import { NumberField } from '@/model/decorators/attributes/types/NumberField'
 import { StringField } from '@/model/decorators/attributes/types/StringField'
-import { Model } from '@/model/Model'
+import { ModelTestEdition } from '@core-shared-utils/testUtils'
 
 describe('unit/model/Model_Sanitize', () => {
-  class User extends Model {
+  class User extends ModelTestEdition {
     static entity = 'users'
 
     @NumberField(null, { nullable: true }) id!: number
@@ -17,7 +17,7 @@ describe('unit/model/Model_Sanitize', () => {
     posts!: Post[]
   }
 
-  class Post extends Model {
+  class Post extends ModelTestEdition {
     static entity = 'posts'
   }
 

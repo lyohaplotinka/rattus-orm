@@ -1,11 +1,12 @@
 import { createStore } from '@func-test/utils/Helpers'
 
-import { Model, Repository } from '@/index'
+import { Repository } from '@/index'
 import { AttrField, StringField } from '@/decorators'
+import { ModelTestEdition } from '@core-shared-utils/testUtils'
 
 describe('feature/repository_custom/custom_repository', () => {
   it('can define a custom repository', async () => {
-    class User extends Model {
+    class User extends ModelTestEdition {
       static entity = 'users'
 
       @AttrField() id!: any

@@ -1,11 +1,11 @@
 import { createStore, fillState } from '@func-test/utils/Helpers'
 
 import type { Query } from '@/index'
-import { Model } from '@/index'
 import { AttrField, HasOne, StringField } from '@/decorators'
+import { ModelTestEdition } from '@core-shared-utils/testUtils'
 
 describe('feature/relations/constraints/constraints', () => {
-  class User extends Model {
+  class User extends ModelTestEdition {
     static entity = 'users'
 
     @AttrField() id!: number
@@ -15,7 +15,7 @@ describe('feature/relations/constraints/constraints', () => {
     phone!: Phone | null
   }
 
-  class Phone extends Model {
+  class Phone extends ModelTestEdition {
     static entity = 'phones'
 
     @AttrField() id!: number
@@ -26,7 +26,7 @@ describe('feature/relations/constraints/constraints', () => {
     type!: Type | null
   }
 
-  class Type extends Model {
+  class Type extends ModelTestEdition {
     static entity = 'types'
 
     @AttrField() id!: number

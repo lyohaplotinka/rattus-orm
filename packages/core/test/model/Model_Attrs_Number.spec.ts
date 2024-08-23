@@ -1,9 +1,9 @@
 import { NumberField } from '../../src/model/decorators/attributes/types/NumberField'
-import { Model } from '@/model/Model'
+import { ModelTestEdition } from '../../shared-utils/testUtils'
 
 describe('unit/model/Model_Attrs_Number', () => {
   it('casts the value to `Number` when instantiating the model', () => {
-    class User extends Model {
+    class User extends ModelTestEdition {
       static entity = 'users'
 
       @NumberField(0)
@@ -19,7 +19,7 @@ describe('unit/model/Model_Attrs_Number', () => {
   })
 
   it('accepts `null` when the `nullable` option is set', () => {
-    class User extends Model {
+    class User extends ModelTestEdition {
       static entity = 'users'
 
       @NumberField(null, { nullable: true })

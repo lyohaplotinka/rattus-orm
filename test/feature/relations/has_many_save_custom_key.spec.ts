@@ -1,15 +1,15 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
-import { Model } from '@/index'
 import { AttrField, HasMany, StringField } from '@/decorators'
+import { ModelTestEdition } from '@core-shared-utils/testUtils'
 
 describe('feature/relations/has_many_save_custom_key', () => {
   beforeEach(() => {
-    Model.clearRegistries()
+    ModelTestEdition.clearRegistries()
   })
 
   it('inserts "has many" relation with custom primary key', () => {
-    class User extends Model {
+    class User extends ModelTestEdition {
       static entity = 'users'
 
       static primaryKey = 'userId'
@@ -21,7 +21,7 @@ describe('feature/relations/has_many_save_custom_key', () => {
       posts!: Post[]
     }
 
-    class Post extends Model {
+    class Post extends ModelTestEdition {
       static entity = 'posts'
 
       @AttrField() id!: number
@@ -52,7 +52,7 @@ describe('feature/relations/has_many_save_custom_key', () => {
   })
 
   it('inserts "has many" relation with custom local key', () => {
-    class User extends Model {
+    class User extends ModelTestEdition {
       static entity = 'users'
 
       @AttrField() id!: number
@@ -63,7 +63,7 @@ describe('feature/relations/has_many_save_custom_key', () => {
       posts!: Post[]
     }
 
-    class Post extends Model {
+    class Post extends ModelTestEdition {
       static entity = 'posts'
 
       @AttrField() id!: number

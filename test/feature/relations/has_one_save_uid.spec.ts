@@ -1,15 +1,15 @@
 import { assertState, createStore, mockUid } from '@func-test/utils/Helpers'
 
-import { Model } from '@/index'
 import { AttrField, HasOne, StringField, UidField } from '@/decorators'
+import { ModelTestEdition } from '@core-shared-utils/testUtils'
 
 describe('feature/relations/has_one_save_uid', () => {
   beforeEach(() => {
-    Model.clearRegistries()
+    ModelTestEdition.clearRegistries()
   })
 
   it('inserts "has one" relation with parent having "uid" field as the primary key', () => {
-    class User extends Model {
+    class User extends ModelTestEdition {
       static entity = 'users'
 
       @UidField() id!: string
@@ -19,7 +19,7 @@ describe('feature/relations/has_one_save_uid', () => {
       phone!: Phone | null
     }
 
-    class Phone extends Model {
+    class Phone extends ModelTestEdition {
       static entity = 'phones'
 
       @AttrField() id!: number
@@ -50,7 +50,7 @@ describe('feature/relations/has_one_save_uid', () => {
   })
 
   it('inserts "has one" relation with child having "uid" as the foreign key', () => {
-    class User extends Model {
+    class User extends ModelTestEdition {
       static entity = 'users'
 
       @UidField() id!: string
@@ -60,7 +60,7 @@ describe('feature/relations/has_one_save_uid', () => {
       phone!: Phone | null
     }
 
-    class Phone extends Model {
+    class Phone extends ModelTestEdition {
       static entity = 'phones'
 
       @UidField() id!: string
@@ -90,7 +90,7 @@ describe('feature/relations/has_one_save_uid', () => {
   })
 
   it('inserts "has one" relation with child having "uid" as foreign key being primary key', () => {
-    class User extends Model {
+    class User extends ModelTestEdition {
       static entity = 'users'
 
       @UidField() id!: string
@@ -100,7 +100,7 @@ describe('feature/relations/has_one_save_uid', () => {
       phone!: Phone | null
     }
 
-    class Phone extends Model {
+    class Phone extends ModelTestEdition {
       static entity = 'phones'
 
       static primaryKey = 'userId'

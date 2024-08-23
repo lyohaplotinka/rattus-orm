@@ -1,17 +1,17 @@
 import { assertInstanceOf, assertModel, createStore, fillState } from '@func-test/utils/Helpers'
 
-import { Model } from '@/index'
 import { AttrField, HasManyBy, StringField } from '@/decorators'
+import { ModelTestEdition } from '@core-shared-utils/testUtils'
 
 describe('feature/relations/has_many_by_retrieve', () => {
-  class Node extends Model {
+  class Node extends ModelTestEdition {
     static entity = 'nodes'
 
     @AttrField() id!: number
     @StringField('') name!: string
   }
 
-  class Cluster extends Model {
+  class Cluster extends ModelTestEdition {
     static entity = 'clusters'
 
     @AttrField() id!: number

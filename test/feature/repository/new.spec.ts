@@ -1,11 +1,11 @@
 import { assertState, createStore, mockUid } from '@func-test/utils/Helpers'
 
-import { Model } from '@/index'
 import { AttrField, BooleanField, NumberField, StringField, UidField } from '@/decorators'
+import { ModelTestEdition } from '@core-shared-utils/testUtils'
 
 describe('feature/repository/new', () => {
   it('inserts with a models default values', () => {
-    class User extends Model {
+    class User extends ModelTestEdition {
       static entity = 'users'
 
       @UidField() id!: string
@@ -28,7 +28,7 @@ describe('feature/repository/new', () => {
   })
 
   it('throws if a primary key is not capable of being generated', () => {
-    class User extends Model {
+    class User extends ModelTestEdition {
       static entity = 'users'
 
       @AttrField() id!: any

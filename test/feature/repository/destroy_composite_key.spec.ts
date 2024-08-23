@@ -1,10 +1,10 @@
 import { createStore, fillState } from '@func-test/utils/Helpers'
 
-import { Model } from '@/index'
 import { AttrField, StringField } from '@/decorators'
+import { ModelTestEdition } from '@core-shared-utils/testUtils'
 
 describe('feature/repository/destroy_composite_key', () => {
-  class User extends Model {
+  class User extends ModelTestEdition {
     static entity = 'users'
 
     static primaryKey = ['idA', 'idB']

@@ -1,16 +1,17 @@
 import { describe, expect } from 'vitest'
-import { createDatabase, Model, Repository } from '../src'
+import { createDatabase, Repository } from '../src'
 import { ObjectDataProvider } from '../src/data/object-data-provider'
 import { StringField } from '../src/decorators'
+import { ModelTestEdition } from '../shared-utils/testUtils'
 
-class User extends Model {
+class User extends ModelTestEdition {
   public static entity = 'user'
 
   @StringField('')
   public id: string
 }
 
-class Email extends Model {
+class Email extends ModelTestEdition {
   public static entity = 'email'
 
   @StringField('')

@@ -1,17 +1,17 @@
 import { assertModel, createStore } from '@func-test/utils/Helpers'
 
-import { Model } from '@/index'
 import { AttrField, StringField } from '@/decorators'
+import { ModelTestEdition } from '@core-shared-utils/testUtils'
 
 describe('unit/repository/Repository', () => {
-  class User extends Model {
+  class User extends ModelTestEdition {
     static entity = 'users'
 
     @AttrField() id!: any
     @StringField('John Doe') name!: string
   }
 
-  class Post extends Model {
+  class Post extends ModelTestEdition {
     public static entity = 'posts'
 
     @AttrField() public id!: any

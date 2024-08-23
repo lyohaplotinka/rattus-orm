@@ -1,9 +1,9 @@
 import { StringField } from '../../src/model/decorators/attributes/types/StringField'
-import { Model } from '@/model/Model'
+import { ModelTestEdition } from '../../shared-utils/testUtils'
 
 describe('unit/model/Model_Attrs_String', () => {
   it('casts the value to `String` when instantiating the model', () => {
-    class User extends Model {
+    class User extends ModelTestEdition {
       static entity = 'users'
 
       @StringField('default')
@@ -18,7 +18,7 @@ describe('unit/model/Model_Attrs_String', () => {
   })
 
   it('accepts `null` when the `nullable` option is set', () => {
-    class User extends Model {
+    class User extends ModelTestEdition {
       static entity = 'users'
 
       @StringField(null, { nullable: true })

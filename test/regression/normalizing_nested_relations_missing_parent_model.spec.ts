@@ -1,7 +1,7 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
-import { Model } from '@/index'
 import { BelongsTo, HasMany, NumberField, StringField } from '@/decorators'
+import { ModelTestEdition } from '@core-shared-utils/testUtils'
 
 // A model with more than 2 related models related to the same model was
 // causing a normalization error. It was due to the Schema class was caching
@@ -20,7 +20,7 @@ import { BelongsTo, HasMany, NumberField, StringField } from '@/decorators'
 // We've fixed this by caching the schema with `model` AND `parent` entity
 // name. So only when the model and the parent name match, we use the cache.
 describe('regression/normalizing_nested_relations_multiple_same_parent_model', () => {
-  class Opportunity extends Model {
+  class Opportunity extends ModelTestEdition {
     static entity = 'opportunities'
 
     @NumberField(null, { nullable: true }) id!: number | null
@@ -32,7 +32,7 @@ describe('regression/normalizing_nested_relations_multiple_same_parent_model', (
     proposals!: Proposal[]
   }
 
-  class ProposalTemplate extends Model {
+  class ProposalTemplate extends ModelTestEdition {
     static entity = 'proposal_templates'
 
     static primaryKey = ['opportunityId', 'proposalId']
@@ -44,7 +44,7 @@ describe('regression/normalizing_nested_relations_multiple_same_parent_model', (
     proposal!: ProposalSetting
   }
 
-  class Proposal extends Model {
+  class Proposal extends ModelTestEdition {
     static entity = 'proposals'
 
     @NumberField(null, { nullable: true }) id!: number | null
@@ -55,7 +55,7 @@ describe('regression/normalizing_nested_relations_multiple_same_parent_model', (
     template!: ProposalSetting | null
   }
 
-  class ProposalSetting extends Model {
+  class ProposalSetting extends ModelTestEdition {
     static entity = 'proposal_settings'
 
     @NumberField(null, { nullable: true }) id!: number | null

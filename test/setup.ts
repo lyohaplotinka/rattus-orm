@@ -1,9 +1,9 @@
 import { vi } from 'vitest'
 
-import { Model } from '@/index'
 import { loadProvider } from '@func-test/utils/load-provider'
 import { TestingStoreFactory } from '@func-test/utils/types'
 import { loadPackagesMeta } from '@scripts/utils.mjs'
+import { ModelTestEdition } from '@core-shared-utils/testUtils'
 
 declare global {
   var testingStoreFactory: TestingStoreFactory
@@ -30,5 +30,5 @@ globalThis.testingStoreFactory = await loadProvider(testProvider.path, testProvi
 window.crypto.randomUUID = vi.fn()
 
 beforeEach(() => {
-  Model.clearBootedModels()
+  ModelTestEdition.clearBootedModels()
 })

@@ -1,22 +1,22 @@
 import { assertState, createStore, mockUid } from '@func-test/utils/Helpers'
 
-import { Model } from '@/index'
 import { AttrField, BelongsTo, StringField, UidField } from '@/decorators'
+import { ModelTestEdition } from '@core-shared-utils/testUtils'
 
 describe('feature/relations/belongs_to_save_uid', () => {
   beforeEach(() => {
-    Model.clearRegistries()
+    ModelTestEdition.clearRegistries()
   })
 
   it('inserts "belongs to" relation with parent having "uid" field as the primary key', () => {
-    class User extends Model {
+    class User extends ModelTestEdition {
       static entity = 'users'
 
       @AttrField() id!: number
       @StringField('') name!: string
     }
 
-    class Post extends Model {
+    class Post extends ModelTestEdition {
       static entity = 'posts'
 
       @UidField() id!: string
@@ -47,14 +47,14 @@ describe('feature/relations/belongs_to_save_uid', () => {
   })
 
   it('inserts "belongs to" relation with child having "uid" as the owner key', () => {
-    class User extends Model {
+    class User extends ModelTestEdition {
       static entity = 'users'
 
       @UidField() id!: string
       @StringField('') name!: string
     }
 
-    class Post extends Model {
+    class Post extends ModelTestEdition {
       static entity = 'posts'
 
       @UidField() id!: number

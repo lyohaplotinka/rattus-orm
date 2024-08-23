@@ -1,10 +1,10 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
-import { Model } from '@/index'
 import { AttrField, MorphTo, NumberField, StringField } from '@/decorators'
+import { ModelTestEdition } from '@core-shared-utils/testUtils'
 
 describe('feature/relations/morph_to_save', () => {
-  class Image extends Model {
+  class Image extends ModelTestEdition {
     static entity = 'images'
 
     @NumberField(0) id!: number
@@ -15,7 +15,7 @@ describe('feature/relations/morph_to_save', () => {
     imageable!: User | null
   }
 
-  class User extends Model {
+  class User extends ModelTestEdition {
     static entity = 'users'
 
     @NumberField(0) id!: number

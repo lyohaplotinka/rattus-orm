@@ -1,15 +1,15 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
-import { Model } from '@/index'
 import { AttrField, HasOne, StringField } from '@/decorators'
+import { ModelTestEdition } from '@core-shared-utils/testUtils'
 
 describe('feature/relations/has_one_save_custom_key', () => {
   beforeEach(() => {
-    Model.clearRegistries()
+    ModelTestEdition.clearRegistries()
   })
 
   it('inserts "has one" relation with custom primary key', () => {
-    class User extends Model {
+    class User extends ModelTestEdition {
       static entity = 'users'
 
       static primaryKey = 'userId'
@@ -21,7 +21,7 @@ describe('feature/relations/has_one_save_custom_key', () => {
       phone!: Phone | null
     }
 
-    class Phone extends Model {
+    class Phone extends ModelTestEdition {
       static entity = 'phones'
 
       @AttrField() id!: number
@@ -51,7 +51,7 @@ describe('feature/relations/has_one_save_custom_key', () => {
   })
 
   it('inserts "has one" relation with custom local key', () => {
-    class User extends Model {
+    class User extends ModelTestEdition {
       static entity = 'users'
 
       @AttrField() id!: number
@@ -62,7 +62,7 @@ describe('feature/relations/has_one_save_custom_key', () => {
       phone!: Phone | null
     }
 
-    class Phone extends Model {
+    class Phone extends ModelTestEdition {
       static entity = 'phones'
 
       @AttrField() id!: number

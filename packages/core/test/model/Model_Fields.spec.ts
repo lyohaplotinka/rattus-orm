@@ -1,9 +1,9 @@
-import { Model } from '@/model/Model'
 import { expect } from 'vitest'
+import { ModelTestEdition } from '../../shared-utils/testUtils'
 
 describe('unit/model/Model_Fields', () => {
   it('can define model fields as a static function', () => {
-    class User extends Model {
+    class User extends ModelTestEdition {
       static entity = 'users'
 
       static fields() {

@@ -1,10 +1,10 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
-import { Model } from '@/index'
 import { AttrField, BelongsTo, HasMany, StringField } from '@/decorators'
+import { ModelTestEdition } from '@core-shared-utils/testUtils'
 
 describe('feature/relations/nested/nested_relations', () => {
-  class User extends Model {
+  class User extends ModelTestEdition {
     static entity = 'users'
 
     @AttrField() id!: number
@@ -14,14 +14,14 @@ describe('feature/relations/nested/nested_relations', () => {
     followers!: Follower[]
   }
 
-  class Follower extends Model {
+  class Follower extends ModelTestEdition {
     static entity = 'followers'
 
     @AttrField() id!: number
     @AttrField() userId!: number
   }
 
-  class Post extends Model {
+  class Post extends ModelTestEdition {
     static entity = 'posts'
 
     @AttrField() id!: number

@@ -1,22 +1,22 @@
 import { assertState, createStore, mockUid } from '@func-test/utils/Helpers'
 
-import { Model } from '@/index'
 import { AttrField, HasManyBy, StringField, UidField } from '@/decorators'
+import { ModelTestEdition } from '@core-shared-utils/testUtils'
 
 describe('feature/relations/has_many_by_insert_uid', () => {
   beforeEach(() => {
-    Model.clearRegistries()
+    ModelTestEdition.clearRegistries()
   })
 
   it('inserts "has many by" relation with parent having "uid" field as the primary key', () => {
-    class Node extends Model {
+    class Node extends ModelTestEdition {
       static entity = 'nodes'
 
       @AttrField() id!: number
       @StringField('') name!: string
     }
 
-    class Cluster extends Model {
+    class Cluster extends ModelTestEdition {
       static entity = 'clusters'
 
       @UidField() id!: number
@@ -51,14 +51,14 @@ describe('feature/relations/has_many_by_insert_uid', () => {
   })
 
   it('inserts "has many by" relation with child having "uid" as the owner key', () => {
-    class Node extends Model {
+    class Node extends ModelTestEdition {
       static entity = 'nodes'
 
       @UidField() id!: number
       @StringField('') name!: string
     }
 
-    class Cluster extends Model {
+    class Cluster extends ModelTestEdition {
       static entity = 'clusters'
 
       @UidField() id!: number

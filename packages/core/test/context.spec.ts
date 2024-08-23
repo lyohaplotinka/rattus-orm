@@ -1,10 +1,11 @@
 import { describe, expect, it } from 'vitest'
 import { createRattusContext, RattusContext } from '../src/context/rattus-context'
 import { ObjectDataProvider } from '../src/data/object-data-provider'
-import { createDatabase, Model, Repository } from '../src'
+import { createDatabase, Repository } from '../src'
 import { StringField } from '../src/decorators'
+import { ModelTestEdition } from '../shared-utils/testUtils'
 
-class Email extends Model {
+class Email extends ModelTestEdition {
   public static entity = 'email'
 
   @StringField('')

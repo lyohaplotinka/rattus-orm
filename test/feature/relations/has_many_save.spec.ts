@@ -1,10 +1,10 @@
 import { assertState, createStore, fillState } from '@func-test/utils/Helpers'
 
-import { Model } from '@/index'
 import { HasMany, NumberField, StringField } from '@/decorators'
+import { ModelTestEdition } from '@core-shared-utils/testUtils'
 
 describe('feature/relations/has_many_save', () => {
-  class User extends Model {
+  class User extends ModelTestEdition {
     static entity = 'users'
 
     @NumberField(0) id!: number
@@ -14,7 +14,7 @@ describe('feature/relations/has_many_save', () => {
     posts!: Post[]
   }
 
-  class Post extends Model {
+  class Post extends ModelTestEdition {
     static entity = 'posts'
 
     @NumberField(0) id!: number

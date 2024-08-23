@@ -1,10 +1,10 @@
 import { assertState, createStore, mockUid } from '@func-test/utils/Helpers'
 
-import { Model } from '@/index'
 import { StringField, UidField } from '@/decorators'
+import { ModelTestEdition } from '@core-shared-utils/testUtils'
 
 describe('feature/uid/fresh_uid', () => {
-  class User extends Model {
+  class User extends ModelTestEdition {
     static entity = 'users'
 
     @UidField() id!: string | null

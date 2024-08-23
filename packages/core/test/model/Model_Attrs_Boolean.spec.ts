@@ -1,9 +1,9 @@
 import { BooleanField } from '../../src/model/decorators/attributes/types/BooleanField'
-import { Model } from '@/model/Model'
+import { ModelTestEdition } from '../../shared-utils/testUtils'
 
 describe('unit/model/Model_Attrs_Boolean', () => {
   it('casts the value to `Boolean` when instantiating the model', () => {
-    class User extends Model {
+    class User extends ModelTestEdition {
       static entity = 'users'
 
       @BooleanField(true)
@@ -21,7 +21,7 @@ describe('unit/model/Model_Attrs_Boolean', () => {
   })
 
   it('accepts `null` when the `nullable` option is set', () => {
-    class User extends Model {
+    class User extends ModelTestEdition {
       static entity = 'users'
 
       @BooleanField(null, { nullable: true })

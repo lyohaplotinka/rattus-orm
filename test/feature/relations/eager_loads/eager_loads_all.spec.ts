@@ -1,17 +1,17 @@
 import { assertInstanceOf, assertModel, createStore, fillState } from '@func-test/utils/Helpers'
 
-import { Model } from '@/index'
 import { AttrField, BelongsTo, HasMany, StringField } from '@/decorators'
+import { ModelTestEdition } from '@core-shared-utils/testUtils'
 
 describe('feature/relations/eager_loads_all', () => {
-  class User extends Model {
+  class User extends ModelTestEdition {
     static entity = 'users'
 
     @AttrField() id!: number
     @StringField('') name!: string
   }
 
-  class Post extends Model {
+  class Post extends ModelTestEdition {
     static entity = 'posts'
 
     @AttrField() id!: number
@@ -25,7 +25,7 @@ describe('feature/relations/eager_loads_all', () => {
     comments!: Comment[]
   }
 
-  class Comment extends Model {
+  class Comment extends ModelTestEdition {
     static entity = 'comments'
 
     @AttrField() id!: number

@@ -1,22 +1,22 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
-import { Model } from '@/index'
 import { AttrField, HasManyBy, StringField } from '@/decorators'
+import { ModelTestEdition } from '@core-shared-utils/testUtils'
 
 describe('feature/relations/has_many_by_save_custom_key', () => {
   beforeEach(() => {
-    Model.clearRegistries()
+    ModelTestEdition.clearRegistries()
   })
 
   it('inserts "has many by" relation with custom primary key', () => {
-    class Node extends Model {
+    class Node extends ModelTestEdition {
       static entity = 'nodes'
 
       @AttrField() id!: number
       @StringField('') name!: string
     }
 
-    class Cluster extends Model {
+    class Cluster extends ModelTestEdition {
       static entity = 'clusters'
 
       static primaryKey = 'clusterId'
@@ -52,7 +52,7 @@ describe('feature/relations/has_many_by_save_custom_key', () => {
   })
 
   it('inserts "has many by" relation with custom owner key', () => {
-    class Node extends Model {
+    class Node extends ModelTestEdition {
       static entity = 'nodes'
 
       @AttrField() id!: number
@@ -60,7 +60,7 @@ describe('feature/relations/has_many_by_save_custom_key', () => {
       @StringField('') name!: string
     }
 
-    class Cluster extends Model {
+    class Cluster extends ModelTestEdition {
       static entity = 'clusters'
 
       @AttrField() id!: number

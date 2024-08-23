@@ -1,10 +1,10 @@
 import { assertModel, createStore, fillState } from '@func-test/utils/Helpers'
 
-import { Model } from '@/index'
 import { AttrField, HasOne, StringField } from '@/decorators'
+import { ModelTestEdition } from '@core-shared-utils/testUtils'
 
 describe('feature/relations/has_one_retrieve', () => {
-  class User extends Model {
+  class User extends ModelTestEdition {
     static entity = 'users'
 
     @AttrField() id!: number
@@ -14,7 +14,7 @@ describe('feature/relations/has_one_retrieve', () => {
     phone!: Phone | null
   }
 
-  class Phone extends Model {
+  class Phone extends ModelTestEdition {
     static entity = 'phones'
 
     @AttrField() id!: number

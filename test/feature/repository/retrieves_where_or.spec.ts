@@ -1,10 +1,10 @@
 import { assertInstanceOf, assertModels, createStore, fillState } from '@func-test/utils/Helpers'
 
-import { Model } from '@/index'
 import { AttrField, NumberField, StringField } from '@/decorators'
+import { ModelTestEdition } from '@core-shared-utils/testUtils'
 
 describe('feature/repository/retrieves_where', () => {
-  class User extends Model {
+  class User extends ModelTestEdition {
     static entity = 'users'
 
     @AttrField() id!: any

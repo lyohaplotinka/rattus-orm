@@ -1,9 +1,9 @@
-import { Model } from '@/model/Model'
 import { DateField } from '../../src/decorators'
+import { ModelTestEdition } from '../../shared-utils/testUtils'
 
 describe('unit/model/Model_Attrs_Date', () => {
   it('casts the value to `Date` when instantiating the model', () => {
-    class User extends Model {
+    class User extends ModelTestEdition {
       static entity = 'users'
 
       @DateField(null)
@@ -25,7 +25,7 @@ describe('unit/model/Model_Attrs_Date', () => {
   })
 
   it('accepts `null` when the `nullable` option is set', () => {
-    class User extends Model {
+    class User extends ModelTestEdition {
       static entity = 'users'
 
       @DateField(null, { nullable: true })

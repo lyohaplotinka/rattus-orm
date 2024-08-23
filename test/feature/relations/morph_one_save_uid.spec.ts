@@ -1,15 +1,15 @@
 import { assertState, createStore, mockUid } from '@func-test/utils/Helpers'
 
-import { Model } from '@/index'
 import { MorphOne, NumberField, StringField, UidField } from '@/decorators'
+import { ModelTestEdition } from '@core-shared-utils/testUtils'
 
 describe('feature/relations/morph_one_save_uid', () => {
   beforeEach(() => {
-    Model.clearRegistries()
+    ModelTestEdition.clearRegistries()
   })
 
   it('inserts "morph one" relation with parent having "uid" field as the primary key', () => {
-    class Image extends Model {
+    class Image extends ModelTestEdition {
       static entity = 'images'
 
       @NumberField(0) id!: number
@@ -18,7 +18,7 @@ describe('feature/relations/morph_one_save_uid', () => {
       @StringField('') imageableType!: string
     }
 
-    class User extends Model {
+    class User extends ModelTestEdition {
       static entity = 'users'
 
       @UidField() id!: string
@@ -57,7 +57,7 @@ describe('feature/relations/morph_one_save_uid', () => {
   })
 
   it('inserts "morph one" relation with child having "uid" as the primary key', () => {
-    class Image extends Model {
+    class Image extends ModelTestEdition {
       static entity = 'images'
 
       @UidField() id!: string
@@ -66,7 +66,7 @@ describe('feature/relations/morph_one_save_uid', () => {
       @StringField('') imageableType!: string
     }
 
-    class User extends Model {
+    class User extends ModelTestEdition {
       static entity = 'users'
 
       @UidField() id!: string
@@ -103,7 +103,7 @@ describe('feature/relations/morph_one_save_uid', () => {
   })
 
   it('inserts "morph one" relation with child having a composite primary key', () => {
-    class Image extends Model {
+    class Image extends ModelTestEdition {
       static entity = 'images'
       static primaryKey = ['imageableId', 'imageableType']
 
@@ -112,7 +112,7 @@ describe('feature/relations/morph_one_save_uid', () => {
       @StringField('') imageableType!: string
     }
 
-    class User extends Model {
+    class User extends ModelTestEdition {
       static entity = 'users'
 
       @UidField() id!: string

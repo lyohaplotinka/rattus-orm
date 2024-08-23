@@ -1,17 +1,17 @@
 import { assertModel, createStore, fillState } from '@func-test/utils/Helpers'
 
 import { AttrField, BelongsTo, StringField } from '@/decorators'
-import { Model } from '@/index'
+import { ModelTestEdition } from '@core-shared-utils/testUtils'
 
 describe('feature/relations/belongs_to_retrieve', () => {
-  class User extends Model {
+  class User extends ModelTestEdition {
     static entity = 'users'
 
     @AttrField() id!: number
     @StringField('') name!: string
   }
 
-  class Post extends Model {
+  class Post extends ModelTestEdition {
     static entity = 'posts'
 
     @AttrField() id!: number

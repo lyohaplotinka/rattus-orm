@@ -1,15 +1,15 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
-import { Model } from '@/index'
 import { AttrField, BelongsTo, StringField } from '@/decorators'
+import { ModelTestEdition } from '@core-shared-utils/testUtils'
 
 describe('feature/relations/belongs_to_save_custome_key', () => {
   beforeEach(() => {
-    Model.clearRegistries()
+    ModelTestEdition.clearRegistries()
   })
 
   it('inserts "belongs to" relation with custom primary key', () => {
-    class User extends Model {
+    class User extends ModelTestEdition {
       static entity = 'users'
 
       static primaryKey = 'userId'
@@ -18,7 +18,7 @@ describe('feature/relations/belongs_to_save_custome_key', () => {
       @StringField('') name!: string
     }
 
-    class Post extends Model {
+    class Post extends ModelTestEdition {
       static entity = 'posts'
 
       @AttrField() id!: string
@@ -48,7 +48,7 @@ describe('feature/relations/belongs_to_save_custome_key', () => {
   })
 
   it('inserts "belongs to" relation with custom owner key', () => {
-    class User extends Model {
+    class User extends ModelTestEdition {
       static entity = 'users'
 
       @AttrField() id!: number
@@ -56,7 +56,7 @@ describe('feature/relations/belongs_to_save_custome_key', () => {
       @StringField('') name!: string
     }
 
-    class Post extends Model {
+    class Post extends ModelTestEdition {
       static entity = 'posts'
 
       @AttrField() id!: string

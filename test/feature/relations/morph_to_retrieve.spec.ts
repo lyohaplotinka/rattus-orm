@@ -1,11 +1,11 @@
 import { assertModel, createStore, fillState } from '@func-test/utils/Helpers'
 
 import type { Query } from '@/index'
-import { Model } from '@/index'
 import { AttrField, MorphTo, NumberField, StringField } from '@/decorators'
+import { ModelTestEdition } from '@core-shared-utils/testUtils'
 
 describe('feature/relations/morph_to_retrieve', () => {
-  class Image extends Model {
+  class Image extends ModelTestEdition {
     static entity = 'images'
 
     @NumberField(0) id!: number
@@ -16,14 +16,14 @@ describe('feature/relations/morph_to_retrieve', () => {
     imageable!: User | Post | null
   }
 
-  class User extends Model {
+  class User extends ModelTestEdition {
     static entity = 'users'
 
     @NumberField(0) id!: number
     @StringField('') name!: string
   }
 
-  class Post extends Model {
+  class Post extends ModelTestEdition {
     static entity = 'posts'
 
     @NumberField(0) id!: number

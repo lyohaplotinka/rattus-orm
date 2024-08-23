@@ -98,21 +98,6 @@ export class Model {
   }
 
   /**
-   * Clear the list of booted models, so they can be re-booted.
-   */
-  public static clearBootedModels(): void {
-    this.booted = {}
-    this.schemas = {}
-  }
-
-  /**
-   * Clear registries.
-   */
-  public static clearRegistries(): void {
-    this.registries = {}
-  }
-
-  /**
    * Create a new model instance without field values being populated.
    *
    * This method is mainly for the internal use when registering models to the
@@ -274,17 +259,6 @@ export class Model {
 
   protected static thisAsModelConstructor() {
     return this as ModelConstructor<any>
-  }
-
-  /**
-   * Build the schema by evaluating fields and registry.
-   */
-  protected static initializeSchema(): void {
-    this.schemas[this.entity] = {}
-
-    for (const [key, attribute] of Object.entries({ ...this.fields(), ...this.registries[this.entity] })) {
-      this.schemas[this.entity][key] = isFunction(attribute) ? attribute() : attribute
-    }
   }
 
   /**
@@ -495,12 +469,25 @@ export class Model {
     return this as Record<string, any>
   }
 
-  protected $processValue(attribute: Attribute<unknown>, value?: any) {
+  /**
+   * Processes the value based on the given attribute.
+   *
+   * @param {Attribute<unknown>} attribute - The attribute object.
+   * @param {any} [value] - The value to be processed.
+   * @return {any} - The processed value.
+   */
+  protected $processValue(attribute: Attribute<unknown>, value?: any): any {
     return attribute instanceof MorphTo
       ? attribute.make(value, this.$getThisNonStrict()[attribute.getType()])
       : attribute.make(value)
   }
 
+  /**
+   * Creates a property descriptor for a field property.
+   *
+   * @param {Attribute<unknown>} attribute - The attribute associated with the field property.
+   * @return The property descriptor for the field property.
+   */
   protected $createFieldProperty(attribute: Attribute<unknown>): PropertyDescriptor {
     let internalValue: any = undefined
     return {
@@ -521,6 +508,9 @@ export class Model {
     }
   }
 
+  /**
+   * Initializes field properties based on the schema of the entity.
+   */
   protected $initFieldProperties() {
     const schema = this.$self().schemas[this.$entity()]
     for (const key in schema) {

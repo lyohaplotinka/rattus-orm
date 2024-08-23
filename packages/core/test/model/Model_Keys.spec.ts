@@ -1,13 +1,13 @@
 import { AttrField } from '../../src/model/decorators/attributes/types/AttrField'
-import { Model } from '@/model/Model'
+import { ModelTestEdition } from '../../shared-utils/testUtils'
 
 describe('unit/model/Model_Keys', () => {
   beforeEach(() => {
-    Model.clearRegistries()
+    ModelTestEdition.clearRegistries()
   })
 
   it('can get primary key value of the model', () => {
-    class User extends Model {
+    class User extends ModelTestEdition {
       static entity = 'users'
 
       @AttrField() id!: any
@@ -21,7 +21,7 @@ describe('unit/model/Model_Keys', () => {
   })
 
   it('can get primary key value of the given record', () => {
-    class User extends Model {
+    class User extends ModelTestEdition {
       static entity = 'users'
 
       @AttrField() id!: any
@@ -34,7 +34,7 @@ describe('unit/model/Model_Keys', () => {
   })
 
   it('can get composite primary key value of the model', () => {
-    class User extends Model {
+    class User extends ModelTestEdition {
       static entity = 'users'
 
       static primaryKey = ['idA', 'idB']
@@ -51,7 +51,7 @@ describe('unit/model/Model_Keys', () => {
   })
 
   it('can get composite primary key value of the given record', () => {
-    class User extends Model {
+    class User extends ModelTestEdition {
       static entity = 'users'
 
       static primaryKey = ['idA', 'idB']

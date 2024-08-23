@@ -1,10 +1,10 @@
 import { createStore } from '@func-test/utils/Helpers'
 
-import { Model } from '@/index'
 import { AttrField, BelongsTo, HasMany, HasManyBy, HasOne, MorphOne, MorphTo } from '@/decorators'
+import { ModelTestEdition } from '@core-shared-utils/testUtils'
 
 describe('unit/model/Model_Relations', () => {
-  class User extends Model {
+  class User extends ModelTestEdition {
     static entity = 'users'
 
     @AttrField() id!: number
@@ -27,33 +27,33 @@ describe('unit/model/Model_Relations', () => {
     image!: Image | null
   }
 
-  class Phone extends Model {
+  class Phone extends ModelTestEdition {
     static entity = 'phones'
 
     @AttrField() id!: number
     @AttrField() userId!: number
   }
 
-  class Country extends Model {
+  class Country extends ModelTestEdition {
     static entity = 'countries'
 
     @AttrField() id!: number
   }
 
-  class Post extends Model {
+  class Post extends ModelTestEdition {
     static entity = 'posts'
 
     @AttrField() id!: number
     @AttrField() userId!: number
   }
 
-  class Name extends Model {
+  class Name extends ModelTestEdition {
     static entity = 'names'
 
     @AttrField() id!: number
   }
 
-  class Image extends Model {
+  class Image extends ModelTestEdition {
     static entity = 'images'
 
     @AttrField() id!: number

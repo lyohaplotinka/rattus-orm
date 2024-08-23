@@ -1,8 +1,8 @@
 import { AttrField } from '../../src/model/decorators/attributes/types/AttrField'
-import { Model } from '@/model/Model'
+import { ModelTestEdition } from '../../shared-utils/testUtils'
 
 describe('unit/model/Model', () => {
-  class User extends Model {
+  class User extends ModelTestEdition {
     static entity = 'users'
 
     @AttrField() id!: number

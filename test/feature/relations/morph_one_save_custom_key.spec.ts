@@ -1,15 +1,15 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
-import { Model } from '@/index'
 import { MorphOne, NumberField, StringField } from '@/decorators'
+import { ModelTestEdition } from '@core-shared-utils/testUtils'
 
 describe('feature/relations/morph_one_save_custom_key', () => {
   beforeEach(() => {
-    Model.clearRegistries()
+    ModelTestEdition.clearRegistries()
   })
 
   it('inserts "morph one" relation with custom primary key', () => {
-    class Image extends Model {
+    class Image extends ModelTestEdition {
       static entity = 'images'
 
       @NumberField(0) id!: number
@@ -18,7 +18,7 @@ describe('feature/relations/morph_one_save_custom_key', () => {
       @StringField('') imageableType!: string
     }
 
-    class User extends Model {
+    class User extends ModelTestEdition {
       static entity = 'users'
 
       static primaryKey = 'userId'
@@ -58,7 +58,7 @@ describe('feature/relations/morph_one_save_custom_key', () => {
   })
 
   it('inserts "morph one" relation with custom local key', () => {
-    class Image extends Model {
+    class Image extends ModelTestEdition {
       static entity = 'images'
 
       @NumberField(0) id!: number
@@ -67,7 +67,7 @@ describe('feature/relations/morph_one_save_custom_key', () => {
       @StringField('') imageableType!: string
     }
 
-    class User extends Model {
+    class User extends ModelTestEdition {
       static entity = 'users'
 
       @NumberField(0) id!: number

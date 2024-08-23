@@ -12,7 +12,18 @@ import { pullRepositoryKeys } from './integrationsHelpers'
 import { isInitializedContext } from './integrationsHelpers'
 import { isUnknownRecord } from './isUnknownRecord'
 
-export class TestUser extends Model {
+export class ModelTestEdition extends Model {
+  public static clearBootedModels(): void {
+    this.booted = {}
+    this.schemas = {}
+  }
+
+  public static clearRegistries(): void {
+    this.registries = {}
+  }
+}
+
+export class TestUser extends ModelTestEdition {
   public static entity = 'testUser'
 
   @StringField('')

@@ -1,12 +1,13 @@
 import { assertState, createStore, fillState } from '@func-test/utils/Helpers'
 
-import { Model, Repository } from '@/index'
+import { Repository } from '@/index'
 import { AttrField, NumberField, StringField } from '@/decorators'
 import { TestingStore } from '@func-test/utils/types'
 import { describe, expect } from 'vitest'
+import { ModelTestEdition } from '@core-shared-utils/testUtils'
 
 describe('feature/repository/update', () => {
-  class User extends Model {
+  class User extends ModelTestEdition {
     static entity = 'users'
 
     @AttrField() id!: number

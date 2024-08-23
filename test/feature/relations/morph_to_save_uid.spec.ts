@@ -1,15 +1,15 @@
 import { assertState, createStore, mockUid } from '@func-test/utils/Helpers'
 
-import { Model } from '@/index'
 import { AttrField, MorphTo, NumberField, StringField, UidField } from '@/decorators'
+import { ModelTestEdition } from '@core-shared-utils/testUtils'
 
 describe('feature/relations/morph_to_save_uid', () => {
   beforeEach(() => {
-    Model.clearRegistries()
+    ModelTestEdition.clearRegistries()
   })
 
   it('inserts "morph to" relation with parent having "uid" field as the primary key', () => {
-    class Image extends Model {
+    class Image extends ModelTestEdition {
       static entity = 'images'
 
       @UidField() id!: number
@@ -20,7 +20,7 @@ describe('feature/relations/morph_to_save_uid', () => {
       imageable!: User | null
     }
 
-    class User extends Model {
+    class User extends ModelTestEdition {
       static entity = 'users'
 
       @NumberField(0) id!: number
@@ -52,7 +52,7 @@ describe('feature/relations/morph_to_save_uid', () => {
   })
 
   it('inserts "morph to" relation with parent and child having "uid" as the primary key', () => {
-    class Image extends Model {
+    class Image extends ModelTestEdition {
       static entity = 'images'
 
       @UidField() id!: string
@@ -63,7 +63,7 @@ describe('feature/relations/morph_to_save_uid', () => {
       imageable!: User | null
     }
 
-    class User extends Model {
+    class User extends ModelTestEdition {
       static entity = 'users'
 
       @UidField() id!: string

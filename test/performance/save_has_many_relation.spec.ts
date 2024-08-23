@@ -1,10 +1,10 @@
 import { createStore } from '@func-test/utils/Helpers'
 
-import { Model } from '@/index'
 import { HasMany, NumberField, StringField } from '@/decorators'
+import { ModelTestEdition } from '@core-shared-utils/testUtils'
 
 describe('performance/save_has_many_relation', () => {
-  class User extends Model {
+  class User extends ModelTestEdition {
     public static entity = 'users'
 
     @NumberField(0) public id!: number
@@ -14,7 +14,7 @@ describe('performance/save_has_many_relation', () => {
     public posts!: Post[]
   }
 
-  class Post extends Model {
+  class Post extends ModelTestEdition {
     public static entity = 'posts'
 
     @NumberField(0) public id!: number

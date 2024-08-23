@@ -1,9 +1,9 @@
+import { isFunction } from '@/support/utils'
+
 import { isUnknownRecord } from '../../shared-utils/isUnknownRecord'
-import { isFunction } from '../support/utils'
-import type { UnionToArray } from '../types'
 import type { DataProvider } from './types'
 
-export const DataProviderKeys: UnionToArray<keyof DataProvider> = [
+export const DataProviderKeys: Array<keyof DataProvider> = [
   'registerConnection',
   'dump',
   'restore',

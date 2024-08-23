@@ -1,15 +1,15 @@
 import { assertState, createStore, mockUid } from '@func-test/utils/Helpers'
 
-import { Model } from '@/index'
 import { AttrField, HasMany, StringField, UidField } from '@/decorators'
+import { ModelTestEdition } from '@core-shared-utils/testUtils'
 
 describe('feature/relations/has_many_insert_uid', () => {
   beforeEach(() => {
-    Model.clearRegistries()
+    ModelTestEdition.clearRegistries()
   })
 
   it('inserts "has many" relation with parent having "uid" field as the primary key', () => {
-    class User extends Model {
+    class User extends ModelTestEdition {
       static entity = 'users'
 
       @UidField() id!: string
@@ -19,7 +19,7 @@ describe('feature/relations/has_many_insert_uid', () => {
       posts!: Post[]
     }
 
-    class Post extends Model {
+    class Post extends ModelTestEdition {
       static entity = 'posts'
 
       @AttrField() id!: number
@@ -51,7 +51,7 @@ describe('feature/relations/has_many_insert_uid', () => {
   })
 
   it('inserts "has many" relation with child having "uid" as the foreign key', () => {
-    class User extends Model {
+    class User extends ModelTestEdition {
       static entity = 'users'
 
       @UidField() id!: string
@@ -61,7 +61,7 @@ describe('feature/relations/has_many_insert_uid', () => {
       posts!: Post[]
     }
 
-    class Post extends Model {
+    class Post extends ModelTestEdition {
       static entity = 'posts'
 
       @AttrField() id!: number

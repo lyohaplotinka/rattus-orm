@@ -1,9 +1,9 @@
 import { vi } from 'vitest'
-import { Model } from '../src'
+import { ModelTestEdition } from '../shared-utils/testUtils'
 
 // @ts-ignore
 window.crypto.randomUUID = vi.fn()
 
 beforeEach(() => {
-  Model.clearBootedModels()
+  ModelTestEdition.clearBootedModels()
 })
