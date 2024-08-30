@@ -50,7 +50,7 @@
     "mobx-react-lite": "^4.0.7"
   },
   "peerDependencies": {
-    "@rattus-orm/core": "^0.2.0",
+    "@rattus-orm/core": "^0.3.0",
     "mobx": "*"
   },
   "rattusMeta": {

@@ -286,5 +286,18 @@
         "release(core): v0.2.0"
       ]
     }
+  ],
+  "2024/08/30": [
+    {
+      "packageName": "Core",
+      "packageKey": "core",
+      "packageVersion": "0.3.0",
+      "commitMessages": [
+        "🎉  Feature: Date attribute and decorators, type methods and decorators refactored [BREAKING] ([#43](https://github.com/lyohaplotinka/rattus-orm/pull/43))",
+        "🛠️ Update dependencies ([#42](https://github.com/lyohaplotinka/rattus-orm/pull/42))",
+        "⚙️ Refactor: query and constraintor are split ([#41](https://github.com/lyohaplotinka/rattus-orm/pull/41))",
+        " ⚙️ Refactor: createDatabase function ([#40](https://github.com/lyohaplotinka/rattus-orm/pull/40))"
+      ]
+    }
   ]
 }

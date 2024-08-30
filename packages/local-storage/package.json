@@ -46,7 +46,7 @@
     "@rattus-orm/core": "workspace:^"
   },
   "peerDependencies": {
-    "@rattus-orm/core": "^0.2.0"
+    "@rattus-orm/core": "^0.3.0"
   },
   "rattusMeta": {
     "title": "LocalStorage",
