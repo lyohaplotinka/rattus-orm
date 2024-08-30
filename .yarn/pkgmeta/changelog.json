@@ -328,6 +328,14 @@
         "⚙️ Refactor: query and constraintor are split ([#41](https://github.com/lyohaplotinka/rattus-orm/pull/41))",
         " ⚙️ Refactor: createDatabase function ([#40](https://github.com/lyohaplotinka/rattus-orm/pull/40))"
       ]
+    },
+    {
+      "packageName": "React MobX",
+      "packageKey": "react-mobx",
+      "packageVersion": "0.2.0",
+      "commitMessages": [
+        "release(core): v0.3.0"
+      ]
     }
   ]
 }
