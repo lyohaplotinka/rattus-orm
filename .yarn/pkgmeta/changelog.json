@@ -345,6 +345,14 @@
         "release(core): v0.3.0",
         "🛠️ Update dependencies ([#42](https://github.com/lyohaplotinka/rattus-orm/pull/42))"
       ]
+    },
+    {
+      "packageName": "React Signals",
+      "packageKey": "react-signals",
+      "packageVersion": "0.2.0",
+      "commitMessages": [
+        "release(core): v0.3.0"
+      ]
     }
   ]
 }
