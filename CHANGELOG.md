@@ -1,9 +1,11 @@
 # 2024/08/30
 ### Core (0.3.0)
-* 🎉 Feature: Date attribute and decorators, type methods and decorators refactored [BREAKING] ([#43](https://github.com/lyohaplotinka/rattus-orm/pull/43))
+* 🎉  Feature: Date attribute and decorators, type methods and decorators refactored [BREAKING] ([#43](https://github.com/lyohaplotinka/rattus-orm/pull/43))
 * 🛠️ Update dependencies ([#42](https://github.com/lyohaplotinka/rattus-orm/pull/42))
 * ⚙️ Refactor: query and constraintor are split ([#41](https://github.com/lyohaplotinka/rattus-orm/pull/41))
-* ⚙️ Refactor: createDatabase function ([#40](https://github.com/lyohaplotinka/rattus-orm/pull/40))
+*  ⚙️ Refactor: createDatabase function ([#40](https://github.com/lyohaplotinka/rattus-orm/pull/40))
+### LocalStorage (0.2.0)
+* release(core): v0.3.0
 
 # 2024/04/13
 ### Core (0.2.0)
