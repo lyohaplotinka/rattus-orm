@@ -34,6 +34,10 @@
 ### Solid.js (0.1.0)
 * release(core): v0.3.0
 *  ⚙️ Refactor: createDatabase function ([#40](https://github.com/lyohaplotinka/rattus-orm/pull/40))
+### Angular + RxJS (0.2.0)
+* release(local-storage): v0.2.0
+* release(core): v0.3.0
+*  ⚙️ Refactor: createDatabase function ([#40](https://github.com/lyohaplotinka/rattus-orm/pull/40))
 
 # 2024/04/13
 ### Core (0.2.0)

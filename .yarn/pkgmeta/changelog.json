@@ -382,6 +382,16 @@
         "release(core): v0.3.0",
         " ⚙️ Refactor: createDatabase function ([#40](https://github.com/lyohaplotinka/rattus-orm/pull/40))"
       ]
+    },
+    {
+      "packageName": "Angular + RxJS",
+      "packageKey": "angular-rxjs",
+      "packageVersion": "0.2.0",
+      "commitMessages": [
+        "release(local-storage): v0.2.0",
+        "release(core): v0.3.0",
+        " ⚙️ Refactor: createDatabase function ([#40](https://github.com/lyohaplotinka/rattus-orm/pull/40))"
+      ]
     }
   ]
 }
