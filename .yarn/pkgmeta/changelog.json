@@ -306,6 +306,16 @@
       "commitMessages": [
         "release(core): v0.3.0"
       ]
+    },
+    {
+      "packageName": "Pinia",
+      "packageKey": "pinia",
+      "packageVersion": "0.2.0",
+      "commitMessages": [
+        "release(core): v0.3.0",
+        "🛠️ Update dependencies ([#42](https://github.com/lyohaplotinka/rattus-orm/pull/42))",
+        " ⚙️ Refactor: createDatabase function ([#40](https://github.com/lyohaplotinka/rattus-orm/pull/40))"
+      ]
     }
   ]
 }
