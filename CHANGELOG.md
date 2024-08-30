@@ -27,6 +27,10 @@
 * release(core): v0.3.0
 * 🎉  Feature: Date attribute and decorators, type methods and decorators refactored [BREAKING] ([#43](https://github.com/lyohaplotinka/rattus-orm/pull/43))
 *  ⚙️ Refactor: createDatabase function ([#40](https://github.com/lyohaplotinka/rattus-orm/pull/40))
+### Vuex (0.2.0)
+* release(core): v0.3.0
+* 🛠️ Update dependencies ([#42](https://github.com/lyohaplotinka/rattus-orm/pull/42))
+*  ⚙️ Refactor: createDatabase function ([#40](https://github.com/lyohaplotinka/rattus-orm/pull/40))
 
 # 2024/04/13
 ### Core (0.2.0)
