@@ -373,6 +373,15 @@
         "🛠️ Update dependencies ([#42](https://github.com/lyohaplotinka/rattus-orm/pull/42))",
         " ⚙️ Refactor: createDatabase function ([#40](https://github.com/lyohaplotinka/rattus-orm/pull/40))"
       ]
+    },
+    {
+      "packageName": "Solid.js",
+      "packageKey": "solidjs",
+      "packageVersion": "0.1.0",
+      "commitMessages": [
+        "release(core): v0.3.0",
+        " ⚙️ Refactor: createDatabase function ([#40](https://github.com/lyohaplotinka/rattus-orm/pull/40))"
+      ]
     }
   ]
 }
