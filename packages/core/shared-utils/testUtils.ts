@@ -1,9 +1,7 @@
 import { uniq } from 'lodash-es'
-import type { Constructor } from 'type-fest'
 import { expect, vi } from 'vitest'
 
-import type { DataProvider, RawModel } from '../src'
-import { Database, Model, Repository } from '../src'
+import { type Constructor, Database, type DataProvider, Model, type RawModel, Repository } from '../src'
 import type { RattusContext } from '../src/context/rattus-context'
 import { NumberField, StringField } from '../src/decorators'
 import { ObjectDataProvider } from '../src/object-data-provider'
