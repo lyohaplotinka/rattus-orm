@@ -402,6 +402,15 @@
       "commitMessages": [
         "⚙️ Refactor: get rid of extra dependencies in prod build ([#44](https://github.com/lyohaplotinka/rattus-orm/pull/44))"
       ]
+    },
+    {
+      "packageName": "Angular + RxJS",
+      "packageKey": "angular-rxjs",
+      "packageVersion": "0.2.1",
+      "commitMessages": [
+        "release(core): v0.3.1",
+        "🐞Bugfix: fix peer dependencies versions for angular-rxjs"
+      ]
     }
   ]
 }

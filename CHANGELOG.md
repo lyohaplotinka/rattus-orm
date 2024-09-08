@@ -1,6 +1,9 @@
 # 2024/09/08
 ### Core (0.3.1)
 * ⚙️ Refactor: get rid of extra dependencies in prod build ([#44](https://github.com/lyohaplotinka/rattus-orm/pull/44))
+### Angular + RxJS (0.2.1)
+* release(core): v0.3.1
+* 🐞Bugfix: fix peer dependencies versions for angular-rxjs
 
 # 2024/08/30
 ### Core (0.3.0)
