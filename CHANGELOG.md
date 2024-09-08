@@ -18,6 +18,8 @@
 * release(core): v0.3.1
 ### Solid.js (0.1.1)
 * release(core): v0.3.1
+### Svelte (0.2.1)
+* release(core): v0.3.1
 
 # 2024/08/30
 ### Core (0.3.0)
