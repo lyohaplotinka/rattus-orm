@@ -427,6 +427,14 @@
       "commitMessages": [
         "release(core): v0.3.1"
       ]
+    },
+    {
+      "packageName": "Plugin Zod Validate",
+      "packageKey": "plugin-zod-validate",
+      "packageVersion": "0.2.1",
+      "commitMessages": [
+        "release(core): v0.3.1"
+      ]
     }
   ]
 }

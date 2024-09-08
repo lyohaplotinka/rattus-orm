@@ -20,7 +20,7 @@
     "typescript",
     "javascript"
   ],
-  "version": "0.2.0",
+  "version": "0.2.1",
   "main": "./dist/rattus-orm-plugin-zod-validate.js",
   "browser": "./dist/rattus-orm-plugin-zod-validate.mjs",
   "module": "./dist/rattus-orm-plugin-zod-validate.mjs",
