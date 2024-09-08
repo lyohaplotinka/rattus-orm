@@ -393,5 +393,15 @@
         " ⚙️ Refactor: createDatabase function ([#40](https://github.com/lyohaplotinka/rattus-orm/pull/40))"
       ]
     }
+  ],
+  "2024/09/08": [
+    {
+      "packageName": "Core",
+      "packageKey": "core",
+      "packageVersion": "0.3.1",
+      "commitMessages": [
+        "⚙️ Refactor: get rid of extra dependencies in prod build ([#44](https://github.com/lyohaplotinka/rattus-orm/pull/44))"
+      ]
+    }
   ]
 }

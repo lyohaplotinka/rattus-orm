@@ -50,7 +50,7 @@
     "@rattus-orm/core": "workspace:^"
   },
   "peerDependencies": {
-    "@rattus-orm/core": "^0.3.0"
+    "@rattus-orm/core": "^0.3.1"
   },
   "rattusMeta": {
     "title": "Plugin Zod Validate"

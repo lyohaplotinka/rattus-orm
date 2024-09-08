@@ -1,3 +1,7 @@
+# 2024/09/08
+### Core (0.3.1)
+* ⚙️ Refactor: get rid of extra dependencies in prod build ([#44](https://github.com/lyohaplotinka/rattus-orm/pull/44))
+
 # 2024/08/30
 ### Core (0.3.0)
 * 🎉  Feature: Date attribute and decorators, type methods and decorators refactored [BREAKING] ([#43](https://github.com/lyohaplotinka/rattus-orm/pull/43))
