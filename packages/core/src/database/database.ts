@@ -1,3 +1,4 @@
+import { Relation } from '@/attributes/classes/relations/relation'
 import type { DataProvider, Elements, SerializedStorage, State } from '@/data/types'
 import type { DatabasePlugin } from '@/database/types'
 import { EventsDataProviderWrapper } from '@/events/events-data-provider-wrapper'
@@ -9,7 +10,6 @@ import type {
   RattusEvent,
   RattusEvents,
 } from '@/events/types'
-import { Relation } from '@/model/attributes/relations/relation'
 import type { Model } from '@/model/Model'
 import type { ModelConstructor } from '@/model/types'
 import type { Repository } from '@/repository/repository'

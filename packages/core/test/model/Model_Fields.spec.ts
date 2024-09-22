@@ -1,5 +1,10 @@
 import { Model } from '@/model/Model'
 import { expect } from 'vitest'
+import { createAttrField } from '../../src/attributes/createAttrField'
+import { createStringField } from '../../src/attributes/createStringField'
+import { createNumberField } from '../../src/attributes/createNumberField'
+import { createBooleanField } from '../../src/attributes/createBooleanField'
+import { createDateField } from '../../src/attributes/createDateField'
 
 describe('unit/model/Model_Fields', () => {
   it('can define model fields as a static function', () => {
@@ -8,11 +13,11 @@ describe('unit/model/Model_Fields', () => {
 
       static fields() {
         return {
-          id: this.attrField(null),
-          str: this.stringField(''),
-          num: this.numberField(0),
-          bool: this.booleanField(false),
-          date: this.dateField(new Date()),
+          id: createAttrField(this, null),
+          str: createStringField(this, ''),
+          num: createNumberField(this, 0),
+          bool: createBooleanField(this, false),
+          date: createDateField(this, new Date()),
         }
       }
 

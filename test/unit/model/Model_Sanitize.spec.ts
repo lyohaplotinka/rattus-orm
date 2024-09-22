@@ -1,8 +1,8 @@
 import { createStore } from '@func-test/utils/Helpers'
 
-import { HasMany } from '@/model/decorators/attributes/relations/HasMany'
-import { NumberField } from '@/model/decorators/attributes/types/NumberField'
-import { StringField } from '@/model/decorators/attributes/types/StringField'
+import { HasMany } from '@/attributes/decorators/attributes/relations/HasMany'
+import { NumberField } from '@/attributes/decorators/attributes/types/NumberField'
+import { StringField } from '@/attributes/decorators/attributes/types/StringField'
 import { Model } from '@/model/Model'
 
 describe('unit/model/Model_Sanitize', () => {

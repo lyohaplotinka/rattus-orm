@@ -1,4 +1,4 @@
-import { AttrField } from '../../src/model/decorators/attributes/types/AttrField'
+import { AttrField } from '../../src/attributes/decorators/attributes/types/AttrField'
 import { Model } from '@/model/Model'
 
 describe('unit/model/Model_Keys', () => {

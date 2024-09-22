@@ -1,6 +1,5 @@
 import type { Database, ModulePath } from '@rattus-orm/core'
-import { AttrAttr, BooleanAttr, NumberAttr, StringAttr } from '@rattus-orm/core'
-import { Type } from '@rattus-orm/core'
+import { Attr, Boolean, Number, String, Type } from '@rattus-orm/core/field-types'
 import { z, type ZodSchema, type ZodTypeAny } from 'zod'
 
 import { isModelWithZodSchemas } from '../types/guards'
@@ -33,16 +32,16 @@ export class ZodSchemaManager {
         fieldSchema = modelConstructor.$zodSchemas[key]
       } else {
         switch (true) {
-          case field instanceof NumberAttr:
+          case field instanceof Number:
             fieldSchema = z.number()
             break
-          case field instanceof StringAttr:
+          case field instanceof String:
             fieldSchema = z.string()
             break
-          case field instanceof BooleanAttr:
+          case field instanceof Boolean:
             fieldSchema = z.boolean()
             break
-          case field instanceof AttrAttr:
+          case field instanceof Attr:
             fieldSchema = z.unknown()
             break
         }

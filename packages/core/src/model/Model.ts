@@ -1,25 +1,19 @@
 import { isUnknownRecord } from '@core-shared-utils/isUnknownRecord'
 
+import { BelongsTo } from '@/attributes/classes/relations/belongs-to'
+import { HasMany } from '@/attributes/classes/relations/has-many'
+import { HasManyBy } from '@/attributes/classes/relations/has-many-by'
+import { HasOne } from '@/attributes/classes/relations/has-one'
+import { MorphOne } from '@/attributes/classes/relations/morph-one'
+import { MorphTo } from '@/attributes/classes/relations/morph-to'
+import { Relation } from '@/attributes/classes/relations/relation'
+import type { Type } from '@/attributes/classes/types/Type'
 import type { Collection, Element, Item, RawModel } from '@/data/types'
-import { DateField } from '@/model/attributes/types/DateField'
-import type { Type } from '@/model/attributes/types/Type'
 import type { ModelConstructor } from '@/model/types'
 import { assert, isArray, isFunction, isNullish } from '@/support/utils'
 import type { Constructor } from '@/types'
 
-import type { Attribute } from './attributes/attribute'
-import { BelongsTo } from './attributes/relations/belongs-to'
-import { HasMany } from './attributes/relations/has-many'
-import { HasManyBy } from './attributes/relations/has-many-by'
-import { HasOne } from './attributes/relations/has-one'
-import { MorphOne } from './attributes/relations/morph-one'
-import { MorphTo } from './attributes/relations/morph-to'
-import { Relation } from './attributes/relations/relation'
-import { Attr } from './attributes/types/Attr'
-import { Boolean as Bool } from './attributes/types/Boolean'
-import { Number as Num } from './attributes/types/Number'
-import { String as Str } from './attributes/types/String'
-import { Uid } from './attributes/types/Uid'
+import type { Attribute } from '../attributes/classes/attribute'
 
 export type ModelFields = Record<string, Attribute<unknown>>
 export type ModelSchemas = Record<string, ModelFields>
@@ -125,58 +119,6 @@ export class Model {
    */
   public static newRawInstance<M extends Model>(this: ModelConstructor<M>): M {
     return new this(undefined, { fill: false }) as M
-  }
-
-  /**
-   * Create a new Attr attribute instance.
-   *
-   * @param {any} value initial attribute value
-   */
-  public static attrField(value: any): Attr {
-    return this.createType(Attr, value)
-  }
-
-  /**
-   * Create a new String attribute instance.
-   *
-   * @param {string | null} value initial value, null if nullable
-   */
-  public static stringField(value: string | null): Str {
-    return this.createType(Str, value)
-  }
-
-  /**
-   * Create a new Number attribute instance.
-   *
-   * @param {number | null} value initial value, null if nullable
-   */
-  public static numberField(value: number | null): Num {
-    return this.createType(Num, value)
-  }
-
-  /**
-   * Create a new Boolean attribute instance.
-   *
-   * @param {boolean | null} value initial value, null if nullable
-   */
-  public static booleanField(value: boolean | null): Bool {
-    return this.createType(Bool, value)
-  }
-
-  /**
-   * Create a new Uid attribute instance.
-   */
-  public static uidField(): Uid {
-    return this.createType(Uid)
-  }
-
-  /**
-   * Create a new Date attribute instance.
-   *
-   * @param {Date | string | number | null} value initial value, null if nullable.
-   */
-  public static dateField(value: Date | string | number | null): DateField {
-    return this.createType(DateField, value)
   }
 
   /**

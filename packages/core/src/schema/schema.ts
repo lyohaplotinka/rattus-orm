@@ -1,5 +1,7 @@
-import { Relation } from '@/model/attributes/relations/relation'
-import { Uid } from '@/model/attributes/types/Uid'
+import { isUnknownRecord } from '@core-shared-utils/isUnknownRecord'
+
+import { Relation } from '@/attributes/classes/relations/relation'
+import type { Uid } from '@/attributes/classes/types/Uid'
 import type { Model } from '@/model/Model'
 import { ArrayNormalizationSchema } from '@/normalization/schemas/array-normalization-schema'
 import { EntityNormalizationSchema } from '@/normalization/schemas/entity-normalization-schema'
@@ -134,7 +136,7 @@ export class Schema {
     keys.forEach((k) => {
       const attr = fields[k]
 
-      if (attr instanceof Uid) {
+      if (this.isUid(attr)) {
         attributes[k] = attr
       }
     })
@@ -158,5 +160,12 @@ export class Schema {
     }
 
     return definition
+  }
+
+  /**
+   * Checks if the given value is of type Uid.
+   */
+  private isUid(value: unknown): value is Uid {
+    return isUnknownRecord(value) && value.__isUid === true
   }
 }

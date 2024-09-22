@@ -34,6 +34,11 @@
       "require": "./dist/decorators.js",
       "types": "./dist/decorators.d.ts"
     },
+    "./field-types": {
+      "import": "./dist/field-types.mjs",
+      "require": "./dist/field-types.js",
+      "types": "./dist/field-types.d.ts"
+    },
     "./object-data-provider": {
       "import": "./dist/object-data-provider.mjs",
       "require": "./dist/object-data-provider.js",

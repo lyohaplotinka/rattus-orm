@@ -61,6 +61,7 @@ describe('rattus-orm-plugin-zod-validate', () => {
       repo.save({ id: 'asd', name: 'test' })
       throw new Error('Error not happened!')
     } catch (e) {
+      console.log(e)
       expect(e).toBeInstanceOf(RattusZodValidationError)
       if (isRattusZodValidationError(e)) {
         expect(e.originalZodErrors[0].errors[0].path).toStrictEqual(['id'])

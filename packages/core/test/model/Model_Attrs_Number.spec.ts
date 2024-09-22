@@ -1,4 +1,4 @@
-import { NumberField } from '../../src/model/decorators/attributes/types/NumberField'
+import { NumberField } from '../../src/attributes/decorators/attributes/types/NumberField'
 import { Model } from '@/model/Model'
 
 describe('unit/model/Model_Attrs_Number', () => {
