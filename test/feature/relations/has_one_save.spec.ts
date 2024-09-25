@@ -1,7 +1,8 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
 import { Model } from '@/index'
-import { AttrField, HasOne, StringField } from '@/decorators'
+import { HasOne } from '@/decorators'
+import { AttrField, StringField } from '@/attributes/field-types'
 
 describe('feature/relations/has_one_save', () => {
   class User extends Model {

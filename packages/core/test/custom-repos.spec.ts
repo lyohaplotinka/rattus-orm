@@ -1,7 +1,7 @@
 import { describe, expect } from 'vitest'
 import { createDatabase, Model, Repository } from '../src'
 import { ObjectDataProvider } from '../src/data/object-data-provider'
-import { StringField } from '../src/decorators'
+import { StringField } from '../src/attributes/field-types'
 
 class User extends Model {
   public static entity = 'user'

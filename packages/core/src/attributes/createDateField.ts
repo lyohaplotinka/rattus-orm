@@ -1,6 +1,6 @@
 import type { ModelConstructor } from '../model/types'
-import { DateField } from './classes/types/DateField'
+import { DateAttr } from './classes/types/DateAttr'
 
 export const createDateField = (model: ModelConstructor<any>, value: Date | null) => {
-  return new DateField(model.newRawInstance(), value)
+  return new DateAttr(model.newRawInstance(), value)
 }

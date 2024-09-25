@@ -1,7 +1,7 @@
 import { assertInstanceOf, assertModels, createStore, fillState } from '@func-test/utils/Helpers'
 
 import { Model } from '@/index'
-import { AttrField, NumberField, StringField } from '@/decorators'
+import { StringField, AttrField, NumberField } from '@/attributes/field-types'
 
 describe('feature/repository/retrieves_order_by', () => {
   class User extends Model {

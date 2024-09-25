@@ -4,7 +4,7 @@ import { RattusZodValidationError } from '../src/exceptions/exceptions'
 import { isRattusZodValidationError, RattusZodValidationPlugin, ZodFieldType } from '../src'
 import { ObjectDataProvider } from '@rattus-orm/core/object-data-provider'
 import { z } from 'zod'
-import { AttrField, NumberField, StringField } from '@rattus-orm/core/decorators'
+import { AttrField, NumberField, StringField } from '@rattus-orm/core/field-types'
 
 export const createDb = (strict: boolean | string[] = true) => {
   return createDatabase({

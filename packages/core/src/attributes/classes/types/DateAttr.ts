@@ -1,8 +1,9 @@
-import type { Model } from '../../../model/Model'
-import { isNumber, isString } from '../../../support/utils'
+import type { Model } from '@/model/Model'
+import { isNumber, isString } from '@/support/utils'
+
 import { Type } from './Type'
 
-export class DateField extends Type<Date | null> {
+export class DateAttr extends Type<Date | null> {
   constructor(model: Model, value: Date | null) {
     super(model, value)
   }

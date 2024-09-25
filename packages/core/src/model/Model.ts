@@ -7,13 +7,11 @@ import { HasOne } from '@/attributes/classes/relations/has-one'
 import { MorphOne } from '@/attributes/classes/relations/morph-one'
 import { MorphTo } from '@/attributes/classes/relations/morph-to'
 import { Relation } from '@/attributes/classes/relations/relation'
-import type { Type } from '@/attributes/classes/types/Type'
+import type { Attribute, Type } from '@/attributes/field-types'
 import type { Collection, Element, Item, RawModel } from '@/data/types'
 import type { ModelConstructor } from '@/model/types'
 import { assert, isArray, isFunction, isNullish } from '@/support/utils'
 import type { Constructor } from '@/types'
-
-import type { Attribute } from '../attributes/classes/attribute'
 
 export type ModelFields = Record<string, Attribute<unknown>>
 export type ModelSchemas = Record<string, ModelFields>

@@ -1,7 +1,7 @@
 import { assertState, createStore, mockUid } from '@func-test/utils/Helpers'
 
 import { Model } from '@/index'
-import { AttrField, BooleanField, NumberField, StringField, UidField } from '@/decorators'
+import { AttrField, BooleanField, NumberField, StringField, UidField } from '@/attributes/field-types'
 
 describe('feature/repository/new', () => {
   it('inserts with a models default values', () => {

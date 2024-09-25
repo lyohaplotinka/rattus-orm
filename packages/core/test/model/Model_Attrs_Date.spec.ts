@@ -1,5 +1,5 @@
 import { Model } from '@/model/Model'
-import { DateField } from '../../src/decorators'
+import { DateField } from '../../src/attributes/field-types'
 
 describe('unit/model/Model_Attrs_Date', () => {
   it('casts the value to `Date` when instantiating the model', () => {

@@ -1,7 +1,8 @@
 import { assertState, createStore, mockUid } from '@func-test/utils/Helpers'
 
 import { Model } from '@/index'
-import { AttrField, BelongsTo, StringField, UidField } from '@/decorators'
+import { BelongsTo } from '@/decorators'
+import { AttrField, StringField, UidField } from '@/attributes/field-types'
 
 describe('feature/relations/belongs_to_save_uid', () => {
   beforeEach(() => {

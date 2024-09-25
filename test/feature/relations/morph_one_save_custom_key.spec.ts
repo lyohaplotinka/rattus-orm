@@ -1,7 +1,8 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
 import { Model } from '@/index'
-import { MorphOne, NumberField, StringField } from '@/decorators'
+import { MorphOne } from '@/decorators'
+import { NumberField, StringField } from '@/attributes/field-types'
 
 describe('feature/relations/morph_one_save_custom_key', () => {
   beforeEach(() => {

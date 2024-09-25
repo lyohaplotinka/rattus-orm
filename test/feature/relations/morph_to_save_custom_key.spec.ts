@@ -1,7 +1,8 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
 import { Model } from '@/index'
-import { AttrField, MorphTo, NumberField, StringField } from '@/decorators'
+import { MorphTo } from '@/decorators'
+import { NumberField, StringField, AttrField } from '@/attributes/field-types'
 
 describe('feature/relations/morph_to_save_custom_key', () => {
   beforeEach(() => {

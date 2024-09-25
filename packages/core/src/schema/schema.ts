@@ -1,7 +1,7 @@
 import { isUnknownRecord } from '@core-shared-utils/isUnknownRecord'
 
 import { Relation } from '@/attributes/classes/relations/relation'
-import type { Uid } from '@/attributes/classes/types/Uid'
+import type { Uid } from '@/attributes/field-types'
 import type { Model } from '@/model/Model'
 import { ArrayNormalizationSchema } from '@/normalization/schemas/array-normalization-schema'
 import { EntityNormalizationSchema } from '@/normalization/schemas/entity-normalization-schema'

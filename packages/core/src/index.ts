@@ -1,4 +1,3 @@
-export * from './attributes/classes/attribute'
 export * from './context/types'
 export * from './data/data-provider-helpers'
 export * from './data/types'

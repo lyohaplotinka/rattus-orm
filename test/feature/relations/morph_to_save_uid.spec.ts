@@ -1,7 +1,8 @@
 import { assertState, createStore, mockUid } from '@func-test/utils/Helpers'
 
 import { Model } from '@/index'
-import { AttrField, MorphTo, NumberField, StringField, UidField } from '@/decorators'
+import { MorphTo } from '@/decorators'
+import { NumberField, StringField, AttrField, UidField } from '@/attributes/field-types'
 
 describe('feature/relations/morph_to_save_uid', () => {
   beforeEach(() => {

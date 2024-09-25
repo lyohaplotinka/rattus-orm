@@ -1,7 +1,8 @@
 import { assertInstanceOf, assertModel, createStore, fillState } from '@func-test/utils/Helpers'
 
 import { Model } from '@/index'
-import { AttrField, BelongsTo, HasMany, StringField } from '@/decorators'
+import { HasMany, BelongsTo } from '@/decorators'
+import { StringField, AttrField } from '@/attributes/field-types'
 
 describe('feature/relations/eager_loads_all', () => {
   class User extends Model {

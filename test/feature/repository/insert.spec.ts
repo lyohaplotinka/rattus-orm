@@ -1,7 +1,7 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
 import { Model } from '@/index'
-import { AttrField, StringField } from '@/decorators'
+import { StringField, AttrField } from '@/attributes/field-types'
 
 describe('feature/repository/insert', () => {
   class User extends Model {

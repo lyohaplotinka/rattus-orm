@@ -1,7 +1,8 @@
 import { assertModel, createStore, fillState } from '@func-test/utils/Helpers'
 
 import { Model } from '@/index'
-import { MorphOne, NumberField, StringField } from '@/decorators'
+import { MorphOne } from '@/decorators'
+import { NumberField, StringField } from '@/attributes/field-types'
 
 describe('feature/relations/morph_one_retrieve', () => {
   class Image extends Model {

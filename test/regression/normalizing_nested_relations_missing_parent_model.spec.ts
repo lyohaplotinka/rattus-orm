@@ -1,7 +1,8 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
 import { Model } from '@/index'
-import { BelongsTo, HasMany, NumberField, StringField } from '@/decorators'
+import { HasMany, BelongsTo } from '@/decorators'
+import { StringField, NumberField } from '@/attributes/field-types'
 
 // A model with more than 2 related models related to the same model was
 // causing a normalization error. It was due to the Schema class was caching

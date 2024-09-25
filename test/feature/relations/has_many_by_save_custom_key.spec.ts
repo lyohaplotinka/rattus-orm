@@ -1,7 +1,8 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
 import { Model } from '@/index'
-import { AttrField, HasManyBy, StringField } from '@/decorators'
+import { HasManyBy } from '@/decorators'
+import { AttrField, StringField } from '@/attributes/field-types'
 
 describe('feature/relations/has_many_by_save_custom_key', () => {
   beforeEach(() => {
