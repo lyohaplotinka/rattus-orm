@@ -3,7 +3,7 @@ import type { Model } from '../../../model/Model'
 import type { Query } from '../../../query/query'
 import type { Schema } from '../../../schema/schema'
 import type { NormalizedSchema } from '../../../schema/types'
-import { Attribute } from '../attribute'
+import { Attribute } from '../../common/attribute'
 
 export interface Dictionary {
   [id: string]: Model[]

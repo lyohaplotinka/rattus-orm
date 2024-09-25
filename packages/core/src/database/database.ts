@@ -1,4 +1,4 @@
-import { Relation } from '@/attributes/classes/relations/relation'
+import { Relation } from '@/attributes/relations/classes/relation'
 import type { DataProvider, Elements, SerializedStorage, State } from '@/data/types'
 import type { DatabasePlugin } from '@/database/types'
 import { EventsDataProviderWrapper } from '@/events/events-data-provider-wrapper'

@@ -1,6 +1,5 @@
-import { createNumberField } from '@/attributes/createNumberField'
-
-import type { PropertyDecorator, TypeOptions } from '../../Contracts'
+import type { PropertyDecorator, TypeOptions } from '../../common/contracts'
+import { createNumberField } from '../createNumberField'
 
 /**
  * Create a Number attribute property decorator.

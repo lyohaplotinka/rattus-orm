@@ -1,4 +1,4 @@
-import { Relation } from '@/attributes/classes/relations/relation'
+import { Relation } from '@/attributes/relations/classes/relation'
 import type { Model } from '@/model/Model'
 import type {
   EagerLoad,

@@ -1,5 +1,5 @@
-import type { Model } from '../../../../model/Model'
-import type { PropertyDecorator } from '../../Contracts'
+import type { Model } from '../../../model/Model'
+import type { PropertyDecorator } from '../../common/contracts'
 
 /**
  * Create a has-many attribute property decorator.

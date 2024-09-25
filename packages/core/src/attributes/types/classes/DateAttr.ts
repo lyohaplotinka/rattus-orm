@@ -1,6 +1,5 @@
-import type { Model } from '@/model/Model'
-import { isNumber, isString } from '@/support/utils'
-
+import type { Model } from '../../../model/Model'
+import { isNumber, isString } from '../../../support/utils'
 import { Type } from './Type'
 
 export class DateAttr extends Type<Date | null> {

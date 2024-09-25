@@ -1,6 +1,5 @@
-import { createBooleanField } from '@/attributes/createBooleanField'
-
-import type { PropertyDecorator, TypeOptions } from '../../Contracts'
+import type { PropertyDecorator, TypeOptions } from '../../common/contracts'
+import { createBooleanField } from '../createBooleanField'
 
 /**
  * Create a Boolean attribute property decorator.

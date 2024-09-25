@@ -1,5 +1,5 @@
-import type { ModelConstructor } from '../../../../model/types'
-import type { PropertyDecorator } from '../../Contracts'
+import type { ModelConstructor } from '../../../model/types'
+import type { PropertyDecorator } from '../../common/contracts'
 
 /**
  * Create a morph-one attribute property decorator.

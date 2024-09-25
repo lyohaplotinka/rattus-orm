@@ -1,6 +1,5 @@
-import { createAttrField } from '@/attributes/createAttrField'
-
-import type { PropertyDecorator } from '../../Contracts'
+import type { PropertyDecorator } from '../../common/contracts'
+import { createAttrField } from '../createAttrField'
 
 /**
  * Create an Attr attribute property decorator.

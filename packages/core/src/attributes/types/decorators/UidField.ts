@@ -1,6 +1,5 @@
-import { createUidField } from '@/attributes/createUidField'
-
-import type { PropertyDecorator } from '../../Contracts'
+import type { PropertyDecorator } from '../../common/contracts'
+import { createUidField } from '../createUidField'
 
 /**
  * Create a Uid attribute property decorator.

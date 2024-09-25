@@ -1,5 +1,5 @@
 import type { Model } from '../../../model/Model'
-import { Attribute } from '../attribute'
+import { Attribute } from '../../common/attribute'
 
 export abstract class Type<MakeValue> extends Attribute<MakeValue> {
   /**

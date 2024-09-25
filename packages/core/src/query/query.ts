@@ -1,5 +1,5 @@
-import { MorphTo } from '@/attributes/classes/relations/morph-to'
-import { Relation } from '@/attributes/classes/relations/relation'
+import { MorphTo } from '@/attributes/relations/classes/morph-to'
+import { Relation } from '@/attributes/relations/classes/relation'
 import { Constraintor } from '@/constraintor/constraintor'
 import type { Collection, Element, Elements, Entities, Item, ModulePath } from '@/data/types'
 import type { Database } from '@/database/database'

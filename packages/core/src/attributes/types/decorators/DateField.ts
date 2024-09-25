@@ -1,6 +1,5 @@
-import { createDateField } from '@/attributes/createDateField'
-
-import type { PropertyDecorator, TypeOptions } from '../../Contracts'
+import type { PropertyDecorator, TypeOptions } from '../../common/contracts'
+import { createDateField } from '../createDateField'
 
 /**
  * Create a Number attribute property decorator.

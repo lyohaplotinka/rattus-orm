@@ -1,6 +1,5 @@
-import { createStringField } from '@/attributes/createStringField'
-
-import type { PropertyDecorator, TypeOptions } from '../../Contracts'
+import type { PropertyDecorator, TypeOptions } from '../../common/contracts'
+import { createStringField } from '../createStringField'
 
 /**
  * Create a String attribute property decorator.

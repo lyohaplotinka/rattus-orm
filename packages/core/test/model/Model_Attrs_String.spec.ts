@@ -1,4 +1,4 @@
-import { StringField } from '../../src/attributes/decorators/attributes/types/StringField'
+import { StringField } from '../../src/attributes/types/decorators/StringField'
 import { Model } from '@/model/Model'
 
 describe('unit/model/Model_Attrs_String', () => {
