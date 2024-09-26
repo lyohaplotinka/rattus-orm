@@ -1,6 +1,0 @@
-export { BelongsTo } from '@/attributes/relations/decorators/BelongsTo'
-export { HasMany } from '@/attributes/relations/decorators/HasMany'
-export { HasManyBy } from '@/attributes/relations/decorators/HasManyBy'
-export { HasOne } from '@/attributes/relations/decorators/HasOne'
-export { MorphOne } from '@/attributes/relations/decorators/MorphOne'
-export { MorphTo } from '@/attributes/relations/decorators/MorphTo'

@@ -1,7 +1,7 @@
 import { assertModel, createStore, fillState } from '@func-test/utils/Helpers'
 
 import { Model } from '@/index'
-import { HasOne } from '@/decorators'
+import { HasOne } from '@/attributes/field-relations'
 import { AttrField, StringField } from '@/attributes/field-types'
 
 describe('feature/relations/has_one_retrieve', () => {

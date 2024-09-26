@@ -1,11 +1,6 @@
 import { isUnknownRecord } from '@core-shared-utils/isUnknownRecord'
 
 import type { Attribute, Type } from '@/attributes/field-types'
-import { BelongsTo } from '@/attributes/relations/classes/belongs-to'
-import { HasMany } from '@/attributes/relations/classes/has-many'
-import { HasManyBy } from '@/attributes/relations/classes/has-many-by'
-import { HasOne } from '@/attributes/relations/classes/has-one'
-import { MorphOne } from '@/attributes/relations/classes/morph-one'
 import { MorphTo } from '@/attributes/relations/classes/morph-to'
 import { Relation } from '@/attributes/relations/classes/relation'
 import type { Collection, Element, Item, RawModel } from '@/data/types'
@@ -117,95 +112,6 @@ export class Model {
    */
   public static newRawInstance<M extends Model>(this: ModelConstructor<M>): M {
     return new this(undefined, { fill: false }) as M
-  }
-
-  /**
-   * Create a new HasOne relation instance.
-   *
-   * @param {ModelConstructor} related related model
-   * @param {string} foreignKey related model key
-   * @param {string} localKey this model key
-   */
-  public static hasOne(related: ModelConstructor<any>, foreignKey: string, localKey?: string): HasOne {
-    const model = this.thisAsModelConstructor().newRawInstance()
-    return new HasOne(model, related.newRawInstance(), foreignKey, localKey ?? model.$getLocalKey())
-  }
-
-  /**
-   * Create a new BelongsTo relation instance.
-   *
-   * @param {ModelConstructor} related related model
-   * @param {string} foreignKey model key
-   * @param {string} ownerKey related primary key
-   */
-  public static belongsTo(related: ModelConstructor<any>, foreignKey: string, ownerKey?: string): BelongsTo {
-    const instance = related.newRawInstance()
-    return new BelongsTo(
-      this.thisAsModelConstructor().newRawInstance(),
-      instance,
-      foreignKey,
-      ownerKey ?? instance.$getLocalKey(),
-    )
-  }
-
-  /**
-   * Create a new HasMany relation instance.
-   *
-   * @param {ModelConstructor} related related model
-   * @param {string} foreignKey related model key
-   * @param {string} localKey this model key
-   */
-  public static hasMany(related: ModelConstructor<any>, foreignKey: string, localKey?: string): HasMany {
-    const model = this.thisAsModelConstructor().newRawInstance()
-    return new HasMany(model, related.newRawInstance(), foreignKey, localKey ?? model.$getLocalKey())
-  }
-
-  /**
-   * Create a new HasManyBy relation instance.
-   *
-   * @param {ModelConstructor} related related model
-   * @param {string} foreignKey model key
-   * @param {string} ownerKey related model key
-   */
-  public static hasManyBy(related: ModelConstructor<Model>, foreignKey: string, ownerKey?: string): HasManyBy {
-    const instance = related.newRawInstance()
-    return new HasManyBy(
-      this.thisAsModelConstructor().newRawInstance(),
-      instance,
-      foreignKey,
-      ownerKey ?? instance.$getLocalKey(),
-    )
-  }
-
-  /**
-   * Create a new MorphOne relation instance.
-   *
-   * @param {ModelConstructor} related related model
-   * @param {string} id related model key
-   * @param {string} type morph type
-   * @param {string} localKey local key
-   */
-  public static morphOne(related: ModelConstructor<Model>, id: string, type: string, localKey?: string): MorphOne {
-    const model = this.thisAsModelConstructor().newRawInstance()
-    return new MorphOne(model, related.newRawInstance(), id, type, localKey ?? model.$getLocalKey())
-  }
-
-  /**
-   * Create a new MorphTo relation instance.
-   *
-   * @param {ModelConstructor[]} related related models
-   * @param {string} id related model key
-   * @param {string} type morph type
-   * @param {string} ownerKey owner key
-   */
-  public static morphTo(related: ModelConstructor<any>[], id: string, type: string, ownerKey: string = ''): MorphTo {
-    return new MorphTo(
-      this.thisAsModelConstructor().newRawInstance(),
-      related.map((model) => model.newRawInstance()),
-      id,
-      type,
-      ownerKey,
-    )
   }
 
   protected static createType<T extends Type<any>>(TypeCtor: Constructor<T>, value?: any) {

@@ -1,7 +1,7 @@
 import { assertInstanceOf, assertModel, createStore, fillState } from '@func-test/utils/Helpers'
 
 import { Model } from '@/index'
-import { HasManyBy } from '@/decorators'
+import { HasManyBy } from '@/attributes/field-relations'
 import { AttrField, StringField } from '@/attributes/field-types'
 
 describe('feature/relations/has_many_by_retrieve', () => {

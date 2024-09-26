@@ -1,5 +1,6 @@
-import type { Model } from '../../../model/Model'
-import type { PropertyDecorator } from '../../common/contracts'
+import type { PropertyDecorator } from '@/attributes/common/contracts'
+import { createHasOneRelation } from '@/attributes/relations/createHasOneRelation'
+import type { Model } from '@/model/Model'
 
 /**
  * Create a has-one attribute property decorator.
@@ -8,6 +9,6 @@ export function HasOne(related: () => typeof Model, foreignKey: string, localKey
   return (target, propertyKey) => {
     const self = target.$self()
 
-    self.setRegistry(propertyKey, () => self.hasOne(related(), foreignKey, localKey))
+    self.setRegistry(propertyKey, () => createHasOneRelation(self, related(), foreignKey, localKey))
   }
 }

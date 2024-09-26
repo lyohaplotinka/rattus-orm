@@ -1,5 +1,6 @@
-import type { ModelConstructor } from '../../../model/types'
-import type { PropertyDecorator } from '../../common/contracts'
+import type { PropertyDecorator } from '@/attributes/common/contracts'
+import { createHasManyByRelation } from '@/attributes/relations/createHasManyByRelation'
+import type { ModelConstructor } from '@/model/types'
 
 /**
  * Create a has-many-by attribute property decorator.
@@ -12,6 +13,6 @@ export function HasManyBy(
   return (target, propertyKey) => {
     const self = target.$self()
 
-    self.setRegistry(propertyKey, () => self.hasManyBy(related(), foreignKey, ownerKey))
+    self.setRegistry(propertyKey, () => createHasManyByRelation(self, related(), foreignKey, ownerKey))
   }
 }

@@ -1,7 +1,7 @@
 import { assertState, createStore, mockUid } from '@func-test/utils/Helpers'
 
 import { Model } from '@/index'
-import { HasOne } from '@/decorators'
+import { HasOne } from '@/attributes/field-relations'
 import { AttrField, StringField, UidField } from '@/attributes/field-types'
 
 describe('feature/relations/has_one_save_uid', () => {

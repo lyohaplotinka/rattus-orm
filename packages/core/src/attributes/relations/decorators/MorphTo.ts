@@ -1,5 +1,6 @@
-import type { Model } from '../../../model/Model'
-import type { PropertyDecorator } from '../../common/contracts'
+import type { PropertyDecorator } from '@/attributes/common/contracts'
+import { createMorphToRelation } from '@/attributes/relations/createMorphToRelation'
+import type { Model } from '@/model/Model'
 
 /**
  * Create a morph-to attribute property decorator.
@@ -13,6 +14,6 @@ export function MorphTo(
   return (target, propertyKey) => {
     const self = target.$self()
 
-    self.setRegistry(propertyKey, () => self.morphTo(related(), id, type, ownerKey))
+    self.setRegistry(propertyKey, () => createMorphToRelation(self, related(), id, type, ownerKey))
   }
 }

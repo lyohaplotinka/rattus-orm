@@ -1,7 +1,7 @@
 import { assertModels, createStore, fillState } from '@func-test/utils/Helpers'
 
 import { Model } from '@/index'
-import { HasMany } from '@/decorators'
+import { HasMany } from '@/attributes/field-relations'
 import { StringField, AttrField } from '@/attributes/field-types'
 
 describe('feature/relations/lazy_loads/lazy_eager_load', () => {

@@ -1,6 +1,6 @@
 import { assertModel, createStore, fillState } from '@func-test/utils/Helpers'
 
-import { BelongsTo } from '@/decorators'
+import { BelongsTo } from '@/attributes/field-relations'
 import { AttrField, StringField } from '@/attributes/field-types'
 import { Model } from '@/index'
 
