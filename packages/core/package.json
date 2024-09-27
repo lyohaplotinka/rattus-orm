@@ -39,6 +39,11 @@
       "require": "./dist/field-types.js",
       "types": "./dist/field-types.d.ts"
     },
+    "./field-relations": {
+      "import": "./dist/field-relations.mjs",
+      "require": "./dist/field-relations.js",
+      "types": "./dist/field-relations.d.ts"
+    },
     "./object-data-provider": {
       "import": "./dist/object-data-provider.mjs",
       "require": "./dist/object-data-provider.js",
