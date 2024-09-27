@@ -1,4 +1,4 @@
-import { Relation } from '@/attributes/relations/classes/relation'
+import { isRelation } from '@/attributes/common/const'
 import type { DataProvider, Elements, SerializedStorage, State } from '@/data/types'
 import type { DatabasePlugin } from '@/database/types'
 import { EventsDataProviderWrapper } from '@/events/events-data-provider-wrapper'
@@ -274,7 +274,7 @@ export class Database {
    */
   protected registerRelatedModels<M extends Model>(model: M): void {
     for (const attr of Object.values(model.$fields())) {
-      if (attr instanceof Relation) {
+      if (isRelation(attr)) {
         attr.getRelateds().forEach((m) => {
           this.register(m)
         })

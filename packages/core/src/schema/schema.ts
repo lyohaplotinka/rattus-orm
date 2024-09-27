@@ -1,7 +1,6 @@
-import { isUnknownRecord } from '@core-shared-utils/isUnknownRecord'
-
+import { isKindOf, isRelation, uidKind } from '@/attributes/common/const'
 import type { Uid } from '@/attributes/field-types'
-import { Relation } from '@/attributes/relations/classes/relation'
+import type { Relation } from '@/attributes/relations/classes/relation'
 import type { Model } from '@/model/Model'
 import { ArrayNormalizationSchema } from '@/normalization/schemas/array-normalization-schema'
 import { EntityNormalizationSchema } from '@/normalization/schemas/entity-normalization-schema'
@@ -136,7 +135,7 @@ export class Schema {
     keys.forEach((k) => {
       const attr = fields[k]
 
-      if (this.isUid(attr)) {
+      if (isKindOf<Uid>(attr, uidKind)) {
         attributes[k] = attr
       }
     })
@@ -154,18 +153,11 @@ export class Schema {
     for (const key in fields) {
       const field = fields[key]
 
-      if (field instanceof Relation) {
+      if (isRelation(field)) {
         definition[key] = field.define(this)
       }
     }
 
     return definition
-  }
-
-  /**
-   * Checks if the given value is of type Uid.
-   */
-  private isUid(value: unknown): value is Uid {
-    return isUnknownRecord(value) && value.__isUid === true
   }
 }

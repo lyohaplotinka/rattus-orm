@@ -1,7 +1,9 @@
+import { attributeKindKey, uidKind } from '@/attributes/common/const'
+
 import { Type } from './Type'
 
 export class Uid extends Type<string> {
-  public readonly __isUid = true
+  public readonly [attributeKindKey] = uidKind
 
   /**
    * Make the value for the attribute.

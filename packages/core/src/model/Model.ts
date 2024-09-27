@@ -1,8 +1,9 @@
 import { isUnknownRecord } from '@core-shared-utils/isUnknownRecord'
 
+import { isKindOf, isRelation, morphToKind } from '@/attributes/common/const'
 import type { Attribute, Type } from '@/attributes/field-types'
-import { MorphTo } from '@/attributes/relations/classes/morph-to'
-import { Relation } from '@/attributes/relations/classes/relation'
+import type { MorphTo } from '@/attributes/relations/classes/morph-to'
+import type { Relation } from '@/attributes/relations/classes/relation'
 import type { Collection, Element, Item, RawModel } from '@/data/types'
 import type { ModelConstructor } from '@/model/types'
 import { assert, isArray, isFunction, isNullish } from '@/support/utils'
@@ -184,7 +185,7 @@ export class Model {
   public $fill(attributes: Element = {}, options: ModelOptions = {}): this {
     for (const [key, attr] of Object.entries(this.$fields())) {
       const value = attributes[key]
-      if (attr instanceof Relation && !(options.relations ?? true)) {
+      if (isRelation(attr) && !(options.relations ?? true)) {
         continue
       }
       this.$fillField(key, attr, value)
@@ -253,7 +254,7 @@ export class Model {
   public $getRelation(name: string): Relation {
     const relation = this.$fields()[name]
 
-    assert(relation instanceof Relation, [`Relationship [${name}] on model [${this.$entity()}] not found.`])
+    assert(isRelation(relation), [`Relationship [${name}] on model [${this.$entity()}] not found.`])
 
     return relation
   }
@@ -285,7 +286,7 @@ export class Model {
   public $toJson(options: ModelOptions = { relations: true }): RawModel<this> {
     return Object.entries(this.$fields()).reduce((result, [key, attr]) => {
       ;(result as any)[key] =
-        attr instanceof Relation && options.relations
+        isRelation(attr) && options.relations
           ? this.serializeRelation(this.getThisNonStrict()[key])
           : this.serializeValue(this.getThisNonStrict()[key])
       return result
@@ -309,7 +310,7 @@ export class Model {
   public $sanitize(record: Element): Element {
     return Object.entries(record).reduce<Element>((result, [key, value]) => {
       const attr = this.$fields()[key]
-      if (attr !== undefined && !(attr instanceof Relation)) {
+      if (attr !== undefined && !isRelation(attr)) {
         result[key] = attr.make(value)
       }
       return result
@@ -325,7 +326,7 @@ export class Model {
   public $sanitizeAndFill(record: Element): Element {
     return Object.entries(this.$fields()).reduce<Element>((result, [key, attr]) => {
       const value = record[key]
-      if (attr !== undefined && !(attr instanceof Relation)) {
+      if (attr !== undefined && !isRelation(attr)) {
         result[key] = attr.make(value)
       }
       return result
@@ -359,8 +360,9 @@ export class Model {
    */
   protected $fillField(key: string, attr: Attribute<unknown>, value: any): void {
     if (value !== undefined) {
-      this.getThisNonStrict()[key] =
-        attr instanceof MorphTo ? attr.make(value, this.getThisNonStrict()[attr.getType()]) : attr.make(value)
+      this.getThisNonStrict()[key] = isKindOf<MorphTo>(attr, morphToKind)
+        ? attr.make(value, this.getThisNonStrict()[attr.getType()])
+        : attr.make(value)
       return
     }
 

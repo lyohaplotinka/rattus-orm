@@ -1,7 +1,10 @@
-import type { Model } from '../../../model/Model'
-import { Attribute } from '../../common/attribute'
+import { Attribute } from '@/attributes/common/attribute'
+import { attributeKindKey, typeKind } from '@/attributes/common/const'
+import type { Model } from '@/model/Model'
 
 export abstract class Type<MakeValue> extends Attribute<MakeValue> {
+  public readonly [attributeKindKey] = typeKind
+
   /**
    * The default value for the attribute.
    */

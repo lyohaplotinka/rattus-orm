@@ -1,3 +1,5 @@
+import { attributeKindKey, morphToKind } from '@/attributes/common/const'
+
 import type { Collection, Element } from '../../../data/types'
 import type { Model } from '../../../model/Model'
 import type { Query } from '../../../query/query'
@@ -13,6 +15,8 @@ interface DictionaryByEntities {
 }
 
 export class MorphTo extends Relation {
+  public readonly [attributeKindKey] = morphToKind
+
   /**
    * The related model dictionary.
    */

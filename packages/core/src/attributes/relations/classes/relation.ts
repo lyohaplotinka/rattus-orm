@@ -1,15 +1,18 @@
-import type { Collection, Element } from '../../../data/types'
-import type { Model } from '../../../model/Model'
-import type { Query } from '../../../query/query'
-import type { Schema } from '../../../schema/schema'
-import type { NormalizedSchema } from '../../../schema/types'
-import { Attribute } from '../../common/attribute'
+import { Attribute } from '@/attributes/common/attribute'
+import { attributeKindKey, relationKind } from '@/attributes/common/const'
+import type { Collection, Element } from '@/data/types'
+import type { Model } from '@/model/Model'
+import type { Query } from '@/query/query'
+import type { Schema } from '@/schema/schema'
+import type { NormalizedSchema } from '@/schema/types'
 
 export interface Dictionary {
   [id: string]: Model[]
 }
 
 export abstract class Relation extends Attribute<any> {
+  public readonly [attributeKindKey] = relationKind
+
   /**
    * Create a new relation instance.
    */

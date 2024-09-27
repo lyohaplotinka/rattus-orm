@@ -1,4 +1,4 @@
-import { Relation } from '@/attributes/relations/classes/relation'
+import { isRelation } from '@/attributes/common/const'
 import type { Model } from '@/model/Model'
 import type {
   EagerLoad,
@@ -59,7 +59,7 @@ export class Constraintor<M extends Model> {
 
   public withAll(callback: EagerLoadConstraint = () => {}) {
     for (const [name, value] of Object.entries(this.model.$fields())) {
-      value instanceof Relation && this.with(name, callback)
+      isRelation(value) && this.with(name, callback)
     }
   }
 
