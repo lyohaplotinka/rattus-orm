@@ -1,4 +1,5 @@
-import type { ModelConstructor } from '../../model/types'
+import type { ModelConstructor } from '@/model/types'
+
 import { Boolean } from './classes/Boolean'
 
 export const createBooleanField = (model: ModelConstructor<any>, value: boolean | null) => {

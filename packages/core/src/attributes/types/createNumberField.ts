@@ -1,4 +1,5 @@
-import type { ModelConstructor } from '../../model/types'
+import type { ModelConstructor } from '@/model/types'
+
 import { Number } from './classes/Number'
 
 export const createNumberField = (model: ModelConstructor<any>, value: number | null) => {
