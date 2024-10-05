@@ -25,7 +25,7 @@ from the `Model` class:
     <TabItem value={'ts'} label={'TypeScript'}>
         ```typescript title="src/data/User.ts"
         import { Model } from '@rattus-orm/core'
-        import { StringField, UidField, NumberField } from '@rattus-orm/core/decorators'
+        import { StringField, UidField, NumberField } from '@rattus-orm/core/field-types'
 
         export class User extends Model {
             public static entity = 'user'
@@ -44,15 +44,16 @@ from the `Model` class:
     <TabItem value={'js'} label={'JavaScript'}>
         ```javascript title="src/data/User.js"
         import { Model } from '@rattus-orm/core'
+        import { createUidField, createStringField, createNumberField } from '@rattus-orm/core/field-types'
 
         export class User extends Model {
             static entity = 'user'
 
             static fields () {
                 return {
-                    id: this.uidField(),
-                    name: this.stringField(''),
-                    age: this.numberField(0)
+                    id: createUidField(this),
+                    name: createStringField(this, ''),
+                    age: createNumberField(this, 0)
                 }
             }
         }
@@ -106,7 +107,7 @@ export default defineConfig({
 
 #### General Type
 
-Use the decorator `@AttrField(value)` (or the method `this.attrField()`) to define the most
+Use the decorator `@AttrField(value)` (or the `createAttrField` function) to define the most
 general field. The argument is the default value of the field,
 which will be used when creating new data if the field is missing.
 
@@ -122,11 +123,11 @@ export class User extends Model {
 #### Primitive Types
 You can use primitive type attributes:
 `@StringField('')`, `@NumberField(0)`, or `@BooleanField(false)`
-(for JS - `this.stringField()`, `this.numberField()`, and `this.booleanField()`).
+(for JS - `createStringField`, `createNumberField`, and `createBooleanField`).
 These attributes ensure casting by default, which
 converts the given value to the specified type.
 For example, `'0'` is converted to `0`, and `1` to `true`.
-As with `this.attrField()`, the argument is the
+As with `createAttrField`, the argument is the
 default value.
 
 ```typescript
@@ -177,7 +178,7 @@ export class User extends Model {
 ```
 
 #### UID Type
-`@UidField()`  (or `this.uidField()` in JS) generates a unique
+`@UidField()`  (or `createUidField` in JS) generates a unique
 identifier if the value for this field is missing.
 
 ```typescript
