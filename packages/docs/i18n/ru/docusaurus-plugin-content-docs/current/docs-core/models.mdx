@@ -25,7 +25,7 @@ TypeScript и декораторами.
     <TabItem value={'ts'} label={'TypeScript'}>
         ```typescript title="src/data/User.ts"
         import { Model } from '@rattus-orm/core'
-        import { StringField, UidField, NumberField } from '@rattus-orm/core/decorators'
+        import { StringField, UidField, NumberField } from '@rattus-orm/core/field-types'
 
         export class User extends Model {
             public static entity = 'user'
@@ -44,15 +44,16 @@ TypeScript и декораторами.
     <TabItem value={'js'} label={'JavaScript'}>
         ```javascript title="src/data/User.js"
         import { Model } from '@rattus-orm/core'
+        import { createUidField, createStringField, createNumberField } from '@rattus-orm/core/field-types'
 
-        export class User extends Model {
+      export class User extends Model {
             static entity = 'user'
 
             static fields () {
                 return {
-                    id: this.uidField(),
-                    name: this.stringField(''),
-                    age: this.numberField(0)
+                    id: createUidField(this),
+                    name: createStringField(this, ''),
+                    age: createNumberField(this, 0)
                 }
             }
         }
@@ -107,7 +108,7 @@ export default defineConfig({
 
 #### Общий тип
 
-Используйте декоратор `@AttrField(value)` (или метод `this.attrField()`) для определения наиболее
+Используйте декоратор `@AttrField(value)` (или функцию `createAttrField`) для определения наиболее
 общего поля. Аргументом является значение поля по
 умолчанию, которое будет использоваться при создании
 новых данных, если поле отсутствует.
@@ -124,11 +125,11 @@ export class User extends Model {
 #### Примитивные типы
 Вы можете использовать атрибуты примитивного типа:
 `@StringField('')`, `@NumberField(0)` или `@BooleanFeild(false)`
-(для JS - `this.stringField()`, `this.numberField()` и `this.booleanField()`).
+(для JS - `createStringField`, `createNumberField`, и `createBooleanField`).
 Эти атрибуты по умолчанию обеспечивают приведение, которое
 преобразует данное значение в указанный тип.
 Например, `'0'` преобразуется в `0`, а `1`, в `true`.
-Как и в случае с `this.attrField()`, аргументом является
+Как и в случае с `createAttrField`, аргументом является
 значение по умолчанию.
 
 ```typescript
@@ -179,7 +180,7 @@ export class User extends Model {
 ```
 
 #### UID тип
-`@UidField()`  (или `this.uidField()` в JS) генерирует уникальный
+`@UidField()`  (или `createUidField` в JS) генерирует уникальный
 идентификатор, если значение для этого поля отсутствует.
 
 ```typescript
