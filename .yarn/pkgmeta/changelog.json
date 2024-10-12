@@ -493,6 +493,14 @@
       "commitMessages": [
         "⚙️ Refactor: attributes refactor to reduce bundle size ([#45](https://github.com/lyohaplotinka/rattus-orm/pull/45))"
       ]
+    },
+    {
+      "packageName": "Angular + RxJS",
+      "packageKey": "angular-rxjs",
+      "packageVersion": "0.2.2",
+      "commitMessages": [
+        "release(core): v0.4.0"
+      ]
     }
   ]
 }
