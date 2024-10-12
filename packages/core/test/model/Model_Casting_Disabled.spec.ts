@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { Model } from '../../src'
-import { NumberField, StringField, BooleanField, DateField } from '../../src/decorators'
+import { NumberField, StringField, BooleanField, DateField } from '../../src/attributes/field-types'
 
 describe('Disabling casting for model', () => {
   class User extends Model {

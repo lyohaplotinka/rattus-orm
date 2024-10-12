@@ -2,7 +2,8 @@ import { assertModel, createStore, fillState } from '@func-test/utils/Helpers'
 
 import type { Query } from '@/index'
 import { Model } from '@/index'
-import { AttrField, MorphTo, NumberField, StringField } from '@/decorators'
+import { MorphTo } from '@/attributes/field-relations'
+import { NumberField, StringField, AttrField } from '@/attributes/field-types'
 
 describe('feature/relations/morph_to_retrieve', () => {
   class Image extends Model {

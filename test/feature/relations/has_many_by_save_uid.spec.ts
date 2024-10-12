@@ -1,7 +1,8 @@
 import { assertState, createStore, mockUid } from '@func-test/utils/Helpers'
 
 import { Model } from '@/index'
-import { AttrField, HasManyBy, StringField, UidField } from '@/decorators'
+import { HasManyBy } from '@/attributes/field-relations'
+import { AttrField, StringField, UidField } from '@/attributes/field-types'
 
 describe('feature/relations/has_many_by_insert_uid', () => {
   beforeEach(() => {

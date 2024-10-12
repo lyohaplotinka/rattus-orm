@@ -12,7 +12,7 @@ yarn add @rattus-orm/core @rattus-orm/local-storage
 ### Базовый пример использования
 ```typescript
 import { createDatabase, Model } from '@rattus-orm/core'
-import { UidField, StringField } from '@rattus-orm/core/decorators'
+import { UidField, StringField } from '@rattus-orm/core/field-types'
 import { LocalStorageDataProvider } from '@rattus-orm/local-storage'
 
 class User extends Model {

@@ -1,5 +1,6 @@
-import { Relation } from '@/model/attributes/relations/relation'
-import { Uid } from '@/model/attributes/types/Uid'
+import { isKindOf, isRelation, uidKind } from '@/attributes/common/const'
+import type { Uid } from '@/attributes/field-types'
+import type { Relation } from '@/attributes/relations/classes/relation'
 import type { Model } from '@/model/Model'
 import { ArrayNormalizationSchema } from '@/normalization/schemas/array-normalization-schema'
 import { EntityNormalizationSchema } from '@/normalization/schemas/entity-normalization-schema'
@@ -134,7 +135,7 @@ export class Schema {
     keys.forEach((k) => {
       const attr = fields[k]
 
-      if (attr instanceof Uid) {
+      if (isKindOf<Uid>(attr, uidKind)) {
         attributes[k] = attr
       }
     })
@@ -152,7 +153,7 @@ export class Schema {
     for (const key in fields) {
       const field = fields[key]
 
-      if (field instanceof Relation) {
+      if (isRelation(field)) {
         definition[key] = field.define(this)
       }
     }

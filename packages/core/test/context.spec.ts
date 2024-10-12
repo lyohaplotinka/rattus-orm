@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { createRattusContext, RattusContext } from '../src/context/rattus-context'
 import { ObjectDataProvider } from '../src/data/object-data-provider'
 import { createDatabase, Model, Repository } from '../src'
-import { StringField } from '../src/decorators'
+import { StringField } from '../src/attributes/field-types'
 
 class Email extends Model {
   public static entity = 'email'

@@ -12,7 +12,8 @@ export default createTsupConfig(
   {
     'rattus-orm-core': './src/index.ts',
     'object-data-provider': './src/object-data-provider.ts',
-    decorators: './src/decorators.ts',
+    'field-types': './src/attributes/field-types.ts',
+    'field-relations': './src/attributes/field-relations.ts',
     ...buildEntries,
   },
   {

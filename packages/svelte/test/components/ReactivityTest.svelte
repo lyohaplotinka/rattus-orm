@@ -1,14 +1,15 @@
 <script>
   import { useRepository } from '../../dist/rattus-orm-svelte-provider'
   import { Model } from '@rattus-orm/core'
+  import { createNumberField, createStringField } from '@rattus-orm/core/field-types'
 
   class User extends Model {
     static entity = 'users'
 
     static fields() {
       return {
-        id: this.stringField(''),
-        age: this.numberField(0)
+        id: createStringField(this, ''),
+        age: createNumberField(this, 0)
       }
     }
   }

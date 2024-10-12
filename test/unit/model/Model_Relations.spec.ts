@@ -1,7 +1,8 @@
 import { createStore } from '@func-test/utils/Helpers'
 
 import { Model } from '@/index'
-import { AttrField, BelongsTo, HasMany, HasManyBy, HasOne, MorphOne, MorphTo } from '@/decorators'
+import { BelongsTo, HasMany, HasManyBy, HasOne, MorphOne, MorphTo } from '@/attributes/field-relations'
+import { AttrField } from '@/attributes/field-types'
 
 describe('unit/model/Model_Relations', () => {
   class User extends Model {

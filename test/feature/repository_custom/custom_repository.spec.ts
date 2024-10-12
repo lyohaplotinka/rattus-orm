@@ -1,7 +1,7 @@
 import { createStore } from '@func-test/utils/Helpers'
 
 import { Model, Repository } from '@/index'
-import { AttrField, StringField } from '@/decorators'
+import { StringField, AttrField } from '@/attributes/field-types'
 
 describe('feature/repository_custom/custom_repository', () => {
   it('can define a custom repository', async () => {

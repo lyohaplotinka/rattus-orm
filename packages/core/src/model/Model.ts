@@ -1,25 +1,13 @@
 import { isUnknownRecord } from '@core-shared-utils/isUnknownRecord'
 
+import { isKindOf, isRelation, morphToKind } from '@/attributes/common/const'
+import type { Attribute, Type } from '@/attributes/field-types'
+import type { MorphTo } from '@/attributes/relations/classes/morph-to'
+import type { Relation } from '@/attributes/relations/classes/relation'
 import type { Collection, Element, Item, RawModel } from '@/data/types'
-import { DateField } from '@/model/attributes/types/DateField'
-import type { Type } from '@/model/attributes/types/Type'
 import type { ModelConstructor } from '@/model/types'
 import { assert, isArray, isFunction, isNullish } from '@/support/utils'
 import type { Constructor } from '@/types'
-
-import type { Attribute } from './attributes/attribute'
-import { BelongsTo } from './attributes/relations/belongs-to'
-import { HasMany } from './attributes/relations/has-many'
-import { HasManyBy } from './attributes/relations/has-many-by'
-import { HasOne } from './attributes/relations/has-one'
-import { MorphOne } from './attributes/relations/morph-one'
-import { MorphTo } from './attributes/relations/morph-to'
-import { Relation } from './attributes/relations/relation'
-import { Attr } from './attributes/types/Attr'
-import { Boolean as Bool } from './attributes/types/Boolean'
-import { Number as Num } from './attributes/types/Number'
-import { String as Str } from './attributes/types/String'
-import { Uid } from './attributes/types/Uid'
 
 export type ModelFields = Record<string, Attribute<unknown>>
 export type ModelSchemas = Record<string, ModelFields>
@@ -127,147 +115,6 @@ export class Model {
     return new this(undefined, { fill: false }) as M
   }
 
-  /**
-   * Create a new Attr attribute instance.
-   *
-   * @param {any} value initial attribute value
-   */
-  public static attrField(value: any): Attr {
-    return this.createType(Attr, value)
-  }
-
-  /**
-   * Create a new String attribute instance.
-   *
-   * @param {string | null} value initial value, null if nullable
-   */
-  public static stringField(value: string | null): Str {
-    return this.createType(Str, value)
-  }
-
-  /**
-   * Create a new Number attribute instance.
-   *
-   * @param {number | null} value initial value, null if nullable
-   */
-  public static numberField(value: number | null): Num {
-    return this.createType(Num, value)
-  }
-
-  /**
-   * Create a new Boolean attribute instance.
-   *
-   * @param {boolean | null} value initial value, null if nullable
-   */
-  public static booleanField(value: boolean | null): Bool {
-    return this.createType(Bool, value)
-  }
-
-  /**
-   * Create a new Uid attribute instance.
-   */
-  public static uidField(): Uid {
-    return this.createType(Uid)
-  }
-
-  /**
-   * Create a new Date attribute instance.
-   *
-   * @param {Date | string | number | null} value initial value, null if nullable.
-   */
-  public static dateField(value: Date | string | number | null): DateField {
-    return this.createType(DateField, value)
-  }
-
-  /**
-   * Create a new HasOne relation instance.
-   *
-   * @param {ModelConstructor} related related model
-   * @param {string} foreignKey related model key
-   * @param {string} localKey this model key
-   */
-  public static hasOne(related: ModelConstructor<any>, foreignKey: string, localKey?: string): HasOne {
-    const model = this.thisAsModelConstructor().newRawInstance()
-    return new HasOne(model, related.newRawInstance(), foreignKey, localKey ?? model.$getLocalKey())
-  }
-
-  /**
-   * Create a new BelongsTo relation instance.
-   *
-   * @param {ModelConstructor} related related model
-   * @param {string} foreignKey model key
-   * @param {string} ownerKey related primary key
-   */
-  public static belongsTo(related: ModelConstructor<any>, foreignKey: string, ownerKey?: string): BelongsTo {
-    const instance = related.newRawInstance()
-    return new BelongsTo(
-      this.thisAsModelConstructor().newRawInstance(),
-      instance,
-      foreignKey,
-      ownerKey ?? instance.$getLocalKey(),
-    )
-  }
-
-  /**
-   * Create a new HasMany relation instance.
-   *
-   * @param {ModelConstructor} related related model
-   * @param {string} foreignKey related model key
-   * @param {string} localKey this model key
-   */
-  public static hasMany(related: ModelConstructor<any>, foreignKey: string, localKey?: string): HasMany {
-    const model = this.thisAsModelConstructor().newRawInstance()
-    return new HasMany(model, related.newRawInstance(), foreignKey, localKey ?? model.$getLocalKey())
-  }
-
-  /**
-   * Create a new HasManyBy relation instance.
-   *
-   * @param {ModelConstructor} related related model
-   * @param {string} foreignKey model key
-   * @param {string} ownerKey related model key
-   */
-  public static hasManyBy(related: ModelConstructor<Model>, foreignKey: string, ownerKey?: string): HasManyBy {
-    const instance = related.newRawInstance()
-    return new HasManyBy(
-      this.thisAsModelConstructor().newRawInstance(),
-      instance,
-      foreignKey,
-      ownerKey ?? instance.$getLocalKey(),
-    )
-  }
-
-  /**
-   * Create a new MorphOne relation instance.
-   *
-   * @param {ModelConstructor} related related model
-   * @param {string} id related model key
-   * @param {string} type morph type
-   * @param {string} localKey local key
-   */
-  public static morphOne(related: ModelConstructor<Model>, id: string, type: string, localKey?: string): MorphOne {
-    const model = this.thisAsModelConstructor().newRawInstance()
-    return new MorphOne(model, related.newRawInstance(), id, type, localKey ?? model.$getLocalKey())
-  }
-
-  /**
-   * Create a new MorphTo relation instance.
-   *
-   * @param {ModelConstructor[]} related related models
-   * @param {string} id related model key
-   * @param {string} type morph type
-   * @param {string} ownerKey owner key
-   */
-  public static morphTo(related: ModelConstructor<any>[], id: string, type: string, ownerKey: string = ''): MorphTo {
-    return new MorphTo(
-      this.thisAsModelConstructor().newRawInstance(),
-      related.map((model) => model.newRawInstance()),
-      id,
-      type,
-      ownerKey,
-    )
-  }
-
   protected static createType<T extends Type<any>>(TypeCtor: Constructor<T>, value?: any) {
     return new TypeCtor(this.thisAsModelConstructor().newRawInstance(), value)
   }
@@ -338,7 +185,7 @@ export class Model {
   public $fill(attributes: Element = {}, options: ModelOptions = {}): this {
     for (const [key, attr] of Object.entries(this.$fields())) {
       const value = attributes[key]
-      if (attr instanceof Relation && !(options.relations ?? true)) {
+      if (isRelation(attr) && !(options.relations ?? true)) {
         continue
       }
       this.$fillField(key, attr, value)
@@ -407,7 +254,7 @@ export class Model {
   public $getRelation(name: string): Relation {
     const relation = this.$fields()[name]
 
-    assert(relation instanceof Relation, [`Relationship [${name}] on model [${this.$entity()}] not found.`])
+    assert(isRelation(relation), [`Relationship [${name}] on model [${this.$entity()}] not found.`])
 
     return relation
   }
@@ -439,7 +286,7 @@ export class Model {
   public $toJson(options: ModelOptions = { relations: true }): RawModel<this> {
     return Object.entries(this.$fields()).reduce((result, [key, attr]) => {
       ;(result as any)[key] =
-        attr instanceof Relation && options.relations
+        isRelation(attr) && options.relations
           ? this.serializeRelation(this.getThisNonStrict()[key])
           : this.serializeValue(this.getThisNonStrict()[key])
       return result
@@ -463,7 +310,7 @@ export class Model {
   public $sanitize(record: Element): Element {
     return Object.entries(record).reduce<Element>((result, [key, value]) => {
       const attr = this.$fields()[key]
-      if (attr !== undefined && !(attr instanceof Relation)) {
+      if (attr !== undefined && !isRelation(attr)) {
         result[key] = attr.make(value)
       }
       return result
@@ -479,7 +326,7 @@ export class Model {
   public $sanitizeAndFill(record: Element): Element {
     return Object.entries(this.$fields()).reduce<Element>((result, [key, attr]) => {
       const value = record[key]
-      if (attr !== undefined && !(attr instanceof Relation)) {
+      if (attr !== undefined && !isRelation(attr)) {
         result[key] = attr.make(value)
       }
       return result
@@ -513,8 +360,9 @@ export class Model {
    */
   protected $fillField(key: string, attr: Attribute<unknown>, value: any): void {
     if (value !== undefined) {
-      this.getThisNonStrict()[key] =
-        attr instanceof MorphTo ? attr.make(value, this.getThisNonStrict()[attr.getType()]) : attr.make(value)
+      this.getThisNonStrict()[key] = isKindOf<MorphTo>(attr, morphToKind)
+        ? attr.make(value, this.getThisNonStrict()[attr.getType()])
+        : attr.make(value)
       return
     }
 

@@ -1,7 +1,8 @@
 import { createStore } from '@func-test/utils/Helpers'
 
 import { Model } from '@/index'
-import { HasMany, NumberField, StringField } from '@/decorators'
+import { HasMany } from '@/attributes/field-relations'
+import { StringField, NumberField } from '@/attributes/field-types'
 
 describe('performance/save_has_many_relation', () => {
   class User extends Model {

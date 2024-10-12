@@ -39,7 +39,7 @@ app
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { Model } from '@rattus-orm/core'
-import { UidField, StringField } from '@rattus-orm/core/decorators'
+import { UidField, StringField } from '@rattus-orm/core/field-types'
 import { useRepositoryComputed } from '@rattus-orm/pinia'
 
 class User extends Model {

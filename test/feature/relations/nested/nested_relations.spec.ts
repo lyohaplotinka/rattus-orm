@@ -1,7 +1,8 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
 import { Model } from '@/index'
-import { AttrField, BelongsTo, HasMany, StringField } from '@/decorators'
+import { HasMany, BelongsTo } from '@/attributes/field-relations'
+import { StringField, AttrField } from '@/attributes/field-types'
 
 describe('feature/relations/nested/nested_relations', () => {
   class User extends Model {

@@ -1,4 +1,4 @@
-import { BooleanField } from '../../src/model/decorators/attributes/types/BooleanField'
+import { BooleanField } from '../../src/attributes/types/decorators/BooleanField'
 import { Model } from '@/model/Model'
 
 describe('unit/model/Model_Attrs_Boolean', () => {

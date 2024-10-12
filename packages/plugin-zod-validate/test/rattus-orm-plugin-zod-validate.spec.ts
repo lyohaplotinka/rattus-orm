@@ -4,7 +4,7 @@ import { RattusZodValidationError } from '../src/exceptions/exceptions'
 import { isRattusZodValidationError, RattusZodValidationPlugin, ZodFieldType } from '../src'
 import { ObjectDataProvider } from '@rattus-orm/core/object-data-provider'
 import { z } from 'zod'
-import { AttrField, NumberField, StringField } from '@rattus-orm/core/decorators'
+import { AttrField, NumberField, StringField } from '@rattus-orm/core/field-types'
 
 export const createDb = (strict: boolean | string[] = true) => {
   return createDatabase({
@@ -61,6 +61,7 @@ describe('rattus-orm-plugin-zod-validate', () => {
       repo.save({ id: 'asd', name: 'test' })
       throw new Error('Error not happened!')
     } catch (e) {
+      console.log(e)
       expect(e).toBeInstanceOf(RattusZodValidationError)
       if (isRattusZodValidationError(e)) {
         expect(e.originalZodErrors[0].errors[0].path).toStrictEqual(['id'])

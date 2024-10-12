@@ -8,7 +8,7 @@ import {
 } from '@func-test/utils/Helpers'
 
 import { Model } from '@/index'
-import { NumberField, StringField } from '@/decorators'
+import { StringField, NumberField } from '@/attributes/field-types'
 
 describe('feature/repository/save', () => {
   class User extends Model {

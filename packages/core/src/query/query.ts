@@ -1,8 +1,9 @@
+import { isKindOf, isRelation, morphToKind } from '@/attributes/common/const'
+import type { MorphTo } from '@/attributes/relations/classes/morph-to'
+import type { Relation } from '@/attributes/relations/classes/relation'
 import { Constraintor } from '@/constraintor/constraintor'
 import type { Collection, Element, Elements, Entities, Item, ModulePath } from '@/data/types'
 import type { Database } from '@/database/database'
-import { MorphTo } from '@/model/attributes/relations/morph-to'
-import { Relation } from '@/model/attributes/relations/relation'
 import type { Model } from '@/model/Model'
 import { Normalizer } from '@/normalization/normalizer'
 import type { NormalizationSchemaParam } from '@/normalization/schemas/types'
@@ -579,9 +580,9 @@ export class Query<M extends Model = Model> extends Constraintor<M> implements Q
    */
   protected reviveRelations(model: M, schema: Element): M {
     Object.entries(this.model.$fields()).forEach(([key, attr]) => {
-      if (attr instanceof Relation && schema[key]) {
+      if (isRelation(attr) && schema[key]) {
         const relatedSchema = schema[key]
-        if (attr instanceof MorphTo) {
+        if (isKindOf<MorphTo>(attr, morphToKind)) {
           const relatedType = model.getThisNonStrict()[attr.getType()]
 
           model.getThisNonStrict()[key] = this.newQuery(relatedType).reviveOne(relatedSchema)

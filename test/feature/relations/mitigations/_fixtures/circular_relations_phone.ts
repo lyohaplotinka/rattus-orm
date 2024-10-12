@@ -1,5 +1,6 @@
 import { Model } from '@/index'
-import { AttrField, BelongsTo } from '@/decorators'
+import { BelongsTo } from '@/attributes/field-relations'
+import { AttrField } from '@/attributes/field-types'
 
 import User from './circular_relations_user'
 
