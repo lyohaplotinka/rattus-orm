@@ -501,6 +501,14 @@
       "commitMessages": [
         "release(core): v0.4.0"
       ]
+    },
+    {
+      "packageName": "LocalStorage",
+      "packageKey": "local-storage",
+      "packageVersion": "0.2.2",
+      "commitMessages": [
+        "release(core): v0.4.0"
+      ]
     }
   ]
 }
