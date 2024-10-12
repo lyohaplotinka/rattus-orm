@@ -550,6 +550,14 @@
       "commitMessages": [
         "release(core): v0.4.0"
       ]
+    },
+    {
+      "packageName": "Solid.js",
+      "packageKey": "solidjs",
+      "packageVersion": "0.1.2",
+      "commitMessages": [
+        "release(core): v0.4.0"
+      ]
     }
   ]
 }
