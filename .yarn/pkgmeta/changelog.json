@@ -566,6 +566,14 @@
       "commitMessages": [
         "release(core): v0.4.0"
       ]
+    },
+    {
+      "packageName": "Vuex",
+      "packageKey": "vuex",
+      "packageVersion": "0.2.2",
+      "commitMessages": [
+        "release(core): v0.4.0"
+      ]
     }
   ]
 }
