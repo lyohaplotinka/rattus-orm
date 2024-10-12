@@ -1,3 +1,7 @@
+# 2024/10/12
+### Core (0.4.0)
+* ⚙️ Refactor: attributes refactor to reduce bundle size ([#45](https://github.com/lyohaplotinka/rattus-orm/pull/45))
+
 # 2024/09/08
 ### Core (0.3.1)
 * ⚙️ Refactor: get rid of extra dependencies in prod build ([#44](https://github.com/lyohaplotinka/rattus-orm/pull/44))
