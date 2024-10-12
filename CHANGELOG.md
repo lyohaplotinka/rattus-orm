@@ -7,6 +7,9 @@
 * release(core): v0.4.0
 ### Pinia (0.2.2)
 * release(core): v0.4.0
+### Plugin Zod Validate (0.2.2)
+* release(core): v0.4.0
+* ⚙️ Refactor: attributes refactor to reduce bundle size ([#45](https://github.com/lyohaplotinka/rattus-orm/pull/45))
 
 # 2024/09/08
 ### Core (0.3.1)
