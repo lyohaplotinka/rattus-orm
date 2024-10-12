@@ -14,6 +14,8 @@
 * release(core): v0.4.0
 ### React Redux (0.2.2)
 * release(core): v0.4.0
+### React Signals (0.2.2)
+* release(core): v0.4.0
 
 # 2024/09/08
 ### Core (0.3.1)
