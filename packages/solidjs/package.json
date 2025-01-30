@@ -43,13 +43,13 @@
     "typecheck": "bash -c 'run -T tsc -p tsconfig.json --noEmit'"
   },
   "devDependencies": {
-    "@babel/plugin-syntax-explicit-resource-management": "^7.24.7",
+    "@babel/plugin-syntax-explicit-resource-management": "^7.25.9",
     "@rattus-orm/core": "workspace:^",
-    "@solidjs/testing-library": "^0.8.9",
+    "@solidjs/testing-library": "^0.8.10",
     "@types/jsdom": "^21.1.7",
-    "jsdom": "^24.1.1",
-    "solid-js": "^1.8.21",
-    "vite-plugin-solid": "^2.10.2"
+    "jsdom": "^24.1.3",
+    "solid-js": "^1.9.4",
+    "vite-plugin-solid": "^2.11.0"
   },
   "peerDependencies": {
     "@rattus-orm/core": "^0.4.0",

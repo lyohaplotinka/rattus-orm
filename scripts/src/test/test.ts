@@ -22,11 +22,11 @@ program
   .command('run-tests')
   .description('Run tests')
   .argument('[package]', 'for which packages we should run tests, comma-separated', 'all')
-  .option('-sl, --skip-local', 'skip local tests (inside packages/<package> dir)', false)
-  .option('-sf, --skip-functional', 'skip functional tests (inside ./tests)', false)
-  .option('-v, --verbose', 'show test logs', false)
-  .option('-lp, --local-pattern <pattern>', 'tests pattern for local tests', '')
-  .option('-fp, --functional-pattern <pattern>', 'tests pattern for functional tests', '')
+  .option('--sl, --skip-local', 'skip local tests (inside packages/<package> dir)', false)
+  .option('--sf, --skip-functional', 'skip functional tests (inside ./tests)', false)
+  .option('--v, --verbose', 'show test logs', false)
+  .option('--lp, --local-pattern <pattern>', 'tests pattern for local tests', '')
+  .option('--fp, --functional-pattern <pattern>', 'tests pattern for functional tests', '')
   .action(
     async (
       str: string,

@@ -45,8 +45,8 @@
   "devDependencies": {
     "@rattus-orm/core": "workspace:^",
     "@vue/test-utils": "^2.4.6",
-    "pinia": "^2.2.2",
-    "vue": "^3.4.38"
+    "pinia": "^2.3.1",
+    "vue": "^3.5.13"
   },
   "peerDependencies": {
     "@rattus-orm/core": "^0.4.0",

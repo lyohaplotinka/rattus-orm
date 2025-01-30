@@ -44,7 +44,7 @@
     "size": "run -T size-limit"
   },
   "dependencies": {
-    "zod": "^3.23.8"
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "@rattus-orm/core": "workspace:^"
