@@ -2102,7 +2102,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/plugin-syntax-explicit-resource-management@npm:^7.24.7":
+"@babel/plugin-syntax-explicit-resource-management@npm:^7.25.9":
   version: 7.25.9
   resolution: "@babel/plugin-syntax-explicit-resource-management@npm:7.25.9"
   dependencies:
@@ -7449,13 +7449,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@rattus-orm/solidjs@workspace:packages/solidjs"
   dependencies:
-    "@babel/plugin-syntax-explicit-resource-management": "npm:^7.24.7"
+    "@babel/plugin-syntax-explicit-resource-management": "npm:^7.25.9"
     "@rattus-orm/core": "workspace:^"
-    "@solidjs/testing-library": "npm:^0.8.9"
+    "@solidjs/testing-library": "npm:^0.8.10"
     "@types/jsdom": "npm:^21.1.7"
-    jsdom: "npm:^24.1.1"
-    solid-js: "npm:^1.8.21"
-    vite-plugin-solid: "npm:^2.10.2"
+    jsdom: "npm:^24.1.3"
+    solid-js: "npm:^1.9.4"
+    vite-plugin-solid: "npm:^2.11.0"
   peerDependencies:
     "@rattus-orm/core": ^0.4.0
     solid-js: "*"
@@ -8162,7 +8162,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@solidjs/testing-library@npm:^0.8.9":
+"@solidjs/testing-library@npm:^0.8.10":
   version: 0.8.10
   resolution: "@solidjs/testing-library@npm:0.8.10"
   dependencies:
@@ -16718,7 +16718,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsdom@npm:^24.1.1, jsdom@npm:^24.1.3":
+"jsdom@npm:^24.1.3":
   version: 24.1.3
   resolution: "jsdom@npm:24.1.3"
   dependencies:
@@ -23419,7 +23419,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"solid-js@npm:^1.8.21":
+"solid-js@npm:^1.9.4":
   version: 1.9.4
   resolution: "solid-js@npm:1.9.4"
   dependencies:
@@ -25440,7 +25440,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-plugin-solid@npm:^2.10.2":
+"vite-plugin-solid@npm:^2.11.0":
   version: 2.11.0
   resolution: "vite-plugin-solid@npm:2.11.0"
   dependencies:
