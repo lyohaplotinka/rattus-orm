@@ -14,10 +14,10 @@ export class TestUser extends Model {
   public static entity = 'testUser'
 
   @StringField('')
-  public declare id: string
+  declare public id: string
 
   @NumberField(0)
-  public declare age: number
+  declare public age: number
 }
 
 export class TestUserNoCasting extends TestUser {
@@ -37,11 +37,7 @@ export class TestUserNoCastingCustomRepo extends TestUserCustomRepo {
 }
 
 export function createBindSpy() {
-  const mocked = vi.spyOn(Function.prototype, 'bind').mockImplementation(function (
-    this: any,
-    thisArg: any,
-    ...args: any[]
-  ) {
+  return vi.spyOn(Function.prototype, 'bind').mockImplementation(function (this: any, thisArg: any, ...args: any[]) {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const func = this
     const boundFunction = function (...newArgs: any[]): any {
@@ -50,13 +46,6 @@ export function createBindSpy() {
     boundFunction.boundTo = thisArg
     return boundFunction
   })
-
-  return {
-    ...mocked,
-    [Symbol.dispose]: () => {
-      mocked.mockRestore()
-    },
-  }
 }
 
 export class TestDataProvider extends ObjectDataProvider {}
@@ -78,7 +67,7 @@ export function testMethodsBound<T extends UseRepository<any>>(
 ) {
   describe(`${name}: useRepository returns correctly bound methods`, () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    using _ = createBindSpy()
+    const mocked = createBindSpy()
 
     const useRepoResult = useRepo()
     it.each(uniq([...pullRepositoryKeys, ...keysInstanceof]))('%s has correct context', (methodName) => {
@@ -88,6 +77,8 @@ export function testMethodsBound<T extends UseRepository<any>>(
         expect((useRepoResult[methodName] as any).boundTo).toBeInstanceOf(Repository)
       }
     })
+
+    mocked.mockRestore()
   })
 }
 

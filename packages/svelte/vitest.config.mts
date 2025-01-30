@@ -2,9 +2,9 @@ import { defineConfig } from 'vitest/config'
 import { svelte } from '@sveltejs/vite-plugin-svelte';
 
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [
-    svelte({ hot: false })
+    svelte({ compilerOptions: { hmr: false } })
   ],
   test: {
     globals: true,
@@ -15,5 +15,8 @@ export default defineConfig({
     target: 'es2020',
     include: /\.(m?[jt]s|[jt]sx)$/,
     exclude: []
-  }
-})
+  },
+  resolve: {
+    conditions: mode === 'test' ? ['browser'] : [],
+  },
+}))
