@@ -83,6 +83,11 @@
       "import": "./dist/utils/vueTestUtils.mjs",
       "require": "./dist/utils/vueTestUtils.js",
       "types": "./dist/utils/vueTestUtils.d.ts"
+    },
+    "./utils/feedback": {
+      "import": "./dist/utils/feedback.mjs",
+      "require": "./dist/utils/feedback.js",
+      "types": "./dist/utils/feedback.d.ts"
     }
   },
   "files": [

@@ -1,3 +1,4 @@
+import { RattusOrmError } from '../../shared-utils/feedback'
 import { isDataProvider } from '../data/guards'
 import type { DataProvider } from '../data/types'
 import { createDatabase } from '../database/create-database'
@@ -40,8 +41,9 @@ export class RattusContext {
     } else if (isDataProvider(dataProviderOrDatabase)) {
       this.dataProvider = dataProviderOrDatabase
     } else {
-      throw new Error(
-        '[RattusContext] no dataProvider and mainDatabase passed to context. You should pass at least one of them.',
+      throw new RattusOrmError(
+        'no dataProvider and mainDatabase passed to context. You should pass at least one of them.',
+        'RattusContext',
       )
     }
   }
@@ -113,8 +115,9 @@ export function createRattusContext(params: RattusOrmInstallerOptions, dataProvi
   }
 
   if (!isDataProvider(dataProvider)) {
-    throw new Error(
-      '[CreateRattusContext] no dataProvider and mainDatabase passed to context. You should pass at least one of them.',
+    throw new RattusOrmError(
+      'No dataProvider and mainDatabase passed to context. You should pass at least one of them.',
+      'CreateRattusContext',
     )
   }
 

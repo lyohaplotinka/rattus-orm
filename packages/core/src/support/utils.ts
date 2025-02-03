@@ -1,3 +1,5 @@
+import { RattusOrmError } from '@core-shared-utils/feedback'
+
 /**
  * Check if the given value is the type of null.
  */
@@ -66,6 +68,6 @@ export function groupBy<T>(collection: T[], iteratee: (record: T) => string): { 
  */
 export function assert(condition: boolean, message: string[]): asserts condition {
   if (!condition) {
-    throw new Error(['[Rattus ORM]'].concat(message).join(' '))
+    throw new RattusOrmError(message.join(' '))
   }
 }

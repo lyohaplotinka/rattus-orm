@@ -1,3 +1,4 @@
+import { RattusOrmError } from '@core-shared-utils/feedback'
 import { isUnknownRecord } from '@core-shared-utils/isUnknownRecord'
 
 import { BaseSchema } from '@/normalization/schemas/base-schema'
@@ -58,7 +59,7 @@ export class ArrayNormalizationSchema extends BaseSchema<
       return this.definition
     }
     if (!this.schemaAttribute) {
-      throw new Error('No schema attribute')
+      throw new RattusOrmError('No schema attribute')
     }
     const attr = this.schemaAttribute(input, input)
     return (this.definition as any)[attr]
@@ -71,6 +72,6 @@ export class ArrayNormalizationSchema extends BaseSchema<
     if (isUnknownRecord(input)) {
       return Object.values(input)
     }
-    throw new Error('Unknown input type')
+    throw new RattusOrmError('Unknown input type')
   }
 }
