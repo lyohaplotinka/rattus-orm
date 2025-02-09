@@ -8,7 +8,6 @@ import { ObjectDataProvider } from '../src/object-data-provider'
 import type { UseRepository } from './integrationsHelpers'
 import { pullRepositoryKeys } from './integrationsHelpers'
 import { isInitializedContext } from './integrationsHelpers'
-import { isUnknownRecord } from './isUnknownRecord'
 
 export class TestUser extends Model {
   public static entity = 'testUser'
@@ -50,13 +49,12 @@ export function createBindSpy() {
 
 export class TestDataProvider extends ObjectDataProvider {}
 
-export function testContext(context: any, provider: Constructor<DataProvider>, connection = 'entities') {
+export function testContext(context: RattusContext, provider: Constructor<DataProvider>, connection = 'entities') {
   expect(isInitializedContext(context)).toEqual(true)
-  expect(context.$database).toBeInstanceOf(Database)
-  expect(isUnknownRecord(context.$databases)).toEqual(true)
-  expect(context.$databases[connection]).toBeInstanceOf(Database)
-  expect(context.$database.getConnection()).toEqual(connection)
-  expect(context.$database.getDataProvider()).toBeInstanceOf(provider)
+  expect(context.getDatabase()).toBeInstanceOf(Database)
+  expect(context.getDatabase(connection)).toBeInstanceOf(Database)
+  expect(context.getDatabase().getConnection()).toEqual(connection)
+  expect(context.getDatabase().getDataProvider()).toBeInstanceOf(provider)
 }
 
 export function testMethodsBound<T extends UseRepository<any>>(
@@ -104,7 +102,7 @@ export function testMethodsNotRuined(name: string, useRepo: UseRepository<any>, 
 export function testCustomConnection(name: string, context: RattusContext) {
   it(`${name}: custom connection works`, () => {
     context.$repo(TestUser).save({ id: '333', age: 20 } satisfies RawModel<TestUser>)
-    const dataProvider = context.$database.getDataProvider()
+    const dataProvider = context.getDatabase().getDataProvider()
 
     context.createDatabase('custom30').setDataProvider(dataProvider).start()
     context.$repo(TestUser, 'custom30').save({ id: '333', age: 30 } satisfies RawModel<TestUser>)

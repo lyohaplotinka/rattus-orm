@@ -5,7 +5,7 @@ import React, { createContext, type PropsWithChildren, useRef } from 'react'
 
 import { ReactMobxDataProvider } from '../data-provider/react-mobx-data-provider'
 
-export const RattusContext = createContext<Partial<RattusContextCore>>({ $database: undefined, $databases: undefined })
+export const RattusContext = createContext<Partial<RattusContextCore>>({})
 
 export function RattusProvider(props: PropsWithChildren<RattusOrmInstallerOptions>) {
   const rattusContext = useRef(createRattusContext(props, new ReactMobxDataProvider()))

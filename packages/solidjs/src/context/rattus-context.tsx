@@ -6,7 +6,7 @@ import { createContext } from 'solid-js'
 
 import { SolidjsDataProvider } from '../data-provider/solidjs-data-provider'
 
-export const RattusContext = createContext<Partial<RattusContextCore>>({ $database: undefined, $databases: undefined })
+export const RattusContext = createContext<Partial<RattusContextCore>>()
 
 export function RattusProvider(props: ParentProps<RattusOrmInstallerOptions>) {
   const rattusContext = createRattusContext(props, new SolidjsDataProvider())

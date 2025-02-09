@@ -12,7 +12,7 @@ type RattusProviderProps = RattusOrmInstallerOptions & {
   sideReducers?: Record<string, Reducer>
 }
 
-export const RattusContext = createContext<Partial<RattusContextCore>>({ $database: undefined, $databases: undefined })
+export const RattusContext = createContext<Partial<RattusContextCore>>({})
 
 export function RattusProvider(props: PropsWithChildren<RattusProviderProps>) {
   const rattusContext = useRef(createRattusContext(props, new ReactReduxDataProvider(props.store, props.sideReducers)))

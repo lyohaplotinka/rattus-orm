@@ -16,9 +16,8 @@ describe('plugin: vuex', () => {
     const { $rattusContext } = app._context.config.globalProperties.$store
 
     expect($rattusContext).toBeInstanceOf(RattusContext)
-    expect($rattusContext.$database.isStarted()).toEqual(true)
-    expect($rattusContext.$database.getConnection()).toEqual('entities')
-    expect(Object.keys($rattusContext.$databases)).toEqual(['entities'])
+    expect($rattusContext.getDatabase().isStarted()).toEqual(true)
+    expect($rattusContext.getDatabase().getConnection()).toEqual('entities')
   })
 
   it('plugin params respect custom databases', () => {
@@ -29,8 +28,8 @@ describe('plugin: vuex', () => {
     const { $rattusContext } = app._context.config.globalProperties.$store
 
     expect($rattusContext).toBeInstanceOf(RattusContext)
-    expect($rattusContext.$database.isStarted()).toEqual(false)
-    expect($rattusContext.$database.getConnection()).toEqual('custom')
+    expect($rattusContext.getDatabase().isStarted()).toEqual(false)
+    expect($rattusContext.getDatabase().getConnection()).toEqual('custom')
   })
 
   it('installs Vuex ORM to the store', () => {
@@ -41,10 +40,10 @@ describe('plugin: vuex', () => {
     ])
 
     const store = app._context.config.globalProperties.$store
-    const spyRepo = vi.spyOn(store.$rattusContext.$database, 'getRepository')
+    const spyRepo = vi.spyOn(store.$rattusContext.getDatabase(), 'getRepository')
 
     expect(store.state).toEqual({ entities: {} })
-    expect(store.$rattusContext.$database.isStarted()).toBe(true)
+    expect(store.$rattusContext.getDatabase().isStarted()).toBe(true)
     expect(store.$rattusContext.$repo(TestUser).database.getConnection()).toEqual('entities')
     expect(store.$rattusContext.$repo(TestUser).getModel()).toBeInstanceOf(TestUser)
     expect(spyRepo).toHaveBeenCalledOnce()

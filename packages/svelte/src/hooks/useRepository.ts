@@ -48,7 +48,7 @@ export function useRepository<R extends Repository<InstanceType<M>>, M extends t
   connection?: string,
 ): UseComputedRepository<R, M> {
   const repo = useRepositoryForDynamicContext(useRattusContext, model, connection)
-  const db = useRattusContext().$database
+  const db = useRattusContext().getDatabase()
 
   return {
     ...repo,
