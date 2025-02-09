@@ -1,4 +1,5 @@
 import type { Elements, ModulePath, State } from '@rattus-orm/core'
+import { RattusOrmError } from '@rattus-orm/core/utils/feedback'
 import { isUnknownRecord } from '@rattus-orm/core/utils/isUnknownRecord'
 
 export const RATTUS_LS_PREFIX = '$rattusorm-lsprefix$'
@@ -80,7 +81,7 @@ export class LocalStorageStore {
   protected readState(): void {
     const chunksNumber = this.getChunksNumber()
     if (!chunksNumber) {
-      throw new Error(`Cannot read chunksNumber for ${this.key}`)
+      throw new RattusOrmError(`Cannot read chunksNumber for ${this.key}`, 'RattusLocalStorageStore')
     }
 
     let result: string = ''
@@ -88,14 +89,14 @@ export class LocalStorageStore {
       const key = this.getChunkNameKey(i)
       const chunk = localStorage.getItem(key)
       if (chunk === null) {
-        throw new Error(`Missing chunk ${key}`)
+        throw new RattusOrmError(`Missing chunk ${key}`, 'RattusLocalStorageStore')
       }
       result += chunk
     }
 
     const parsed = JSON.parse(result)
     if (!isUnknownRecord(parsed) || !isUnknownRecord(parsed.data)) {
-      throw new Error('Data is malformed')
+      throw new RattusOrmError('Data is malformed', 'RattusLocalStorageStore')
     }
 
     this.state = parsed as State

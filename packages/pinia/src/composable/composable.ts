@@ -1,4 +1,5 @@
 import type { Model, Repository } from '@rattus-orm/core'
+import { RattusOrmError } from '@rattus-orm/core/utils/feedback'
 import { useRepositoryForDynamicContext } from '@rattus-orm/core/utils/integrationsHelpers'
 import type { RattusContext } from '@rattus-orm/core/utils/rattus-context'
 import type { UseComputedRepository } from '@rattus-orm/core/utils/vueComposableUtils'
@@ -12,11 +13,11 @@ export function useRattusContext(): RattusContext {
   if (!context) {
     const currentInstance = getCurrentInstance()
     if (!currentInstance) {
-      throw new Error('[useRattusContext] cannot find current Vue instance')
+      throw new RattusOrmError('Cannot find current Vue instance', 'useRattusContext')
     }
     context = currentInstance.appContext.config.globalProperties.$rattusContext
     if (!context) {
-      throw new Error('[useRattusContext] rattus context not found. Did you use plugin correctly?')
+      throw new RattusOrmError('Rattus context not found. Did you use plugin correctly?', 'useRattusContext')
     }
   }
 
