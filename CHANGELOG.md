@@ -16,6 +16,9 @@
 ### React Redux (0.2.3)
 * release(core): v0.4.1
 * ⚙️ Refactor: implement database manager ([#46](https://github.com/lyohaplotinka/rattus-orm/pull/46))
+### React Signals (0.2.3)
+* release(core): v0.4.1
+* ⚙️ Refactor: implement database manager ([#46](https://github.com/lyohaplotinka/rattus-orm/pull/46))
 
 # 2024/10/12
 ### Core (0.4.0)
