@@ -27,6 +27,14 @@ export class RattusContext {
     }
   }
 
+  /**
+   * Creates and initializes a new database using the provided connection string and data provider.
+   * If no default database exists, the newly created database is set as the default.
+   * The newly created database is added to the database manager.
+   *
+   * @param {string} [connection='entities'] - The connection string used to create the database.
+   * @return {Database} The newly created and initialized database object.
+   */
   public createDatabase(connection = 'entities'): Database {
     const newDb = createDatabase({ connection, dataProvider: this.defaultDataProvider }).start()
     if (!this.hasDefaultDatabase()) {
@@ -37,7 +45,16 @@ export class RattusContext {
     return newDb
   }
 
-  public $repo<R extends Repository<InstanceType<M>>, M extends typeof Model = typeof Model>(
+  /**
+   * Retrieves a repository instance for the specified model and connection parameters. If a repository
+   * for the given model and connection is already cached, it returns the cached instance; otherwise,
+   * it creates a new one, caches it, and then returns it.
+   *
+   * @param model The model class for which the repository needs to be retrieved.
+   * @param connectionParam An optional parameter specifying the connection to use. If not provided, a default connection is used.
+   * @return The repository instance for the specified model and connection.
+   */
+  public getRepository<R extends Repository<InstanceType<M>>, M extends typeof Model = typeof Model>(
     model: M,
     connectionParam?: string,
   ): R {
@@ -55,10 +72,31 @@ export class RattusContext {
     return repo
   }
 
+  /**
+   * @deprecated will be removed in the next minor version, please use RattusContext.getRepository
+   */
+  public $repo<R extends Repository<InstanceType<M>>, M extends typeof Model = typeof Model>(
+    model: M,
+    connectionParam?: string,
+  ): R {
+    return this.getRepository<R, M>(model, connectionParam)
+  }
+
+  /**
+   * Retrieves the instance of the DatabaseManager.
+   *
+   * @return {DatabaseManager} The current instance of the DatabaseManager.
+   */
   public getDatabaseManager(): DatabaseManager {
     return this.databaseManager
   }
 
+  /**
+   * Retrieves the Database instance associated with the provided connection parameter.
+   *
+   * @param {string} [connectionParam] - An optional parameter specifying the connection identifier to use. If not provided, the default connection will be used.
+   * @return {Database} The Database instance associated with the specified or default connection.
+   */
   public getDatabase(connectionParam?: string): Database {
     const connection = this.getConnectionToOperateWith(connectionParam)
     return this.databaseManager.get(connection)
@@ -94,6 +132,14 @@ function registerCustomRepos(db: Database, repos: RattusOrmInstallerOptions['cus
   }
 }
 
+/**
+ * Creates a new instance of RattusContext with the provided parameters.
+ *
+ * @param {RattusOrmInstallerOptions} params - The configuration options for creating the context, including database, connection, and custom repositories.
+ * @param {DataProvider} [dataProvider] - An optional data provider for the context.
+ * @return {RattusContext} An initialized RattusContext instance based on provided configurations.
+ * @throws {RattusOrmError} If neither a dataProvider nor mainDatabase is provided.
+ */
 export function createRattusContext(params: RattusOrmInstallerOptions, dataProvider?: DataProvider): RattusContext {
   if (params.database) {
     registerCustomRepos(params.database, params.customRepositories)

@@ -2,11 +2,7 @@ import * as Apis from '@site/src/api-docs/index'
 import CodeInline from '@theme/CodeInline'
 import Heading from '@theme/Heading'
 
-import type {
-  ModuleJsonDocs,
-  PublicMethod,
-  PublicProperty,
-} from '../../../../../../scripts/compilable/api-docs-builder/types'
+import type { ModuleJsonDocs, PublicMethod, PublicProperty } from '../../../../../../scripts/src/api-docs-builder/types'
 import Styles from './styles.module.scss'
 
 function isPublicMethod(value: unknown): value is PublicMethod {
