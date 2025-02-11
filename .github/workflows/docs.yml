@@ -1,51 +1,51 @@
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
 name: Docs
 
 on:
   push:
     branches: ['main']
     paths: ['packages/docs/**']
-  workflow_dispatch:
 
 jobs:
-  deploy:
+  build:
+    name: Build documentation
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [18]
     steps:
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - uses: actions/checkout@v4
         with:
-          node-version: ${{ matrix.node-version }}
-
-      - uses: actions/checkout@v3
-
-      - uses: actions/cache@v4
-        id: yarn-cache
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
         with:
-          path: node_modules
-          key: ${{ runner.os }}-test-${{ hashFiles('**/yarn.lock') }}
+          node-version: 22
+          cache: yarn
 
-      - name: Install deps
-        if: steps.yarn-cache.outputs.cache-hit != 'true'
-        run: yarn install
+      - name: Install dependencies
+        run: yarn
 
       - name: Build scripts
         run: yarn build:scripts
 
-      - name: Build
+      - name: Build website
         run: yarn build:docs
 
-      - name: Upload artifact
+      - name: Upload Build Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './packages/docs/build/.'
+          path: packages/docs/build
 
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
