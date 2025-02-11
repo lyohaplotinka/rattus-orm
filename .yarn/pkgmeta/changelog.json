@@ -638,6 +638,15 @@
         "release(core): v0.4.1",
         "⚙️ Refactor: implement database manager ([#46](https://github.com/lyohaplotinka/rattus-orm/pull/46))"
       ]
+    },
+    {
+      "packageName": "Solid.js",
+      "packageKey": "solidjs",
+      "packageVersion": "0.1.3",
+      "commitMessages": [
+        "release(core): v0.4.1",
+        "⚙️ Refactor: implement database manager ([#46](https://github.com/lyohaplotinka/rattus-orm/pull/46))"
+      ]
     }
   ]
 }
