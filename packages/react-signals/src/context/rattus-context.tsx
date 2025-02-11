@@ -7,7 +7,7 @@ import React from 'react'
 
 import { ReactSignalsDataProvider } from '../index'
 
-export const RattusContext = createContext<Partial<RattusContextCore>>({ $database: undefined, $databases: undefined })
+export const RattusContext = createContext<Partial<RattusContextCore>>({})
 
 export function RattusProvider(props: PropsWithChildren<RattusOrmInstallerOptions>) {
   const rattusContext = useRef(createRattusContext(props, new ReactSignalsDataProvider()))

@@ -1,5 +1,6 @@
 import type { DataProvider, Elements, ModulePath, SerializedStorage, State } from '@rattus-orm/core'
 import { DataProviderHelpers } from '@rattus-orm/core'
+import { RattusOrmError } from '@rattus-orm/core/utils/feedback'
 
 import { LocalStorageStore } from './local-storage-store'
 
@@ -78,7 +79,7 @@ export class LocalStorageDataProvider extends DataProviderHelpers implements Dat
   protected getLocalStorageStore(modulePath: ModulePath) {
     const storeId = this.getModulePathAsString(modulePath)
     if (!this.modules.has(storeId)) {
-      throw new Error(`[LocalStorageDataProvider] store "${storeId}" does not exists`)
+      throw new RattusOrmError(`store "${storeId}" does not exists`, 'LocalStorageDataProvider')
     }
 
     return this.modules.get(storeId)!

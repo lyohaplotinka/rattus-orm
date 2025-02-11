@@ -18,9 +18,10 @@ describe('unit/model/Model_Attrs_Date', () => {
     expect(new User({ date: null }).date.getTime()).toBe(0)
 
     // valid date cases
-    expect(new User({ date: '0' }).date.getTime()).toBe(946670400000)
+    expect(new User({ date: '0' }).date.getTime()).toBe(new Date('0').getTime())
     expect(new User({ date: 0 }).date.getTime()).toBe(0) // nullish date is expected here
-    expect(new User({ date: '2024-08-16T19:30:38.794Z' }).date.getTime()).toBe(1723836638794)
+    const dateStr = '2024-08-16T19:30:38.794Z'
+    expect(new User({ date: dateStr }).date.getTime()).toBe(new Date(dateStr).getTime())
     expect(new User({ date: 1723836638794 }).date.getTime()).toBe(1723836638794)
   })
 

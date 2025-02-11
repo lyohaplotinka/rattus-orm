@@ -18,17 +18,19 @@ export class RattusContextService {
 
   constructor(@Inject(RATTUS_CONFIG) config?: RattusOrmInstallerOptions) {
     this.context = createRattusContext(config ?? {}, new ObjectDataProvider())
-    this.decorateDatabase(this.context.$database)
+    const database = this.context.getDatabase()
+    const decorated = this.decorateDatabase(database)
+    this.context.getDatabaseManager().addDatabase(decorated as Database)
   }
 
   public getDatabase(connection?: string): DecoratedDatabase {
-    return connection ? this.context.$databases[connection] : this.context.$database
+    return this.context.getDatabase(connection)
   }
 
   public createDatabase(connection: string): Database {
-    const db = this.context.createDatabase(connection, false)
-    this.decorateDatabase(db)
-    return db
+    const db = this.context.createDatabase(connection)
+    const decoratedDb = this.decorateDatabase(db)
+    return decoratedDb as Database
   }
 
   public getRepository<R extends Repository<InstanceType<M>>, M extends typeof Model = typeof Model>(

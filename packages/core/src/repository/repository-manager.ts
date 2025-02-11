@@ -1,3 +1,5 @@
+import { RattusOrmError } from '@core-shared-utils/feedback'
+
 import type { Database } from '@/database/database'
 import type { Model } from '@/model/Model'
 import type { Constructor } from '@/types'
@@ -13,7 +15,7 @@ export class RepositoryManager {
   ) {
     const repoInstance = new repoCtor(database)
     if (!repoInstance.use) {
-      throw new Error('[Rattus ORM] custom repositories should have public "use" property with related model')
+      throw new RattusOrmError('Custom repositories should have public "use" property with related model')
     }
     const entity = repoInstance.use.entity
     this.repoConstructors.set(entity, repoCtor)

@@ -24,28 +24,22 @@ describe('context.spec.ts', () => {
     const context = createRattusContext({ connection: 'entities' }, new ObjectDataProvider())
 
     expect(context).toBeInstanceOf(RattusContext)
-    expect(context.$database.isStarted()).toEqual(true)
-    expect(context.$database.getConnection()).toEqual('entities')
-    expect(context.$databases).toStrictEqual({
-      entities: context.$database,
-    })
+    expect(context.getDatabase().isStarted()).toEqual(true)
+    expect(context.getDatabase().getConnection()).toEqual('entities')
   })
 
   it('respects connection name', () => {
     const context = createRattusContext({ connection: 'custom' }, new ObjectDataProvider())
-    expect(context.$database.getConnection()).toEqual('custom')
+    expect(context.getDatabase().getConnection()).toEqual('custom')
   })
 
   it('respects custom created database', () => {
     const db = createDatabase({ connection: 'third', dataProvider: new ObjectDataProvider() })
     const context = createRattusContext({ database: db })
 
-    expect(context.$database).toEqual(db)
-    expect(context.$database.getConnection()).toEqual('third')
-    expect(context.$databases).toEqual({
-      third: db,
-    })
-    expect(context.$database.isStarted()).toEqual(false)
+    expect(context.getDatabase()).toEqual(db)
+    expect(context.getDatabase().getConnection()).toEqual('third')
+    expect(context.getDatabase().isStarted()).toEqual(false)
   })
 
   it('$repo method allows retrieve custom repos', () => {

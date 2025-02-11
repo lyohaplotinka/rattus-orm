@@ -2,51 +2,20 @@
   "name": "RattusContext",
   "publicMethods": [
     {
-      "name": "constructor",
-      "typeParams": [],
-      "params": [
-        {
-          "declaration": "dataProvider: DataProvider",
-          "name": "dataProvider",
-          "description": "chosen DataProvider"
-        }
-      ],
-      "returnType": "",
-      "description": "Create context with DataProvider passed"
-    },
-    {
-      "name": "constructor",
-      "typeParams": [],
-      "params": [
-        {
-          "declaration": "mainDatabase: Database",
-          "name": "mainDatabase",
-          "description": "main database in context"
-        }
-      ],
-      "returnType": "",
-      "description": "Create context with Database passed. DataProvider will be inferred from database."
-    },
-    {
       "name": "createDatabase",
       "typeParams": [],
       "params": [
         {
-          "declaration": "connection: string = 'entities'",
+          "declaration": "connection = 'entities'",
           "name": "connection",
-          "description": "connection name for new database"
-        },
-        {
-          "declaration": "isPrimary = false",
-          "name": "isPrimary",
-          "description": "should new database become \"main\" database"
+          "description": "- The connection string used to create the database."
         }
       ],
       "returnType": "Database",
-      "description": "Create database, save it in context and return."
+      "description": "Creates and initializes a new database using the provided connection string and data provider. If no default database exists, the newly created database is set as the default. The newly created database is added to the database manager."
     },
     {
-      "name": "$repo",
+      "name": "getRepository",
       "typeParams": [
         "R extends Repository<InstanceType<M>>",
         "M extends typeof Model = typeof Model"
@@ -55,30 +24,37 @@
         {
           "declaration": "model: M",
           "name": "model",
-          "description": "model for which a repository is needed"
+          "description": "The model class for which the repository needs to be retrieved."
         },
         {
-          "declaration": "connection?: string",
-          "name": "connection",
-          "description": "database connection name"
+          "declaration": "connectionParam?: string",
+          "name": "connectionParam",
+          "description": "An optional parameter specifying the connection to use. If not provided, a default connection is used."
         }
       ],
       "returnType": "R",
-      "description": "Get repository for model from database from specific connection"
-    }
-  ],
-  "publicProperties": [
-    {
-      "name": "$database",
-      "type": "Database",
-      "initialValue": "",
-      "description": "instance of first (main) database"
+      "description": "Retrieves a repository instance for the specified model and connection parameters. If a repository for the given model and connection is already cached, it returns the cached instance; otherwise, it creates a new one, caches it, and then returns it."
     },
     {
-      "name": "$databases",
-      "type": "Record<string, Database>",
-      "initialValue": "{}",
-      "description": "all databases storage"
+      "name": "getDatabaseManager",
+      "typeParams": [],
+      "params": [],
+      "returnType": "DatabaseManager",
+      "description": "Retrieves the instance of the DatabaseManager."
+    },
+    {
+      "name": "getDatabase",
+      "typeParams": [],
+      "params": [
+        {
+          "declaration": "connectionParam?: string",
+          "name": "connectionParam",
+          "description": "- An optional parameter specifying the connection identifier to use. If not provided, the default connection will be used."
+        }
+      ],
+      "returnType": "Database",
+      "description": "Retrieves the Database instance associated with the provided connection parameter."
     }
-  ]
+  ],
+  "publicProperties": []
 }

@@ -1,129 +1,161 @@
+import { RattusOrmError } from '../../shared-utils/feedback'
 import { isDataProvider } from '../data/guards'
 import type { DataProvider } from '../data/types'
 import { createDatabase } from '../database/create-database'
 import { Database } from '../database/database'
+import type { DatabaseManager } from '../database/database-manager'
+import { databaseManager } from '../database/database-manager'
 import type { Model } from '../model/Model'
 import type { Repository } from '../repository/repository'
 import type { RattusOrmInstallerOptions } from './types'
 
 export class RattusContext {
-  /**
-   * instance of first (main) database
-   */
-  public $database: Database
-  /**
-   * all databases storage
-   */
-  public $databases: Record<string, Database> = {}
+  protected readonly databaseManager: DatabaseManager = databaseManager
+  protected readonly repositoryCache = new Map<string, Repository>()
+  protected readonly defaultDataProvider: DataProvider
+  protected defaultDatabaseConnection: string | undefined
 
-  protected storedRepos = new Map<string, Repository>()
-  protected readonly dataProvider: DataProvider
-
-  /**
-   * Create context with DataProvider passed
-   *
-   * @param {DataProvider} dataProvider chosen DataProvider
-   */
   constructor(dataProvider: DataProvider)
-  /**
-   * Create context with Database passed. DataProvider will be inferred
-   * from database.
-   *
-   * @param {DataProvider} mainDatabase main database in context
-   */
   constructor(mainDatabase: Database)
-  constructor(dataProviderOrDatabase: DataProvider | Database) {
-    if (dataProviderOrDatabase instanceof Database) {
-      this.dataProvider = dataProviderOrDatabase.getDataProvider()
-      this.$database = dataProviderOrDatabase
-      this.$databases[dataProviderOrDatabase.getConnection()] = dataProviderOrDatabase
-    } else if (isDataProvider(dataProviderOrDatabase)) {
-      this.dataProvider = dataProviderOrDatabase
-    } else {
-      throw new Error(
-        '[RattusContext] no dataProvider and mainDatabase passed to context. You should pass at least one of them.',
-      )
+  constructor(arg: DataProvider | Database) {
+    if (isDataProvider(arg)) {
+      this.defaultDataProvider = arg
+    } else if (arg instanceof Database) {
+      this.defaultDataProvider = arg.getDataProvider()
+      this.defaultDatabaseConnection = arg.getConnection()
+      this.databaseManager.addDatabase(arg)
     }
   }
 
   /**
-   * Create database, save it in context and return.
+   * Creates and initializes a new database using the provided connection string and data provider.
+   * If no default database exists, the newly created database is set as the default.
+   * The newly created database is added to the database manager.
    *
-   * @param {string} connection connection name for new database
-   * @param {Boolean} isPrimary should new database become "main" database
+   * @param {string} [connection='entities'] - The connection string used to create the database.
+   * @return {Database} The newly created and initialized database object.
    */
-  public createDatabase(connection: string = 'entities', isPrimary = false): Database {
-    const newDb = createDatabase({
-      connection,
-      dataProvider: this.dataProvider,
-    })
-    newDb.start()
-
-    if (isPrimary && !this.$database) {
-      this.$database = newDb
+  public createDatabase(connection = 'entities'): Database {
+    const newDb = createDatabase({ connection, dataProvider: this.defaultDataProvider }).start()
+    if (!this.hasDefaultDatabase()) {
+      this.defaultDatabaseConnection = connection
     }
-    this.$databases[connection] = newDb
 
+    this.databaseManager.addDatabase(newDb)
     return newDb
   }
 
   /**
-   * Get repository for model from database from specific connection
+   * Retrieves a repository instance for the specified model and connection parameters. If a repository
+   * for the given model and connection is already cached, it returns the cached instance; otherwise,
+   * it creates a new one, caches it, and then returns it.
    *
-   * @param {Model} model model for which a repository is needed
-   * @param {string} [connection] database connection name
-   * @returns {R extends Repository} Repository instance (or custom if generic argument passed)
+   * @param model The model class for which the repository needs to be retrieved.
+   * @param connectionParam An optional parameter specifying the connection to use. If not provided, a default connection is used.
+   * @return The repository instance for the specified model and connection.
    */
-  public $repo<R extends Repository<InstanceType<M>>, M extends typeof Model = typeof Model>(
+  public getRepository<R extends Repository<InstanceType<M>>, M extends typeof Model = typeof Model>(
     model: M,
-    connection?: string,
+    connectionParam?: string,
   ): R {
-    const cacheKey = [connection, model.entity].join('::')
-    if (this.storedRepos.has(cacheKey)) {
-      return this.storedRepos.get(cacheKey) as R
+    const connection = this.getConnectionToOperateWith(connectionParam)
+    const repoCacheKey = this.getRepositoryCacheKey(connection, model)
+
+    if (this.repositoryCache.has(repoCacheKey)) {
+      return this.repositoryCache.get(repoCacheKey) as R
     }
 
-    let localDb: Database
-
-    if (connection) {
-      if (!(connection in this.$databases)) {
-        localDb = this.createDatabase(connection, false)
-        localDb.start()
-      } else {
-        localDb = this.$databases[connection]
-      }
-    } else {
-      localDb = this.$database
-    }
-
-    const repo = localDb.getRepository<R>(model)
-    this.storedRepos.set(cacheKey, repo)
+    const database = this.getDatabaseForConnection(connection)
+    const repo = database.getRepository(model) as R
+    this.repositoryCache.set(repoCacheKey, repo)
 
     return repo
   }
-}
 
-export function createRattusContext(params: RattusOrmInstallerOptions, dataProvider?: DataProvider): RattusContext {
-  if (params.database) {
-    for (const repo of params.customRepositories ?? []) {
-      params.database.registerCustomRepository(repo)
+  /**
+   * @deprecated will be removed in the next minor version, please use RattusContext.getRepository
+   */
+  public $repo<R extends Repository<InstanceType<M>>, M extends typeof Model = typeof Model>(
+    model: M,
+    connectionParam?: string,
+  ): R {
+    return this.getRepository<R, M>(model, connectionParam)
+  }
+
+  /**
+   * Retrieves the instance of the DatabaseManager.
+   *
+   * @return {DatabaseManager} The current instance of the DatabaseManager.
+   */
+  public getDatabaseManager(): DatabaseManager {
+    return this.databaseManager
+  }
+
+  /**
+   * Retrieves the Database instance associated with the provided connection parameter.
+   *
+   * @param {string} [connectionParam] - An optional parameter specifying the connection identifier to use. If not provided, the default connection will be used.
+   * @return {Database} The Database instance associated with the specified or default connection.
+   */
+  public getDatabase(connectionParam?: string): Database {
+    const connection = this.getConnectionToOperateWith(connectionParam)
+    return this.databaseManager.get(connection)
+  }
+
+  protected getDatabaseForConnection(connection: string) {
+    if (this.databaseManager.has(connection)) {
+      return this.databaseManager.get(connection)!
     }
 
+    return this.createDatabase(connection)
+  }
+
+  protected hasDefaultDatabase() {
+    return !!this.defaultDatabaseConnection
+  }
+
+  protected getConnectionToOperateWith(connectionParam: string | undefined): string {
+    if (!connectionParam && !this.defaultDatabaseConnection) {
+      throw new RattusOrmError('No database connection for desired operation', 'RattusContext')
+    }
+    return (connectionParam || this.defaultDatabaseConnection) as string
+  }
+
+  protected getRepositoryCacheKey(connection: string, model: typeof Model) {
+    return `${connection}::${model.entity}`
+  }
+}
+
+function registerCustomRepos(db: Database, repos: RattusOrmInstallerOptions['customRepositories'] = []) {
+  for (const repo of repos) {
+    db.registerCustomRepository(repo)
+  }
+}
+
+/**
+ * Creates a new instance of RattusContext with the provided parameters.
+ *
+ * @param {RattusOrmInstallerOptions} params - The configuration options for creating the context, including database, connection, and custom repositories.
+ * @param {DataProvider} [dataProvider] - An optional data provider for the context.
+ * @return {RattusContext} An initialized RattusContext instance based on provided configurations.
+ * @throws {RattusOrmError} If neither a dataProvider nor mainDatabase is provided.
+ */
+export function createRattusContext(params: RattusOrmInstallerOptions, dataProvider?: DataProvider): RattusContext {
+  if (params.database) {
+    registerCustomRepos(params.database, params.customRepositories)
     return new RattusContext(params.database)
   }
 
   if (!isDataProvider(dataProvider)) {
-    throw new Error(
-      '[CreateRattusContext] no dataProvider and mainDatabase passed to context. You should pass at least one of them.',
+    throw new RattusOrmError(
+      'No dataProvider and mainDatabase passed to context. You should pass at least one of them.',
+      'CreateRattusContext',
     )
   }
 
   const context = new RattusContext(dataProvider)
-  const db = context.createDatabase(params.connection, true)
-
-  for (const repo of params.customRepositories ?? []) {
-    db.registerCustomRepository(repo)
-  }
+  const db = context.createDatabase(params.connection)
+  registerCustomRepos(db, params.customRepositories)
 
   if (params.plugins?.length) {
     params.plugins.forEach((plugin) => db.use(plugin))

@@ -1,5 +1,8 @@
+import { RattusOrmError } from '@core-shared-utils/feedback'
+
 import { isRelation } from '@/attributes/common/const'
 import type { DataProvider, Elements, SerializedStorage, State } from '@/data/types'
+import { newDbSymbol } from '@/database/const'
 import type { DatabasePlugin } from '@/database/types'
 import { EventsDataProviderWrapper } from '@/events/events-data-provider-wrapper'
 import type {
@@ -46,6 +49,14 @@ export class Database {
   protected schemas: Schemas = {}
 
   protected started: boolean = false
+
+  constructor(key?: symbol) {
+    if (key !== newDbSymbol) {
+      throw new RattusOrmError(
+        'Database constructor is not supposed to be called directly. Use createDatabase instead.',
+      )
+    }
+  }
 
   /**
    * Whether the database has already been installed or not.

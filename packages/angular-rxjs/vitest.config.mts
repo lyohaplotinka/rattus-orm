@@ -2,8 +2,7 @@ import angular from '@analogjs/vite-plugin-angular'
 import { defineConfig } from 'vite'
 
 export default defineConfig(({ mode }) => ({
-  // @ts-ignore
-  plugins: [angular.default()],
+  plugins: [angular()],
   test: {
     globals: true,
     setupFiles: ['test/setup-tests.ts'],

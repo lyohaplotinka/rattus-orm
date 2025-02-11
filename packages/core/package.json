@@ -83,6 +83,11 @@
       "import": "./dist/utils/vueTestUtils.mjs",
       "require": "./dist/utils/vueTestUtils.js",
       "types": "./dist/utils/vueTestUtils.d.ts"
+    },
+    "./utils/feedback": {
+      "import": "./dist/utils/feedback.mjs",
+      "require": "./dist/utils/feedback.js",
+      "types": "./dist/utils/feedback.d.ts"
     }
   },
   "files": [
@@ -97,10 +102,10 @@
     "size": "run -T size-limit"
   },
   "devDependencies": {
-    "@types/react": "^18.3.3",
+    "@types/react": "^18.3.18",
     "normalizr": "^3.6.2",
     "react": "^18.3.1",
-    "vue": "^3.4.38"
+    "vue": "^3.5.13"
   },
   "rattusMeta": {
     "title": "Core",

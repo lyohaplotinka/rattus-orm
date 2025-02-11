@@ -15,9 +15,8 @@ describe('plugin: pinia', () => {
     const context = mockApp._context.config.globalProperties.$rattusContext
 
     expect(context).toBeInstanceOf(RattusContext)
-    expect(context.$database.isStarted()).toEqual(true)
-    expect(context.$database.getConnection()).toEqual('entities')
-    expect(Object.keys(context.$databases)).toEqual(['entities'])
+    expect(context.getDatabase().isStarted()).toEqual(true)
+    expect(context.getDatabase().getConnection()).toEqual('entities')
   })
 
   it('plugin params respect custom databases', () => {
@@ -28,8 +27,8 @@ describe('plugin: pinia', () => {
     const context = mockApp._context.config.globalProperties.$rattusContext
 
     expect(context).toBeInstanceOf(RattusContext)
-    expect(context.$database.isStarted()).toEqual(false)
-    expect(context.$database.getConnection()).toEqual('custom')
+    expect(context.getDatabase().isStarted()).toEqual(false)
+    expect(context.getDatabase().getConnection()).toEqual('custom')
   })
 
   it('installs Vuex ORM to the store', () => {
@@ -37,7 +36,7 @@ describe('plugin: pinia', () => {
     const expected = {}
 
     const globalProps = app._context.config.globalProperties
-    const db = globalProps.$rattusContext.$database
+    const db = globalProps.$rattusContext.getDatabase()
 
     expect(db).toBeInstanceOf(Database)
 

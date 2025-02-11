@@ -1,3 +1,5 @@
+import { rattusWarn } from '@core-shared-utils/feedback'
+
 import type { Model } from '../../../model/Model'
 import { isNumber, isString } from '../../../support/utils'
 import { Type } from './Type'
@@ -22,7 +24,7 @@ export class DateAttr extends Type<Date | null> {
       return value
     }
 
-    console.warn('[Rattus ORM] invalid date detected, nullish date returned')
+    rattusWarn('invalid date detected, nullish date returned')
     return new Date(0)
   }
 }
