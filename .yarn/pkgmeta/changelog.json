@@ -575,5 +575,15 @@
         "release(core): v0.4.0"
       ]
     }
+  ],
+  "2025/02/11": [
+    {
+      "packageName": "Core",
+      "packageKey": "core",
+      "packageVersion": "0.4.1",
+      "commitMessages": [
+        "⚙️ Refactor: implement database manager ([#46](https://github.com/lyohaplotinka/rattus-orm/pull/46))"
+      ]
+    }
   ]
 }

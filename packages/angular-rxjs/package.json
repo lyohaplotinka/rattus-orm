@@ -57,7 +57,7 @@
   "peerDependencies": {
     "@angular/common": ">=17.0.0",
     "@angular/core": ">=17.0.0",
-    "@rattus-orm/core": "^0.4.0"
+    "@rattus-orm/core": "^0.4.1"
   },
   "sideEffects": false,
   "rattusMeta": {
