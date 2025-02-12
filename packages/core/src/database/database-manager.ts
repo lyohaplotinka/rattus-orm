@@ -76,7 +76,7 @@ class DatabaseManager extends BaseManager<Database> {
 
   protected getConnectionToOperateWith(connectionParam: string | undefined): string {
     if (!connectionParam && !this.defaultDatabaseConnection) {
-      throw new RattusOrmError('No database connection for desired operation', 'RattusContext')
+      throw new RattusOrmError('No database connection for desired operation', 'DatabaseManager')
     }
     return (connectionParam || this.defaultDatabaseConnection) as string
   }
