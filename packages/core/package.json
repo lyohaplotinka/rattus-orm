@@ -88,6 +88,11 @@
       "import": "./dist/utils/feedback.mjs",
       "require": "./dist/utils/feedback.js",
       "types": "./dist/utils/feedback.d.ts"
+    },
+    "./utils/contextBootstrap": {
+      "import": "./dist/utils/contextBootstrap.mjs",
+      "require": "./dist/utils/contextBootstrap.js",
+      "types": "./dist/utils/contextBootstrap.d.ts"
     }
   },
   "files": [

@@ -1,13 +1,12 @@
 import { uniq } from 'lodash-es'
 import { expect, vi } from 'vitest'
 
-import { type Constructor, Database, type DataProvider, Model, type RawModel, Repository } from '../src'
+import { Model, type RawModel, Repository } from '../src'
 import { NumberField, StringField } from '../src/attributes/field-types'
-import type { RattusContext } from '../src/context/rattus-context'
+import { databaseManager } from '../src/database/database-manager'
 import { ObjectDataProvider } from '../src/object-data-provider'
 import type { UseRepository } from './integrationsHelpers'
 import { pullRepositoryKeys } from './integrationsHelpers'
-import { isInitializedContext } from './integrationsHelpers'
 
 export class TestUser extends Model {
   public static entity = 'testUser'
@@ -48,14 +47,6 @@ export function createBindSpy() {
 }
 
 export class TestDataProvider extends ObjectDataProvider {}
-
-export function testContext(context: RattusContext, provider: Constructor<DataProvider>, connection = 'entities') {
-  expect(isInitializedContext(context)).toEqual(true)
-  expect(context.getDatabase()).toBeInstanceOf(Database)
-  expect(context.getDatabase(connection)).toBeInstanceOf(Database)
-  expect(context.getDatabase().getConnection()).toEqual(connection)
-  expect(context.getDatabase().getDataProvider()).toBeInstanceOf(provider)
-}
 
 export function testMethodsBound<T extends UseRepository<any>>(
   name: string,
@@ -99,15 +90,15 @@ export function testMethodsNotRuined(name: string, useRepo: UseRepository<any>, 
   })
 }
 
-export function testCustomConnection(name: string, context: RattusContext) {
+export function testCustomConnection(name: string) {
   it(`${name}: custom connection works`, () => {
-    context.$repo(TestUser).save({ id: '333', age: 20 } satisfies RawModel<TestUser>)
-    const dataProvider = context.getDatabase().getDataProvider()
+    databaseManager.getRepository(TestUser).save({ id: '333', age: 20 } satisfies RawModel<TestUser>)
+    const dataProvider = databaseManager.getDatabase().getDataProvider()
 
-    context.createDatabase('custom30').setDataProvider(dataProvider).start()
-    context.$repo(TestUser, 'custom30').save({ id: '333', age: 30 } satisfies RawModel<TestUser>)
+    databaseManager.createDatabase('custom30').setDataProvider(dataProvider).start()
+    databaseManager.getRepository(TestUser, 'custom30').save({ id: '333', age: 30 } satisfies RawModel<TestUser>)
 
-    expect(context.$repo(TestUser).find('333')?.age).toEqual(20)
-    expect(context.$repo(TestUser, 'custom30').find('333')?.age).toEqual(30)
+    expect(databaseManager.getRepository(TestUser).find('333')?.age).toEqual(20)
+    expect(databaseManager.getRepository(TestUser, 'custom30').find('333')?.age).toEqual(30)
   })
 }

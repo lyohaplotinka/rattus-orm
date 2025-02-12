@@ -7,11 +7,10 @@ import React from 'react'
 import type { Constructor } from 'type-fest'
 import { describe } from 'vitest'
 
-import type { DataProvider, RattusOrmInstallerOptions } from '../src'
-import { createDatabase } from '../src'
-import type { RattusContext } from '../src/context/rattus-context'
-import type { UseRepository } from './integrationsHelpers'
-import { testContext, testCustomConnection, testMethodsBound, testMethodsNotRuined, TestUser } from './testUtils'
+import type { RattusOrmInstallerOptions, UseRepository } from './shared-utils/integrationsHelpers'
+import { testCustomConnection, testMethodsBound, testMethodsNotRuined, TestUser } from './shared-utils/testUtils'
+import type { DataProvider } from './src'
+import { createDatabase } from './src'
 
 type RattusRenderProps<T> = {
   ContextComp: JSXElementConstructor<any>
@@ -86,7 +85,6 @@ type ReactIntegrationTestParams = {
   name: string
   Provider: JSXElementConstructor<any>
   useRepositoryHook: (model: any) => UseRepository<any>
-  useRattusContextHook: () => RattusContext
   ProviderConstructor: Constructor<DataProvider>
   providerArgsGetter?: () => any[]
   bootstrap?: () => Record<string, any>
@@ -96,7 +94,6 @@ export function createReactIntegrationTest({
   name,
   Provider,
   bootstrap,
-  useRattusContextHook,
   useRepositoryHook,
   ProviderConstructor,
   providerArgsGetter,
@@ -116,11 +113,6 @@ export function createReactIntegrationTest({
       const TestComponent = componentsWrapper
         ? componentsWrapper(createTestComponent(useRattusContextHook))
         : createTestComponent(useRattusContextHook)
-
-      it(`${name}: context valid`, () => {
-        const res = renderHook(useRattusContextHook)
-        testContext(res, ProviderConstructor)
-      })
 
       it(`${name}: context params respect custom databases`, () => {
         const database = createDatabase({

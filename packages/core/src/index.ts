@@ -1,4 +1,3 @@
-export * from './context/types'
 export * from './data/data-provider-helpers'
 export * from './data/types'
 export * from './database/create-database'

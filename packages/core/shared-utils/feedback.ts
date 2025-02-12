@@ -1,8 +1,9 @@
 export class RattusOrmError extends Error {
   public name = 'RattusOrmError'
 
-  constructor(message: string, tag = 'RattusOrm') {
-    super(`[${tag}] ${message}`)
+  constructor(message: string, tagParam = 'RattusOrm') {
+    const tag = tagParam === 'RattusOrm' ? '[RattusOrm]' : `[RattusOrm][${tagParam}]`
+    super(`${tag} ${message}`)
   }
 }
 
