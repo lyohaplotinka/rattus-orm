@@ -1,5 +1,5 @@
 import { newDbSymbol } from '@/database/const'
-import { databaseManager } from '@/database/database-manager'
+import { getDatabaseManager } from '@/database/database-manager'
 import { assert } from '@/support/utils'
 
 import { Database } from './database'
@@ -18,7 +18,7 @@ export function createDatabase(params: CreateDatabaseFunctionParameters): Databa
     db.use(plugin)
   }
 
-  databaseManager.add(db.getConnection(), db)
+  getDatabaseManager().add(db.getConnection(), db)
 
   return db
 }

@@ -9,7 +9,7 @@ import { assert } from '@/support/utils'
 
 import type { Database } from './database'
 
-export class DatabaseManager extends BaseManager<Database> {
+class DatabaseManager extends BaseManager<Database> {
   protected readonly repositoryCache = new Map<string, Repository>()
   protected defaultDataProvider: DataProvider | undefined
   protected defaultDatabaseConnection: string | undefined
@@ -86,4 +86,6 @@ export class DatabaseManager extends BaseManager<Database> {
   }
 }
 
-export const databaseManager = new DatabaseManager()
+const databaseManagerSingleton = new DatabaseManager()
+
+export const getDatabaseManager = () => databaseManagerSingleton

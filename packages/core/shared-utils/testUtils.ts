@@ -3,7 +3,7 @@ import { expect, vi } from 'vitest'
 
 import { Model, type RawModel, Repository } from '../src'
 import { NumberField, StringField } from '../src/attributes/field-types'
-import { databaseManager } from '../src/database/database-manager'
+import { getDatabaseManager } from '../src/database/database-manager'
 import { ObjectDataProvider } from '../src/object-data-provider'
 import type { UseRepository } from './integrationsHelpers'
 import { pullRepositoryKeys } from './integrationsHelpers'
@@ -92,13 +92,17 @@ export function testMethodsNotRuined(name: string, useRepo: UseRepository<any>, 
 
 export function testCustomConnection(name: string) {
   it(`${name}: custom connection works`, () => {
-    databaseManager.getRepository(TestUser).save({ id: '333', age: 20 } satisfies RawModel<TestUser>)
-    const dataProvider = databaseManager.getDatabase().getDataProvider()
+    getDatabaseManager()
+      .getRepository(TestUser)
+      .save({ id: '333', age: 20 } satisfies RawModel<TestUser>)
+    const dataProvider = getDatabaseManager().getDatabase().getDataProvider()
 
-    databaseManager.createDatabase('custom30').setDataProvider(dataProvider).start()
-    databaseManager.getRepository(TestUser, 'custom30').save({ id: '333', age: 30 } satisfies RawModel<TestUser>)
+    getDatabaseManager().createDatabase('custom30').setDataProvider(dataProvider).start()
+    getDatabaseManager()
+      .getRepository(TestUser, 'custom30')
+      .save({ id: '333', age: 30 } satisfies RawModel<TestUser>)
 
-    expect(databaseManager.getRepository(TestUser).find('333')?.age).toEqual(20)
-    expect(databaseManager.getRepository(TestUser, 'custom30').find('333')?.age).toEqual(30)
+    expect(getDatabaseManager().getRepository(TestUser).find('333')?.age).toEqual(20)
+    expect(getDatabaseManager().getRepository(TestUser, 'custom30').find('333')?.age).toEqual(30)
   })
 }

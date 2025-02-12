@@ -1,6 +1,6 @@
 import type { Constructor, Database, DatabasePlugin, DataProvider, Model, Repository } from '../src'
 import { isDataProvider } from '../src/data/guards'
-import { databaseManager } from '../src/database/database-manager'
+import { getDatabaseManager } from '../src/database/database-manager'
 import { isFunction, isString } from '../src/support/utils'
 import { RattusOrmError } from './feedback'
 
@@ -31,7 +31,7 @@ export function useRepositoryForDynamicContext<
   R extends Repository<InstanceType<M>>,
   M extends typeof Model = typeof Model,
 >(model: M, connection: string = 'entities'): UseRepository<R> {
-  const repo = databaseManager.getRepository<R, M>(model, connection)
+  const repo = getDatabaseManager().getRepository<R, M>(model, connection)
   const allRepoKeys = getAllKeys(repo)
   const result = {} as UseRepository<R>
 
@@ -81,7 +81,7 @@ export type RattusOrmInstallerOptions = {
 export function contextBootstrap(params: RattusOrmInstallerOptions, dataProvider?: DataProvider) {
   if (params.database) {
     registerCustomRepos(params.database, params.customRepositories)
-    databaseManager.addDatabase(params.database)
+    getDatabaseManager().addDatabase(params.database)
     return params.database
   }
 
@@ -92,7 +92,7 @@ export function contextBootstrap(params: RattusOrmInstallerOptions, dataProvider
     )
   }
 
-  const db = databaseManager.createDatabase(params.connection, dataProvider)
+  const db = getDatabaseManager().createDatabase(params.connection, dataProvider)
   registerCustomRepos(db, params.customRepositories)
 
   if (params.plugins?.length) {
