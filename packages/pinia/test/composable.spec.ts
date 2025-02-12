@@ -1,9 +1,8 @@
 import { describe, expect } from 'vitest'
 import { computed, nextTick } from 'vue'
-import { installRattusORM, useRepository, useRattusContext, PiniaDataProvider } from '../src'
+import { installRattusORM, useRepository } from '../src'
 import { createPinia } from 'pinia'
 import {
-  testContext,
   testCustomConnection,
   testMethodsBound,
   testMethodsNotRuined,
@@ -11,6 +10,7 @@ import {
 } from '@rattus-orm/core/utils/testUtils'
 import { renderHookWithContext, renderWithContext } from '@rattus-orm/core/utils/vueTestUtils'
 import { isComputed } from '@rattus-orm/core/utils/vueComposableUtils'
+import { getDatabaseManager } from '@rattus-orm/core'
 
 const renderPiniaHook = <T>(hook: () => T): T => {
   return renderHookWithContext({
@@ -20,10 +20,6 @@ const renderPiniaHook = <T>(hook: () => T): T => {
 }
 
 describe('composable: pinia', () => {
-  it('has correct context', () => {
-    testContext(renderPiniaHook(useRattusContext), PiniaDataProvider)
-  })
-
   testMethodsBound(
     'pinia',
     () => renderPiniaHook(() => useRepository(TestUser)),
@@ -36,7 +32,7 @@ describe('composable: pinia', () => {
     renderPiniaHook(() => useRepository(TestUser)),
   )
 
-  testCustomConnection('pinia', renderPiniaHook(useRattusContext))
+  testCustomConnection('pinia')
 
   it('useRepository: returns reactive data', async () => {
     const wrapper = renderWithContext({
@@ -52,8 +48,7 @@ describe('composable: pinia', () => {
       plugins: [createPinia(), installRattusORM()],
     })
 
-    const rattusContext = wrapper.getCurrentComponent().appContext.config.globalProperties.$rattusContext
-    const repo = rattusContext.$repo(TestUser)
+    const repo = getDatabaseManager().getRepository(TestUser)
 
     expect(wrapper.text()).toStrictEqual('Age: 23')
     repo.query().update({ id: '1', age: 25 })

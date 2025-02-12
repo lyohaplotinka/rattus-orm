@@ -1,11 +1,7 @@
-import type { RattusContext } from '@rattus-orm/core/utils/rattus-context'
-import type { Pinia, Store } from 'pinia'
+import type { Pinia } from 'pinia'
 
 interface ComponentCustomPropertiesBase {
-  $rattusContext: RattusContext
-
   $pinia: Pinia
-  _pStores?: Record<string, Store>
 }
 
 declare module 'vue' {
