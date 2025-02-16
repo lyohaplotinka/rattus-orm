@@ -1,9 +1,9 @@
 import { uniq } from 'lodash-es'
-import { expect, vi } from 'vitest'
+import { afterAll, expect, vi } from 'vitest'
 
-import { Model, type RawModel, Repository } from '../src'
+import type { Constructor, DataProvider, RawModel } from '../src'
+import { Database, getDatabaseManager, Model, Repository } from '../src'
 import { NumberField, StringField } from '../src/attributes/field-types'
-import { getDatabaseManager } from '../src/database/database-manager'
 import { ObjectDataProvider } from '../src/object-data-provider'
 import type { UseRepository } from './integrationsHelpers'
 import { pullRepositoryKeys } from './integrationsHelpers'
@@ -35,7 +35,11 @@ export class TestUserNoCastingCustomRepo extends TestUserCustomRepo {
 }
 
 export function createBindSpy() {
-  return vi.spyOn(Function.prototype, 'bind').mockImplementation(function (this: any, thisArg: any, ...args: any[]) {
+  const mocked = vi.spyOn(Function.prototype, 'bind').mockImplementation(function (
+    this: any,
+    thisArg: any,
+    ...args: any[]
+  ) {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const func = this
     const boundFunction = function (...newArgs: any[]): any {
@@ -44,9 +48,20 @@ export function createBindSpy() {
     boundFunction.boundTo = thisArg
     return boundFunction
   })
+
+  afterAll(() => {
+    mocked?.mockRestore()
+  })
 }
 
 export class TestDataProvider extends ObjectDataProvider {}
+
+export function testBootstrap(provider: Constructor<DataProvider>, connection = 'entities') {
+  expect(getDatabaseManager().getDatabase()).toBeInstanceOf(Database)
+  expect(getDatabaseManager().getDatabase(connection)).toBeInstanceOf(Database)
+  expect(getDatabaseManager().getDatabase().getConnection()).toEqual(connection)
+  expect(getDatabaseManager().getDatabase().getDataProvider()).toBeInstanceOf(provider)
+}
 
 export function testMethodsBound<T extends UseRepository<any>>(
   name: string,
@@ -56,18 +71,14 @@ export function testMethodsBound<T extends UseRepository<any>>(
 ) {
   describe(`${name}: useRepository returns correctly bound methods`, () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const mocked = createBindSpy()
-
-    const useRepoResult = useRepo()
     it.each(uniq([...pullRepositoryKeys, ...keysInstanceof]))('%s has correct context', (methodName) => {
+      const useRepoResult = useRepo()
       if (keysInstanceof.includes(methodName)) {
         expect(checker(useRepoResult[methodName](() => {}))).toBe(true)
       } else {
         expect((useRepoResult[methodName] as any).boundTo).toBeInstanceOf(Repository)
       }
     })
-
-    mocked.mockRestore()
   })
 }
 

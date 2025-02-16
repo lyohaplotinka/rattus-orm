@@ -1,7 +1,6 @@
-import type { RattusOrmInstallerOptions } from '@rattus-orm/core'
-import type { RattusContext as RattusContextCore } from '@rattus-orm/core/utils/rattus-context'
-import { createRattusContext } from '@rattus-orm/core/utils/rattus-context'
-import React, { createContext, type PropsWithChildren, useRef } from 'react'
+import type { RattusOrmInstallerOptions } from '@rattus-orm/core/utils/integrationsHelpers'
+import { contextBootstrap } from '@rattus-orm/core/utils/integrationsHelpers'
+import React, { createContext, type PropsWithChildren } from 'react'
 import { Provider } from 'react-redux'
 import type { Reducer, Store } from 'redux'
 
@@ -12,13 +11,13 @@ type RattusProviderProps = RattusOrmInstallerOptions & {
   sideReducers?: Record<string, Reducer>
 }
 
-export const RattusContext = createContext<Partial<RattusContextCore>>({})
+export const RattusContext = createContext<undefined>(undefined)
 
 export function RattusProvider(props: PropsWithChildren<RattusProviderProps>) {
-  const rattusContext = useRef(createRattusContext(props, new ReactReduxDataProvider(props.store, props.sideReducers)))
+  contextBootstrap(props, new ReactReduxDataProvider(props.store, props.sideReducers))
 
   return (
-    <RattusContext.Provider value={rattusContext.current}>
+    <RattusContext.Provider value={undefined}>
       <Provider store={props.store}>{props.children}</Provider>
     </RattusContext.Provider>
   )

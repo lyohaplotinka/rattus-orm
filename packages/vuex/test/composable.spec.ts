@@ -1,7 +1,7 @@
 import { describe, expect } from 'vitest'
 import { computed, nextTick } from 'vue'
 import { createStore } from 'vuex'
-import { installRattusORM, useRepository } from '../src'
+import { installRattusORM, useRepository, VuexDataProvider } from '../src'
 import { renderHookWithContext, renderWithContext } from '@rattus-orm/core/utils/vueTestUtils'
 import { isComputed } from '@rattus-orm/core/utils/vueComposableUtils'
 import {
@@ -9,6 +9,8 @@ import {
   testMethodsNotRuined,
   TestUser,
   testCustomConnection,
+  createBindSpy,
+  testBootstrap,
 } from '@rattus-orm/core/utils/testUtils'
 import { getDatabaseManager } from '@rattus-orm/core'
 
@@ -24,6 +26,13 @@ const renderVuexHook = <T>(hook: () => T): T => {
 }
 
 describe('composable: vuex', () => {
+  it('vuex: context valid', () => {
+    renderVuexHook(() => true)
+    testBootstrap(VuexDataProvider)
+  })
+
+  createBindSpy()
+
   testMethodsBound(
     'vuex',
     () => renderVuexHook(() => useRepository(TestUser)),

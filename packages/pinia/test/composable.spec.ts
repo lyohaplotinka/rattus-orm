@@ -1,8 +1,10 @@
 import { describe, expect } from 'vitest'
 import { computed, nextTick } from 'vue'
-import { installRattusORM, useRepository } from '../src'
+import { installRattusORM, PiniaDataProvider, useRepository } from '../src'
 import { createPinia } from 'pinia'
 import {
+  createBindSpy,
+  testBootstrap,
   testCustomConnection,
   testMethodsBound,
   testMethodsNotRuined,
@@ -20,6 +22,13 @@ const renderPiniaHook = <T>(hook: () => T): T => {
 }
 
 describe('composable: pinia', () => {
+  it('vuex: context valid', () => {
+    renderPiniaHook(() => true)
+    testBootstrap(PiniaDataProvider)
+  })
+
+  createBindSpy()
+
   testMethodsBound(
     'pinia',
     () => renderPiniaHook(() => useRepository(TestUser)),
