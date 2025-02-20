@@ -4,11 +4,15 @@ import { describe, beforeEach, it, expect } from 'vitest'
 import { RattusContextService } from '../src/context/rattus-context.service'
 import { RattusOrmModule } from '../src/public-api'
 import { RattusBehaviorSubject } from '../src/rxjs/rattus-behavior-subject'
-import { createDatabase } from '@rattus-orm/core'
 import { RattusZodValidationPlugin } from '@rattus-orm/plugin-zod-validate'
 import { TestUserNoCasting, TestUserNoCastingCustomRepo, TestDataProvider } from '@rattus-orm/core/utils/testUtils'
+import { createDatabase, getDatabaseManager } from '@rattus-orm/core'
 
 describe('RattusContextService', () => {
+  beforeEach(() => {
+    getDatabaseManager().clear()
+  })
+
   describe('basic', () => {
     let service: RattusContextService
 

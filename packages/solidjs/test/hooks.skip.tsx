@@ -1,3 +1,4 @@
+// @ts-nocheck
 /** @jsxImportSource solid-js */
 /** @jsxRuntime automatic */
 import '@testing-library/jest-dom/vitest'

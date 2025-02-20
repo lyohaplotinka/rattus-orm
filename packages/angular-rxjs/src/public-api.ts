@@ -3,7 +3,7 @@
  */
 import type { ModuleWithProviders } from '@angular/core'
 import { NgModule } from '@angular/core'
-import type { RattusOrmInstallerOptions } from '@rattus-orm/core'
+import type { RattusOrmInstallerOptions } from '@rattus-orm/core/utils/integrationsHelpers'
 
 import { RATTUS_CONFIG } from './const/const'
 import { RattusContextService } from './context/rattus-context.service'
