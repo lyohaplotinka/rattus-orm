@@ -6,9 +6,6 @@ on:
       - main
   workflow_dispatch:
 
-env:
-  DEPS_KEY: deps-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
-
 jobs:
   install-deps:
     name: Install dependencies
@@ -24,7 +21,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: node_modules
-          key: ${{ env.DEPS_KEY }}
+          key: deps-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
 
       - name: Install dependencies
         if: steps.cache-key.outputs.cache-hit != 'true'
@@ -42,7 +39,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: node_modules
-          key: ${{ env.DEPS_KEY }}
+          key: deps-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
 
       - name: Build scripts
         run: yarn build:scripts
@@ -59,7 +56,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: node_modules
-          key: ${{ env.DEPS_KEY }}
+          key: deps-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
 
       - name: Run tests
         run: yarn test
@@ -76,7 +73,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: node_modules
-          key: ${{ env.DEPS_KEY }}
+          key: deps-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
 
       - name: Build packages
         run: yarn build
@@ -93,7 +90,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: node_modules
-          key: ${{ env.DEPS_KEY }}
+          key: deps-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
 
       - name: Lint packages
         run: yarn lint
@@ -110,7 +107,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: node_modules
-          key: ${{ env.DEPS_KEY }}
+          key: deps-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
 
       - name: Type-check packages
         run: yarn typecheck
