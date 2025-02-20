@@ -1,16 +1,17 @@
-import type { RattusOrmInstallerOptions } from '@rattus-orm/core'
-import type { RattusContext as RattusContextCore } from '@rattus-orm/core/utils/rattus-context'
-import { createRattusContext } from '@rattus-orm/core/utils/rattus-context'
-import type { PropsWithChildren } from 'react'
-import { createContext, useRef } from 'react'
-import React from 'react'
+import type { RattusOrmInstallerOptions } from '@rattus-orm/core/utils/integrationsHelpers'
+import { contextBootstrap } from '@rattus-orm/core/utils/integrationsHelpers'
+import { RattusReactContext } from '@rattus-orm/core/utils/integrationsHelpers'
+import React, { type PropsWithChildren, useMemo } from 'react'
 
 import { ReactSignalsDataProvider } from '../index'
 
-export const RattusContext = createContext<Partial<RattusContextCore>>({})
-
 export function RattusProvider(props: PropsWithChildren<RattusOrmInstallerOptions>) {
-  const rattusContext = useRef(createRattusContext(props, new ReactSignalsDataProvider()))
+  const createdDatabase = useMemo(
+    () => contextBootstrap(props, new ReactSignalsDataProvider()),
+    [props.database, props.plugins, props.customRepositories, props.connection],
+  )
 
-  return <RattusContext.Provider value={rattusContext.current}>{props.children}</RattusContext.Provider>
+  return <RattusReactContext.Provider value={createdDatabase}>{props.children}</RattusReactContext.Provider>
 }
+
+export { reactUseDatabase as useDatabase } from '@rattus-orm/core/utils/integrationsHelpers'
