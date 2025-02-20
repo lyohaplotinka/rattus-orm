@@ -1,9 +1,8 @@
 import { createContext, useContext } from 'react'
 
 import type { Constructor, DatabasePlugin, DataProvider, Model, Repository } from '../src'
-import { Database } from '../src'
+import { Database, getDatabaseManager } from '../src'
 import { isDataProvider } from '../src/data/guards'
-import { getDatabaseManager } from '../src/database/database-manager'
 import { isFunction, isString } from '../src/support/utils'
 import { RattusOrmError } from './feedback'
 
