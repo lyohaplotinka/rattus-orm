@@ -8,6 +8,8 @@ on:
 
 env:
   NODE_VERSION: 22
+  BUILT_SCRIPTS_ARTIFACT_NAME: built-scripts
+  BUILT_SCRIPTS_DIR: scripts/built
 
 jobs:
   install-deps:
@@ -33,10 +35,16 @@ jobs:
 
       - name: Install dependencies
         if: steps.cache-key.outputs.cache-hit != 'true'
-        run: yarn
+        run: yarn install --immutable
 
-  build-scripts:
-    name: Build Rattus scripts
+      - name: Upload built scripts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.BUILT_SCRIPTS_ARTIFACT_NAME }}
+          path: ${{ env.BUILT_SCRIPTS_DIR }}
+
+  test:
+    name: Run tests
     needs: install-deps
     runs-on: ubuntu-latest
     steps:
@@ -54,27 +62,11 @@ jobs:
           path: node_modules
           key: deps-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
 
-      - name: Build scripts
-        run: yarn build:scripts
-
-  test:
-    name: Run tests
-    needs: [install-deps, build-scripts]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Download built scripts
+        uses: actions/download-artifact@v4
         with:
-          node-version: ${{ env.NODE_VERSION }}
-
-      - name: Restore dependencies
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: deps-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+          name: ${{ env.BUILT_SCRIPTS_ARTIFACT_NAME }}
+          path: ${{ env.BUILT_SCRIPTS_DIR }}
 
       - name: Run tests
         run: yarn test
@@ -97,6 +89,12 @@ jobs:
         with:
           path: node_modules
           key: deps-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+
+      - name: Download built scripts
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.BUILT_SCRIPTS_ARTIFACT_NAME }}
+          path: ${{ env.BUILT_SCRIPTS_DIR }}
 
       - name: Build packages
         run: yarn build
@@ -141,6 +139,12 @@ jobs:
         with:
           path: node_modules
           key: deps-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+
+      - name: Download built scripts
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.BUILT_SCRIPTS_ARTIFACT_NAME }}
+          path: ${{ env.BUILT_SCRIPTS_DIR }}
 
       - name: Type-check packages
         run: yarn typecheck
