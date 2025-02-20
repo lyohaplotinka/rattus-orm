@@ -1,0 +1,116 @@
+name: Run Tests
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  DEPS_KEY: deps-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+
+jobs:
+  install-deps:
+    name: Install dependencies
+    runs-on: ubuntu-latest
+    outputs:
+      cache-key: ${{ steps.cache-key.outputs.key }}
+    steps:
+      - name: Prepare environment
+        uses: ./.github/actions/prepare-rattus-env
+
+      - name: Cache dependencies
+        id: cache-key
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ env.DEPS_KEY }}
+
+      - name: Install dependencies
+        if: steps.cache-key.outputs.cache-hit != 'true'
+        run: yarn
+
+  build-scripts:
+    name: Build Rattus scripts
+    needs: install-deps
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prepare environment
+        uses: ./.github/actions/prepare-rattus-env
+
+      - name: Restore dependencies
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ env.DEPS_KEY }}
+
+      - name: Build scripts
+        run: yarn build:scripts
+
+  test:
+    name: Run tests
+    needs: [install-deps, build-scripts]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prepare environment
+        uses: ./.github/actions/prepare-rattus-env
+
+      - name: Restore dependencies
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ env.DEPS_KEY }}
+
+      - name: Run tests
+        run: yarn test
+
+  build:
+    name: Build packages
+    needs: install-deps
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prepare environment
+        uses: ./.github/actions/prepare-rattus-env
+
+      - name: Restore dependencies
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ env.DEPS_KEY }}
+
+      - name: Build packages
+        run: yarn build
+
+  lint:
+    name: Lint packages
+    needs: install-deps
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prepare environment
+        uses: ./.github/actions/prepare-rattus-env
+
+      - name: Restore dependencies
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ env.DEPS_KEY }}
+
+      - name: Lint packages
+        run: yarn lint
+
+  type-check:
+    name: Type-check packages
+    needs: install-deps
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prepare environment
+        uses: ./.github/actions/prepare-rattus-env
+
+      - name: Restore dependencies
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ env.DEPS_KEY }}
+
+      - name: Type-check packages
+        run: yarn typecheck
