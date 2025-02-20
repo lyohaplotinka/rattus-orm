@@ -93,6 +93,11 @@
       "import": "./dist/utils/contextBootstrap.mjs",
       "require": "./dist/utils/contextBootstrap.js",
       "types": "./dist/utils/contextBootstrap.d.ts"
+    },
+    "./utils/reactIntegrationHelpers": {
+      "import": "./dist/utils/reactIntegrationHelpers.mjs",
+      "require": "./dist/utils/reactIntegrationHelpers.js",
+      "types": "./dist/utils/reactIntegrationHelpers.d.ts"
     }
   },
   "files": [

@@ -1,7 +1,5 @@
-import { createContext, useContext } from 'react'
-
-import type { Constructor, DatabasePlugin, DataProvider, Model, Repository } from '../src'
-import { Database, getDatabaseManager } from '../src'
+import type { Constructor, Database, DatabasePlugin, DataProvider, Model, Repository } from '../src'
+import { getDatabaseManager } from '../src'
 import { isDataProvider } from '../src/data/guards'
 import { isFunction, isString } from '../src/support/utils'
 import { RattusOrmError } from './feedback'
@@ -78,17 +76,6 @@ export type RattusOrmInstallerOptions = {
   database?: Database
   plugins?: DatabasePlugin[]
   customRepositories?: Constructor<Repository>[]
-}
-
-export const RattusReactContext = createContext<Database>({} as Database)
-export function reactUseDatabase(): Database {
-  const ctxValue = useContext(RattusReactContext) as unknown
-
-  if (!(ctxValue instanceof Database) || !ctxValue.isStarted()) {
-    throw new RattusOrmError('Database is not valid', 'UseDatabaseHook')
-  }
-
-  return ctxValue
 }
 
 export function contextBootstrap(params: RattusOrmInstallerOptions, dataProvider?: DataProvider) {
