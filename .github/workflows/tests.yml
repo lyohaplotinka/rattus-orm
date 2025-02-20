@@ -8,8 +8,7 @@ on:
 
 env:
   NODE_VERSION: 22
-  BUILT_SCRIPTS_ARTIFACT_NAME: built-scripts
-  BUILT_SCRIPTS_DIR: scripts/built
+  BUILT_ARTIFACT_NAME: built-scripts
 
 jobs:
   install-deps:
@@ -37,11 +36,16 @@ jobs:
         if: steps.cache-key.outputs.cache-hit != 'true'
         run: yarn install --immutable
 
-      - name: Upload built scripts
+      - name: Build scripts & core
+        run: yarn build:scripts && yarn workspace @rattus-orm/core run build
+
+      - name: Upload built scripts and core
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.BUILT_SCRIPTS_ARTIFACT_NAME }}
-          path: ${{ env.BUILT_SCRIPTS_DIR }}
+          name: ${{ env.BUILT_ARTIFACT_NAME }}
+          path: |
+            scripts/built
+            packages/core/dist
 
   test:
     name: Run tests
@@ -65,8 +69,7 @@ jobs:
       - name: Download built scripts
         uses: actions/download-artifact@v4
         with:
-          name: ${{ env.BUILT_SCRIPTS_ARTIFACT_NAME }}
-          path: ${{ env.BUILT_SCRIPTS_DIR }}
+          name: ${{ env.BUILT_ARTIFACT_NAME }}
 
       - name: Run tests
         run: yarn test
@@ -93,8 +96,7 @@ jobs:
       - name: Download built scripts
         uses: actions/download-artifact@v4
         with:
-          name: ${{ env.BUILT_SCRIPTS_ARTIFACT_NAME }}
-          path: ${{ env.BUILT_SCRIPTS_DIR }}
+          name: ${{ env.BUILT_ARTIFACT_NAME }}
 
       - name: Build packages
         run: yarn build
@@ -143,8 +145,7 @@ jobs:
       - name: Download built scripts
         uses: actions/download-artifact@v4
         with:
-          name: ${{ env.BUILT_SCRIPTS_ARTIFACT_NAME }}
-          path: ${{ env.BUILT_SCRIPTS_DIR }}
+          name: ${{ env.BUILT_ARTIFACT_NAME }}
 
       - name: Type-check packages
         run: yarn typecheck
