@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { renderFunction, renderWithContext } from './test-utils'
-import { useRepository, useRattusContext } from '../dist/rattus-orm-svelte-provider'
+import { useRepository } from '../dist/rattus-orm-svelte-provider'
 import { pullRepositoryGettersKeys } from '@rattus-orm/core/utils/integrationsHelpers'
 import { act } from '@testing-library/svelte'
 import ReactivityTest from './components/ReactivityTest.svelte'
@@ -9,9 +9,12 @@ import {
   testMethodsBound,
   testMethodsNotRuined,
   TestUser,
+  createBindSpy,
 } from '@rattus-orm/core/utils/testUtils'
 
 describe('svelte: hooks', () => {
+  createBindSpy()
+
   testMethodsBound(
     'Svelte',
     () => renderFunction(() => useRepository(TestUser)),
@@ -24,7 +27,7 @@ describe('svelte: hooks', () => {
     renderFunction(() => useRepository(TestUser)),
   )
 
-  testCustomConnection('Svelte', renderFunction(useRattusContext))
+  testCustomConnection('Svelte')
 
   it('useRepository: returns reactive data', async () => {
     const wrapper = renderWithContext(ReactivityTest)

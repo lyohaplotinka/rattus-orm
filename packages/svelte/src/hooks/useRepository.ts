@@ -6,7 +6,7 @@ import type { Readable } from 'svelte/store'
 import { get } from 'svelte/store'
 import { readable } from 'svelte/store'
 
-import { useRattusContext } from './useRattusContext'
+import { useDatabase } from './useDatabase'
 
 type SvelteComputed<R> = Readable<R> & {
   value: R
@@ -47,8 +47,8 @@ export function useRepository<R extends Repository<InstanceType<M>>, M extends t
   model: M,
   connection?: string,
 ): UseComputedRepository<R, M> {
-  const repo = useRepositoryForDynamicContext(useRattusContext, model, connection)
-  const db = useRattusContext().getDatabase()
+  const repo = useRepositoryForDynamicContext(model, connection)
+  const db = useDatabase()
 
   return {
     ...repo,
