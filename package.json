@@ -32,7 +32,7 @@
     "build:scripts": "cd ./scripts/src && tsup",
     "build:docs": "yarn generate-api && yarn workspace docs run build",
     "generate-api": "node ./scripts/built/docsBuilder.mjs",
-    "postinstall": "npx simple-git-hooks && yarn build:scripts && yarn workspace @rattus-orm/core run build"
+    "local:prepare": "npx simple-git-hooks && yarn build:scripts && yarn workspace @rattus-orm/core run build"
   },
   "devDependencies": {
     "@size-limit/preset-big-lib": "^11.1.6",
