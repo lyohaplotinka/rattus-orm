@@ -8,7 +8,7 @@ on:
 
 env:
   NODE_VERSION: 22
-  BUILT_ARTIFACT_NAME: built-scripts
+  BUILT_ARTIFACT_NAME: build-packages
 
 jobs:
   install-deps:
@@ -36,44 +36,6 @@ jobs:
         if: steps.cache-key.outputs.cache-hit != 'true'
         run: yarn install --immutable
 
-      - name: Build scripts & core
-        run: yarn build:scripts && yarn workspace @rattus-orm/core run build
-
-      - name: Upload built scripts and core
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ env.BUILT_ARTIFACT_NAME }}
-          path: |
-            scripts/built
-            packages/core/dist
-
-  test:
-    name: Run tests
-    needs: install-deps
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-
-      - name: Restore dependencies
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: deps-v2-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
-
-      - name: Download built scripts
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{ env.BUILT_ARTIFACT_NAME }}
-
-      - name: Run tests
-        run: yarn test
-
   build:
     name: Build packages
     needs: install-deps
@@ -93,13 +55,46 @@ jobs:
           path: node_modules
           key: deps-v2-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
 
-      - name: Download built scripts
+      - name: Build scripts
+        run: yarn build:scripts
+
+      - name: Build packages
+        run: yarn build
+
+      - name: Upload built scripts and core
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.BUILT_ARTIFACT_NAME }}
+          path: |
+            scripts/built
+            packages/**/dist
+
+  test:
+    name: Run tests
+    needs: [install-deps, build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Restore dependencies
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: deps-v2-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
+
+      - name: Download built packages
         uses: actions/download-artifact@v4
         with:
           name: ${{ env.BUILT_ARTIFACT_NAME }}
 
-      - name: Build packages
-        run: yarn build
+      - name: Run tests
+        run: yarn test
 
   lint:
     name: Lint packages
@@ -125,7 +120,7 @@ jobs:
 
   type-check:
     name: Type-check packages
-    needs: install-deps
+    needs: [install-deps, build]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -142,7 +137,7 @@ jobs:
           path: node_modules
           key: deps-v2-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
 
-      - name: Download built scripts
+      - name: Download built packages
         uses: actions/download-artifact@v4
         with:
           name: ${{ env.BUILT_ARTIFACT_NAME }}
