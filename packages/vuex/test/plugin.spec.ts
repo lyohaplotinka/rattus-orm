@@ -1,35 +1,34 @@
 import { createStore } from 'vuex'
 import { installRattusORM, VuexDataProvider } from '../src'
-import { expect, vi } from 'vitest'
-import { createDatabase } from '@rattus-orm/core'
-import { RattusContext } from '@rattus-orm/core/utils/rattus-context'
+import { beforeEach, expect, vi } from 'vitest'
+import { createDatabase, getDatabaseManager } from '@rattus-orm/core'
 import { TestUser } from '@rattus-orm/core/utils/testUtils'
 import { createAppWithPlugins } from '@rattus-orm/core/utils/vueTestUtils'
 
 describe('plugin: vuex', () => {
-  it('context works correctly with default parameters', () => {
-    const app = createAppWithPlugins([
+  beforeEach(() => {
+    getDatabaseManager().clear()
+  })
+
+  it('plugin works correctly with default parameters', () => {
+    createAppWithPlugins([
       createStore({
         plugins: [installRattusORM()],
       }),
     ])
-    const { $rattusContext } = app._context.config.globalProperties.$store
 
-    expect($rattusContext).toBeInstanceOf(RattusContext)
-    expect($rattusContext.getDatabase().isStarted()).toEqual(true)
-    expect($rattusContext.getDatabase().getConnection()).toEqual('entities')
+    expect(getDatabaseManager().getDatabase().isStarted()).toEqual(true)
+    expect(getDatabaseManager().getDatabase().getConnection()).toEqual('entities')
   })
 
   it('plugin params respect custom databases', () => {
     const store = createStore({})
     const database = createDatabase({ connection: 'custom', dataProvider: new VuexDataProvider(store as any) })
     installRattusORM({ database })(store)
-    const app = createAppWithPlugins([store])
-    const { $rattusContext } = app._context.config.globalProperties.$store
+    createAppWithPlugins([store])
 
-    expect($rattusContext).toBeInstanceOf(RattusContext)
-    expect($rattusContext.getDatabase().isStarted()).toEqual(false)
-    expect($rattusContext.getDatabase().getConnection()).toEqual('custom')
+    expect(getDatabaseManager().getDatabase().isStarted()).toEqual(false)
+    expect(getDatabaseManager().getDatabase().getConnection()).toEqual('custom')
   })
 
   it('installs Vuex ORM to the store', () => {
@@ -40,12 +39,12 @@ describe('plugin: vuex', () => {
     ])
 
     const store = app._context.config.globalProperties.$store
-    const spyRepo = vi.spyOn(store.$rattusContext.getDatabase(), 'getRepository')
+    const spyRepo = vi.spyOn(getDatabaseManager().getDatabase(), 'getRepository')
 
     expect(store.state).toEqual({ entities: {} })
-    expect(store.$rattusContext.getDatabase().isStarted()).toBe(true)
-    expect(store.$rattusContext.$repo(TestUser).database.getConnection()).toEqual('entities')
-    expect(store.$rattusContext.$repo(TestUser).getModel()).toBeInstanceOf(TestUser)
+    expect(getDatabaseManager().getDatabase().isStarted()).toBe(true)
+    expect(getDatabaseManager().getRepository(TestUser).database.getConnection()).toEqual('entities')
+    expect(getDatabaseManager().getRepository(TestUser).getModel()).toBeInstanceOf(TestUser)
     expect(spyRepo).toHaveBeenCalledOnce()
   })
 

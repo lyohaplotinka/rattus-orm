@@ -4,8 +4,6 @@ import { useRepositoryForDynamicContext } from '@rattus-orm/core/utils/integrati
 import type { Accessor } from 'solid-js'
 import { createComputed, createSignal } from 'solid-js'
 
-import { useRattusContext } from './useRattusContext'
-
 export type UseComputedRepository<R extends Repository<InstanceType<M>>, M extends typeof Model = typeof Model> = Omit<
   UseRepository<R>,
   RepositoryGettersKeys
@@ -39,7 +37,7 @@ export function useRepository<R extends Repository<InstanceType<M>>, M extends t
   model: M,
   connection?: string,
 ): UseComputedRepository<R, M> {
-  const repo = useRepositoryForDynamicContext(useRattusContext, model, connection)
+  const repo = useRepositoryForDynamicContext(model, connection)
 
   return {
     ...repo,

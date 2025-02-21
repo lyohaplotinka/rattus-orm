@@ -1,6 +1,8 @@
-import type { Model, Repository } from '../src'
-import { RattusContext } from '../src/context/rattus-context'
+import type { Constructor, Database, DatabasePlugin, DataProvider, Model, Repository } from '../src'
+import { getDatabaseManager } from '../src'
+import { isDataProvider } from '../src/data/guards'
 import { isFunction, isString } from '../src/support/utils'
+import { RattusOrmError } from './feedback'
 
 const useRepositorySkippedKeys = ['database', 'use', 'model', 'constructor'] as const
 type UseRepositorySkippedKeys = (typeof useRepositorySkippedKeys)[number]
@@ -8,7 +10,6 @@ const isSkippedKey = (value: unknown): value is UseRepositorySkippedKeys => {
   return isString(value) && useRepositorySkippedKeys.includes(value as UseRepositorySkippedKeys)
 }
 
-export type ContextRetriever = () => RattusContext
 export type UseRepository<R extends Repository<InstanceType<M>>, M extends typeof Model = typeof Model> = Omit<
   R,
   UseRepositorySkippedKeys
@@ -29,9 +30,8 @@ function getAllKeys<T extends Record<any, any>>(obj: T): Array<keyof T> {
 export function useRepositoryForDynamicContext<
   R extends Repository<InstanceType<M>>,
   M extends typeof Model = typeof Model,
->(contextRetriever: ContextRetriever, model: M, connection: string = 'entities'): UseRepository<R> {
-  const context = contextRetriever()
-  const repo = context.$repo<R, M>(model, connection)
+>(model: M, connection: string = 'entities'): UseRepository<R> {
+  const repo = getDatabaseManager().getRepository<R, M>(model, connection)
   const allRepoKeys = getAllKeys(repo)
   const result = {} as UseRepository<R>
 
@@ -71,6 +71,39 @@ export const pullRepositoryKeys = [
 ] satisfies Array<keyof Repository>
 export type RepositoryGettersKeys = (typeof pullRepositoryGettersKeys)[number]
 
-export const isInitializedContext = (value: unknown): value is RattusContext => {
-  return value instanceof RattusContext
+export type RattusOrmInstallerOptions = {
+  connection?: string
+  database?: Database
+  plugins?: DatabasePlugin[]
+  customRepositories?: Constructor<Repository>[]
+}
+
+export function contextBootstrap(params: RattusOrmInstallerOptions, dataProvider?: DataProvider) {
+  if (params.database) {
+    registerCustomRepos(params.database, params.customRepositories)
+    getDatabaseManager().addDatabase(params.database)
+    return params.database
+  }
+
+  if (!isDataProvider(dataProvider)) {
+    throw new RattusOrmError(
+      'No dataProvider and mainDatabase passed. You should pass at least one of them.',
+      'ContextBootstrap',
+    )
+  }
+
+  const db = getDatabaseManager().createDatabase(params.connection, dataProvider)
+  registerCustomRepos(db, params.customRepositories)
+
+  if (params.plugins?.length) {
+    params.plugins.forEach((plugin) => db.use(plugin))
+  }
+
+  return db
+}
+
+function registerCustomRepos(db: Database, repos: RattusOrmInstallerOptions['customRepositories'] = []) {
+  for (const repo of repos) {
+    db.registerCustomRepository(repo)
+  }
 }

@@ -1,5 +1,6 @@
-import type { RattusOrmInstallerOptions } from '@rattus-orm/core'
-import { createRattusContext } from '@rattus-orm/core/utils/rattus-context'
+import { RattusOrmError } from '@rattus-orm/core/utils/feedback'
+import type { RattusOrmInstallerOptions } from '@rattus-orm/core/utils/integrationsHelpers'
+import { contextBootstrap } from '@rattus-orm/core/utils/integrationsHelpers'
 import type { Pinia } from 'pinia'
 import type { Plugin } from 'vue'
 
@@ -19,10 +20,11 @@ export function installRattusORM(options?: PiniaPluginOptions): Plugin {
 
       const piniaInstance = pinia ?? globalProperties.$pinia
       if (!piniaInstance) {
-        throw new Error(
-          '[Rattus ORM Pinia Vue plugin] Pinia instance not found. ' +
+        throw new RattusOrmError(
+          'Pinia instance not found. ' +
             'Please call "app.use(pinia)" BEFORE using this plugin, or pass the Pinia instance ' +
             'as the second argument to the plugin function',
+          'Rattus ORM Pinia Vue plugin]',
         )
       }
 
@@ -30,12 +32,14 @@ export function installRattusORM(options?: PiniaPluginOptions): Plugin {
         app.use(piniaInstance)
       }
 
-      if (!globalProperties.$rattusContext) {
-        globalProperties.$rattusContext = createRattusContext(
-          { ...options, connection, database },
-          new PiniaDataProvider(piniaInstance),
-        )
-      }
+      contextBootstrap(
+        {
+          ...options,
+          connection,
+          database,
+        },
+        new PiniaDataProvider(piniaInstance),
+      )
 
       app.provide(RattusOrmInjectionKey, globalProperties.$rattusContext)
     },

@@ -2,16 +2,17 @@ import { describe, expect } from 'vitest'
 import { computed, nextTick } from 'vue'
 import { createStore } from 'vuex'
 import { installRattusORM, useRepository, VuexDataProvider } from '../src'
-import { useRattusContext } from '../src'
 import { renderHookWithContext, renderWithContext } from '@rattus-orm/core/utils/vueTestUtils'
 import { isComputed } from '@rattus-orm/core/utils/vueComposableUtils'
 import {
-  testContext,
   testMethodsBound,
   testMethodsNotRuined,
   TestUser,
   testCustomConnection,
+  createBindSpy,
+  testBootstrap,
 } from '@rattus-orm/core/utils/testUtils'
+import { getDatabaseManager } from '@rattus-orm/core'
 
 const renderVuexHook = <T>(hook: () => T): T => {
   return renderHookWithContext({
@@ -25,9 +26,12 @@ const renderVuexHook = <T>(hook: () => T): T => {
 }
 
 describe('composable: vuex', () => {
-  it('has correct context', () => {
-    testContext(renderVuexHook(useRattusContext), VuexDataProvider)
+  it('vuex: context valid', () => {
+    renderVuexHook(() => true)
+    testBootstrap(VuexDataProvider)
   })
+
+  createBindSpy()
 
   testMethodsBound(
     'vuex',
@@ -41,7 +45,7 @@ describe('composable: vuex', () => {
     renderVuexHook(() => useRepository(TestUser)),
   )
 
-  testCustomConnection('vuex', renderVuexHook(useRattusContext))
+  testCustomConnection('vuex')
 
   it('useRepository: returns reactive data', async () => {
     const wrapper = renderWithContext({
@@ -61,8 +65,7 @@ describe('composable: vuex', () => {
       ],
     })
 
-    const rattusContext = wrapper.getCurrentComponent().appContext.config.globalProperties.$store.$rattusContext
-    const repo = rattusContext.$repo(TestUser)
+    const repo = getDatabaseManager().getRepository(TestUser)
 
     expect(wrapper.text()).toStrictEqual('Age: 23')
     repo.query().update({ id: '1', age: 25 })

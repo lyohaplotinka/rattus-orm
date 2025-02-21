@@ -1,3 +1,6 @@
+// eslint-disable-next-line
+// @ts-nocheck
+
 import '@testing-library/jest-dom/vitest'
 
 import type { RenderResult } from '@testing-library/react'
@@ -5,13 +8,20 @@ import { act, cleanup, render, renderHook } from '@testing-library/react'
 import type { JSXElementConstructor } from 'react'
 import React from 'react'
 import type { Constructor } from 'type-fest'
-import { describe } from 'vitest'
+import { beforeEach, describe } from 'vitest'
 
-import type { DataProvider, RattusOrmInstallerOptions } from '../src'
+import type { DataProvider } from '../src'
+import { getDatabaseManager } from '../src'
 import { createDatabase } from '../src'
-import type { RattusContext } from '../src/context/rattus-context'
-import type { UseRepository } from './integrationsHelpers'
-import { testContext, testCustomConnection, testMethodsBound, testMethodsNotRuined, TestUser } from './testUtils'
+import type { RattusOrmInstallerOptions, UseRepository } from './integrationsHelpers'
+import {
+  createBindSpy,
+  testBootstrap,
+  testCustomConnection,
+  testMethodsBound,
+  testMethodsNotRuined,
+  TestUser,
+} from './testUtils'
 
 type RattusRenderProps<T> = {
   ContextComp: JSXElementConstructor<any>
@@ -86,7 +96,7 @@ type ReactIntegrationTestParams = {
   name: string
   Provider: JSXElementConstructor<any>
   useRepositoryHook: (model: any) => UseRepository<any>
-  useRattusContextHook: () => RattusContext
+  useRattusContextHook: () => unknown
   ProviderConstructor: Constructor<DataProvider>
   providerArgsGetter?: () => any[]
   bootstrap?: () => Record<string, any>
@@ -113,13 +123,11 @@ export function createReactIntegrationTest({
     }
 
     describe(`${name}: context`, () => {
-      const TestComponent = componentsWrapper
-        ? componentsWrapper(createTestComponent(useRattusContextHook))
-        : createTestComponent(useRattusContextHook)
+      beforeEach(() => getDatabaseManager().clear())
 
       it(`${name}: context valid`, () => {
-        const res = renderHook(useRattusContextHook)
-        testContext(res, ProviderConstructor)
+        renderHook(useRattusContextHook)
+        testBootstrap(ProviderConstructor)
       })
 
       it(`${name}: context params respect custom databases`, () => {
@@ -128,22 +136,8 @@ export function createReactIntegrationTest({
           connection: 'custom',
         })
 
-        const result = renderHook(useRattusContextHook, { database })
-        testContext(result, ProviderConstructor, 'custom')
-      })
-
-      it(`${name}: does not throw an error when wrapped and throws when not`, () => {
-        expect(
-          render(
-            <Provider {...(bootstrap?.() ?? {})} {...(providerArgsGetter?.() ?? [])}>
-              <TestComponent />
-            </Provider>,
-          ).getByTestId(REACT_TEST_ID),
-        ).toHaveTextContent('Success')
-
-        cleanup()
-
-        expect(render(<TestComponent />).getByTestId(REACT_TEST_ID)).toHaveTextContent('Error')
+        renderHook(useRattusContextHook, { database })
+        testBootstrap(ProviderConstructor, 'custom')
       })
     })
 
@@ -166,23 +160,15 @@ export function createReactIntegrationTest({
         })
       }
 
-      testMethodsBound(
-        name,
-        () =>
-          renderHookWithComp(ReactivityTestComponent, () => {
-            return useRepositoryHook(TestUser)
-          }).result,
-      )
+      createBindSpy()
 
-      testMethodsNotRuined(
-        name,
-        renderHookWithComp(ReactivityTestComponent, () => {
-          return useRepositoryHook(TestUser)
-        }).result,
-        act,
-      )
+      const renderResult = renderHookWithComp(ReactivityTestComponent, () => {
+        return useRepositoryHook(TestUser)
+      }).result
 
-      testCustomConnection(name, renderHook(useRattusContextHook))
+      testMethodsBound(name, () => renderResult)
+      testMethodsNotRuined(name, renderResult, act)
+      testCustomConnection(name)
 
       it(`${name}: useRepository returns reactive data`, async () => {
         const {

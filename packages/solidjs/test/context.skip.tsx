@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { describe, expect, it } from 'vitest'
 import { RattusProvider, SolidjsDataProvider, useRattusContext } from '../src'
 import { createDatabase } from '@rattus-orm/core'

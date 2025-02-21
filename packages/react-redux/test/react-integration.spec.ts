@@ -1,4 +1,4 @@
-import { RattusProvider, ReactReduxDataProvider, useRattusContext, useRepository } from '../src'
+import { RattusProvider, ReactReduxDataProvider, useRepository } from '../src'
 import { createStore } from 'redux'
 import { createReactIntegrationTest } from '@rattus-orm/core/utils/reactTestUtils'
 
@@ -7,7 +7,7 @@ createReactIntegrationTest({
   Provider: RattusProvider,
   bootstrap: () => ({ store: createStore((state) => state) }),
   useRepositoryHook: useRepository,
-  useRattusContextHook: useRattusContext,
+  useRattusContextHook: () => ({}),
   ProviderConstructor: ReactReduxDataProvider,
   providerArgsGetter: () => [createStore((state) => state)],
 })

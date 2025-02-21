@@ -2,8 +2,6 @@ import { mount } from '@vue/test-utils'
 import type { ComponentOptionsBase } from 'vue'
 import { createApp } from 'vue'
 
-import type { RattusContext } from '../src/context/rattus-context'
-
 type RattusRenderProps<T> = {
   hook: () => T
   plugins: any[]
@@ -46,11 +44,10 @@ export function renderWithContext<T>({ plugins, setup }: RattusRenderSetupProps<
   )
 }
 
-type GlobalProperties<T extends Record<string, any>> = { $rattusContext: RattusContext } & T
 type MockedApp<T extends Record<string, any>> = {
   _context: {
     config: {
-      globalProperties: GlobalProperties<T>
+      globalProperties: T
     }
   }
   provide: () => void
@@ -59,7 +56,7 @@ export function createMockApp<T extends Record<string, any>>(globalProperties: T
   return {
     _context: {
       config: {
-        globalProperties: globalProperties as GlobalProperties<T>,
+        globalProperties,
       },
     },
     provide() {},

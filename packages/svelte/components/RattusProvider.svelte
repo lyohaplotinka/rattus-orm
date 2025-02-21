@@ -1,6 +1,6 @@
 <script>
   import { setContext } from 'svelte'
-  import { createRattusContext } from '@rattus-orm/core/utils/rattus-context'
+  import { contextBootstrap } from '@rattus-orm/core/utils/integrationsHelpers'
   import { ObjectDataProvider } from '@rattus-orm/core/object-data-provider'
   import { rattusContextKey } from '../dist/rattus-orm-svelte-provider.mjs'
 
@@ -9,7 +9,7 @@
   export let plugins = []
   export let customRepositories = []
 
-  const context = createRattusContext({ connection, database, plugins, customRepositories }, new ObjectDataProvider())
-  setContext(rattusContextKey, context)
+  const createdDatabase = contextBootstrap({ connection, database, plugins, customRepositories }, new ObjectDataProvider())
+  setContext(rattusContextKey, createdDatabase)
 </script>
 <slot />

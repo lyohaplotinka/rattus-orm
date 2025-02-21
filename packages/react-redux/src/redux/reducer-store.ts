@@ -6,13 +6,13 @@ import { rattusReduxActions } from './types'
 
 export class ReducerStore<MP extends ModulePath> {
   constructor(
-    protected readonly strore: Store,
+    protected readonly store: Store,
     protected readonly modulePath: MP,
     protected readonly initialState?: State,
   ) {}
 
   public dispatch(action: RattusReduxActionName, payload: any) {
-    this.strore.dispatch({
+    this.store.dispatch({
       type: this.getModuleAction(action),
       payload,
     })
