@@ -1,5 +1,5 @@
-import { StringField } from '../../src/attributes/types/decorators/StringField'
 import { Model } from '@/model/Model'
+import { StringField } from '../../src/attributes/types/decorators/StringField'
 
 describe('unit/model/Model_Attrs_String', () => {
   it('casts the value to `String` when instantiating the model', () => {

@@ -15,14 +15,21 @@ export class Constraintor<M extends Model> {
   constructor(
     protected readonly model: M,
     protected eagerLoad: EagerLoad = {},
-    protected skip: number = 0,
+    protected skip = 0,
     protected take: number | null = null,
     protected orders: Order[] = [],
     protected wheres: Where[] = [],
   ) {}
 
   public clone(): Constraintor<M> {
-    return new Constraintor(this.model, this.eagerLoad, this.skip, this.take, this.orders, this.wheres)
+    return new Constraintor(
+      this.model,
+      this.eagerLoad,
+      this.skip,
+      this.take,
+      this.orders,
+      this.wheres,
+    )
   }
 
   public where(field: WherePrimaryClosure | string, value?: WhereSecondaryClosure | any) {
@@ -63,7 +70,7 @@ export class Constraintor<M extends Model> {
     }
   }
 
-  public withAllRecursive(depth: number = 3) {
+  public withAllRecursive(depth = 3) {
     this.withAll((query) => {
       depth > 0 && query.withAllRecursive(depth - 1)
     })

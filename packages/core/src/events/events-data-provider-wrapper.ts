@@ -65,7 +65,10 @@ export class EventsDataProviderWrapper implements DataProvider {
   }
 
   public replace(module: ModulePath, records: Elements): void {
-    this.provider.replace(module, this.dispatchEventWithResult(RattusEvents.REPLACE, records, module))
+    this.provider.replace(
+      module,
+      this.dispatchEventWithResult(RattusEvents.REPLACE, records, module),
+    )
     this.dispatchDataChangedEvent(module)
   }
 
@@ -109,7 +112,11 @@ export class EventsDataProviderWrapper implements DataProvider {
     this.getListenersForEvent(event).forEach((listener) => listener(param, modulePath))
   }
 
-  protected dispatchEventWithResult<T>(eventName: RattusEvent, param: T, modulePath: ModulePath): T {
+  protected dispatchEventWithResult<T>(
+    eventName: RattusEvent,
+    param: T,
+    modulePath: ModulePath,
+  ): T {
     return this.getListenersForEvent(eventName).reduce<T>((result, listener) => {
       result = listener(param, modulePath) as T
       return result

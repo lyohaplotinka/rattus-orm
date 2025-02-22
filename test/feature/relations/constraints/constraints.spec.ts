@@ -1,9 +1,9 @@
 import { createStore, fillState } from '@func-test/utils/Helpers'
 
+import { HasOne } from '@/attributes/field-relations'
+import { AttrField, StringField } from '@/attributes/field-types'
 import type { Query } from '@/index'
 import { Model } from '@/index'
-import { HasOne } from '@/attributes/field-relations'
-import { StringField, AttrField } from '@/attributes/field-types'
 
 describe('feature/relations/constraints/constraints', () => {
   class User extends Model {

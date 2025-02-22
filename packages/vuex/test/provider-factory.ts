@@ -1,8 +1,8 @@
-import { TestingStoreFactory } from '@func-test/utils/types'
-import { VuexDataProvider } from '../src'
-import { createStore } from 'vuex'
 import { TestStore } from '@func-test/utils/test-store'
+import { TestingStoreFactory } from '@func-test/utils/types'
 import { SerializedStorage } from '@rattus-orm/core'
+import { createStore } from 'vuex'
+import { VuexDataProvider } from '../src'
 
 export const dataProviderFactory: TestingStoreFactory = () => {
   const store = createStore<SerializedStorage>({})

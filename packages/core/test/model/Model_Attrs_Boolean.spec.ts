@@ -1,5 +1,5 @@
-import { BooleanField } from '../../src/attributes/types/decorators/BooleanField'
 import { Model } from '@/model/Model'
+import { BooleanField } from '../../src/attributes/types/decorators/BooleanField'
 
 describe('unit/model/Model_Attrs_Boolean', () => {
   it('casts the value to `Boolean` when instantiating the model', () => {

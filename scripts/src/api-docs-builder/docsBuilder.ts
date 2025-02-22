@@ -39,7 +39,10 @@ function getMethodOrPropertyName(
   sourceFile: SourceFile,
 ): string {
   const name = node.name.getText(sourceFile)
-  if (Array.isArray(node.modifiers) && node.modifiers.some((mod) => mod.kind === SyntaxKind.StaticKeyword)) {
+  if (
+    Array.isArray(node.modifiers) &&
+    node.modifiers.some((mod) => mod.kind === SyntaxKind.StaticKeyword)
+  ) {
     return `static ${name}`
   }
   return name
@@ -48,7 +51,11 @@ function getMethodOrPropertyName(
 function getMethodOrPropertyDescription(
   node: MethodDeclaration | ConstructorDeclaration | MethodSignature | PropertyDeclaration,
 ): string {
-  if (!isPropertyDeclaration(node) && node.parameters.length && node.parameters[0].name.getText() !== 'this') {
+  if (
+    !isPropertyDeclaration(node) &&
+    node.parameters.length &&
+    node.parameters[0].name.getText() !== 'this'
+  ) {
     const paramTags = getJSDocParameterTags(node.parameters[0])
     const parentComment = paramTags[0]?.parent?.comment
 
@@ -97,7 +104,8 @@ function buildDocsForFile(fileStr: string, sectionName: string) {
       if (
         isConstructorDeclaration(node) ||
         isMethodSignature(node) ||
-        (isMethodDeclaration(node) && getModifiers(node)!.some((mod) => mod.kind === SyntaxKind.PublicKeyword))
+        (isMethodDeclaration(node) &&
+          getModifiers(node)!.some((mod) => mod.kind === SyntaxKind.PublicKeyword))
       ) {
         const params = getMethodParams(node, sourceFile).filter((v) => v.name !== 'this')
         if (params.some((v) => v.description === 'COMPLEX')) {
@@ -105,7 +113,9 @@ function buildDocsForFile(fileStr: string, sectionName: string) {
         }
 
         moduleDocs.publicMethods.push({
-          name: isConstructorDeclaration(node) ? 'constructor' : getMethodOrPropertyName(node, sourceFile),
+          name: isConstructorDeclaration(node)
+            ? 'constructor'
+            : getMethodOrPropertyName(node, sourceFile),
           typeParams: node.typeParameters?.map((param) => param.getText(sourceFile)) ?? [],
           params: params,
           returnType: node.type ? node.type.getText(sourceFile) : '',
@@ -113,7 +123,10 @@ function buildDocsForFile(fileStr: string, sectionName: string) {
         })
       }
 
-      if (isPropertyDeclaration(node) && getModifiers(node)!.some((mod) => mod.kind === SyntaxKind.PublicKeyword)) {
+      if (
+        isPropertyDeclaration(node) &&
+        getModifiers(node)!.some((mod) => mod.kind === SyntaxKind.PublicKeyword)
+      ) {
         moduleDocs.publicProperties.push({
           name: getMethodOrPropertyName(node, sourceFile),
           type: node.type ? node.type.getText(sourceFile) : '',
@@ -126,7 +139,11 @@ function buildDocsForFile(fileStr: string, sectionName: string) {
   )
 
   const newFileName = `${sectionName}.api.json`
-  writeFileSync(resolve(apiDocsDir, newFileName), JSON.stringify(moduleDocs, null, 2) + '\n', 'utf8')
+  writeFileSync(
+    resolve(apiDocsDir, newFileName),
+    JSON.stringify(moduleDocs, null, 2) + '\n',
+    'utf8',
+  )
 }
 
 function main() {

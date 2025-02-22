@@ -1,8 +1,8 @@
+import { DataProvider, ModulePath, State } from '@/data/types'
 import { createDatabase } from '@/database/create-database'
+import type { Database } from '@/database/database'
 import { Repository } from '@/repository/repository'
 import { Entities, TestingStore } from '@func-test/utils/types'
-import { DataProvider, ModulePath, State } from '@/data/types'
-import type { Database } from '@/database/database'
 
 export class TestStore implements TestingStore {
   public $database: Database

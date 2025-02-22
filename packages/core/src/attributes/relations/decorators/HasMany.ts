@@ -5,10 +5,16 @@ import type { Model } from '@/model/Model'
 /**
  * Create a has-many attribute property decorator.
  */
-export function HasMany(related: () => typeof Model, foreignKey: string, localKey?: string): PropertyDecorator {
+export function HasMany(
+  related: () => typeof Model,
+  foreignKey: string,
+  localKey?: string,
+): PropertyDecorator {
   return (target, propertyKey) => {
     const self = target.$self()
 
-    self.setRegistry(propertyKey, () => createHasManyRelation(self, related(), foreignKey, localKey))
+    self.setRegistry(propertyKey, () =>
+      createHasManyRelation(self, related(), foreignKey, localKey),
+    )
   }
 }

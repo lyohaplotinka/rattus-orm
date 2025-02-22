@@ -1,10 +1,10 @@
-import { beforeEach, describe, it } from 'vitest'
-import { renderWithContext } from './test-utils'
 import { createDatabase, getDatabaseManager } from '@rattus-orm/core'
 import { ObjectDataProvider } from '@rattus-orm/core/object-data-provider'
 import { testBootstrap } from '@rattus-orm/core/utils/testUtils'
-import FuncExecutor from './components/FuncExecutor.svelte'
 import { noop } from 'lodash-es'
+import { beforeEach, describe, it } from 'vitest'
+import FuncExecutor from './components/FuncExecutor.svelte'
+import { renderWithContext } from './test-utils'
 
 class TestDataProvider extends ObjectDataProvider {}
 

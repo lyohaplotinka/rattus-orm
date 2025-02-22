@@ -7,8 +7,8 @@ import {
   fillState,
 } from '@func-test/utils/Helpers'
 
+import { NumberField, StringField } from '@/attributes/field-types'
 import { Model } from '@/index'
-import { StringField, NumberField } from '@/attributes/field-types'
 
 describe('feature/repository/save', () => {
   class User extends Model {

@@ -135,7 +135,10 @@ export class MorphTo extends Relation {
 
       // If we can't find a model, it means the user did not provide model
       // that corresponds with the type.
-      assert(!!model, [`Trying to load "morph to" relation of \`${entity}\``, 'but the model could not be found.'])
+      assert(!!model, [
+        `Trying to load "morph to" relation of \`${entity}\``,
+        'but the model could not be found.',
+      ])
 
       const ownerKey = (this.ownerKey || model.$getKeyName()) as string
 

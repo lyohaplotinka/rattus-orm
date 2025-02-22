@@ -1,8 +1,8 @@
 import { assertState, createStore, fillState } from '@func-test/utils/Helpers'
 
-import { Model } from '@/index'
 import { HasMany } from '@/attributes/field-relations'
 import { NumberField, StringField } from '@/attributes/field-types'
+import { Model } from '@/index'
 
 describe('feature/relations/has_many_save', () => {
   class User extends Model {

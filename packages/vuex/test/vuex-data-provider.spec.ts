@@ -1,8 +1,8 @@
-import { describe } from 'vitest'
-import { createStore, Store } from 'vuex'
-import { VuexDataProvider } from '../src'
 import { SerializedStorage } from '@rattus-orm/core'
 import { createBasicProviderTest } from '@rattus-orm/core/utils/createBasicProviderTest'
+import { describe } from 'vitest'
+import { Store, createStore } from 'vuex'
+import { VuexDataProvider } from '../src'
 
 describe('vuex-data-provider', () => {
   const storeFactory = () => {

@@ -15,5 +15,10 @@ const PluginsList: PackageItem[] = [
 ]
 
 export default function HomepagePlugins(): JSX.Element {
-  return <PackageList packages={PluginsList} title={translate({ message: 'Plugins' })} />
+  return (
+    <PackageList
+      packages={PluginsList}
+      title={translate({ message: 'Plugins' })}
+    />
+  )
 }

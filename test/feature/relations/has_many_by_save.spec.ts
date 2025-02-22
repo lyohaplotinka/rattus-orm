@@ -1,8 +1,8 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
-import { Model } from '@/index'
 import { HasManyBy } from '@/attributes/field-relations'
 import { AttrField, StringField } from '@/attributes/field-types'
+import { Model } from '@/index'
 
 describe('feature/relations/has_many_by_save', () => {
   class Node extends Model {

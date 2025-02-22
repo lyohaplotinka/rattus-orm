@@ -1,7 +1,7 @@
 import { createStore, fillState } from '@func-test/utils/Helpers'
 
+import { NumberField, StringField } from '@/attributes/field-types'
 import { Model } from '@/index'
-import { StringField, NumberField } from '@/attributes/field-types'
 
 describe('feature/repository/retrieves_revive', () => {
   class User extends Model {

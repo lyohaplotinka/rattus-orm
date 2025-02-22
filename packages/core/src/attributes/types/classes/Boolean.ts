@@ -26,7 +26,7 @@ export class Boolean extends Type<boolean | null> {
       if (!value.length) {
         return false
       }
-      const int = parseInt(value, 0)
+      const int = Number.parseInt(value, 0)
       return isNaN(int) ? true : !!int
     }
 

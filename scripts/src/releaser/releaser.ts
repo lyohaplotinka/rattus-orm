@@ -15,7 +15,8 @@ program
   .argument('[packages]', 'packages to release, comma-separated')
   .option('-a, --affected', 'release affected packages only', false)
   .action(async (packages, { affected }) => {
-    const forPackages = affected && !packages ? await getAffectedPackages() : parsePackages(packages)
+    const forPackages =
+      affected && !packages ? await getAffectedPackages() : parsePackages(packages)
     if (!forPackages.length) {
       console.log('Pass --packages option')
       process.exit()

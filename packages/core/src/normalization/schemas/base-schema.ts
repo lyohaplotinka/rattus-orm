@@ -13,5 +13,10 @@ export abstract class BaseSchema<Result, Definition = SchemaDefinition>
     Object.assign(this.definition as Record<string, unknown>, definition)
   }
 
-  public abstract normalize(input: unknown, parent: unknown, key: unknown, visitor: Normalizer): Result | undefined
+  public abstract normalize(
+    input: unknown,
+    parent: unknown,
+    key: unknown,
+    visitor: Normalizer,
+  ): Result | undefined
 }

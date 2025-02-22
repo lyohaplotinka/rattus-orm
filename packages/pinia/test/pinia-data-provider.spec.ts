@@ -1,7 +1,7 @@
+import { createBasicProviderTest } from '@rattus-orm/core/utils/createBasicProviderTest'
+import { createPinia } from 'pinia'
 import { describe } from 'vitest'
 import { PiniaDataProvider } from '../src'
-import { createPinia } from 'pinia'
-import { createBasicProviderTest } from '@rattus-orm/core/utils/createBasicProviderTest'
 
 describe('pinia-data-provider', () => {
   createBasicProviderTest({

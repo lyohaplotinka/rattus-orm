@@ -1,7 +1,7 @@
 import { assertState, createStore, fillState } from '@func-test/utils/Helpers'
 
+import { AttrField, NumberField, StringField } from '@/attributes/field-types'
 import { Model, Repository } from '@/index'
-import { StringField, AttrField, NumberField } from '@/attributes/field-types'
 import { TestingStore } from '@func-test/utils/types'
 import { describe, expect } from 'vitest'
 

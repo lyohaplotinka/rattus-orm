@@ -45,7 +45,9 @@ export class MorphOne extends Relation {
    * Set the constraints for an eager load of the relation.
    */
   public addEagerConstraints(query: Query, models: Collection): void {
-    query.where(this.morphType, this.parent.$entity()).whereIn(this.morphId, this.getKeys(models, this.localKey))
+    query
+      .where(this.morphType, this.parent.$entity())
+      .whereIn(this.morphId, this.getKeys(models, this.localKey))
   }
 
   /**
@@ -57,7 +59,9 @@ export class MorphOne extends Relation {
     models.forEach((model) => {
       const key = model.getThisNonStrict()[this.localKey]
 
-      dictionary[key] ? model.$setRelation(relation, dictionary[key]) : model.$setRelation(relation, null)
+      dictionary[key]
+        ? model.$setRelation(relation, dictionary[key])
+        : model.$setRelation(relation, null)
     })
   }
 

@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 
-import { existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
 import { readdir } from 'node:fs/promises'
 import { dirname, extname, normalize, parse, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -19,8 +19,12 @@ export function dirName(importMetaUrl: string) {
   return dirname(fileURLToPath(importMetaUrl))
 }
 
-export const SCRIPTS_DIR = dirname(findUpSync('apiDocsFiles.json', { cwd: dirName(import.meta.url) })!)
-export const MONOREPO_ROOT_DIR = dirname(findUpSync('.yarnrc.yml', { cwd: dirName(import.meta.url) })!)
+export const SCRIPTS_DIR = dirname(
+  findUpSync('apiDocsFiles.json', { cwd: dirName(import.meta.url) })!,
+)
+export const MONOREPO_ROOT_DIR = dirname(
+  findUpSync('.yarnrc.yml', { cwd: dirName(import.meta.url) })!,
+)
 export const MONOREPO_PACKAGES_PATH = resolve(MONOREPO_ROOT_DIR, 'packages')
 
 export function readJson<T = any>(filePath: string): T {
@@ -28,44 +32,43 @@ export function readJson<T = any>(filePath: string): T {
 }
 
 export function loadPackagesMeta() {
-  return readdirSync(MONOREPO_PACKAGES_PATH, { withFileTypes: true }).reduce<Record<string, PackageMeta>>(
-    (result, entry) => {
-      if (!entry.isDirectory()) {
-        return result
-      }
-      const dirName = entry.name
-      const packagePath = resolve(MONOREPO_PACKAGES_PATH, dirName)
-      const packageJson = loadPackageJson(dirName)
-      if (!isPackageJsonWithRattusMeta(packageJson)) {
-        return result
-      }
-
-      const meta = packageJson.rattusMeta
-
-      const testProvider =
-        meta.testProvider === undefined || typeof meta.testProvider === 'boolean'
-          ? (meta.testProvider ?? false)
-          : {
-              exportName: meta.testProvider.exportName,
-              path: resolve(packagePath, meta.testProvider.path),
-            }
-
-      result[dirName] = {
-        title: meta.title,
-        code: dirName,
-        matchPattern: `packages/${dirName}/**`,
-        path: packagePath,
-        testProvider,
-        autoBumpDependents: meta.autoBumpDependents ?? false,
-        order: meta.order ?? 9999,
-        packageJson,
-        publishDir: meta.publishDir ? resolve(packagePath, meta.publishDir) : null,
-      }
-
+  return readdirSync(MONOREPO_PACKAGES_PATH, { withFileTypes: true }).reduce<
+    Record<string, PackageMeta>
+  >((result, entry) => {
+    if (!entry.isDirectory()) {
       return result
-    },
-    {},
-  )
+    }
+    const dirName = entry.name
+    const packagePath = resolve(MONOREPO_PACKAGES_PATH, dirName)
+    const packageJson = loadPackageJson(dirName)
+    if (!isPackageJsonWithRattusMeta(packageJson)) {
+      return result
+    }
+
+    const meta = packageJson.rattusMeta
+
+    const testProvider =
+      meta.testProvider === undefined || typeof meta.testProvider === 'boolean'
+        ? (meta.testProvider ?? false)
+        : {
+            exportName: meta.testProvider.exportName,
+            path: resolve(packagePath, meta.testProvider.path),
+          }
+
+    result[dirName] = {
+      title: meta.title,
+      code: dirName,
+      matchPattern: `packages/${dirName}/**`,
+      path: packagePath,
+      testProvider,
+      autoBumpDependents: meta.autoBumpDependents ?? false,
+      order: meta.order ?? 9999,
+      packageJson,
+      publishDir: meta.publishDir ? resolve(packagePath, meta.publishDir) : null,
+    }
+
+    return result
+  }, {})
 }
 
 export function getPackageMeta(pkg: string): PackageMeta {
@@ -82,7 +85,10 @@ export function sortPackages(packages: string[]) {
   })
 }
 
-export function parsePackages(commaSeparatedString: string, filter: (pkg: PackageMeta) => boolean = () => true) {
+export function parsePackages(
+  commaSeparatedString: string,
+  filter: (pkg: PackageMeta) => boolean = () => true,
+) {
   const configuredProviders = loadPackagesMeta()
   const configuredProvidersKeys = Object.keys(configuredProviders)
 
@@ -122,7 +128,12 @@ export function isOnMainBranch() {
 }
 
 export function getPackageJsonPath(packageDirName: string): string {
-  const path = resolve(MONOREPO_ROOT_DIR, 'packages', packageDirName.replace('packages/', ''), 'package.json')
+  const path = resolve(
+    MONOREPO_ROOT_DIR,
+    'packages',
+    packageDirName.replace('packages/', ''),
+    'package.json',
+  )
   if (!existsSync(path)) {
     throw new Error(`Not found package.json for "${packageDirName}"`)
   }
@@ -188,7 +199,11 @@ export function createExportsBlock(name: string, prefix?: string): PackageJson.E
   }
 }
 
-export async function createBuildsAndExportsForFiles(dirPath: string, prefix?: string, pwd?: string) {
+export async function createBuildsAndExportsForFiles(
+  dirPath: string,
+  prefix?: string,
+  pwd?: string,
+) {
   const utilsDirContents = await readDirContents(dirPath, pwd)
   const patchPkgJsonWith = {
     exports: {},
@@ -230,7 +245,7 @@ export class YarnUtils {
     return result.stdout.split('\n').map((part) => JSON.parse(part))
   }
 
-  public static async runFunctionalTests(pkg: string, pattern: string = '', options?: ExecaOptions) {
+  public static async runFunctionalTests(pkg: string, pattern = '', options?: ExecaOptions) {
     return execaCommand(`./node_modules/.bin/vitest run ${pattern}`, {
       ...options,
       env: {
@@ -239,8 +254,11 @@ export class YarnUtils {
     })
   }
 
-  public static async testPackage(pkg: string, pattern: string = '', options?: ExecaOptions) {
-    return execaCommand(`yarn workspace @rattus-orm/${pkg} run test ${pattern} --passWithNoTests`, options)
+  public static async testPackage(pkg: string, pattern = '', options?: ExecaOptions) {
+    return execaCommand(
+      `yarn workspace @rattus-orm/${pkg} run test ${pattern} --passWithNoTests`,
+      options,
+    )
   }
 
   public static async test(pkg = 'all') {

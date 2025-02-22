@@ -1,5 +1,5 @@
-import { describe } from 'vitest'
 import { createBasicProviderTest } from '@rattus-orm/core/utils/createBasicProviderTest'
+import { describe } from 'vitest'
 import { ReactMobxDataProvider } from '../src'
 
 describe('react-mobx-data-provider', () => {

@@ -2,10 +2,10 @@
 /** @jsxImportSource solid-js */
 /** @jsxRuntime automatic */
 
-import { RattusProvider, useRattusContext } from '../src'
-import { render } from '@solidjs/testing-library'
 import { RattusOrmInstallerOptions } from '@rattus-orm/core'
+import { render } from '@solidjs/testing-library'
 import { JSXElement } from 'solid-js'
+import { RattusProvider, useRattusContext } from '../src'
 
 export const TestComponent = () => {
   try {

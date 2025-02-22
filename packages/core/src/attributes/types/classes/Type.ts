@@ -13,7 +13,7 @@ export abstract class Type<MakeValue> extends Attribute<MakeValue> {
   /**
    * Whether the attribute accepts `null` value or not.
    */
-  protected isNullable: boolean = false
+  protected isNullable = false
 
   /**
    * Create a new Type attribute instance.

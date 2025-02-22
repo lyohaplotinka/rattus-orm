@@ -3,17 +3,17 @@
 /** @jsxRuntime automatic */
 import '@testing-library/jest-dom/vitest'
 
-import { describe, expect } from 'vitest'
-import { useRepository, RattusProvider, useRattusContext } from '../src'
-import { renderHook } from '@solidjs/testing-library'
-import { renderWithResultAndContext } from './test-utils'
 import { pullRepositoryGettersKeys } from '@rattus-orm/core/utils/integrationsHelpers'
 import {
+  TestUser,
   testCustomConnection,
   testMethodsBound,
   testMethodsNotRuined,
-  TestUser,
 } from '@rattus-orm/core/utils/testUtils'
+import { renderHook } from '@solidjs/testing-library'
+import { describe, expect } from 'vitest'
+import { RattusProvider, useRattusContext, useRepository } from '../src'
+import { renderWithResultAndContext } from './test-utils'
 
 const ReactivityTestComponent = () => {
   const { find } = useRepository(TestUser)

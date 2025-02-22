@@ -17,7 +17,12 @@ export function PackageList({ packages, title }: PackageListProps) {
       <Heading as={'h1'}>{title}</Heading>
       <div className={clsx('padding-vert--lg', styles.packagesWrapper)}>
         {packages.map((integration, index) => {
-          return <Package key={`int${index}`} {...integration} />
+          return (
+            <Package
+              key={`int${index}`}
+              {...integration}
+            />
+          )
         })}
       </div>
     </section>

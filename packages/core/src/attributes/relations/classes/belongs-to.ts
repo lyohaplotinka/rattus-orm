@@ -55,7 +55,9 @@ export class BelongsTo extends Relation {
     models.forEach((model) => {
       const key = model.getThisNonStrict()[this.foreignKey]
 
-      dictionary[key] ? model.$setRelation(relation, dictionary[key]) : model.$setRelation(relation, null)
+      dictionary[key]
+        ? model.$setRelation(relation, dictionary[key])
+        : model.$setRelation(relation, null)
     })
   }
 

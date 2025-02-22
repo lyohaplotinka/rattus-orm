@@ -1,7 +1,12 @@
 import type { ModulePath, State } from '@rattus-orm/core'
 import { type Reducer, type Store } from 'redux'
 
-import type { RattusReducerAction, RattusReducerActionName, RattusReducerPrefix, RattusReduxActionName } from './types'
+import type {
+  RattusReducerAction,
+  RattusReducerActionName,
+  RattusReducerPrefix,
+  RattusReduxActionName,
+} from './types'
 import { rattusReduxActions } from './types'
 
 export class ReducerStore<MP extends ModulePath> {

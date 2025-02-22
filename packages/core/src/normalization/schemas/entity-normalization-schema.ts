@@ -21,8 +21,12 @@ export class EntityNormalizationSchema extends BaseSchema<Identifier> {
     key: unknown,
     visitor: Normalizer,
   ): string | number {
-    const idAttribute = isString(this.idAttribute) ? this.idAttribute : this.idAttribute(input, parent, key)
-    const id = isString(this.idAttribute) ? (input[idAttribute] as Identifier) : this.idAttribute(input, parent, key)
+    const idAttribute = isString(this.idAttribute)
+      ? this.idAttribute
+      : this.idAttribute(input, parent, key)
+    const id = isString(this.idAttribute)
+      ? (input[idAttribute] as Identifier)
+      : this.idAttribute(input, parent, key)
 
     visitor.cache.set(input, id)
 
@@ -32,7 +36,12 @@ export class EntityNormalizationSchema extends BaseSchema<Identifier> {
       if (!isUnknownRecord(processedEntity[key])) {
         continue
       }
-      processedEntity[key] = visitor.visit(processedEntity[key], processedEntity, key, this.definition[key])
+      processedEntity[key] = visitor.visit(
+        processedEntity[key],
+        processedEntity,
+        key,
+        this.definition[key],
+      )
     }
 
     visitor.addEntity(this, id, processedEntity)

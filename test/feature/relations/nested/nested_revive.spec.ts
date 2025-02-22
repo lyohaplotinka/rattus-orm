@@ -1,8 +1,8 @@
 import { createStore, fillState } from '@func-test/utils/Helpers'
 
-import { Model } from '@/index'
-import { HasMany, BelongsTo } from '@/attributes/field-relations'
+import { BelongsTo, HasMany } from '@/attributes/field-relations'
 import { AttrField } from '@/attributes/field-types'
+import { Model } from '@/index'
 
 describe('feature/relations/nested/nested_revive', () => {
   class User extends Model {

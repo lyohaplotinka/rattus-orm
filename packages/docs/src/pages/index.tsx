@@ -19,7 +19,10 @@ function HomepageHeader() {
       <div className="container">
         <div className={styles.titleBlock}>
           <Logo className={styles.logo} />
-          <Heading as="h1" className={clsx('hero__title', styles.heroTitle)}>
+          <Heading
+            as="h1"
+            className={clsx('hero__title', styles.heroTitle)}
+          >
             {siteConfig.title}
           </Heading>
         </div>
@@ -27,7 +30,10 @@ function HomepageHeader() {
           <Translate>ORM for your JS/TS apps</Translate>
         </p>
         <div className={styles.buttons}>
-          <Link className="button button--secondary button--lg" to="/docs/intro">
+          <Link
+            className="button button--secondary button--lg"
+            to="/docs/intro"
+          >
             <Translate>Read documentation</Translate>
           </Link>
         </div>
@@ -41,7 +47,9 @@ export default function Home(): JSX.Element {
   return (
     <Layout
       title={siteConfig.title}
-      description={translate({ message: 'Object-Relational Mapping (ORM) like experience for JS/TS applications' })}
+      description={translate({
+        message: 'Object-Relational Mapping (ORM) like experience for JS/TS applications',
+      })}
     >
       <HomepageHeader />
       <main>
@@ -52,7 +60,11 @@ export default function Home(): JSX.Element {
           <p className={'hero__subtitle text-center'}>
             <Translate>ORM-like experience for any state management library</Translate>
           </p>
-          <img src={threeLibsDemo} alt={'React, Vue and Angular demo'} className={'w-220'} />
+          <img
+            src={threeLibsDemo}
+            alt={'React, Vue and Angular demo'}
+            className={'w-220'}
+          />
         </div>
         <HomepageIntegrations />
         <HomepagePlugins />

@@ -48,7 +48,7 @@ export class Database {
    */
   protected schemas: Schemas = {}
 
-  protected started: boolean = false
+  protected started = false
 
   constructor(key?: symbol) {
     if (key !== newDbSymbol) {
@@ -72,7 +72,10 @@ export class Database {
    * @param {Model} model model for which a repository is needed
    * @returns {R extends Repository} Repository instance (or custom if generic argument passed)
    */
-  public getRepository<R extends Repository<InstanceType<M>>, M extends typeof Model = typeof Model>(model: M): R {
+  public getRepository<
+    R extends Repository<InstanceType<M>>,
+    M extends typeof Model = typeof Model,
+  >(model: M): R {
     const RepoCtor = this.repositoryManager.getRepositoryCtorForModel(model)
     const repo = new RepoCtor(this).initialize(model as ModelConstructor<any>)
     this.register(repo.getModel())
@@ -216,7 +219,10 @@ export class Database {
    * @param {RattusEvent.FLUSH} event event to listen to
    * @param {DataEventCallback} callback void callback
    */
-  public on(event: typeof RattusEvents.FLUSH, callback: DataEventCallback<undefined>): CancelSubscriptionCallback
+  public on(
+    event: typeof RattusEvents.FLUSH,
+    callback: DataEventCallback<undefined>,
+  ): CancelSubscriptionCallback
   /**
    * Listen to RattusEvent on connection register. Can't modify data.
    *

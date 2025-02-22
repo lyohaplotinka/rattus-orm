@@ -1,8 +1,8 @@
 import { createStore } from '@func-test/utils/Helpers'
 
-import { Model } from '@/index'
 import { HasMany } from '@/attributes/field-relations'
-import { StringField, NumberField } from '@/attributes/field-types'
+import { NumberField, StringField } from '@/attributes/field-types'
+import { Model } from '@/index'
 
 describe(
   'performance/save_has_many_relation',

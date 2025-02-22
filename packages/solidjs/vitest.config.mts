@@ -1,11 +1,11 @@
+import solidPlugin from 'vite-plugin-solid'
 import { defineConfig } from 'vitest/config'
-import solidPlugin from 'vite-plugin-solid';
 
 export default defineConfig({
   plugins: [
     solidPlugin({
       babel: {
-        plugins: ["@babel/plugin-syntax-explicit-resource-management"],
+        plugins: ['@babel/plugin-syntax-explicit-resource-management'],
       },
     }),
   ],
@@ -13,14 +13,14 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     fileParallelism: false,
-    testTransformMode: { web: ["/\.[jt]sx?$/"] },
+    testTransformMode: { web: ['/.[jt]sx?$/'] },
   },
   optimizeDeps: {
-    disabled: "dev",
+    disabled: 'dev',
   },
   esbuild: {
     target: 'es2020',
     include: /\.(m?[jt]s|[jt]sx)$/,
-    exclude: []
+    exclude: [],
   },
 })

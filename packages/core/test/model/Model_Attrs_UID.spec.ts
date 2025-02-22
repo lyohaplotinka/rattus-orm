@@ -1,7 +1,7 @@
 import { mockUid } from '../../../../test/utils/Helpers'
 
-import { UidField } from '../../src/attributes/types/decorators/UidField'
 import { Model } from '@/model/Model'
+import { UidField } from '../../src/attributes/types/decorators/UidField'
 
 describe('unit/model/Model_Attrs_UID', () => {
   it('returns `null` when the model is instantiated', () => {

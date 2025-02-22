@@ -32,10 +32,10 @@ class DatabaseManager extends BaseManager<Database> {
     return this.add(database.getConnection(), database)
   }
 
-  public getRepository<R extends Repository<InstanceType<M>>, M extends typeof Model = typeof Model>(
-    model: M,
-    connectionParam?: string,
-  ): R {
+  public getRepository<
+    R extends Repository<InstanceType<M>>,
+    M extends typeof Model = typeof Model,
+  >(model: M, connectionParam?: string): R {
     const connection = this.getConnectionToOperateWith(connectionParam)
     const repoCacheKey = this.getRepositoryCacheKey(connection, model)
 

@@ -5,7 +5,11 @@ import type { Model } from '@/model/Model'
 /**
  * Create a has-one attribute property decorator.
  */
-export function HasOne(related: () => typeof Model, foreignKey: string, localKey?: string): PropertyDecorator {
+export function HasOne(
+  related: () => typeof Model,
+  foreignKey: string,
+  localKey?: string,
+): PropertyDecorator {
   return (target, propertyKey) => {
     const self = target.$self()
 

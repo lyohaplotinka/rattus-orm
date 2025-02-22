@@ -25,7 +25,9 @@ const expectedData = (id: string): SerializedStorage => ({
   },
 })
 
-export const createBasicProviderTest = <StoreType>(params: CreateBasicProviderTestParams<StoreType>) => {
+export const createBasicProviderTest = <StoreType>(
+  params: CreateBasicProviderTestParams<StoreType>,
+) => {
   const { name, storeFactory, connectionRequired } = params
 
   describe(`Running basic provider tests for "${name}"`, () => {
@@ -139,7 +141,9 @@ export const createBasicProviderTest = <StoreType>(params: CreateBasicProviderTe
       })
 
       expect(getDump()).toStrictEqual({
-        entities: { user: { data: { '5': { id: '5', name: 'Alex5' }, '7': { id: '7', name: 'Alex7' } } } },
+        entities: {
+          user: { data: { '5': { id: '5', name: 'Alex5' }, '7': { id: '7', name: 'Alex7' } } },
+        },
       })
     })
 

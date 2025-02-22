@@ -18,7 +18,9 @@ export type PackageMeta = {
   publishDir: string | null
 }
 
-export type PackageJsonWithRattusMeta = PackageJson.PackageJsonStandard & { rattusMeta: PackageMeta }
+export type PackageJsonWithRattusMeta = PackageJson.PackageJsonStandard & {
+  rattusMeta: PackageMeta
+}
 
 export type YarnPackageListItem = {
   location: string

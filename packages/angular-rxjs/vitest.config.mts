@@ -9,7 +9,7 @@ export default defineConfig(({ mode }) => ({
     environment: 'jsdom',
     include: ['test/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     reporters: ['default'],
-    fileParallelism: false
+    fileParallelism: false,
   },
   define: {
     'import.meta.vitest': mode !== 'production',
@@ -17,6 +17,6 @@ export default defineConfig(({ mode }) => ({
   esbuild: {
     target: 'es2022',
     include: /\.(m?[jt]s|[jt]sx)$/,
-    exclude: []
-  }
+    exclude: [],
+  },
 }))

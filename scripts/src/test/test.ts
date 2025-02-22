@@ -2,7 +2,7 @@ import chalk from 'chalk'
 import { program } from 'commander'
 
 import type { PackageMeta } from '../types/types'
-import { parsePackages, YarnUtils } from '../utils/utils'
+import { YarnUtils, parsePackages } from '../utils/utils'
 
 async function runLocalTests(packageName: string, pattern: string, verbose: boolean) {
   return YarnUtils.testPackage(packageName, pattern, {

@@ -11,7 +11,11 @@ export function RattusProvider(props: PropsWithChildren<RattusOrmInstallerOption
     [props.database, props.plugins, props.customRepositories, props.connection],
   )
 
-  return <RattusReactContext.Provider value={createdDatabase}>{props.children}</RattusReactContext.Provider>
+  return (
+    <RattusReactContext.Provider value={createdDatabase}>
+      {props.children}
+    </RattusReactContext.Provider>
+  )
 }
 
 export { reactUseDatabase as useDatabase } from '@rattus-orm/core/utils/reactIntegrationHelpers'

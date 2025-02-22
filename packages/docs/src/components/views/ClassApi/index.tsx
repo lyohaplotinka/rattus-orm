@@ -2,7 +2,11 @@ import * as Apis from '@site/src/api-docs/index'
 import CodeInline from '@theme/CodeInline'
 import Heading from '@theme/Heading'
 
-import type { ModuleJsonDocs, PublicMethod, PublicProperty } from '../../../../../../scripts/src/api-docs-builder/types'
+import type {
+  ModuleJsonDocs,
+  PublicMethod,
+  PublicProperty,
+} from '../../../../../../scripts/src/api-docs-builder/types'
 import Styles from './styles.module.scss'
 
 function isPublicMethod(value: unknown): value is PublicMethod {
@@ -63,7 +67,10 @@ function Method({ method }: { method: PublicMethod }) {
   )
 }
 
-function PropertiesOrMethodsList({ data, heading }: { data: PublicProperty[] | PublicMethod[]; heading: string }) {
+function PropertiesOrMethodsList({
+  data,
+  heading,
+}: { data: PublicProperty[] | PublicMethod[]; heading: string }) {
   return (
     <>
       <Heading as={'h4'}>{heading}</Heading>
@@ -87,11 +94,24 @@ function OneClassApi({ name, docs }: { name: string; docs: ModuleJsonDocs }) {
 
   return (
     <section className={Styles.classSection}>
-      <Heading as={'h2'} id={name}>
+      <Heading
+        as={'h2'}
+        id={name}
+      >
         {name}
       </Heading>
-      {hasProperties && <PropertiesOrMethodsList data={docs.publicProperties} heading={'Properties'} />}
-      {hasMethods && <PropertiesOrMethodsList data={docs.publicMethods} heading={'Methods'} />}
+      {hasProperties && (
+        <PropertiesOrMethodsList
+          data={docs.publicProperties}
+          heading={'Properties'}
+        />
+      )}
+      {hasMethods && (
+        <PropertiesOrMethodsList
+          data={docs.publicMethods}
+          heading={'Methods'}
+        />
+      )}
     </section>
   )
 }
@@ -100,7 +120,13 @@ export default function ClassesApi() {
   return (
     <>
       {Object.values(Apis).map((doc) => {
-        return <OneClassApi key={doc.name} name={doc.name} docs={doc} />
+        return (
+          <OneClassApi
+            key={doc.name}
+            name={doc.name}
+            docs={doc}
+          />
+        )
       })}
     </>
   )

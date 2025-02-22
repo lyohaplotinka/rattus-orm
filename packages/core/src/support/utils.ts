@@ -55,7 +55,10 @@ export function size(collection: any[] | object): number {
  * Creates an object composed of keys generated from the results of running
  * each element of collection through iteratee.
  */
-export function groupBy<T>(collection: T[], iteratee: (record: T) => string): { [key: string]: T[] } {
+export function groupBy<T>(
+  collection: T[],
+  iteratee: (record: T) => string,
+): { [key: string]: T[] } {
   return collection.reduce((records, record) => {
     const key = iteratee(record)
     ;(records as any)[key] ? (records as any)[key].push(record) : ((records as any)[key] = [record])

@@ -1,5 +1,5 @@
-import { AttrField } from '../../src/attributes/types/decorators/AttrField'
 import { Model } from '@/model/Model'
+import { AttrField } from '../../src/attributes/types/decorators/AttrField'
 
 describe('unit/model/Model_Keys', () => {
   beforeEach(() => {

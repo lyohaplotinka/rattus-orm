@@ -1,8 +1,8 @@
 import { assertModel, createStore, fillState } from '@func-test/utils/Helpers'
 
+import { BelongsTo, HasOne } from '@/attributes/field-relations'
+import { AttrField, StringField } from '@/attributes/field-types'
 import { Model } from '@/index'
-import { HasOne, BelongsTo } from '@/attributes/field-relations'
-import { StringField, AttrField } from '@/attributes/field-types'
 
 describe('feature/relations/eager_loads_recursive', () => {
   class User extends Model {

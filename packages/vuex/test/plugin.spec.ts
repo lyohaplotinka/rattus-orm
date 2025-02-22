@@ -1,9 +1,9 @@
-import { createStore } from 'vuex'
-import { installRattusORM, VuexDataProvider } from '../src'
-import { beforeEach, expect, vi } from 'vitest'
 import { createDatabase, getDatabaseManager } from '@rattus-orm/core'
 import { TestUser } from '@rattus-orm/core/utils/testUtils'
 import { createAppWithPlugins } from '@rattus-orm/core/utils/vueTestUtils'
+import { beforeEach, expect, vi } from 'vitest'
+import { createStore } from 'vuex'
+import { VuexDataProvider, installRattusORM } from '../src'
 
 describe('plugin: vuex', () => {
   beforeEach(() => {
@@ -23,7 +23,10 @@ describe('plugin: vuex', () => {
 
   it('plugin params respect custom databases', () => {
     const store = createStore({})
-    const database = createDatabase({ connection: 'custom', dataProvider: new VuexDataProvider(store as any) })
+    const database = createDatabase({
+      connection: 'custom',
+      dataProvider: new VuexDataProvider(store as any),
+    })
     installRattusORM({ database })(store)
     createAppWithPlugins([store])
 
@@ -43,7 +46,9 @@ describe('plugin: vuex', () => {
 
     expect(store.state).toEqual({ entities: {} })
     expect(getDatabaseManager().getDatabase().isStarted()).toBe(true)
-    expect(getDatabaseManager().getRepository(TestUser).database.getConnection()).toEqual('entities')
+    expect(getDatabaseManager().getRepository(TestUser).database.getConnection()).toEqual(
+      'entities',
+    )
     expect(getDatabaseManager().getRepository(TestUser).getModel()).toBeInstanceOf(TestUser)
     expect(spyRepo).toHaveBeenCalledOnce()
   })

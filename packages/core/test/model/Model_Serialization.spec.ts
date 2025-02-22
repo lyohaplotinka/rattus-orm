@@ -1,5 +1,5 @@
 import { Model } from '@/model/Model'
-import { DateField, AttrField } from '../../src/attributes/field-types'
+import { AttrField, DateField } from '../../src/attributes/field-types'
 
 describe('unit/model/Model_Serialization', () => {
   class User extends Model {

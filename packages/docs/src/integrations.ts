@@ -18,7 +18,8 @@ export const IntegrationsList: PackageItem[] = [
     picture: VuexLogo,
     link: '/docs/category/vuex-integration-vue',
     description: translate({ message: 'Vue + Vuex integration' }),
-    liveDemoUrl: 'https://stackblitz.com/edit/vitejs-vite-uvhvpx?embed=1&file=src%2Fmodels%2FUser.ts',
+    liveDemoUrl:
+      'https://stackblitz.com/edit/vitejs-vite-uvhvpx?embed=1&file=src%2Fmodels%2FUser.ts',
   },
   {
     title: 'Pinia',
@@ -26,7 +27,8 @@ export const IntegrationsList: PackageItem[] = [
     picture: PiniaLogo,
     link: '/docs/category/pinia-integration-vue',
     description: translate({ message: 'Vue + Pinia integration' }),
-    liveDemoUrl: 'https://stackblitz.com/edit/vitejs-vite-gheh5j?embed=1&file=src%2Fmodels%2FUser.ts',
+    liveDemoUrl:
+      'https://stackblitz.com/edit/vitejs-vite-gheh5j?embed=1&file=src%2Fmodels%2FUser.ts',
   },
   {
     title: 'React MobX',
@@ -34,7 +36,8 @@ export const IntegrationsList: PackageItem[] = [
     picture: MobxLogo,
     link: '/docs/category/mobx-integration-react',
     description: translate({ message: 'React + MobX integration' }),
-    liveDemoUrl: 'https://stackblitz.com/edit/vitejs-vite-y4vza6?embed=1&file=src%2Fmodels%2FUser.ts',
+    liveDemoUrl:
+      'https://stackblitz.com/edit/vitejs-vite-y4vza6?embed=1&file=src%2Fmodels%2FUser.ts',
   },
   {
     title: 'React Redux',
@@ -42,7 +45,8 @@ export const IntegrationsList: PackageItem[] = [
     picture: ReduxLogo,
     link: '/docs/category/redux-integration-react',
     description: translate({ message: 'React + Redux integration' }),
-    liveDemoUrl: 'https://stackblitz.com/edit/vitejs-vite-ug5prg?embed=1&file=src%2Fmodels%2FUser.ts',
+    liveDemoUrl:
+      'https://stackblitz.com/edit/vitejs-vite-ug5prg?embed=1&file=src%2Fmodels%2FUser.ts',
   },
   {
     title: 'React Signals',
@@ -50,7 +54,8 @@ export const IntegrationsList: PackageItem[] = [
     picture: ReactLogo,
     link: '/docs/category/signals-integration-react',
     description: translate({ message: 'React + Signals integration' }),
-    liveDemoUrl: 'https://stackblitz.com/edit/vitejs-vite-ra2xlc?embed=1&file=src%2Fmodels%2FUser.ts',
+    liveDemoUrl:
+      'https://stackblitz.com/edit/vitejs-vite-ra2xlc?embed=1&file=src%2Fmodels%2FUser.ts',
   },
   {
     title: 'Angular RxJS',
@@ -58,7 +63,8 @@ export const IntegrationsList: PackageItem[] = [
     picture: AngularLogo,
     link: '/docs/category/angular-rxjs-integration',
     description: translate({ message: 'Angular RxJS integration' }),
-    liveDemoUrl: 'https://stackblitz.com/edit/stackblitz-starters-tgrfz2?embed=1&file=src%2Fmodels%2FUser.ts',
+    liveDemoUrl:
+      'https://stackblitz.com/edit/stackblitz-starters-tgrfz2?embed=1&file=src%2Fmodels%2FUser.ts',
   },
   {
     title: 'Svelte',
@@ -66,7 +72,8 @@ export const IntegrationsList: PackageItem[] = [
     picture: SvelteLogo,
     link: '/docs/category/svelte-integration',
     description: translate({ message: 'Svelte integration' }),
-    liveDemoUrl: 'https://stackblitz.com/edit/vitejs-vite-faunob?embed=1&file=src%2Fmodels%2FUser.ts',
+    liveDemoUrl:
+      'https://stackblitz.com/edit/vitejs-vite-faunob?embed=1&file=src%2Fmodels%2FUser.ts',
   },
   {
     title: 'Solid.js',
@@ -74,7 +81,8 @@ export const IntegrationsList: PackageItem[] = [
     picture: SolidLogo,
     link: '/docs/category/solid-integration',
     description: translate({ message: 'Solid integration' }),
-    liveDemoUrl: 'https://stackblitz.com/edit/solidjs-templates-tyxxud?embed=1&file=src%2Fmodels%2FUser.ts',
+    liveDemoUrl:
+      'https://stackblitz.com/edit/solidjs-templates-tyxxud?embed=1&file=src%2Fmodels%2FUser.ts',
   },
   {
     title: 'LocalStorage',
