@@ -47,6 +47,6 @@ export async function generateChangelogFromJson(
     )
   }
 
-  changelogFileContent = newBlock.join('\n') + '\n\n' + changelogFileContent
+  changelogFileContent = `${newBlock.join('\n')}\n\n${changelogFileContent}`
   await writeFile(filePath, changelogFileContent, 'utf8')
 }

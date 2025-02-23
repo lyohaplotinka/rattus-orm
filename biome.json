@@ -2,7 +2,12 @@
   "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
   "files": {
     "ignoreUnknown": false,
-    "ignore": ["*/**/*.json"]
+    "ignore": [
+      "*/**/*.json",
+      "*/**/dist/*",
+      "scripts/built/*",
+      "packages/docs/build/*"
+    ]
   },
   "formatter": {
     "enabled": true,
@@ -19,17 +24,24 @@
       "suspicious": {
         "noExplicitAny": "off",
         "noConstEnum": "off",
-        "noAssignInExpressions": "off"
+        "noAssignInExpressions": "off",
+        "noShadowRestrictedNames": "off",
+        "noExportsInTest": "off"
       },
       "style": {
         "noNonNullAssertion": "off",
         "useEnumInitializers": "off",
-        "useImportType": "off"
+        "useImportType": "off",
+        "noParameterAssign": "off",
+        "useDefaultParameterLast": "off"
       },
       "complexity": {
         "noStaticOnlyClass": "off",
         "noThisInStatic": "off",
         "noForEach": "off"
+      },
+      "a11y": {
+        "noRedundantAlt": "off"
       }
     }
   },

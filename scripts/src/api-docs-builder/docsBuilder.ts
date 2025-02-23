@@ -141,7 +141,7 @@ function buildDocsForFile(fileStr: string, sectionName: string) {
   const newFileName = `${sectionName}.api.json`
   writeFileSync(
     resolve(apiDocsDir, newFileName),
-    JSON.stringify(moduleDocs, null, 2) + '\n',
+    `${JSON.stringify(moduleDocs, null, 2)}\n`,
     'utf8',
   )
 }
@@ -154,7 +154,7 @@ function main() {
     exports.push(`export { default as ${name}Api } from './${name}.api.json'`)
   }
 
-  writeFileSync(resolve(apiDocsDir, 'index.ts'), exports.join('\n') + '\n', 'utf8')
+  writeFileSync(resolve(apiDocsDir, 'index.ts'), `${exports.join('\n')}\n`, 'utf8')
 }
 
 main()

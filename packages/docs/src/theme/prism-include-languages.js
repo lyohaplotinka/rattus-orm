@@ -19,5 +19,6 @@ export default function prismIncludeLanguages(PrismObject) {
     // eslint-disable-next-line
     require(`prismjs/components/prism-${lang}`)
   })
+  // biome-ignore lint/performance/noDelete: can be allowed here
   delete globalThis.Prism
 }

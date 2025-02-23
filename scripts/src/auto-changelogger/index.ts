@@ -34,6 +34,6 @@ export async function updateChangelog(forPackage: string) {
     commitRecord.commitMessages = uniq([...commitRecord.commitMessages, ...changes.commitMessages])
   }
 
-  writeFileSync(CHANGELOG_JSON_PATH, JSON.stringify(changelogJson, null, 2) + '\n', 'utf8')
+  writeFileSync(CHANGELOG_JSON_PATH, `${JSON.stringify(changelogJson, null, 2)}\n`, 'utf8')
   await generateChangelogFromJson(changelogJson, date)
 }

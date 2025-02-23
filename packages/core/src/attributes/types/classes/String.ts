@@ -1,15 +1,7 @@
-import type { Model } from '../../../model/Model'
 import { isString } from '../../../support/utils'
 import { Type } from './Type'
 
 export class String extends Type<string | null> {
-  /**
-   * Create a new String attribute instance.
-   */
-  constructor(model: Model, value: string | null) {
-    super(model, value)
-  }
-
   /**
    * Make the value for the attribute.
    */
@@ -26,6 +18,7 @@ export class String extends Type<string | null> {
       return value
     }
 
+    // biome-ignore lint/style/useTemplate: should be allowed here
     return value + ''
   }
 }

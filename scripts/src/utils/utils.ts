@@ -145,7 +145,7 @@ export function loadPackageJson(packageDirName: string): PackageJson.PackageJson
 }
 
 export function writePackageJson(packageDirName: string, content: PackageJson.PackageJsonStandard) {
-  writeFileSync(getPackageJsonPath(packageDirName), JSON.stringify(content, null, 2) + '\n', 'utf8')
+  writeFileSync(getPackageJsonPath(packageDirName), `${JSON.stringify(content, null, 2)}\n`, 'utf8')
 }
 
 export function updatePackageJson(
@@ -188,7 +188,7 @@ export function createTsupBuildEntries(files: string[], srcPath: string, prefix 
 }
 
 export function createExportsBlock(name: string, prefix?: string): PackageJson.Exports {
-  const nameWithoutExtension = normalize(prefix + '/' + name.replace(extname(name), ''))
+  const nameWithoutExtension = normalize(`${prefix}/${name.replace(extname(name), '')}`)
 
   return {
     [`./${nameWithoutExtension}`]: {
@@ -270,7 +270,7 @@ export class YarnUtils {
   }
 
   public static async publishPackageForCustomDir(publishDir: string) {
-    return execaCommand(`npm publish --access public`, {
+    return execaCommand('npm publish --access public', {
       shell: true,
       stdio: 'inherit',
       cwd: publishDir,

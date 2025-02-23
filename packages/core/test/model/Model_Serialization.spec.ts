@@ -7,7 +7,7 @@ describe('unit/model/Model_Serialization', () => {
 
     @AttrField() id!: number
     @AttrField() arr!: []
-    @AttrField() obj!: {}
+    @AttrField() obj!: any
     @DateField(null) public date: Date
   }
 

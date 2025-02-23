@@ -30,6 +30,7 @@ export default function PreviewIframe({ src }: PreviewIframeProps) {
     <>
       {showLoader && <PreviewIframePlaceholder />}
       <iframe
+        title={'Integration preview'}
         onLoad={onIframeLoad}
         ref={iframeRef}
         src={src}

@@ -68,7 +68,7 @@ export async function runForPackage(packageName: string) {
   const packageMeta = getPackageMeta(packageName)
 
   const currentVersion = packageMeta.packageJson.version!
-  let targetVersion
+  let targetVersion: string
 
   const { release } = await enquirer.prompt<{ release: string }>({
     type: 'select',
@@ -138,7 +138,7 @@ export async function runForPackage(packageName: string) {
   const { yes: changelogOk } = await enquirer.prompt<{ yes: boolean }>({
     type: 'confirm',
     name: 'yes',
-    message: `Is changelog OK?`,
+    message: 'Is changelog OK?',
   })
 
   if (!changelogOk) {

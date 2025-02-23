@@ -56,6 +56,7 @@ describe('plugin: pinia', () => {
     await nextTick()
 
     const expected = {
+      // biome-ignore lint/complexity/useLiteralKeys: should be allowed here
       ['database/testUser']: {
         data: {
           '1': { id: '1', age: 27 },

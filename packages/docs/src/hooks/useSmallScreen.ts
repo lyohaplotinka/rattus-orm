@@ -7,6 +7,7 @@ const match = () => window.matchMedia('(max-width: 996px)').matches
 export function useSmallScreen() {
   const isSmall = useSignal(false)
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: does not required here
   useEffect(() => {
     const onResize = debounce(() => {
       isSmall.value = match()

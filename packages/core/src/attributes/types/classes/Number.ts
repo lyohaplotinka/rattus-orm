@@ -1,15 +1,7 @@
-import type { Model } from '../../../model/Model'
 import { isNumber } from '../../../support/utils'
 import { Type } from './Type'
 
 export class Number extends Type<number | null> {
-  /**
-   * Create a new Number attribute instance.
-   */
-  constructor(model: Model, value: number | null) {
-    super(model, value)
-  }
-
   /**
    * Make the value for the attribute.
    */

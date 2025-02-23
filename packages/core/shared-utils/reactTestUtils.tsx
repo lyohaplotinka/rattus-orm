@@ -101,7 +101,7 @@ export function createReactivityTestComponent<T extends UseRepository<any>>(
     const { find } = useRepoCb(TestUser)
     const user = find('1')
 
-    return <div data-testid={REACT_REACTIVITY_TEST_ID}>{user && user.age}</div>
+    return <div data-testid={REACT_REACTIVITY_TEST_ID}>{user?.age}</div>
   }
 }
 

@@ -8,7 +8,7 @@ import { ReactSignalsDataProvider } from '../index'
 export function RattusProvider(props: PropsWithChildren<RattusOrmInstallerOptions>) {
   const createdDatabase = useMemo(
     () => contextBootstrap(props, new ReactSignalsDataProvider()),
-    [props.database, props.plugins, props.customRepositories, props.connection],
+    [props, props.database, props.plugins, props.customRepositories, props.connection],
   )
 
   return (

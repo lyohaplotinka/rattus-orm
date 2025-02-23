@@ -56,7 +56,7 @@ function Method({ method }: { method: PublicMethod }) {
         <ul>
           {method.params.map((param) => {
             return (
-              <li>
+              <li key={param.name}>
                 <CodeInline>{param.name}</CodeInline> - {param.description}
               </li>
             )

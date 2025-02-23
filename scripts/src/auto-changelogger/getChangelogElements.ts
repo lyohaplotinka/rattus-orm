@@ -13,7 +13,7 @@ export async function getChangelogElementsForPackage(
       result.push(
         commit.message.replace(
           /\(#(\d{0,5})\)$/,
-          `([#$1](https://github.com/lyohaplotinka/rattus-orm/pull/$1))`,
+          '([#$1](https://github.com/lyohaplotinka/rattus-orm/pull/$1))',
         ),
       )
     }

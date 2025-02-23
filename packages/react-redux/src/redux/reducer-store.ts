@@ -24,7 +24,9 @@ export class ReducerStore<MP extends ModulePath> {
   }
 
   public getReducer(): Reducer<State, RattusReducerAction<MP>> {
-    return (state = this.initialState ?? { data: {} }, action) => {
+    return (state, action) => {
+      state ??= this.initialState ?? { data: {} }
+
       switch (action.type) {
         case this.getModuleAction(rattusReduxActions.FRESH): {
           return {

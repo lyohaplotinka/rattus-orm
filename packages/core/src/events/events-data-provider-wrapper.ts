@@ -16,7 +16,7 @@ export class EventsDataProviderWrapper implements DataProvider {
 
   public registerConnection(name: string): void {
     this.dispatchVoidEvent(RattusEvents.CONNECTION_REGISTER, name, [name, name])
-    return this.provider.registerConnection(name)
+    this.provider.registerConnection(name)
   }
 
   public dump(): SerializedStorage {

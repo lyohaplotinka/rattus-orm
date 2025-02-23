@@ -72,9 +72,9 @@ export default function HomepageFeatures(): JSX.Element {
       </Heading>
       <div className="container">
         <div className="row">
-          {FeatureList.map((props, idx) => (
+          {FeatureList.map((props) => (
             <Feature
-              key={idx}
+              key={props.title}
               {...props}
             />
           ))}

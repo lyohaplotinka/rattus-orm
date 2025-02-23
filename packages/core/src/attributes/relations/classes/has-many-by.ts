@@ -96,7 +96,8 @@ export class HasManyBy extends Relation {
    */
   protected getEagerModelKeys(models: Collection): (string | number)[] {
     return models.reduce<(string | number)[]>((keys, model) => {
-      return [...keys, ...model.getThisNonStrict()[this.foreignKey]]
+      keys.push(...model.getThisNonStrict()[this.foreignKey])
+      return keys
     }, [])
   }
 
