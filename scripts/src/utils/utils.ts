@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
 import { readdir } from 'node:fs/promises'
 import { dirname, extname, normalize, parse, resolve } from 'node:path'
@@ -12,7 +10,7 @@ import { merge } from 'lodash-es'
 import type { PackageJson } from 'type-fest'
 
 import { isPackageJsonWithRattusMeta } from '../types/guards'
-import type { ExecaOptions, PackageMeta, YarnPackageListItem } from '../types/types'
+import type { PackageMeta, YarnPackageListItem } from '../types/types'
 import { getCommitsListFromLastRelease, hasAffectedFilesForPackage } from './git'
 
 export function dirName(importMetaUrl: string) {
@@ -244,24 +242,8 @@ export class YarnUtils {
     return result.stdout.split('\n').map((part) => JSON.parse(part))
   }
 
-  public static async runFunctionalTests(pkg: string, pattern = '', options?: ExecaOptions) {
-    return execaCommand(`./node_modules/.bin/vitest run ${pattern}`, {
-      ...options,
-      env: {
-        PACKAGE_NAME: pkg,
-      },
-    })
-  }
-
-  public static async testPackage(pkg: string, pattern = '', options?: ExecaOptions) {
-    return execaCommand(
-      `yarn workspace @rattus-orm/${pkg} run test ${pattern} --passWithNoTests`,
-      options,
-    )
-  }
-
   public static async test(pkg = 'all') {
-    return $`yarn test ${pkg}`
+    return $`yarn test --project '${pkg}*'`
   }
 
   public static async runForPackage(pkg: string, command: string) {
