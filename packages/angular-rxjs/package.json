@@ -12,21 +12,13 @@
   "bugs": {
     "url": "https://github.com/lyohaplotinka/rattus-orm/issues"
   },
-  "keywords": [
-    "orm",
-    "rattus",
-    "angular",
-    "rxjs",
-    "typescript",
-    "javascript"
-  ],
+  "keywords": ["orm", "rattus", "angular", "rxjs", "typescript", "javascript"],
   "version": "0.2.3",
   "type": "module",
   "scripts": {
     "ng": "ng",
     "build": "yarn install && ng build",
     "clean": "rm -rf dist && rm -rf node_modules && rm -rf .angular",
-    "lint": "run -T eslint 'src/**/*.{ts,tsx}' --quiet --fix",
     "test": "run -T vitest run",
     "typecheck": "bash -c 'run -T tsc -p tsconfig.json --noEmit'"
   },

@@ -66,7 +66,6 @@ export function testMethodsBound<T extends UseRepository<any>>(
   checker: (v: any) => boolean = () => true,
 ) {
   describe(`${name}: useRepository returns correctly bound methods`, () => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     it.each(uniq([...pullRepositoryKeys, ...keysInstanceof]))(
       '%s has correct context',
       (methodName) => {

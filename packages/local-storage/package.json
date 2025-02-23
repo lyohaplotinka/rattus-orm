@@ -12,13 +12,7 @@
   "bugs": {
     "url": "https://github.com/lyohaplotinka/rattus-orm/issues"
   },
-  "keywords": [
-    "orm",
-    "rattus",
-    "local-storage",
-    "typescript",
-    "javascript"
-  ],
+  "keywords": ["orm", "rattus", "local-storage", "typescript", "javascript"],
   "version": "0.2.3",
   "main": "./dist/rattus-orm-local-storage-provider.js",
   "browser": "./dist/rattus-orm-local-storage-provider.mjs",
@@ -31,13 +25,10 @@
       "types": "./dist/rattus-orm-local-storage-provider.d.ts"
     }
   },
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "scripts": {
     "build": "run -T tsup",
     "clean": "rm -rf dist && rm -rf node_modules",
-    "lint": "run -T eslint 'src/**/*.ts' --quiet --fix",
     "test": "run -T vitest run",
     "typecheck": "bash -c 'run -T tsc -p tsconfig.json --noEmit'",
     "size": "run -T size-limit"

@@ -12,13 +12,7 @@
   "bugs": {
     "url": "https://github.com/lyohaplotinka/rattus-orm/issues"
   },
-  "keywords": [
-    "orm",
-    "rattus",
-    "svelte",
-    "typescript",
-    "javascript"
-  ],
+  "keywords": ["orm", "rattus", "svelte", "typescript", "javascript"],
   "version": "0.2.3",
   "main": "./dist/rattus-orm-svelte-provider.js",
   "browser": "./dist/rattus-orm-svelte-provider.mjs",
@@ -33,14 +27,10 @@
       "svelte": "./dist/rattus-orm-svelte-provider.mjs"
     }
   },
-  "files": [
-    "dist",
-    "components"
-  ],
+  "files": ["dist", "components"],
   "scripts": {
     "build": "run -T tsup",
     "clean": "rm -rf dist && rm -rf node_modules",
-    "lint": "run -T eslint 'src/**/*.ts' --quiet --fix",
     "test": "yarn build && run -T vitest run",
     "typecheck": "bash -c 'run -T tsc -p tsconfig.json --noEmit'"
   },

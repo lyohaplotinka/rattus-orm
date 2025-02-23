@@ -1,5 +1,5 @@
-import { createDatabase } from '@rattus-orm/core'
 // @ts-nocheck
+import { createDatabase } from '@rattus-orm/core'
 import { describe, expect, it } from 'vitest'
 import { RattusProvider, SolidjsDataProvider, useRattusContext } from '../src'
 import { TestComponent } from './test-utils'

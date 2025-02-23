@@ -4,28 +4,8 @@ export default (allStagedFiles) => {
   const commands = []
 
   const coreMatch = micromatch(allStagedFiles, ['**/core/**/*.{ts,tsx}'])
-  const allTesting = coreMatch.length > 0
   const hasTsTsx = micromatch(allStagedFiles, ['**/*.{ts,tsx}']).length > 0
   const hasScripts = micromatch(allStagedFiles, ['**/scripts/**/*.{ts,tsx,js,mjs}']).length > 0
-
-  if (allTesting) {
-    commands.push('yarn test all')
-  } else {
-    const hasLibs = micromatch(allStagedFiles, [
-      '**/packages/**/*.{ts,tsx}',
-      '!**/docs/**',
-      '!**/core/**',
-      '!**/utils/**',
-    ])
-
-    const result = new Set()
-    for (const filePath of hasLibs) {
-      const pkgDir = filePath.match(/.*\/packages\/([a-z-]+)\/.+$/)[1]
-      result.add(`yarn test ${pkgDir}`)
-    }
-
-    commands.push(...result)
-  }
 
   if (hasTsTsx) {
     commands.unshift('yarn lint', 'yarn typecheck')

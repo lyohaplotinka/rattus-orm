@@ -23,7 +23,6 @@ export function renderHookWithContext<T>({ hook, plugins }: RattusRenderProps<T>
     },
   })
 
-  // eslint-disable-next-line
   // @ts-ignore
   return result as T
 }
