@@ -4,7 +4,11 @@ import type { Relation } from '@/attributes/relations/classes/relation'
 import type { Model } from '@/model/Model'
 import { ArrayNormalizationSchema } from '@/normalization/schemas/array-normalization-schema'
 import { EntityNormalizationSchema } from '@/normalization/schemas/entity-normalization-schema'
-import type { NormalizationSchema, SchemaAttributeGetter, SchemaDefinition } from '@/normalization/schemas/types'
+import type {
+  NormalizationSchema,
+  SchemaAttributeGetter,
+  SchemaDefinition,
+} from '@/normalization/schemas/types'
 import type { IdentifierGetter } from '@/normalization/schemas/types'
 import { UnionNormalizationSchema } from '@/normalization/schemas/union-normalization-schema'
 import type { Schemas } from '@/schema/types'

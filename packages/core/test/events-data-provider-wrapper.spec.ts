@@ -1,8 +1,8 @@
-import { describe, expect } from 'vitest'
-import { EventsDataProviderWrapper } from '../src/events/events-data-provider-wrapper'
-import { ObjectDataProvider } from '../src/data/object-data-provider'
-import { ModuleRegisterEventPayload, RattusEvents } from '../src'
 import { merge } from 'lodash-es'
+import { describe, expect } from 'vitest'
+import { ModuleRegisterEventPayload, RattusEvents } from '../src'
+import { ObjectDataProvider } from '../src/data/object-data-provider'
+import { EventsDataProviderWrapper } from '../src/events/events-data-provider-wrapper'
 
 class TestEventsDataProviderWrapper extends EventsDataProviderWrapper {
   public getInternalListeners() {
@@ -27,14 +27,18 @@ describe('events-data-provider-wrapper', () => {
       return data
     })
     provider.save(['entities', 'test'], { '1': { id: 1, age: 22 } })
-    expect(provider.dump()).toStrictEqual({ entities: { test: { data: { '1': { id: 1, age: 23 } } } } })
+    expect(provider.dump()).toStrictEqual({
+      entities: { test: { data: { '1': { id: 1, age: 23 } } } },
+    })
 
     provider.listen(RattusEvents.REPLACE, (data: any) => {
       data['1'].age = data['1'].age * 2
       return data
     })
     provider.replace(['entities', 'test'], { '1': { id: 1, age: 10 } })
-    expect(provider.dump()).toStrictEqual({ entities: { test: { data: { '1': { id: 1, age: 20 } } } } })
+    expect(provider.dump()).toStrictEqual({
+      entities: { test: { data: { '1': { id: 1, age: 20 } } } },
+    })
 
     provider.flush(['entities', 'test'])
     provider.listen(RattusEvents.INSERT, (data: any) => {
@@ -42,14 +46,18 @@ describe('events-data-provider-wrapper', () => {
       return data
     })
     provider.insert(['entities', 'test'], { '1': { id: 1, age: 50 } })
-    expect(provider.dump()).toStrictEqual({ entities: { test: { data: { '1': { id: 1, age: 25 } } } } })
+    expect(provider.dump()).toStrictEqual({
+      entities: { test: { data: { '1': { id: 1, age: 25 } } } },
+    })
 
     provider.listen(RattusEvents.UPDATE, (data: any) => {
       data['1'].age = Math.sqrt(data['1'].age)
       return data
     })
     provider.update(['entities', 'test'], { '1': { id: 1, age: 1024 } })
-    expect(provider.dump()).toStrictEqual({ entities: { test: { data: { '1': { id: 1, age: 32 } } } } })
+    expect(provider.dump()).toStrictEqual({
+      entities: { test: { data: { '1': { id: 1, age: 32 } } } },
+    })
   })
 
   it('can change deleting ids in delete hook', () => {
@@ -60,7 +68,9 @@ describe('events-data-provider-wrapper', () => {
       return ['2']
     })
     provider.delete(['entities', 'test'], ['1'])
-    expect(provider.dump()).toStrictEqual({ entities: { test: { data: { '1': { id: 1, age: 22 } } } } })
+    expect(provider.dump()).toStrictEqual({
+      entities: { test: { data: { '1': { id: 1, age: 22 } } } },
+    })
   })
 
   it('can modify module path and initial data when registering module', () => {

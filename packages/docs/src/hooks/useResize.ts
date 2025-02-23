@@ -8,6 +8,7 @@ export const useResize = (callback: (size: number) => void) => {
     callback(windowSize.value)
   })
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: does not required here
   useEffect(() => {
     const onResize = () => {
       windowSize.value = window.innerWidth

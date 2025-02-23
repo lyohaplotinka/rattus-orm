@@ -1,5 +1,5 @@
-import { RattusProvider, ReactSignalsDataProvider, useRepository } from '../src'
 import { createReactIntegrationTest } from '@rattus-orm/core/utils/reactTestUtils'
+import { RattusProvider, ReactSignalsDataProvider, useRepository } from '../src'
 
 createReactIntegrationTest({
   name: 'Signals',

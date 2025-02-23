@@ -23,7 +23,7 @@ export class VuexDataProvider extends DataProviderHelpers implements DataProvide
   }
 
   public getModuleState(module: ModulePath): State {
-    return this.store.getters[this.getModulePathString(module) + '/getData']
+    return this.store.getters[`${this.getModulePathString(module)}/getData`]
   }
 
   public insert(module: ModulePath, records: Elements): void {

@@ -27,9 +27,16 @@ function PackageBase({
 }: PackageBaseProps) {
   const picComp =
     typeof PackagePicture === 'string' ? (
-      <img src={PackagePicture} className={styles.packageLogo} alt={`${title} image`} />
+      <img
+        src={PackagePicture}
+        className={styles.packageLogo}
+        alt={`${title} image`}
+      />
     ) : (
-      <PackagePicture className={styles.packageLogo} role={'img'} />
+      <PackagePicture
+        className={styles.packageLogo}
+        role={'img'}
+      />
     )
 
   return (
@@ -66,13 +73,23 @@ function ComingSoonPackage({ title, picture: PackagePicture, description }) {
   )
 }
 
-function ReleasedPackage({ title, picture: PackagePicture, description, packageName, link, liveDemoUrl }: PackageItem) {
+function ReleasedPackage({
+  title,
+  picture: PackagePicture,
+  description,
+  packageName,
+  link,
+  liveDemoUrl,
+}: PackageItem) {
   return (
     <PackageBase
       title={title}
       picture={PackagePicture}
       subtitleSlot={
-        <code title={packageName} className={styles.packageName}>
+        <code
+          title={packageName}
+          className={styles.packageName}
+        >
           {packageName}
         </code>
       }
@@ -92,7 +109,10 @@ function ReleasedPackage({ title, picture: PackagePicture, description, packageN
           {liveDemoUrl && (
             <Link
               to={liveDemoUrl}
-              className={clsx('button button--outline button--secondary', styles.buttonReducedPadding)}
+              className={clsx(
+                'button button--outline button--secondary',
+                styles.buttonReducedPadding,
+              )}
             >
               <Translate>Live demo</Translate>
             </Link>

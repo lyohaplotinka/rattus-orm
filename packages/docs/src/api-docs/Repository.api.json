@@ -36,9 +36,7 @@
     },
     {
       "name": "repo",
-      "typeParams": [
-        "M extends typeof Model"
-      ],
+      "typeParams": ["M extends typeof Model"],
       "params": [
         {
           "declaration": "model: M",

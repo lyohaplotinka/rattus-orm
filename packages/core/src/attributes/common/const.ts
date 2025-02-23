@@ -16,4 +16,5 @@ export const isKindOf = <T>(value: unknown, kind: symbol | symbol[]): value is T
   return isUnknownRecord(value) && attributeKindKey in value && value[attributeKindKey] === kind
 }
 
-export const isRelation = (value: unknown): value is Relation => isKindOf<Relation>(value, [relationKind, morphToKind])
+export const isRelation = (value: unknown): value is Relation =>
+  isKindOf<Relation>(value, [relationKind, morphToKind])

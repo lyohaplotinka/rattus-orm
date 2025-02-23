@@ -37,7 +37,7 @@ export class Query<M extends Model = Model> extends Constraintor<M> implements Q
     protected readonly database: Database,
     model: M,
     eagerLoad: EagerLoad = {},
-    skip: number = 0,
+    skip = 0,
     take: number | null = null,
     orders: Order[] = [],
     wheres: Where[] = [],
@@ -179,7 +179,7 @@ export class Query<M extends Model = Model> extends Constraintor<M> implements Q
    *
    * @param {number} depth relations depth to load
    */
-  public withAllRecursive(depth: number = 3): this {
+  public withAllRecursive(depth = 3): this {
     this.withAll((query) => {
       depth > 0 && query.withAllRecursive(depth - 1)
     })
@@ -517,11 +517,19 @@ export class Query<M extends Model = Model> extends Constraintor<M> implements Q
     return models.sort((elemA, elemB) => {
       for (const order of this.orders) {
         const isAsc = order.direction === 'asc'
-        const aValue: unknown = isFunction(order.field) ? order.field(elemA) : elemA.getThisNonStrict()[order.field]
-        const bValue: unknown = isFunction(order.field) ? order.field(elemB) : elemB.getThisNonStrict()[order.field]
+        const aValue: unknown = isFunction(order.field)
+          ? order.field(elemA)
+          : elemA.getThisNonStrict()[order.field]
+        const bValue: unknown = isFunction(order.field)
+          ? order.field(elemB)
+          : elemB.getThisNonStrict()[order.field]
 
         if (isString(aValue) && isString(bValue)) {
-          const result = (isAsc ? aValue : bValue).localeCompare(isAsc ? bValue : aValue, undefined, { numeric: true })
+          const result = (isAsc ? aValue : bValue).localeCompare(
+            isAsc ? bValue : aValue,
+            undefined,
+            { numeric: true },
+          )
 
           if (result) {
             return result
@@ -544,13 +552,19 @@ export class Query<M extends Model = Model> extends Constraintor<M> implements Q
    * Filter the given collection by the registered limit and offset values.
    */
   protected filterLimit(models: Collection<M>): Collection<M> {
-    return this.take !== null ? models.slice(this.skip, this.skip + this.take) : models.slice(this.skip)
+    return this.take !== null
+      ? models.slice(this.skip, this.skip + this.take)
+      : models.slice(this.skip)
   }
 
   /**
    * Eagerly load the relationship on a set of models.
    */
-  protected eagerLoadRelation(models: Collection<M>, name: string, constraints: EagerLoadConstraint): void {
+  protected eagerLoadRelation(
+    models: Collection<M>,
+    name: string,
+    constraints: EagerLoadConstraint,
+  ): void {
     // First we will "back up" the existing where conditions on the query so we can
     // add our eager constraints. Then we will merge the wheres that were on the
     // query back to it in order that any where conditions might be specified.
@@ -650,7 +664,9 @@ export class Query<M extends Model = Model> extends Constraintor<M> implements Q
     }, {})
   }
 
-  protected getNormalizedEntities(records: Element | Element[]): [data: Element | Element[], entities: Entities] {
+  protected getNormalizedEntities(
+    records: Element | Element[],
+  ): [data: Element | Element[], entities: Entities] {
     const schema = this.database.getSchema(this.model.$entity())
     const toNormalizrSchema: NormalizationSchemaParam = isArray(records) ? [schema] : schema
     const entities = new Normalizer().normalize(records, toNormalizrSchema).entities

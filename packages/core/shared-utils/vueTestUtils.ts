@@ -23,7 +23,6 @@ export function renderHookWithContext<T>({ hook, plugins }: RattusRenderProps<T>
     },
   })
 
-  // eslint-disable-next-line
   // @ts-ignore
   return result as T
 }
@@ -31,7 +30,7 @@ export function renderHookWithContext<T>({ hook, plugins }: RattusRenderProps<T>
 export function renderWithContext<T>({ plugins, setup }: RattusRenderSetupProps<T>) {
   return mount(
     {
-      template: `<div>Age: {{ age }}</div>`,
+      template: '<div>Age: {{ age }}</div>',
       setup(props: any, context: any) {
         return setup(props, context)
       },

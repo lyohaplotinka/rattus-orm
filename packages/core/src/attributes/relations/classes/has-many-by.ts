@@ -65,7 +65,10 @@ export class HasManyBy extends Relation {
     const dictionary = this.buildDictionary(query.get())
 
     models.forEach((model) => {
-      const relatedModels = this.getRelatedModels(dictionary, model.getThisNonStrict()[this.foreignKey])
+      const relatedModels = this.getRelatedModels(
+        dictionary,
+        model.getThisNonStrict()[this.foreignKey],
+      )
 
       model.$setRelation(relation, relatedModels)
     })
@@ -93,7 +96,8 @@ export class HasManyBy extends Relation {
    */
   protected getEagerModelKeys(models: Collection): (string | number)[] {
     return models.reduce<(string | number)[]>((keys, model) => {
-      return [...keys, ...model.getThisNonStrict()[this.foreignKey]]
+      keys.push(...model.getThisNonStrict()[this.foreignKey])
+      return keys
     }, [])
   }
 
@@ -111,7 +115,10 @@ export class HasManyBy extends Relation {
   /**
    * Get all related models from the given dictionary.
    */
-  protected getRelatedModels(dictionary: Record<string, Model>, keys: (string | number)[]): Model[] {
+  protected getRelatedModels(
+    dictionary: Record<string, Model>,
+    keys: (string | number)[],
+  ): Model[] {
     return keys.reduce<Model[]>((items, key) => {
       const item = dictionary[key]
 

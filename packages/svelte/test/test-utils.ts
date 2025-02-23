@@ -1,14 +1,16 @@
-import { render } from '@testing-library/svelte'
-import RattusProviderTest from './components/RattusProviderTest.svelte'
-import FuncExecutor from './components/FuncExecutor.svelte'
 import { RattusOrmInstallerOptions } from '@rattus-orm/core/utils/integrationsHelpers'
+import { render } from '@testing-library/svelte'
+import FuncExecutor from './components/FuncExecutor.svelte'
+import RattusProviderTest from './components/RattusProviderTest.svelte'
 
 export const renderWithContext = (
   component: any,
   contextProps: RattusOrmInstallerOptions = {},
   slotProps = {},
 ): any => {
-  return render(RattusProviderTest, { props: { slotContent: component, slotProps, ...contextProps } as any })
+  return render(RattusProviderTest, {
+    props: { slotContent: component, slotProps, ...contextProps } as any,
+  })
 }
 
 export const renderFunction = <R>(cb: () => R, contextProps: RattusOrmInstallerOptions = {}): R => {

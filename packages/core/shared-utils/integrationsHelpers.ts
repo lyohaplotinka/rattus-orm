@@ -1,4 +1,4 @@
-import type { Constructor, Database, DatabasePlugin, DataProvider, Model, Repository } from '../src'
+import type { Constructor, DataProvider, Database, DatabasePlugin, Model, Repository } from '../src'
 import { getDatabaseManager } from '../src'
 import { isDataProvider } from '../src/data/guards'
 import { isFunction, isString } from '../src/support/utils'
@@ -10,10 +10,10 @@ const isSkippedKey = (value: unknown): value is UseRepositorySkippedKeys => {
   return isString(value) && useRepositorySkippedKeys.includes(value as UseRepositorySkippedKeys)
 }
 
-export type UseRepository<R extends Repository<InstanceType<M>>, M extends typeof Model = typeof Model> = Omit<
-  R,
-  UseRepositorySkippedKeys
->
+export type UseRepository<
+  R extends Repository<InstanceType<M>>,
+  M extends typeof Model = typeof Model,
+> = Omit<R, UseRepositorySkippedKeys>
 
 function getAllKeys<T extends Record<any, any>>(obj: T): Array<keyof T> {
   const keys = new Set<keyof T>()
@@ -30,7 +30,7 @@ function getAllKeys<T extends Record<any, any>>(obj: T): Array<keyof T> {
 export function useRepositoryForDynamicContext<
   R extends Repository<InstanceType<M>>,
   M extends typeof Model = typeof Model,
->(model: M, connection: string = 'entities'): UseRepository<R> {
+>(model: M, connection = 'entities'): UseRepository<R> {
   const repo = getDatabaseManager().getRepository<R, M>(model, connection)
   const allRepoKeys = getAllKeys(repo)
   const result = {} as UseRepository<R>
@@ -102,7 +102,10 @@ export function contextBootstrap(params: RattusOrmInstallerOptions, dataProvider
   return db
 }
 
-function registerCustomRepos(db: Database, repos: RattusOrmInstallerOptions['customRepositories'] = []) {
+function registerCustomRepos(
+  db: Database,
+  repos: RattusOrmInstallerOptions['customRepositories'] = [],
+) {
   for (const repo of repos) {
     db.registerCustomRepository(repo)
   }

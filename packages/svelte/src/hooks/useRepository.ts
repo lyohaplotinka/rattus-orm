@@ -1,6 +1,9 @@
 import type { Collection, Database, Item, Model, Query, Repository } from '@rattus-orm/core'
 import { RattusEvents } from '@rattus-orm/core'
-import type { RepositoryGettersKeys, UseRepository } from '@rattus-orm/core/utils/integrationsHelpers'
+import type {
+  RepositoryGettersKeys,
+  UseRepository,
+} from '@rattus-orm/core/utils/integrationsHelpers'
 import { useRepositoryForDynamicContext } from '@rattus-orm/core/utils/integrationsHelpers'
 import type { Readable } from 'svelte/store'
 import { get } from 'svelte/store'
@@ -12,10 +15,10 @@ type SvelteComputed<R> = Readable<R> & {
   value: R
 }
 
-export type UseComputedRepository<R extends Repository<InstanceType<M>>, M extends typeof Model = typeof Model> = Omit<
-  UseRepository<R>,
-  RepositoryGettersKeys
-> & {
+export type UseComputedRepository<
+  R extends Repository<InstanceType<M>>,
+  M extends typeof Model = typeof Model,
+> = Omit<UseRepository<R>, RepositoryGettersKeys> & {
   find: {
     (id: string | number): SvelteComputed<Item<InstanceType<M>>>
     (ids: (string | number)[]): SvelteComputed<Collection<InstanceType<M>>>
@@ -43,10 +46,10 @@ function computed<R>(cb: () => R, database: Database, modelEntity: string): Svel
   return readableStore as SvelteComputed<R>
 }
 
-export function useRepository<R extends Repository<InstanceType<M>>, M extends typeof Model = typeof Model>(
-  model: M,
-  connection?: string,
-): UseComputedRepository<R, M> {
+export function useRepository<
+  R extends Repository<InstanceType<M>>,
+  M extends typeof Model = typeof Model,
+>(model: M, connection?: string): UseComputedRepository<R, M> {
   const repo = useRepositoryForDynamicContext(model, connection)
   const db = useDatabase()
 

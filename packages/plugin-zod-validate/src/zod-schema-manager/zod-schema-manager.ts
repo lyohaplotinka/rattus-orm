@@ -1,6 +1,6 @@
 import type { Database, ModulePath } from '@rattus-orm/core'
 import { Attr, Boolean, Number, String, Type } from '@rattus-orm/core/field-types'
-import { z, type ZodSchema, type ZodTypeAny } from 'zod'
+import { type ZodSchema, type ZodTypeAny, z } from 'zod'
 
 import { isModelWithZodSchemas } from '../types/guards'
 

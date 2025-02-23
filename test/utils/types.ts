@@ -1,6 +1,6 @@
+import { Elements, ModulePath, State } from '@/data/types'
 import { Database } from '@/database/database'
 import { Repository } from '@/repository/repository'
-import { Elements, ModulePath, State } from '@/data/types'
 
 export type Entities = {
   [name: string]: Elements

@@ -1,18 +1,18 @@
-import { describe, expect } from 'vitest'
-import { computed, nextTick } from 'vue'
-import { installRattusORM, PiniaDataProvider, useRepository } from '../src'
-import { createPinia } from 'pinia'
+import { getDatabaseManager } from '@rattus-orm/core'
 import {
+  TestUser,
   createBindSpy,
   testBootstrap,
   testCustomConnection,
   testMethodsBound,
   testMethodsNotRuined,
-  TestUser,
 } from '@rattus-orm/core/utils/testUtils'
-import { renderHookWithContext, renderWithContext } from '@rattus-orm/core/utils/vueTestUtils'
 import { isComputed } from '@rattus-orm/core/utils/vueComposableUtils'
-import { getDatabaseManager } from '@rattus-orm/core'
+import { renderHookWithContext, renderWithContext } from '@rattus-orm/core/utils/vueTestUtils'
+import { createPinia } from 'pinia'
+import { describe, expect } from 'vitest'
+import { computed, nextTick } from 'vue'
+import { PiniaDataProvider, installRattusORM, useRepository } from '../src'
 
 const renderPiniaHook = <T>(hook: () => T): T => {
   return renderHookWithContext({

@@ -56,7 +56,9 @@ export class HasMany extends Relation {
     models.forEach((model) => {
       const key = model.getThisNonStrict()[this.localKey]
 
-      dictionary[key] ? model.$setRelation(relation, dictionary[key]) : model.$setRelation(relation, [])
+      dictionary[key]
+        ? model.$setRelation(relation, dictionary[key])
+        : model.$setRelation(relation, [])
     })
   }
 

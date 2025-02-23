@@ -15,7 +15,12 @@ export class Normalizer {
     obj[id] = processedEntity
   }
 
-  public visit(input: unknown, parent: unknown, key: unknown, schema: NormalizationSchemaParam): unknown {
+  public visit(
+    input: unknown,
+    parent: unknown,
+    key: unknown,
+    schema: NormalizationSchemaParam,
+  ): unknown {
     if (!isUnknownRecord(input)) {
       return input
     }

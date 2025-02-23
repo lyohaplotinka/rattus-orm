@@ -1,6 +1,6 @@
-import { RattusProvider, ReactReduxDataProvider, useRepository } from '../src'
-import { createStore } from 'redux'
 import { createReactIntegrationTest } from '@rattus-orm/core/utils/reactTestUtils'
+import { createStore } from 'redux'
+import { RattusProvider, ReactReduxDataProvider, useRepository } from '../src'
 
 createReactIntegrationTest({
   name: 'Redux',

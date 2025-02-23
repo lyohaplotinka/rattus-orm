@@ -1,9 +1,9 @@
 import { beforeEach, describe, expect, it } from 'vitest'
-import { ObjectDataProvider } from '../src/data/object-data-provider'
-import { createDatabase, Model, Repository } from '../src'
-import { StringField } from '../src/attributes/field-types'
-import { getDatabaseManager } from '../src/database/database-manager'
 import { contextBootstrap } from '../shared-utils/integrationsHelpers'
+import { Model, Repository, createDatabase } from '../src'
+import { StringField } from '../src/attributes/field-types'
+import { ObjectDataProvider } from '../src/data/object-data-provider'
+import { getDatabaseManager } from '../src/database/database-manager'
 
 class Email extends Model {
   public static entity = 'email'

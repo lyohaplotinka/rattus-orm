@@ -21,7 +21,9 @@ describe('Custom normalization', () => {
     const normalizrParsed = normalize(inputData, normalizrTestSchema)
 
     const customUserSchema = new EntityNormalizationSchema('users')
-    const customTestSchema = new EntityNormalizationSchema('mySchema', { users: [customUserSchema] })
+    const customTestSchema = new EntityNormalizationSchema('mySchema', {
+      users: [customUserSchema],
+    })
     const customParsed = getNormalizerResult(inputData, customTestSchema)
 
     expect(customParsed).toStrictEqual(normalizrParsed)
@@ -80,7 +82,10 @@ describe('Custom normalization', () => {
 
     const normalizrUserSchema = new schema.Entity('users')
     const normalizrGroupSchema = new schema.Entity('groups')
-    const normalizrUnionSchema = new schema.Union({ user: normalizrUserSchema, group: normalizrGroupSchema }, 'type')
+    const normalizrUnionSchema = new schema.Union(
+      { user: normalizrUserSchema, group: normalizrGroupSchema },
+      'type',
+    )
     const normalizrTestSchema = new schema.Entity('withOwner', { owner: normalizrUnionSchema })
     const normalizrParsed = normalize(inputData, normalizrTestSchema)
 
@@ -90,7 +95,9 @@ describe('Custom normalization', () => {
       { user: customUserSchema, group: customGroupSchema },
       (input) => input.type,
     )
-    const customTestSchema = new EntityNormalizationSchema('withOwner', { owner: customUnionSchema })
+    const customTestSchema = new EntityNormalizationSchema('withOwner', {
+      owner: customUnionSchema,
+    })
     const customParsed = getNormalizerResult(inputData, customTestSchema)
 
     expect(customParsed).toStrictEqual(normalizrParsed)

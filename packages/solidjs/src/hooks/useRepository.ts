@@ -1,13 +1,16 @@
 import type { Collection, Item, Model, Query, Repository } from '@rattus-orm/core'
-import type { RepositoryGettersKeys, UseRepository } from '@rattus-orm/core/utils/integrationsHelpers'
+import type {
+  RepositoryGettersKeys,
+  UseRepository,
+} from '@rattus-orm/core/utils/integrationsHelpers'
 import { useRepositoryForDynamicContext } from '@rattus-orm/core/utils/integrationsHelpers'
 import type { Accessor } from 'solid-js'
 import { createComputed, createSignal } from 'solid-js'
 
-export type UseComputedRepository<R extends Repository<InstanceType<M>>, M extends typeof Model = typeof Model> = Omit<
-  UseRepository<R>,
-  RepositoryGettersKeys
-> & {
+export type UseComputedRepository<
+  R extends Repository<InstanceType<M>>,
+  M extends typeof Model = typeof Model,
+> = Omit<UseRepository<R>, RepositoryGettersKeys> & {
   find: {
     (id: string | number): Accessor<Item<InstanceType<M>>>
     (ids: (string | number)[]): Accessor<Collection<InstanceType<M>>>
@@ -33,10 +36,10 @@ function computed<T>(cb: () => T): Accessor<T> {
   return value
 }
 
-export function useRepository<R extends Repository<InstanceType<M>>, M extends typeof Model = typeof Model>(
-  model: M,
-  connection?: string,
-): UseComputedRepository<R, M> {
+export function useRepository<
+  R extends Repository<InstanceType<M>>,
+  M extends typeof Model = typeof Model,
+>(model: M, connection?: string): UseComputedRepository<R, M> {
   const repo = useRepositoryForDynamicContext(model, connection)
 
   return {

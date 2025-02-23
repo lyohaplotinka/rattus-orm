@@ -6,7 +6,13 @@ import semver from 'semver'
 
 import { updateChangelog } from '../auto-changelogger'
 import { GitUtils } from '../utils/git'
-import { getPackageMeta, loadPackageJson, updatePackageJson, writePackageJson, YarnUtils } from '../utils/utils'
+import {
+  YarnUtils,
+  getPackageMeta,
+  loadPackageJson,
+  updatePackageJson,
+  writePackageJson,
+} from '../utils/utils'
 
 const versionIncrements: ReleaseType[] = ['patch', 'minor', 'major']
 
@@ -48,7 +54,6 @@ async function bumpDependents(packageName: string, newVersion: string, exclude =
         if (depName !== bumpingDep || depVer === 'workspace:^') {
           continue
         }
-
         ;(pkg as any)[dep][depName] = `^${newVersion}`
       }
     }
@@ -63,13 +68,15 @@ export async function runForPackage(packageName: string) {
   const packageMeta = getPackageMeta(packageName)
 
   const currentVersion = packageMeta.packageJson.version!
-  let targetVersion
+  let targetVersion: string
 
   const { release } = await enquirer.prompt<{ release: string }>({
     type: 'select',
     name: 'release',
     message: 'Select release type',
-    choices: versionIncrements.map((i) => `${i} (${semver.inc(currentVersion, i)})`).concat(['custom']),
+    choices: versionIncrements
+      .map((i) => `${i} (${semver.inc(currentVersion, i)})`)
+      .concat(['custom']),
   })
 
   if (release === 'custom') {
@@ -103,7 +110,8 @@ export async function runForPackage(packageName: string) {
     const { doAutoBump } = await enquirer.prompt<{ doAutoBump: boolean }>({
       type: 'confirm',
       name: 'doAutoBump',
-      message: "This package has dependents, maybe you should bump it's version in them too. Do bumping?",
+      message:
+        "This package has dependents, maybe you should bump it's version in them too. Do bumping?",
     })
 
     if (doAutoBump) {
@@ -130,7 +138,7 @@ export async function runForPackage(packageName: string) {
   const { yes: changelogOk } = await enquirer.prompt<{ yes: boolean }>({
     type: 'confirm',
     name: 'yes',
-    message: `Is changelog OK?`,
+    message: 'Is changelog OK?',
   })
 
   if (!changelogOk) {

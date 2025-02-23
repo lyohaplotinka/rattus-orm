@@ -40,7 +40,10 @@ export abstract class Relation extends Attribute<any> {
   /**
    * Run a dictionary map over the items.
    */
-  protected mapToDictionary(models: Collection, callback: (model: Model) => [string, Model]): Dictionary {
+  protected mapToDictionary(
+    models: Collection,
+    callback: (model: Model) => [string, Model],
+  ): Dictionary {
     return models.reduce<Dictionary>((dictionary, model) => {
       const [key, value] = callback(model)
 

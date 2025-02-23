@@ -1,12 +1,16 @@
 import { TestBed } from '@angular/core/testing'
-import { describe, beforeEach, it, expect } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 
+import { createDatabase, getDatabaseManager } from '@rattus-orm/core'
+import {
+  TestDataProvider,
+  TestUserNoCasting,
+  TestUserNoCastingCustomRepo,
+} from '@rattus-orm/core/utils/testUtils'
+import { RattusZodValidationPlugin } from '@rattus-orm/plugin-zod-validate'
 import { RattusContextService } from '../src/context/rattus-context.service'
 import { RattusOrmModule } from '../src/public-api'
 import { RattusBehaviorSubject } from '../src/rxjs/rattus-behavior-subject'
-import { RattusZodValidationPlugin } from '@rattus-orm/plugin-zod-validate'
-import { TestUserNoCasting, TestUserNoCastingCustomRepo, TestDataProvider } from '@rattus-orm/core/utils/testUtils'
-import { createDatabase, getDatabaseManager } from '@rattus-orm/core'
 
 describe('RattusContextService', () => {
   beforeEach(() => {
@@ -47,7 +51,10 @@ describe('RattusContextService', () => {
     })
 
     it('respects custom database', () => {
-      const database = createDatabase({ connection: 'third', dataProvider: new TestDataProvider() }).start()
+      const database = createDatabase({
+        connection: 'third',
+        dataProvider: new TestDataProvider(),
+      }).start()
       TestBed.configureTestingModule(RattusOrmModule.forRoot({ database }))
       const service = TestBed.inject(RattusContextService)
 
@@ -56,7 +63,9 @@ describe('RattusContextService', () => {
     })
 
     it('respects custom repositories, they have observe method', () => {
-      TestBed.configureTestingModule(RattusOrmModule.forRoot({ customRepositories: [TestUserNoCastingCustomRepo] }))
+      TestBed.configureTestingModule(
+        RattusOrmModule.forRoot({ customRepositories: [TestUserNoCastingCustomRepo] }),
+      )
       const service = TestBed.inject(RattusContextService)
       const repo = service.getRepository<TestUserNoCastingCustomRepo>(TestUserNoCasting)
 

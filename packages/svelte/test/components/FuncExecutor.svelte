@@ -1,9 +1,9 @@
 <script>
-  export let callbackFunction
+export let callbackFunction
 
-  const result = callbackFunction()
+const result = callbackFunction()
 
-  export function getResult() {
-    return result
-  }
+export function getResult() {
+  return result
+}
 </script>

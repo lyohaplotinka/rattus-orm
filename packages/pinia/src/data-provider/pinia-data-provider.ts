@@ -1,6 +1,6 @@
 import type { DataProvider, Elements, ModulePath, SerializedStorage, State } from '@rattus-orm/core'
 import { DataProviderHelpers } from '@rattus-orm/core'
-import { defineStore, type Pinia } from 'pinia'
+import { type Pinia, defineStore } from 'pinia'
 
 import type { OrmActionsTree, OrmGettersTree, OrmStoreDefinition } from './types'
 
@@ -114,7 +114,11 @@ export class PiniaDataProvider extends DataProviderHelpers implements DataProvid
     })
   }
 
-  protected commit(module: ModulePath, action: 'save' | 'fresh' | 'destroy' | 'flush', payload?: any) {
+  protected commit(
+    module: ModulePath,
+    action: 'save' | 'fresh' | 'destroy' | 'flush',
+    payload?: any,
+  ) {
     return this.useModuleStore(module)[action](payload)
   }
 

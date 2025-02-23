@@ -1,8 +1,8 @@
 import { describe, expect } from 'vitest'
-import { createDatabase } from '../src'
-import { ObjectDataProvider } from '../src/object-data-provider'
-import { EventsDataProviderWrapper } from '../src/events/events-data-provider-wrapper'
 import { TestUser } from '../shared-utils/testUtils'
+import { createDatabase } from '../src'
+import { EventsDataProviderWrapper } from '../src/events/events-data-provider-wrapper'
+import { ObjectDataProvider } from '../src/object-data-provider'
 
 describe('database', () => {
   it('getDataProvider returns user-set data provider, not wrapped one', () => {

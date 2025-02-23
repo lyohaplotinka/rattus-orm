@@ -3,7 +3,13 @@ import { dirname, join, resolve } from 'node:path'
 
 import { program } from 'commander'
 
-import { getFiles, loadPackageJson, MONOREPO_ROOT_DIR, SCRIPTS_DIR, YarnUtils } from '../utils/utils'
+import {
+  MONOREPO_ROOT_DIR,
+  SCRIPTS_DIR,
+  YarnUtils,
+  getFiles,
+  loadPackageJson,
+} from '../utils/utils'
 
 const corePackageVersion = loadPackageJson('core').version!
 const templatesPath = resolve(SCRIPTS_DIR, 'templates/package')

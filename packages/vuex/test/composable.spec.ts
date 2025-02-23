@@ -1,18 +1,18 @@
+import { getDatabaseManager } from '@rattus-orm/core'
+import {
+  TestUser,
+  createBindSpy,
+  testBootstrap,
+  testCustomConnection,
+  testMethodsBound,
+  testMethodsNotRuined,
+} from '@rattus-orm/core/utils/testUtils'
+import { isComputed } from '@rattus-orm/core/utils/vueComposableUtils'
+import { renderHookWithContext, renderWithContext } from '@rattus-orm/core/utils/vueTestUtils'
 import { describe, expect } from 'vitest'
 import { computed, nextTick } from 'vue'
 import { createStore } from 'vuex'
-import { installRattusORM, useRepository, VuexDataProvider } from '../src'
-import { renderHookWithContext, renderWithContext } from '@rattus-orm/core/utils/vueTestUtils'
-import { isComputed } from '@rattus-orm/core/utils/vueComposableUtils'
-import {
-  testMethodsBound,
-  testMethodsNotRuined,
-  TestUser,
-  testCustomConnection,
-  createBindSpy,
-  testBootstrap,
-} from '@rattus-orm/core/utils/testUtils'
-import { getDatabaseManager } from '@rattus-orm/core'
+import { VuexDataProvider, installRattusORM, useRepository } from '../src'
 
 const renderVuexHook = <T>(hook: () => T): T => {
   return renderHookWithContext({

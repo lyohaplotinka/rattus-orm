@@ -15,7 +15,14 @@ type RattusProviderProps = RattusOrmInstallerOptions & {
 export function RattusProvider(props: PropsWithChildren<RattusProviderProps>) {
   const createdDatabase = useMemo(
     () => contextBootstrap(props, new ReactReduxDataProvider(props.store, props.sideReducers)),
-    [props.connection, props.database, props.customRepositories, props.store, props.sideReducers],
+    [
+      props,
+      props.connection,
+      props.database,
+      props.customRepositories,
+      props.store,
+      props.sideReducers,
+    ],
   )
 
   return (

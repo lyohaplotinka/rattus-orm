@@ -20,7 +20,7 @@ export class Repository<M extends Model = Model> {
    * used when retrieving repository instance from `store.$repo()` method to
    * determine whether the passed in class is either a repository or a model.
    */
-  public static _isRepository: boolean = true
+  public static _isRepository = true
 
   /**
    * The model object to be used for the custom repository.
@@ -113,7 +113,10 @@ export class Repository<M extends Model = Model> {
    * @param {WherePrimaryClosure | string} field field name to work with
    * @param {WhereSecondaryClosure | any} value optional value to match
    */
-  public orWhere(field: WherePrimaryClosure | string, value?: WhereSecondaryClosure | any): Query<M> {
+  public orWhere(
+    field: WherePrimaryClosure | string,
+    value?: WhereSecondaryClosure | any,
+  ): Query<M> {
     return this.query().orWhere(field, value)
   }
 

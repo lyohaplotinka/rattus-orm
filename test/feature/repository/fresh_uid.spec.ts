@@ -1,7 +1,7 @@
 import { assertState, createStore, mockUid } from '@func-test/utils/Helpers'
 
-import { Model } from '@/index'
 import { StringField, UidField } from '@/attributes/field-types'
+import { Model } from '@/index'
 
 describe('feature/uid/fresh_uid', () => {
   class User extends Model {

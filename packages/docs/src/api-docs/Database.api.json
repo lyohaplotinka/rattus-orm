@@ -26,9 +26,7 @@
     },
     {
       "name": "registerCustomRepository",
-      "typeParams": [
-        "R extends Repository"
-      ],
+      "typeParams": ["R extends Repository"],
       "params": [
         {
           "declaration": "repo: Constructor<R>",
@@ -95,9 +93,7 @@
     },
     {
       "name": "register",
-      "typeParams": [
-        "M extends Model"
-      ],
+      "typeParams": ["M extends Model"],
       "params": [
         {
           "declaration": "model: M",
@@ -110,9 +106,7 @@
     },
     {
       "name": "getModel",
-      "typeParams": [
-        "M extends Model"
-      ],
+      "typeParams": ["M extends Model"],
       "params": [
         {
           "declaration": "name: string",

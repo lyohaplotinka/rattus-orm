@@ -24,7 +24,9 @@ export class UnionNormalizationSchema extends BaseSchema<Record<string, unknown>
     }
 
     const normalizedValue = visitor.visit(input, parent, key, schema)
-    return isNullish(normalizedValue) ? undefined : { id: normalizedValue, schema: this.schemaAttribute(input, parent) }
+    return isNullish(normalizedValue)
+      ? undefined
+      : { id: normalizedValue, schema: this.schemaAttribute(input, parent) }
   }
 
   protected inferSchema(input: unknown, parent: unknown) {

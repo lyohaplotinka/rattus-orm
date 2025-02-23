@@ -1,16 +1,16 @@
-import { describe, expect, it } from 'vitest'
-import { renderFunction, renderWithContext } from './test-utils'
-import { useRepository } from '../dist/rattus-orm-svelte-provider'
 import { pullRepositoryGettersKeys } from '@rattus-orm/core/utils/integrationsHelpers'
-import { act } from '@testing-library/svelte'
-import ReactivityTest from './components/ReactivityTest.svelte'
 import {
+  TestUser,
+  createBindSpy,
   testCustomConnection,
   testMethodsBound,
   testMethodsNotRuined,
-  TestUser,
-  createBindSpy,
 } from '@rattus-orm/core/utils/testUtils'
+import { act } from '@testing-library/svelte'
+import { describe, expect, it } from 'vitest'
+import { useRepository } from '../dist/rattus-orm-svelte-provider'
+import ReactivityTest from './components/ReactivityTest.svelte'
+import { renderFunction, renderWithContext } from './test-utils'
 
 describe('svelte: hooks', () => {
   createBindSpy()

@@ -1,5 +1,5 @@
-import { NumberField } from '../../src/attributes/types/decorators/NumberField'
 import { Model } from '@/model/Model'
+import { NumberField } from '../../src/attributes/types/decorators/NumberField'
 
 describe('unit/model/Model_Attrs_Number', () => {
   it('casts the value to `Number` when instantiating the model', () => {

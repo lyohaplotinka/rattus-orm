@@ -6,10 +6,10 @@ import type { RepositoryGettersKeys } from './integrationsHelpers'
 import { type UseRepository } from './integrationsHelpers'
 import { isUnknownRecord } from './isUnknownRecord'
 
-export type UseComputedRepository<R extends Repository<InstanceType<M>>, M extends typeof Model = typeof Model> = Omit<
-  UseRepository<R>,
-  RepositoryGettersKeys
-> & {
+export type UseComputedRepository<
+  R extends Repository<InstanceType<M>>,
+  M extends typeof Model = typeof Model,
+> = Omit<UseRepository<R>, RepositoryGettersKeys> & {
   find: {
     (id: string | number): ComputedRef<Item<InstanceType<M>>>
     (ids: (string | number)[]): ComputedRef<Collection<InstanceType<M>>>
@@ -18,9 +18,10 @@ export type UseComputedRepository<R extends Repository<InstanceType<M>>, M exten
   withQuery: <R>(computedCb: (query: Query<InstanceType<M>>) => R) => ComputedRef<R>
 }
 
-export function computifyUseRepository<R extends Repository<InstanceType<M>>, M extends typeof Model = typeof Model>(
-  repo: UseRepository<R, M>,
-): UseComputedRepository<R, M> {
+export function computifyUseRepository<
+  R extends Repository<InstanceType<M>>,
+  M extends typeof Model = typeof Model,
+>(repo: UseRepository<R, M>): UseComputedRepository<R, M> {
   return {
     ...repo,
     find(ids: any) {

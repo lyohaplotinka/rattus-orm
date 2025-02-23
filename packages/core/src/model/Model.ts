@@ -28,7 +28,7 @@ export class Model {
   /**
    * Should or should not cast data types
    */
-  public static dataTypeCasting: boolean = true
+  public static dataTypeCasting = true
 
   /**
    * The primary key for the model.
@@ -76,7 +76,11 @@ export class Model {
    * @param {string} key model field name
    * @param {() => Attribute<unknown>} attribute attribute factory
    */
-  public static setRegistry<M extends typeof Model>(this: M, key: string, attribute: () => Attribute<unknown>): M {
+  public static setRegistry<M extends typeof Model>(
+    this: M,
+    key: string,
+    attribute: () => Attribute<unknown>,
+  ): M {
     this.registries[this.entity] = {
       ...(this.registries[this.entity] ?? {}),
       [key]: attribute,
@@ -129,7 +133,10 @@ export class Model {
   protected static initializeSchema(): void {
     this.schemas[this.entity] = {}
 
-    for (const [key, attribute] of Object.entries({ ...this.fields(), ...this.registries[this.entity] })) {
+    for (const [key, attribute] of Object.entries({
+      ...this.fields(),
+      ...this.registries[this.entity],
+    })) {
       this.schemas[this.entity][key] = isFunction(attribute) ? attribute() : attribute
     }
   }

@@ -3,13 +3,17 @@ import type { BehaviorSubject } from 'rxjs'
 
 import { RattusBehaviorSubject } from './rattus-behavior-subject'
 
-export type RxjsRepository<R extends Repository<InstanceType<M>>, M extends typeof Model = typeof Model> = R & {
+export type RxjsRepository<
+  R extends Repository<InstanceType<M>>,
+  M extends typeof Model = typeof Model,
+> = R & {
   observe<RT>(cb: (repo: R) => RT): BehaviorSubject<RT>
 }
 
-export function repoToRxjsRepository<R extends Repository<InstanceType<M>>, M extends typeof Model = typeof Model>(
-  repo: R,
-): RxjsRepository<R> {
+export function repoToRxjsRepository<
+  R extends Repository<InstanceType<M>>,
+  M extends typeof Model = typeof Model,
+>(repo: R): RxjsRepository<R> {
   if ('observe' in repo && typeof repo.observe === 'function') {
     return repo as RxjsRepository<R, M>
   }

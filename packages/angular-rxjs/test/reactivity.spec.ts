@@ -1,11 +1,11 @@
-import { beforeEach, describe, expect, it } from 'vitest'
-import { Item } from '@rattus-orm/core'
-import { TestBed } from '@angular/core/testing'
-import { RattusOrmModule, RattusContextService } from '../src/public-api'
-import { Component } from '@angular/core'
 import { AsyncPipe, NgIf } from '@angular/common'
-import { BehaviorSubject } from 'rxjs'
+import { Component } from '@angular/core'
+import { TestBed } from '@angular/core/testing'
+import { Item } from '@rattus-orm/core'
 import { TestUser } from '@rattus-orm/core/utils/testUtils'
+import { BehaviorSubject } from 'rxjs'
+import { beforeEach, describe, expect, it } from 'vitest'
+import { RattusContextService, RattusOrmModule } from '../src/public-api'
 
 @Component({
   standalone: true,

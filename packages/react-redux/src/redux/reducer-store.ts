@@ -1,7 +1,12 @@
 import type { ModulePath, State } from '@rattus-orm/core'
 import { type Reducer, type Store } from 'redux'
 
-import type { RattusReducerAction, RattusReducerActionName, RattusReducerPrefix, RattusReduxActionName } from './types'
+import type {
+  RattusReducerAction,
+  RattusReducerActionName,
+  RattusReducerPrefix,
+  RattusReduxActionName,
+} from './types'
 import { rattusReduxActions } from './types'
 
 export class ReducerStore<MP extends ModulePath> {
@@ -19,7 +24,9 @@ export class ReducerStore<MP extends ModulePath> {
   }
 
   public getReducer(): Reducer<State, RattusReducerAction<MP>> {
-    return (state = this.initialState ?? { data: {} }, action) => {
+    return (state, action) => {
+      state ??= this.initialState ?? { data: {} }
+
       switch (action.type) {
         case this.getModuleAction(rattusReduxActions.FRESH): {
           return {

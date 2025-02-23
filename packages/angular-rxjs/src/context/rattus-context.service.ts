@@ -33,10 +33,10 @@ export class RattusContextService {
     return decoratedDb as Database
   }
 
-  public getRepository<R extends Repository<InstanceType<M>>, M extends typeof Model = typeof Model>(
-    model: M,
-    connection?: string,
-  ): RxjsRepository<R, M> {
+  public getRepository<
+    R extends Repository<InstanceType<M>>,
+    M extends typeof Model = typeof Model,
+  >(model: M, connection?: string): RxjsRepository<R, M> {
     const repo = this.getDatabase(connection).getRepository<R, M>(model)
     return repoToRxjsRepository<R, M>(repo)
   }
@@ -45,7 +45,7 @@ export class RattusContextService {
     const originalGetRepository = db.getRepository
 
     Object.defineProperty(db, 'getRepository', {
-      value: function (...args: Parameters<typeof originalGetRepository>) {
+      value: (...args: Parameters<typeof originalGetRepository>) => {
         const repo = originalGetRepository.call(db, ...args)
         return repoToRxjsRepository(repo)
       },

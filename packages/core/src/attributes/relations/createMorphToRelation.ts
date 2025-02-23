@@ -7,7 +7,7 @@ export const createMorphToRelation = (
   related: ModelConstructor<any>[],
   id: string,
   type: string,
-  ownerKey: string = '',
+  ownerKey = '',
 ) => {
   const model = modelConstructor.newRawInstance()
   return new MorphTo(

@@ -1,11 +1,11 @@
 // @ts-nocheck
+import { createDatabase } from '@rattus-orm/core'
 import { describe, expect, it } from 'vitest'
 import { RattusProvider, SolidjsDataProvider, useRattusContext } from '../src'
-import { createDatabase } from '@rattus-orm/core'
 import { TestComponent } from './test-utils'
 import '@testing-library/jest-dom/vitest'
-import { render, renderHook, cleanup } from '@solidjs/testing-library'
 import { testContext } from '@rattus-orm/core/utils/testUtils'
+import { cleanup, render, renderHook } from '@solidjs/testing-library'
 
 describe('solid: context', () => {
   it('Context valid', () => {
@@ -15,11 +15,19 @@ describe('solid: context', () => {
   })
 
   it('Context params respect custom databases', () => {
-    const database = createDatabase({ dataProvider: new SolidjsDataProvider(), connection: 'custom' })
+    const database = createDatabase({
+      dataProvider: new SolidjsDataProvider(),
+      connection: 'custom',
+    })
     database.start()
 
     const { result } = renderHook(useRattusContext, {
-      wrapper: (props) => <RattusProvider database={database} {...props} />,
+      wrapper: (props) => (
+        <RattusProvider
+          database={database}
+          {...props}
+        />
+      ),
     })
     testContext(result, SolidjsDataProvider, 'custom')
   })

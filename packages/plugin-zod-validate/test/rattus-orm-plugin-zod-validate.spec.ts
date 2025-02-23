@@ -1,10 +1,10 @@
-import { describe, expect, vi } from 'vitest'
-import { createDatabase, Model } from '@rattus-orm/core'
-import { RattusZodValidationError } from '../src/exceptions/exceptions'
-import { isRattusZodValidationError, RattusZodValidationPlugin, ZodFieldType } from '../src'
-import { ObjectDataProvider } from '@rattus-orm/core/object-data-provider'
-import { z } from 'zod'
+import { Model, createDatabase } from '@rattus-orm/core'
 import { AttrField, NumberField, StringField } from '@rattus-orm/core/field-types'
+import { ObjectDataProvider } from '@rattus-orm/core/object-data-provider'
+import { describe, expect, vi } from 'vitest'
+import { z } from 'zod'
+import { RattusZodValidationPlugin, ZodFieldType, isRattusZodValidationError } from '../src'
+import { RattusZodValidationError } from '../src/exceptions/exceptions'
 
 export const createDb = (strict: boolean | string[] = true) => {
   return createDatabase({

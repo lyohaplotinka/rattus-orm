@@ -20,7 +20,10 @@ const getHeading = (str: string): Heading => {
   }
 }
 
-export async function generateChangelogFromJson(changelogJson: Record<string, ChangelogElement[]>, dateStr: string) {
+export async function generateChangelogFromJson(
+  changelogJson: Record<string, ChangelogElement[]>,
+  dateStr: string,
+) {
   HEADING_REGEX.lastIndex = 0
   let changelogFileContent = await readFile(filePath, 'utf8')
   const firstBlock = getHeading(changelogFileContent)
@@ -28,7 +31,10 @@ export async function generateChangelogFromJson(changelogJson: Record<string, Ch
   const hasCurrentDate = firstBlock.text === dateStr
 
   if (hasCurrentDate) {
-    changelogFileContent = changelogFileContent.slice(secondBlock.indexStart, changelogFileContent.length)
+    changelogFileContent = changelogFileContent.slice(
+      secondBlock.indexStart,
+      changelogFileContent.length,
+    )
   }
 
   const changelogElements = changelogJson[dateStr]
@@ -41,6 +47,6 @@ export async function generateChangelogFromJson(changelogJson: Record<string, Ch
     )
   }
 
-  changelogFileContent = newBlock.join('\n') + '\n\n' + changelogFileContent
+  changelogFileContent = `${newBlock.join('\n')}\n\n${changelogFileContent}`
   await writeFile(filePath, changelogFileContent, 'utf8')
 }

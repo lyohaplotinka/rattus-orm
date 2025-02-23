@@ -1,6 +1,6 @@
-import { RattusProvider, ReactMobxDataProvider, useRepository } from '../src'
 import { createReactIntegrationTest } from '@rattus-orm/core/utils/reactTestUtils'
 import { observer } from 'mobx-react-lite'
+import { RattusProvider, ReactMobxDataProvider, useRepository } from '../src'
 
 createReactIntegrationTest({
   name: 'MobX',

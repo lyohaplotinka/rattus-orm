@@ -1,6 +1,6 @@
-import { Model } from '@/index'
 import { HasOne } from '@/attributes/field-relations'
 import { AttrField } from '@/attributes/field-types'
+import { Model } from '@/index'
 
 import Phone from './circular_relations_phone'
 

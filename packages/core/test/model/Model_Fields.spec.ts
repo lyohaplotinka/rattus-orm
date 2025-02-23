@@ -1,10 +1,10 @@
 import { Model } from '@/model/Model'
 import { expect } from 'vitest'
 import { createAttrField } from '../../src/attributes/types/createAttrField'
-import { createStringField } from '../../src/attributes/types/createStringField'
-import { createNumberField } from '../../src/attributes/types/createNumberField'
 import { createBooleanField } from '../../src/attributes/types/createBooleanField'
 import { createDateField } from '../../src/attributes/types/createDateField'
+import { createNumberField } from '../../src/attributes/types/createNumberField'
+import { createStringField } from '../../src/attributes/types/createStringField'
 
 describe('unit/model/Model_Fields', () => {
   it('can define model fields as a static function', () => {

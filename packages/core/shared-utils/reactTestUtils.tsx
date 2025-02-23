@@ -1,4 +1,3 @@
-// eslint-disable-next-line
 // @ts-nocheck
 
 import '@testing-library/jest-dom/vitest'
@@ -15,12 +14,12 @@ import { getDatabaseManager } from '../src'
 import { createDatabase } from '../src'
 import type { RattusOrmInstallerOptions, UseRepository } from './integrationsHelpers'
 import {
+  TestUser,
   createBindSpy,
   testBootstrap,
   testCustomConnection,
   testMethodsBound,
   testMethodsNotRuined,
-  TestUser,
 } from './testUtils'
 
 type RattusRenderProps<T> = {
@@ -34,11 +33,19 @@ type RattusRenderPropsWithUI<T> = RattusRenderProps<T> & { UiComponent: JSXEleme
 export const REACT_TEST_ID = 'rattus-test'
 export const REACT_REACTIVITY_TEST_ID = 'reactivity'
 
-export function renderHookWithContext<T>({ hook, ContextComp, bootstrap, contextProps }: RattusRenderProps<T>): T {
+export function renderHookWithContext<T>({
+  hook,
+  ContextComp,
+  bootstrap,
+  contextProps,
+}: RattusRenderProps<T>): T {
   const { result } = renderHook(hook, {
     wrapper: (props) => {
       return (
-        <ContextComp {...(bootstrap?.() ?? {})} {...(contextProps ?? {})}>
+        <ContextComp
+          {...(bootstrap?.() ?? {})}
+          {...(contextProps ?? {})}
+        >
           {props.children}
         </ContextComp>
       )
@@ -76,19 +83,24 @@ export function renderComponentWithContextAndHook<T>({
   }
 
   const renderResult = render(
-    <ContextComp {...bootstrapResult} {...(contextProps ?? {})}>
+    <ContextComp
+      {...bootstrapResult}
+      {...(contextProps ?? {})}
+    >
       <Component />
     </ContextComp>,
   )
   return { result, renderResult }
 }
 
-export function createReactivityTestComponent<T extends UseRepository<any>>(useRepoCb: (model: any) => T) {
+export function createReactivityTestComponent<T extends UseRepository<any>>(
+  useRepoCb: (model: any) => T,
+) {
   return () => {
     const { find } = useRepoCb(TestUser)
     const user = find('1')
 
-    return <div data-testid={REACT_REACTIVITY_TEST_ID}>{user && user.age}</div>
+    return <div data-testid={REACT_REACTIVITY_TEST_ID}>{user?.age}</div>
   }
 }
 

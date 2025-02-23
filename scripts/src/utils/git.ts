@@ -5,7 +5,7 @@ import { isEqual } from 'lodash-es'
 import micromatch from 'micromatch'
 import type { PackageJson } from 'type-fest'
 
-import { getPackageMeta, MONOREPO_ROOT_DIR } from './utils'
+import { MONOREPO_ROOT_DIR, getPackageMeta } from './utils'
 
 export type Commit = {
   message: string
@@ -26,12 +26,19 @@ function getPackagePatternForFormat(pattern: string, format = '{ts,tsx,json}') {
 function getCompareRelease(packageKey: string, includeCommit = false): string {
   return (
     GitUtils.getLastCommitByPattern(getReleaseCommitMessage(packageKey)) ||
-    GitUtils.getCommitWherePathWasIntroduced(resolve(MONOREPO_ROOT_DIR, `packages/${packageKey}`), includeCommit)
+    GitUtils.getCommitWherePathWasIntroduced(
+      resolve(MONOREPO_ROOT_DIR, `packages/${packageKey}`),
+      includeCommit,
+    )
   )
 }
 
 function getPackageJsonDifference(path: string, commit: Commit, packageKey: string) {
-  const currentPkg = GitUtils.readFileFromCommit<PackageJson.PackageJsonStandard>(path, commit.hash, JSON.parse)
+  const currentPkg = GitUtils.readFileFromCommit<PackageJson.PackageJsonStandard>(
+    path,
+    commit.hash,
+    JSON.parse,
+  )
   const prevPkg = GitUtils.readFileFromCommit<PackageJson.PackageJsonStandard>(
     path,
     getCompareRelease(packageKey),
@@ -50,14 +57,16 @@ function getPackageJsonDifference(path: string, commit: Commit, packageKey: stri
 }
 
 export async function getCommitsListFromLastRelease(packageKey: string): Promise<Commit[]> {
-  return GitUtils.getCommitsSincePattern(getCompareRelease(packageKey, true)).map<Commit>((commitString) => {
-    const [message, hash] = commitString.split('::::')
-    return {
-      message,
-      hash,
-      affectedFiles: GitUtils.getCommitFilesList(hash),
-    }
-  })
+  return GitUtils.getCommitsSincePattern(getCompareRelease(packageKey, true)).map<Commit>(
+    (commitString) => {
+      const [message, hash] = commitString.split('::::')
+      return {
+        message,
+        hash,
+        affectedFiles: GitUtils.getCommitFilesList(hash),
+      }
+    },
+  )
 }
 
 export function hasAffectedFilesForPackage(commit: Commit, packageKey: string) {
@@ -101,8 +110,16 @@ export class GitUtils {
   }
 
   public static readFileFromCommit(path: string, hash: string): string
-  public static readFileFromCommit<T>(path: string, hash: string, processor: (stdout: string) => T): T
-  public static readFileFromCommit(path: string, hash: string, processor?: (stdout: string) => any) {
+  public static readFileFromCommit<T>(
+    path: string,
+    hash: string,
+    processor: (stdout: string) => T,
+  ): T
+  public static readFileFromCommit(
+    path: string,
+    hash: string,
+    processor?: (stdout: string) => any,
+  ) {
     const { stdout } = execaCommandSync(`git --no-pager show ${hash}:${path}`, {
       cwd: MONOREPO_ROOT_DIR,
     })

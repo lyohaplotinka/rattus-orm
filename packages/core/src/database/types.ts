@@ -10,4 +10,7 @@ export type CreateDatabaseParameters = {
   dataProvider: DataProvider
   customRepositories: Constructor<Repository>[]
 }
-export type CreateDatabaseFunctionParameters = MakeRequired<CreateDatabaseParameters, 'dataProvider'>
+export type CreateDatabaseFunctionParameters = MakeRequired<
+  CreateDatabaseParameters,
+  'dataProvider'
+>

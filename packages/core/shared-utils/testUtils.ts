@@ -2,7 +2,7 @@ import { uniq } from 'lodash-es'
 import { afterAll, expect, vi } from 'vitest'
 
 import type { Constructor, DataProvider, RawModel } from '../src'
-import { Database, getDatabaseManager, Model, Repository } from '../src'
+import { Database, Model, Repository, getDatabaseManager } from '../src'
 import { NumberField, StringField } from '../src/attributes/field-types'
 import { ObjectDataProvider } from '../src/object-data-provider'
 import type { UseRepository } from './integrationsHelpers'
@@ -12,10 +12,10 @@ export class TestUser extends Model {
   public static entity = 'testUser'
 
   @StringField('')
-  declare public id: string
+  public declare id: string
 
   @NumberField(0)
-  declare public age: number
+  public declare age: number
 }
 
 export class TestUserNoCasting extends TestUser {
@@ -40,11 +40,7 @@ export function createBindSpy() {
     thisArg: any,
     ...args: any[]
   ) {
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
-    const func = this
-    const boundFunction = function (...newArgs: any[]): any {
-      return func.apply(thisArg, args.concat(newArgs))
-    }
+    const boundFunction = (...newArgs: any[]): any => this.apply(thisArg, args.concat(newArgs))
     boundFunction.boundTo = thisArg
     return boundFunction
   })
@@ -70,19 +66,25 @@ export function testMethodsBound<T extends UseRepository<any>>(
   checker: (v: any) => boolean = () => true,
 ) {
   describe(`${name}: useRepository returns correctly bound methods`, () => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    it.each(uniq([...pullRepositoryKeys, ...keysInstanceof]))('%s has correct context', (methodName) => {
-      const useRepoResult = useRepo()
-      if (keysInstanceof.includes(methodName)) {
-        expect(checker(useRepoResult[methodName](() => {}))).toBe(true)
-      } else {
-        expect((useRepoResult[methodName] as any).boundTo).toBeInstanceOf(Repository)
-      }
-    })
+    it.each(uniq([...pullRepositoryKeys, ...keysInstanceof]))(
+      '%s has correct context',
+      (methodName) => {
+        const useRepoResult = useRepo()
+        if (keysInstanceof.includes(methodName)) {
+          expect(checker(useRepoResult[methodName](() => {}))).toBe(true)
+        } else {
+          expect((useRepoResult[methodName] as any).boundTo).toBeInstanceOf(Repository)
+        }
+      },
+    )
   })
 }
 
-export function testMethodsNotRuined(name: string, useRepo: UseRepository<any>, _act?: (f: any) => any) {
+export function testMethodsNotRuined(
+  name: string,
+  useRepo: UseRepository<any>,
+  _act?: (f: any) => any,
+) {
   const act =
     _act ??
     ((func: CallableFunction) => {

@@ -5,14 +5,20 @@ import type { ZodError, ZodType as ZodLibType } from 'zod'
 
 import { RattusZodValidationError } from './exceptions/exceptions'
 import { isModelWithZodSchemas } from './types/guards'
-import type { ModelWithZodSchemas, RattusZodValidationPluginParams, ZodIssueWithData } from './types/types'
+import type {
+  ModelWithZodSchemas,
+  RattusZodValidationPluginParams,
+  ZodIssueWithData,
+} from './types/types'
 import { ZodSchemaManager } from './zod-schema-manager/zod-schema-manager'
 
 const defaultParams: RattusZodValidationPluginParams = {
   strict: false,
 }
 
-export function RattusZodValidationPlugin(params: RattusZodValidationPluginParams = defaultParams): DatabasePlugin {
+export function RattusZodValidationPlugin(
+  params: RattusZodValidationPluginParams = defaultParams,
+): DatabasePlugin {
   const schemaManager = new ZodSchemaManager()
 
   return (db) => {
@@ -21,7 +27,9 @@ export function RattusZodValidationPlugin(params: RattusZodValidationPluginParam
       const zodIssues: ZodIssueWithData[] = []
       const originalErrors: ZodError[] = []
 
-      const strict = Array.isArray(params.strict) ? params.strict.includes(modulePath[1]) : params.strict === true
+      const strict = Array.isArray(params.strict)
+        ? params.strict.includes(modulePath[1])
+        : params.strict === true
 
       for (const entityData of Object.values(data)) {
         const result = schema.safeParse(entityData)
@@ -37,7 +45,12 @@ export function RattusZodValidationPlugin(params: RattusZodValidationPluginParam
       }
 
       if (zodIssues.length) {
-        const error = new RattusZodValidationError(zodIssues, modulePath[0], modulePath[1], originalErrors)
+        const error = new RattusZodValidationError(
+          zodIssues,
+          modulePath[0],
+          modulePath[1],
+          originalErrors,
+        )
         if (strict) {
           throw error
         }

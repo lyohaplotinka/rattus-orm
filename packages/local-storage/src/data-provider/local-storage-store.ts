@@ -81,10 +81,13 @@ export class LocalStorageStore {
   protected readState(): void {
     const chunksNumber = this.getChunksNumber()
     if (!chunksNumber) {
-      throw new RattusOrmError(`Cannot read chunksNumber for ${this.key}`, 'RattusLocalStorageStore')
+      throw new RattusOrmError(
+        `Cannot read chunksNumber for ${this.key}`,
+        'RattusLocalStorageStore',
+      )
     }
 
-    let result: string = ''
+    let result = ''
     for (let i = 0; i < chunksNumber; i++) {
       const key = this.getChunkNameKey(i)
       const chunk = localStorage.getItem(key)
@@ -107,7 +110,7 @@ export class LocalStorageStore {
     if (!numberRaw) {
       return null
     }
-    const parsed = parseInt(numberRaw)
+    const parsed = Number.parseInt(numberRaw)
     if (Number.isNaN(parsed)) {
       return null
     }

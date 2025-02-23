@@ -4,7 +4,10 @@ import { createDateField } from '../createDateField'
 /**
  * Create a Number attribute property decorator.
  */
-export function DateField(value: Date | string | number | null, options: TypeOptions = {}): PropertyDecorator {
+export function DateField(
+  value: Date | string | number | null,
+  options: TypeOptions = {},
+): PropertyDecorator {
   return (target, propertyKey) => {
     const self = target.$self()
 

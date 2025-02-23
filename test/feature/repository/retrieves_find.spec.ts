@@ -1,7 +1,13 @@
-import { assertInstanceOf, assertModel, assertModels, createStore, fillState } from '@func-test/utils/Helpers'
+import {
+  assertInstanceOf,
+  assertModel,
+  assertModels,
+  createStore,
+  fillState,
+} from '@func-test/utils/Helpers'
 
+import { AttrField, StringField } from '@/attributes/field-types'
 import { Model } from '@/index'
-import { StringField, AttrField } from '@/attributes/field-types'
 
 describe('feature/repository/retrieves_find', () => {
   class User extends Model {
