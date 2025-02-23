@@ -1,6 +1,5 @@
-import { mockUid } from '../../../../test/utils/Helpers'
-
 import { Model } from '@/model/Model'
+import { mockUid } from '../../../../test/utils/mock-uid'
 import { UidField } from '../../src/attributes/types/decorators/UidField'
 
 describe('unit/model/Model_Attrs_UID', () => {

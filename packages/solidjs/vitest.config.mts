@@ -14,6 +14,7 @@ export default defineConfig({
     environment: 'jsdom',
     fileParallelism: false,
     testTransformMode: { web: ['/.[jt]sx?$/'] },
+    name: 'solidjs:local',
   },
   optimizeDeps: {
     disabled: 'dev',

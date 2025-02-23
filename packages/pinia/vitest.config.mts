@@ -5,6 +5,7 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     fileParallelism: false,
+    name: 'pinia:local',
   },
   esbuild: {
     target: 'es2022',

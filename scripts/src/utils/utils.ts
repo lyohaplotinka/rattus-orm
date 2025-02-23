@@ -51,7 +51,6 @@ export function loadPackagesMeta() {
       meta.testProvider === undefined || typeof meta.testProvider === 'boolean'
         ? (meta.testProvider ?? false)
         : {
-            exportName: meta.testProvider.exportName,
             path: resolve(packagePath, meta.testProvider.path),
           }
 

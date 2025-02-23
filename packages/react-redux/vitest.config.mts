@@ -5,6 +5,7 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     fileParallelism: false,
+    name: 'react-redux:local',
   },
   esbuild: {
     target: 'es2020',

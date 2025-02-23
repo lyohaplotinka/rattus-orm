@@ -10,6 +10,7 @@ export default defineConfig(({ mode }) => ({
     include: ['test/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     reporters: ['default'],
     fileParallelism: false,
+    name: 'angular-rxjs:local',
   },
   define: {
     'import.meta.vitest': mode !== 'production',

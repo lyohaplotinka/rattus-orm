@@ -58,8 +58,7 @@
   "rattusMeta": {
     "title": "React Signals",
     "testProvider": {
-      "path": "./test/provider-factory.ts",
-      "exportName": "dataProviderFactory"
+      "path": "./test/provider-factory.ts"
     }
   },
   "size-limit": [

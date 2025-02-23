@@ -7,6 +7,7 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     fileParallelism: false,
+    name: 'react-signals:local',
   },
   esbuild: {
     target: 'es2020',
