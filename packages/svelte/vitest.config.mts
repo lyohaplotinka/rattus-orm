@@ -7,6 +7,7 @@ export default defineConfig(({ mode }) => ({
     globals: true,
     environment: 'jsdom',
     fileParallelism: false,
+    name: 'svelte:local',
   },
   esbuild: {
     target: 'es2020',

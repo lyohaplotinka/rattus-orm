@@ -21,7 +21,7 @@
   ],
   "scripts": {
     "dev:docs": "yarn workspace docs run start",
-    "test": "node scripts/built/test.mjs run-tests",
+    "test": "NODE_OPTIONS=\"$NODE_OPTIONS --no-deprecation\" vitest run",
     "lint": "biome check packages",
     "lint:scripts": "biome check scripts",
     "typecheck": "yarn workspaces foreach -A run typecheck",

@@ -1,4 +1,4 @@
-import { assertState, createStore, mockUid } from '@func-test/utils/Helpers'
+import { assertState, createStore } from '@func-test/utils/Helpers'
 
 import {
   AttrField,
@@ -8,6 +8,7 @@ import {
   UidField,
 } from '@/attributes/field-types'
 import { Model } from '@/index'
+import { mockUid } from '@func-test/utils/mock-uid'
 
 describe('feature/repository/new', () => {
   it('inserts with a models default values', () => {

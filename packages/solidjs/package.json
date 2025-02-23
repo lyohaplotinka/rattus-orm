@@ -48,8 +48,7 @@
   "rattusMeta": {
     "title": "Solid.js",
     "testProvider": {
-      "path": "./test/provider-factory.ts",
-      "exportName": "dataProviderFactory"
+      "path": "./test/provider-factory.ts"
     }
   }
 }

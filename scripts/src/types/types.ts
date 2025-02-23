@@ -3,7 +3,6 @@ import type { PackageJson } from 'type-fest'
 
 export type TestProviderConfig = {
   path: string
-  exportName: string
 }
 
 export type PackageMeta = {

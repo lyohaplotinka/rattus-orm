@@ -119,8 +119,7 @@
   "rattusMeta": {
     "title": "Core",
     "testProvider": {
-      "path": "./test/provider-factory.ts",
-      "exportName": "dataProviderFactory"
+      "path": "./test/provider-factory.ts"
     },
     "autoBumpDependents": true,
     "order": 1

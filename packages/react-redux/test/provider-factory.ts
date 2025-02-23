@@ -1,7 +1,7 @@
+import { TestStore } from '@func-test/utils/test-store'
+import { TestingStoreFactory } from '@func-test/utils/types'
 import { createStore } from 'redux'
-import { TestStore } from '../../../test/utils/test-store'
-import { TestingStoreFactory } from '../../../test/utils/types'
-import { ReactReduxDataProvider } from '../src/data-provider/react-redux-data-provider'
+import { ReactReduxDataProvider } from '../src'
 
 export const dataProviderFactory: TestingStoreFactory = () => {
   const store = createStore((state: Record<string, unknown> = {}) => state)

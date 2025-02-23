@@ -1,3 +1,5 @@
+// @ts-ignore
+import { dataProviderFactory } from 'virtual:providerFactory'
 import type { Collection, Element, Elements, Model, State } from '@/index'
 import { TestingStore } from '@func-test/utils/types'
 
@@ -6,7 +8,7 @@ interface Entities {
 }
 
 export function createStore(): TestingStore {
-  return globalThis.testingStoreFactory()
+  return dataProviderFactory()
 }
 
 export function createState(entities: Entities): State {
@@ -44,8 +46,4 @@ export function assertInstanceOf(collection: Collection<any>, model: typeof Mode
   collection.forEach((item) => {
     expect(item).toBeInstanceOf(model)
   })
-}
-
-export function mockUid(ids: any[]): void {
-  ids.forEach((id) => (window.crypto.randomUUID as any).mockImplementationOnce(() => id))
 }

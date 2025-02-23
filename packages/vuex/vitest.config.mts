@@ -5,6 +5,7 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     fileParallelism: false,
+    name: 'vuex:local',
   },
   esbuild: {
     target: 'es2022',
