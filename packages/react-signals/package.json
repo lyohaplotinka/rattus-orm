@@ -33,7 +33,9 @@
       "types": "./dist/rattus-orm-react-signals-provider.d.ts"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "run -T tsup",
     "clean": "rm -rf dist && rm -rf node_modules",

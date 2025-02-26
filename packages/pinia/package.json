@@ -12,7 +12,13 @@
   "bugs": {
     "url": "https://github.com/lyohaplotinka/rattus-orm/issues"
   },
-  "keywords": ["orm", "rattus", "pinia", "typescript", "javascript"],
+  "keywords": [
+    "orm",
+    "rattus",
+    "pinia",
+    "typescript",
+    "javascript"
+  ],
   "version": "0.2.3",
   "main": "./dist/rattus-orm-pinia-provider.js",
   "browser": "./dist/rattus-orm-pinia-provider.mjs",
@@ -25,7 +31,9 @@
       "types": "./dist/rattus-orm-pinia-provider.d.ts"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "run -T tsup",
     "clean": "rm -rf dist && rm -rf node_modules",
