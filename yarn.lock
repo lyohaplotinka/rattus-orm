@@ -7375,6 +7375,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@rattus-orm/classless@workspace:packages/classless":
+  version: 0.0.0-use.local
+  resolution: "@rattus-orm/classless@workspace:packages/classless"
+  dependencies:
+    "@rattus-orm/core": "workspace:^"
+  peerDependencies:
+    "@rattus-orm/core": ^0.4.1
+  languageName: unknown
+  linkType: soft
+
 "@rattus-orm/core@workspace:^, @rattus-orm/core@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "@rattus-orm/core@workspace:packages/core"

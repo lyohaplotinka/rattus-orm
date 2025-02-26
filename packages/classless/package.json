@@ -1,0 +1,64 @@
+{
+  "name": "@rattus-orm/classless",
+  "description": "ORM for your JS/TS apps: classless interaction",
+  "homepage": "https://lyohaplotinka.github.io/rattus-orm/",
+  "author": "Lyoha Plotinka",
+  "license": "MIT",
+  "packageManager": "yarn@4.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lyohaplotinka/rattus-orm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lyohaplotinka/rattus-orm/issues"
+  },
+  "keywords": [
+    "orm",
+    "rattus",
+    "classless",
+    "typescript",
+    "javascript"
+  ],
+  "version": "0.0.0",
+  "main": "./dist/rattus-orm-classless.js",
+  "browser": "./dist/rattus-orm-classless.mjs",
+  "module": "./dist/rattus-orm-classless.mjs",
+  "types": "./dist/rattus-orm-classless.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/rattus-orm-classless.mjs",
+      "require": "./dist/rattus-orm-classless.js",
+      "types": "./dist/rattus-orm-classless.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "run -T tsup",
+    "clean": "rm -rf dist && rm -rf node_modules",
+    "lint": "run -T eslint 'src/**/*.ts' --quiet --fix",
+    "test": "run -T vitest run",
+    "typecheck": "bash -c 'run -T tsc -p tsconfig.json --noEmit'",
+    "size": "run -T size-limit"
+  },
+  "devDependencies": {
+    "@rattus-orm/core": "workspace:^"
+  },
+  "peerDependencies": {
+    "@rattus-orm/core": "^0.4.1"
+  },
+  "rattusMeta": {
+    "title": "classless"
+  },
+  "size-limit": [
+    {
+      "name": "ESM classless",
+      "path": "./dist/rattus-orm-classless-provider.mjs"
+    },
+    {
+      "name": "CJS classless",
+      "path": "./dist/rattus-orm-classless-provider.mjs"
+    }
+  ]
+}
