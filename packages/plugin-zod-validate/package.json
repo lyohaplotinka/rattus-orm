@@ -12,7 +12,14 @@
   "bugs": {
     "url": "https://github.com/lyohaplotinka/rattus-orm/issues"
   },
-  "keywords": ["orm", "rattus", "zod", "validate", "typescript", "javascript"],
+  "keywords": [
+    "orm",
+    "rattus",
+    "zod",
+    "validate",
+    "typescript",
+    "javascript"
+  ],
   "version": "0.2.3",
   "main": "./dist/rattus-orm-plugin-zod-validate.js",
   "browser": "./dist/rattus-orm-plugin-zod-validate.mjs",
@@ -25,7 +32,9 @@
       "types": "./dist/rattus-orm-plugin-zod-validate.d.ts"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "run -T tsup",
     "clean": "rm -rf dist && rm -rf node_modules",

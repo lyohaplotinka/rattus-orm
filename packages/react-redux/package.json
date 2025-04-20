@@ -12,7 +12,14 @@
   "bugs": {
     "url": "https://github.com/lyohaplotinka/rattus-orm/issues"
   },
-  "keywords": ["orm", "rattus", "react", "redux", "typescript", "javascript"],
+  "keywords": [
+    "orm",
+    "rattus",
+    "react",
+    "redux",
+    "typescript",
+    "javascript"
+  ],
   "version": "0.2.3",
   "main": "./dist/rattus-orm-react-redux-provider.js",
   "browser": "./dist/rattus-orm-react-redux-provider.mjs",
@@ -25,7 +32,9 @@
       "types": "./dist/rattus-orm-react-redux-provider.d.ts"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "run -T tsup",
     "clean": "rm -rf dist && rm -rf node_modules",
