@@ -19,7 +19,7 @@
     "typescript",
     "javascript"
   ],
-  "version": "0.2.3",
+  "version": "0.2.4",
   "main": "./dist/rattus-orm-local-storage-provider.js",
   "browser": "./dist/rattus-orm-local-storage-provider.mjs",
   "module": "./dist/rattus-orm-local-storage-provider.mjs",
@@ -45,7 +45,7 @@
     "@rattus-orm/core": "workspace:^"
   },
   "peerDependencies": {
-    "@rattus-orm/core": "^0.4.1"
+    "@rattus-orm/core": "^0.4.2"
   },
   "rattusMeta": {
     "title": "LocalStorage",

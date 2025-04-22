@@ -21,7 +21,7 @@
     "typescript",
     "javascript"
   ],
-  "version": "0.2.3",
+  "version": "0.2.4",
   "main": "./dist/rattus-orm-react-signals-provider.js",
   "browser": "./dist/rattus-orm-react-signals-provider.mjs",
   "module": "./dist/rattus-orm-react-signals-provider.mjs",
@@ -54,7 +54,7 @@
   },
   "peerDependencies": {
     "@preact/signals-react": "*",
-    "@rattus-orm/core": "^0.4.1",
+    "@rattus-orm/core": "^0.4.2",
     "react": "*"
   },
   "rattusMeta": {

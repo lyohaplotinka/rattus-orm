@@ -19,7 +19,7 @@
     "typescript",
     "javascript"
   ],
-  "version": "0.2.3",
+  "version": "0.2.4",
   "main": "./dist/rattus-orm-pinia-provider.js",
   "browser": "./dist/rattus-orm-pinia-provider.mjs",
   "module": "./dist/rattus-orm-pinia-provider.mjs",
@@ -48,7 +48,7 @@
     "vue": "^3.5.13"
   },
   "peerDependencies": {
-    "@rattus-orm/core": "^0.4.1",
+    "@rattus-orm/core": "^0.4.2",
     "pinia": "^2.0.0",
     "vue": "^3.0.0"
   },

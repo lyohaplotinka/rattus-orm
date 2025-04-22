@@ -21,7 +21,7 @@
     "typescript",
     "javascript"
   ],
-  "version": "0.2.3",
+  "version": "0.2.4",
   "main": "./dist/rattus-orm-react-mobx-provider.js",
   "browser": "./dist/rattus-orm-react-mobx-provider.mjs",
   "module": "./dist/rattus-orm-react-mobx-provider.mjs",
@@ -49,7 +49,7 @@
     "mobx-react-lite": "^4.1.0"
   },
   "peerDependencies": {
-    "@rattus-orm/core": "^0.4.1",
+    "@rattus-orm/core": "^0.4.2",
     "mobx": "*"
   },
   "rattusMeta": {

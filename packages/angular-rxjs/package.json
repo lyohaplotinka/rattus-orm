@@ -20,7 +20,7 @@
     "typescript",
     "javascript"
   ],
-  "version": "0.2.3",
+  "version": "0.2.4",
   "type": "module",
   "scripts": {
     "ng": "ng",
@@ -56,7 +56,7 @@
   "peerDependencies": {
     "@angular/common": ">=17.0.0",
     "@angular/core": ">=17.0.0",
-    "@rattus-orm/core": "^0.4.1"
+    "@rattus-orm/core": "^0.4.2"
   },
   "sideEffects": false,
   "rattusMeta": {
