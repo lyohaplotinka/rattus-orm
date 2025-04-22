@@ -1,3 +1,6 @@
+# 2025/04/22
+Switched to `changesets`, please see changelogs in packages
+
 # 2025/02/11
 ### Core (0.4.1)
 * ⚙️ Refactor: implement database manager ([#46](https://github.com/lyohaplotinka/rattus-orm/pull/46))
