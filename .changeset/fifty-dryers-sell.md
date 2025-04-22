@@ -12,4 +12,4 @@
 "@rattus-orm/vuex": patch
 ---
 
-update dependcies, add changeset library for changelog management
+update dependencies, add changeset library for changelog management
