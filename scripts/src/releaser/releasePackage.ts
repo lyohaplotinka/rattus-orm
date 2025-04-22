@@ -4,7 +4,6 @@ import enquirer from 'enquirer'
 import type { ReleaseType } from 'semver'
 import semver from 'semver'
 
-import { updateChangelog } from '../auto-changelogger'
 import { GitUtils } from '../utils/git'
 import {
   YarnUtils,
@@ -131,9 +130,6 @@ export async function runForPackage(packageName: string) {
 
   console.log('Build...')
   await YarnUtils.runForPackage(packageName, 'build')
-
-  console.log('Updating changelog...')
-  await updateChangelog(packageName)
 
   const { yes: changelogOk } = await enquirer.prompt<{ yes: boolean }>({
     type: 'confirm',

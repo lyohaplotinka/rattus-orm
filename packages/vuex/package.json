@@ -12,7 +12,14 @@
   "bugs": {
     "url": "https://github.com/lyohaplotinka/rattus-orm/issues"
   },
-  "keywords": ["orm", "rattus", "vuex", "typescript", "javascript", "vue"],
+  "keywords": [
+    "orm",
+    "rattus",
+    "vuex",
+    "typescript",
+    "javascript",
+    "vue"
+  ],
   "version": "0.2.3",
   "main": "./dist/rattus-orm-vuex-provider.js",
   "browser": "./dist/rattus-orm-vuex-provider.mjs",
@@ -25,7 +32,9 @@
       "types": "./dist/rattus-orm-vuex-provider.d.ts"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "run -T tsup",
     "clean": "rm -rf dist && rm -rf node_modules",

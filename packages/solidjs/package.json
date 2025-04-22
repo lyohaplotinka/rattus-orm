@@ -12,7 +12,14 @@
   "bugs": {
     "url": "https://github.com/lyohaplotinka/rattus-orm/issues"
   },
-  "keywords": ["orm", "rattus", "solid", "solidjs", "typescript", "javascript"],
+  "keywords": [
+    "orm",
+    "rattus",
+    "solid",
+    "solidjs",
+    "typescript",
+    "javascript"
+  ],
   "version": "0.1.3",
   "main": "./dist/rattus-orm-solidjs-provider.cjs.jsx",
   "browser": "./dist/rattus-orm-solidjs-provider.esm.jsx",
@@ -25,7 +32,9 @@
       "types": "./dist/rattus-orm-solidjs-provider.d.ts"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "run -T tsup",
     "clean": "rm -rf dist && rm -rf node_modules",
@@ -38,8 +47,8 @@
     "@solidjs/testing-library": "^0.8.10",
     "@types/jsdom": "^21.1.7",
     "jsdom": "^24.1.3",
-    "solid-js": "^1.9.4",
-    "vite-plugin-solid": "^2.11.1"
+    "solid-js": "^1.9.5",
+    "vite-plugin-solid": "^2.11.6"
   },
   "peerDependencies": {
     "@rattus-orm/core": "^0.4.1",

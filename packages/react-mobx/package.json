@@ -33,7 +33,9 @@
       "types": "./dist/rattus-orm-react-mobx-provider.d.ts"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "run -T tsup",
     "clean": "rm -rf dist && rm -rf node_modules",
@@ -43,7 +45,7 @@
   },
   "devDependencies": {
     "@rattus-orm/core": "workspace:^",
-    "mobx": "^6.13.6",
+    "mobx": "^6.13.7",
     "mobx-react-lite": "^4.1.0"
   },
   "peerDependencies": {
