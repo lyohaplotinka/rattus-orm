@@ -1,0 +1,49 @@
+{
+  "name": "@rattus-orm/core-next",
+  "description": "Next version of core",
+  "homepage": "https://lyohaplotinka.github.io/rattus-orm/",
+  "author": "Lyoha Plotinka",
+  "license": "MIT",
+  "packageManager": "yarn@4.0.1",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lyohaplotinka/rattus-orm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lyohaplotinka/rattus-orm/issues"
+  },
+  "keywords": [
+    "orm",
+    "rattus",
+    "core-next",
+    "typescript",
+    "javascript"
+  ],
+  "version": "0.0.0",
+  "main": "./dist/rattus-orm-core-next-provider.js",
+  "browser": "./dist/rattus-orm-core-next-provider.mjs",
+  "module": "./dist/rattus-orm-core-next-provider.mjs",
+  "types": "./dist/rattus-orm-core-next-provider.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/rattus-orm-core-next-provider.mjs",
+      "require": "./dist/rattus-orm-core-next-provider.js",
+      "types": "./dist/rattus-orm-core-next-provider.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "clean": "rm -rf dist && rm -rf node_modules",
+    "lint": "run -T eslint 'src/**/*.ts' --quiet --fix",
+    "test": "run -T vitest run",
+    "typecheck": "bash -c 'run -T tsc -p tsconfig.json --noEmit'",
+    "size": "run -T size-limit"
+  },
+  "devDependencies": {
+    "tsdown": "^0.9.7"
+  }
+}
