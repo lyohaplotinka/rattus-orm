@@ -1,5 +1,5 @@
 import type { PropertyDecorator, TypeOptions } from '../../common/contracts'
-import { createStringField } from '../createStringField'
+import { createStringFieldAF } from '../createStringField'
 
 /**
  * Create a String attribute property decorator.
@@ -8,14 +8,6 @@ export function StringField(value: string | null, options: TypeOptions = {}): Pr
   return (target, propertyKey) => {
     const self = target.$self()
 
-    self.setRegistry(propertyKey, () => {
-      const attr = createStringField(self, value)
-
-      if (options.nullable) {
-        attr.nullable()
-      }
-
-      return attr
-    })
+    self.setRegistry(propertyKey, createStringFieldAF(value, options.nullable))
   }
 }

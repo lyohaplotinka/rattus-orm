@@ -1,5 +1,5 @@
 import type { PropertyDecorator, TypeOptions } from '../../common/contracts'
-import { createBooleanField } from '../createBooleanField'
+import { createBooleanFieldAF } from '../createBooleanField'
 
 /**
  * Create a Boolean attribute property decorator.
@@ -8,13 +8,6 @@ export function BooleanField(value: boolean | null, options: TypeOptions = {}): 
   return (target, propertyKey) => {
     const self = target.$self()
 
-    self.setRegistry(propertyKey, () => {
-      const attr = createBooleanField(self, value)
-      if (options.nullable) {
-        attr.nullable()
-      }
-
-      return attr
-    })
+    self.setRegistry(propertyKey, createBooleanFieldAF(value, options.nullable))
   }
 }

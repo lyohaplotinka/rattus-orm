@@ -1,6 +1,7 @@
 import { isUnknownRecord } from '@core-shared-utils/isUnknownRecord'
 
 import { isKindOf, isRelation, morphToKind } from '@/attributes/common/const'
+import { AttributeFactory } from '@/attributes/common/contracts'
 import type { Attribute, Type } from '@/attributes/field-types'
 import type { MorphTo } from '@/attributes/relations/classes/morph-to'
 import type { Relation } from '@/attributes/relations/classes/relation'
@@ -12,7 +13,7 @@ import type { Constructor } from '@/types'
 export type ModelFields = Record<string, Attribute<unknown>>
 export type ModelSchemas = Record<string, ModelFields>
 export type ModelRegistries = Record<string, ModelRegistry>
-export type ModelRegistry = Record<string, () => Attribute<unknown>>
+export type ModelRegistry = Record<string, AttributeFactory<unknown>>
 
 export interface ModelOptions {
   fill?: boolean
@@ -79,7 +80,7 @@ export class Model {
   public static setRegistry<M extends typeof Model>(
     this: M,
     key: string,
-    attribute: () => Attribute<unknown>,
+    attribute: AttributeFactory<unknown>,
   ): M {
     this.registries[this.entity] = {
       ...(this.registries[this.entity] ?? {}),
@@ -137,7 +138,7 @@ export class Model {
       ...this.fields(),
       ...this.registries[this.entity],
     })) {
-      this.schemas[this.entity][key] = isFunction(attribute) ? attribute() : attribute
+      this.schemas[this.entity][key] = isFunction(attribute) ? attribute(this) : attribute
     }
   }
 
