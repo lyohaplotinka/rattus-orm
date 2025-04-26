@@ -1,10 +1,10 @@
 import { Model } from '@/model/Model'
 import { expect } from 'vitest'
-import { createAttrField } from '../../src/attributes/types/createAttrField'
-import { createBooleanField } from '../../src/attributes/types/createBooleanField'
-import { createDateField } from '../../src/attributes/types/createDateField'
-import { createNumberField } from '../../src/attributes/types/createNumberField'
-import { createStringField } from '../../src/attributes/types/createStringField'
+import { createAttrFieldAF } from '../../src/attributes/types/createAttrField'
+import { createBooleanFieldAF } from '../../src/attributes/types/createBooleanField'
+import { createDateFieldAF } from '../../src/attributes/types/createDateField'
+import { createNumberFieldAF } from '../../src/attributes/types/createNumberField'
+import { createStringFieldAF } from '../../src/attributes/types/createStringField'
 
 describe('unit/model/Model_Fields', () => {
   it('can define model fields as a static function', () => {
@@ -13,11 +13,11 @@ describe('unit/model/Model_Fields', () => {
 
       static fields() {
         return {
-          id: createAttrField(this, null),
-          str: createStringField(this, ''),
-          num: createNumberField(this, 0),
-          bool: createBooleanField(this, false),
-          date: createDateField(this, new Date()),
+          id: createAttrFieldAF(null),
+          str: createStringFieldAF(''),
+          num: createNumberFieldAF(0),
+          bool: createBooleanFieldAF(false),
+          date: createDateFieldAF(new Date()),
         }
       }
 
