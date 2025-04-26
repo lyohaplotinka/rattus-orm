@@ -1,5 +1,5 @@
 import type { PropertyDecorator, TypeOptions } from '../../common/contracts'
-import { createNumberFieldAF } from '../createNumberField'
+import { createNumberField } from '../createNumberField'
 
 /**
  * Create a Number attribute property decorator.
@@ -8,6 +8,6 @@ export function NumberField(value: number | null, options: TypeOptions = {}): Pr
   return (target, propertyKey) => {
     const self = target.$self()
 
-    self.setRegistry(propertyKey, createNumberFieldAF(value, options.nullable))
+    self.setRegistry(propertyKey, createNumberField(value, options.nullable))
   }
 }

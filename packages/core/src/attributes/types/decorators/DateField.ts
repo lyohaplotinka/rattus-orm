@@ -1,5 +1,5 @@
 import type { PropertyDecorator, TypeOptions } from '../../common/contracts'
-import { createDateFieldAF } from '../createDateField'
+import { createDateField } from '../createDateField'
 
 /**
  * Create a Number attribute property decorator.
@@ -11,9 +11,6 @@ export function DateField(
   return (target, propertyKey) => {
     const self = target.$self()
 
-    self.setRegistry(
-      propertyKey,
-      createDateFieldAF(value ? new Date(value) : null, options.nullable),
-    )
+    self.setRegistry(propertyKey, createDateField(value ? new Date(value) : null, options.nullable))
   }
 }
