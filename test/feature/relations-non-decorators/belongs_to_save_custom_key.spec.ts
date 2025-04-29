@@ -34,7 +34,7 @@ describe('feature/relations-non-decorators/belongs_to_save_custome_key', () => {
           id: createAttrField(),
           userId: createAttrField(),
           title: createStringField(''),
-          author: createBelongsToRelation(this, User, 'userId'),
+          author: createBelongsToRelation(User, 'userId'),
         }
       }
 
@@ -87,7 +87,7 @@ describe('feature/relations-non-decorators/belongs_to_save_custome_key', () => {
           id: createAttrField(),
           userId: createAttrField(),
           title: createStringField(''),
-          author: createBelongsToRelation(this, User, 'userId', 'userId'),
+          author: createBelongsToRelation(User, 'userId', 'userId'),
         }
       }
 

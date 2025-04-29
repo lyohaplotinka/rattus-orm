@@ -22,13 +22,12 @@ describe('feature/relations-non-decorators/belongs_to_save', () => {
   class Post extends Model {
     static entity = 'posts'
 
-
     public static fields() {
       return {
         id: createAttrField(),
         userId: createAttrField(),
         title: createStringField(''),
-        author: createBelongsToRelation(this, User, 'userId'),
+        author: createBelongsToRelation(User, 'userId'),
       }
     }
 
