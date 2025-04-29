@@ -27,7 +27,7 @@ describe('feature/relations-non-decorators/has_many_by_save', () => {
         id: createAttrField(),
         nodeIds: createAttrField(),
         name: createStringField(''),
-        nodes: createHasManyByRelation(this, Node, 'nodeIds'),
+        nodes: createHasManyByRelation(Node, 'nodeIds'),
       }
     }
 

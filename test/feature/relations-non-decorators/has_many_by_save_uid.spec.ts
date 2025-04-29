@@ -33,7 +33,7 @@ describe('feature/relations-non-decorators/has_many_by_insert_uid', () => {
           id: createUidField(),
           nodeIds: createAttrField(),
           name: createStringField(''),
-          nodes: createHasManyByRelation(this, Node, 'nodeIds'),
+          nodes: createHasManyByRelation(Node, 'nodeIds'),
         }
       }
 
@@ -70,7 +70,6 @@ describe('feature/relations-non-decorators/has_many_by_insert_uid', () => {
     class Node extends Model {
       static entity = 'nodes'
 
-
       public static fields() {
         return {
           id: createUidField(),
@@ -90,7 +89,7 @@ describe('feature/relations-non-decorators/has_many_by_insert_uid', () => {
           id: createUidField(),
           nodeIds: createAttrField(),
           name: createStringField(''),
-          nodes: createHasManyByRelation(this, Node, 'nodeIds'),
+          nodes: createHasManyByRelation(Node, 'nodeIds'),
         }
       }
 
