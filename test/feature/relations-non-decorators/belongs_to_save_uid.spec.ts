@@ -1,32 +1,47 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
-import { BelongsTo } from '@/attributes/field-relations'
-import { AttrField, StringField, UidField } from '@/attributes/field-types'
+import { createBelongsToRelation } from '@/attributes/field-relations'
+import { createAttrField, createStringField, createUidField } from '@/attributes/field-types'
 import { Model } from '@/index'
 import { mockUid } from '@func-test/utils/mock-uid'
 
-describe('feature/relations/belongs_to_save_uid', () => {
+describe('feature/relations-non-decorators/belongs_to_save_uid', () => {
   beforeEach(() => {
     Model.clearRegistries()
   })
+  
 
   it('inserts "belongs to" relation with parent having "uid" field as the primary key', () => {
     class User extends Model {
       static entity = 'users'
 
-      @AttrField() id!: number
-      @StringField('') name!: string
+      public static fields() {
+        return {
+          id: createAttrField(this),
+          name: createStringField(this, ''),
+        }
+      }
+
+      declare id: number
+      declare name: string
     }
 
     class Post extends Model {
       static entity = 'posts'
 
-      @UidField() id!: string
-      @AttrField() userId!: number | null
-      @StringField('') title!: string
+      public static fields() {
+        return {
+          id: createUidField(this),
+          userId: createAttrField(this),
+          title: createStringField(this, ''),
+          author: createBelongsToRelation(this, User, 'userId'),
+        }
+      }
 
-      @BelongsTo(() => User, 'userId')
-      author!: User | null
+      declare id: string
+      declare userId: number | null
+      declare title: string
+      declare author: User | null
     }
 
     mockUid(['uid1'])
@@ -52,19 +67,33 @@ describe('feature/relations/belongs_to_save_uid', () => {
     class User extends Model {
       static entity = 'users'
 
-      @UidField() id!: string
-      @StringField('') name!: string
+      public static fields() {
+        return {
+          id: createUidField(this),
+          name: createStringField(this, ''),
+        }
+      }
+
+      declare id: string
+      declare name: string
     }
 
     class Post extends Model {
       static entity = 'posts'
 
-      @UidField() id!: number
-      @AttrField() userId!: number | null
-      @StringField('') title!: string
+      public static fields() {
+        return {
+          id: createUidField(this),
+          userId: createAttrField(this),
+          title: createStringField(this, ''),
+          author: createBelongsToRelation(this, User, 'userId'),
+        }
+      }
 
-      @BelongsTo(() => User, 'userId')
-      author!: User | null
+      declare id: number
+      declare userId: number | null
+      declare title: string
+      declare author: User | null
     }
 
     mockUid(['uid1', 'uid2'])

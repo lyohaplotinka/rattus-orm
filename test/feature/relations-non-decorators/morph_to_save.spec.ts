@@ -1,26 +1,42 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
-import { MorphTo } from '@/attributes/field-relations'
-import { AttrField, NumberField, StringField } from '@/attributes/field-types'
+import { createMorphToRelation } from '@/attributes/field-relations'
+import { createAttrField, createNumberField, createStringField } from '@/attributes/field-types'
 import { Model } from '@/index'
 
-describe('feature/relations/morph_to_save', () => {
+describe('feature/relations-non-decorators/morph_to_save', () => {
   class Image extends Model {
     static entity = 'images'
 
-    @NumberField(0) id!: number
-    @StringField('') url!: string
-    @AttrField() imageableId!: number
-    @AttrField() imageableType!: string
-    @MorphTo(() => [User], 'imageableId', 'imageableType')
-    imageable!: User | null
+    public static fields() {
+      return {
+        id: createNumberField(this, 0),
+        url: createStringField(this, ''),
+        imageableId: createAttrField(this),
+        imageableType: createAttrField(this),
+        imageable: createMorphToRelation(this, [User], 'imageableId', 'imageableType'),
+      }
+    }
+
+    declare id: number
+    declare url: string
+    declare imageableId: number
+    declare imageableType: string
+    declare imageable: User | null
   }
 
   class User extends Model {
     static entity = 'users'
 
-    @NumberField(0) id!: number
-    @StringField('') name!: string
+    public static fields() {
+      return {
+        id: createNumberField(this, 0),
+        name: createStringField(this, ''),
+      }
+    }
+
+    declare id: number
+    declare name: string
   }
 
   it('inserts a record to the store with "morph to" relation', () => {

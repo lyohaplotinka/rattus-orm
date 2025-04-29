@@ -1,11 +1,11 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
-import { HasOne } from '@/attributes/field-relations'
-import { AttrField, StringField, UidField } from '@/attributes/field-types'
+import { createHasOneRelation } from '@/attributes/field-relations'
+import { createAttrField, createStringField, createUidField } from '@/attributes/field-types'
 import { Model } from '@/index'
 import { mockUid } from '@func-test/utils/mock-uid'
 
-describe('feature/relations/has_one_save_uid', () => {
+describe('feature/relations-non-decorators/has_one_save_uid', () => {
   beforeEach(() => {
     Model.clearRegistries()
   })
@@ -14,19 +14,33 @@ describe('feature/relations/has_one_save_uid', () => {
     class User extends Model {
       static entity = 'users'
 
-      @UidField() id!: string
-      @StringField('') name!: string
+      public static fields() {
+        return {
+          id: createUidField(this),
+          name: createStringField(this, ''),
+          phone: createHasOneRelation(this, Phone, 'userId'),
+        }
+      }
 
-      @HasOne(() => Phone, 'userId')
-      phone!: Phone | null
+      declare id: string
+      declare name: string
+      declare phone: Phone | null
     }
 
     class Phone extends Model {
       static entity = 'phones'
 
-      @AttrField() id!: number
-      @AttrField() userId!: string
-      @StringField('') number!: string
+      public static fields() {
+        return {
+          id: createAttrField(this),
+          userId: createAttrField(this),
+          number: createStringField(this, ''),
+        }
+      }
+
+      declare id: number
+      declare userId: string
+      declare number: string
     }
 
     mockUid(['uid1'])
@@ -55,19 +69,33 @@ describe('feature/relations/has_one_save_uid', () => {
     class User extends Model {
       static entity = 'users'
 
-      @UidField() id!: string
-      @StringField('') name!: string
+      public static fields() {
+        return {
+          id: createUidField(this),
+          name: createStringField(this, ''),
+          phone: createHasOneRelation(this, Phone, 'userId'),
+        }
+      }
 
-      @HasOne(() => Phone, 'userId')
-      phone!: Phone | null
+      declare id: string
+      declare name: string
+      declare phone: Phone | null
     }
 
     class Phone extends Model {
       static entity = 'phones'
 
-      @UidField() id!: string
-      @UidField() userId!: string
-      @StringField('') number!: string
+      public static fields() {
+        return {
+          id: createUidField(this),
+          userId: createUidField(this),
+          number: createStringField(this, ''),
+        }
+      }
+
+      declare id: string
+      declare userId: string
+      declare number: string
     }
 
     mockUid(['uid1', 'uid2'])
@@ -95,11 +123,17 @@ describe('feature/relations/has_one_save_uid', () => {
     class User extends Model {
       static entity = 'users'
 
-      @UidField() id!: string
-      @StringField('') name!: string
+      public static fields() {
+        return {
+          id: createUidField(this),
+          name: createStringField(this, ''),
+          phone: createHasOneRelation(this, Phone, 'userId'),
+        }
+      }
 
-      @HasOne(() => Phone, 'userId')
-      phone!: Phone | null
+      declare id: string
+      declare name: string
+      declare phone: Phone | null
     }
 
     class Phone extends Model {
@@ -107,8 +141,15 @@ describe('feature/relations/has_one_save_uid', () => {
 
       static primaryKey = 'userId'
 
-      @UidField() userId!: string
-      @StringField('') number!: string
+      public static fields() {
+        return {
+          userId: createUidField(this),
+          number: createStringField(this, ''),
+        }
+      }
+
+      declare userId: string
+      declare number: string
     }
 
     mockUid(['uid1', 'uid2'])

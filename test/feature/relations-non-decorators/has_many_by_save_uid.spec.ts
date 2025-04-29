@@ -1,11 +1,11 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
-import { HasManyBy } from '@/attributes/field-relations'
-import { AttrField, StringField, UidField } from '@/attributes/field-types'
+import { createHasManyByRelation } from '@/attributes/field-relations'
+import { createAttrField, createStringField, createUidField } from '@/attributes/field-types'
 import { Model } from '@/index'
 import { mockUid } from '@func-test/utils/mock-uid'
 
-describe('feature/relations/has_many_by_insert_uid', () => {
+describe('feature/relations-non-decorators/has_many_by_insert_uid', () => {
   beforeEach(() => {
     Model.clearRegistries()
   })
@@ -14,19 +14,33 @@ describe('feature/relations/has_many_by_insert_uid', () => {
     class Node extends Model {
       static entity = 'nodes'
 
-      @AttrField() id!: number
-      @StringField('') name!: string
+      public static fields() {
+        return {
+          id: createAttrField(this),
+          name: createStringField(this, ''),
+        }
+      }
+
+      declare id: number
+      declare name: string
     }
 
     class Cluster extends Model {
       static entity = 'clusters'
 
-      @UidField() id!: number
-      @AttrField() nodeIds!: number[]
-      @StringField('') name!: string
+      public static fields() {
+        return {
+          id: createUidField(this),
+          nodeIds: createAttrField(this),
+          name: createStringField(this, ''),
+          nodes: createHasManyByRelation(this, Node, 'nodeIds'),
+        }
+      }
 
-      @HasManyBy(() => Node, 'nodeIds')
-      nodes!: Node[]
+      declare id: number
+      declare nodeIds: number[]
+      declare name: string
+      declare nodes: Node[]
     }
 
     mockUid(['uid1'])
@@ -56,19 +70,34 @@ describe('feature/relations/has_many_by_insert_uid', () => {
     class Node extends Model {
       static entity = 'nodes'
 
-      @UidField() id!: number
-      @StringField('') name!: string
+
+      public static fields() {
+        return {
+          id: createUidField(this),
+          name: createStringField(this, ''),
+        }
+      }
+
+      declare id: number
+      declare name: string
     }
 
     class Cluster extends Model {
       static entity = 'clusters'
 
-      @UidField() id!: number
-      @AttrField() nodeIds!: number[]
-      @StringField('') name!: string
+      public static fields() {
+        return {
+          id: createUidField(this),
+          nodeIds: createAttrField(this),
+          name: createStringField(this, ''),
+          nodes: createHasManyByRelation(this, Node, 'nodeIds'),
+        }
+      }
 
-      @HasManyBy(() => Node, 'nodeIds')
-      nodes!: Node[]
+      declare id: number
+      declare nodeIds: number[]
+      declare name: string
+      declare nodes: Node[]
     }
 
     mockUid(['uid1', 'uid2', 'uid3'])

@@ -1,34 +1,57 @@
 import { assertModel, createStore, fillState } from '@func-test/utils/Helpers'
 
-import { MorphTo } from '@/attributes/field-relations'
-import { AttrField, NumberField, StringField } from '@/attributes/field-types'
+import { createMorphToRelation } from '@/attributes/field-relations'
+import { createAttrField, createStringField } from '@/attributes/field-types'
 import type { Query } from '@/index'
 import { Model } from '@/index'
 
-describe('feature/relations/morph_to_retrieve', () => {
+describe('feature/relations-non-decorators/morph_to_retrieve', () => {
   class Image extends Model {
     static entity = 'images'
 
-    @NumberField(0) id!: number
-    @StringField('') url!: string
-    @AttrField() imageableId!: number
-    @AttrField() imageableType!: string
-    @MorphTo(() => [User, Post], 'imageableId', 'imageableType')
-    imageable!: User | Post | null
+    public static fields() {
+      return {
+        id: createAttrField(this, 0),
+        url: createStringField(this, ''),
+        imageableId: createAttrField(this),
+        imageableType: createAttrField(this),
+        imageable: createMorphToRelation(this, [User, Post], 'imageableId', 'imageableType'),
+      }
+    }
+
+    declare id: number
+    declare url: string
+    declare imageableId: number
+    declare imageableType: string
+    declare imageable: User | Post | null
   }
 
   class User extends Model {
     static entity = 'users'
 
-    @NumberField(0) id!: number
-    @StringField('') name!: string
+    public static fields() {
+      return {
+        id: createAttrField(this, 0),
+        name: createStringField(this, ''),
+      }
+    }
+
+    declare id: number
+    declare name: string
   }
 
   class Post extends Model {
     static entity = 'posts'
 
-    @NumberField(0) id!: number
-    @StringField('') title!: string
+    public static fields() {
+      return {
+        id: createAttrField(this, 0),
+        title: createStringField(this, ''),
+      }
+    }
+
+    declare id: number
+    declare title: string
   }
 
   const MORPH_TO_ENTITIES = {

@@ -1,10 +1,10 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
-import { HasMany } from '@/attributes/field-relations'
-import { AttrField, StringField } from '@/attributes/field-types'
+import { createHasManyRelation } from '@/attributes/field-relations'
+import { createAttrField, createStringField } from '@/attributes/field-types'
 import { Model } from '@/index'
 
-describe('feature/relations/has_many_save_custom_key', () => {
+describe('feature/relations-non-decorators/has_many_save_custom_key', () => {
   beforeEach(() => {
     Model.clearRegistries()
   })
@@ -15,19 +15,33 @@ describe('feature/relations/has_many_save_custom_key', () => {
 
       static primaryKey = 'userId'
 
-      @AttrField() userId!: string
-      @StringField('') name!: string
+      public static fields() {
+        return {
+          userId: createAttrField(this),
+          name: createStringField(this, ''),
+          posts: createHasManyRelation(this, Post, 'userId'),
+        }
+      }
 
-      @HasMany(() => Post, 'userId')
-      posts!: Post[]
+      declare userId: string
+      declare name: string
+      declare posts: Post[]
     }
 
     class Post extends Model {
       static entity = 'posts'
 
-      @AttrField() id!: number
-      @AttrField() userId!: number
-      @StringField('') title!: string
+      public static fields() {
+        return {
+          id: createAttrField(this),
+          userId: createAttrField(this),
+          title: createStringField(this, ''),
+        }
+      }
+
+      declare id: number
+      declare userId: number
+      declare title: string
     }
 
     const store = createStore()
@@ -56,20 +70,35 @@ describe('feature/relations/has_many_save_custom_key', () => {
     class User extends Model {
       static entity = 'users'
 
-      @AttrField() id!: number
-      @AttrField() userId!: number
-      @StringField('') name!: string
+      public static fields() {
+        return {
+          id: createAttrField(this),
+          userId: createAttrField(this),
+          name: createStringField(this, ''),
+          posts: createHasManyRelation(this, Post, 'userId', 'userId'),
+        }
+      }
 
-      @HasMany(() => Post, 'userId', 'userId')
-      posts!: Post[]
+      declare id: number
+      declare userId: number
+      declare name: string
+      declare posts: Post[]
     }
 
     class Post extends Model {
       static entity = 'posts'
 
-      @AttrField() id!: number
-      @AttrField() userId!: string
-      @StringField('') title!: string
+      public static fields() {
+        return {
+          id: createAttrField(this),
+          userId: createAttrField(this),
+          title: createStringField(this, ''),
+        }
+      }
+
+      declare id: number
+      declare userId: string
+      declare title: string
     }
 
     const store = createStore()

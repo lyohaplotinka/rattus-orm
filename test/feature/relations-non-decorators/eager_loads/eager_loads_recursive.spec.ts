@@ -1,29 +1,42 @@
 import { assertModel, createStore, fillState } from '@func-test/utils/Helpers'
 
-import { BelongsTo, HasOne } from '@/attributes/field-relations'
-import { AttrField, StringField } from '@/attributes/field-types'
+import { createBelongsToRelation, createHasOneRelation } from '@/attributes/field-relations'
+import { createAttrField, createStringField } from '@/attributes/field-types'
 import { Model } from '@/index'
 
-describe('feature/relations/eager_loads_recursive', () => {
+describe('feature/relations-non-decorators/eager_loads_recursive', () => {
   class User extends Model {
     static entity = 'users'
 
-    @AttrField() id!: number
-    @StringField('') name!: string
+    public static fields() {
+      return {
+        id: createAttrField(this),
+        name: createStringField(this, ''),
+        phone: createHasOneRelation(this, Phone, 'userId'),
+      }
+    }
 
-    @HasOne(() => Phone, 'userId')
-    phone!: Phone
+    declare id: number
+    declare name: string
+    declare phone: Phone
   }
 
   class Phone extends Model {
     static entity = 'phones'
 
-    @AttrField() id!: number
-    @AttrField() userId!: number
-    @StringField('') number!: string
+    public static fields() {
+      return {
+        id: createAttrField(this),
+        userId: createAttrField(this),
+        number: createStringField(this, ''),
+        user: createBelongsToRelation(this, User, 'userId'),
+      }
+    }
 
-    @BelongsTo(() => User, 'userId')
-    user!: User
+    declare id: number
+    declare userId: number
+    declare number: string
+    declare user: User
   }
 
   it('eager loads all relations recursively', () => {

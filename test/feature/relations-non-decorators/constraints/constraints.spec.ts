@@ -1,38 +1,59 @@
 import { createStore, fillState } from '@func-test/utils/Helpers'
 
-import { HasOne } from '@/attributes/field-relations'
-import { AttrField, StringField } from '@/attributes/field-types'
+import { createHasOneRelation } from '@/attributes/field-relations'
+import { createAttrField, createStringField } from '@/attributes/field-types'
 import type { Query } from '@/index'
 import { Model } from '@/index'
 
-describe('feature/relations/constraints/constraints', () => {
+describe('feature/relations-non-decorators/constraints/constraints', () => {
   class User extends Model {
     static entity = 'users'
 
-    @AttrField() id!: number
-    @StringField('') name!: string
+    static fields() {
+      return {
+        id: createAttrField(this),
+        name: createStringField(this, ''),
+        phone: createHasOneRelation(this, Phone, 'userId'),
+      }
+    }
 
-    @HasOne(() => Phone, 'userId')
-    phone!: Phone | null
+    declare id: number
+    declare name: string
+    declare phone: Phone | null
   }
 
   class Phone extends Model {
     static entity = 'phones'
 
-    @AttrField() id!: number
-    @AttrField() userId!: number
-    @StringField('') number!: string
+    static fields() {
+      return {
+        id: createAttrField(this),
+        userId: createAttrField(this),
+        number: createStringField(this, ''),
+        type: createHasOneRelation(this, Type, 'phoneId'),
+      }
+    }
 
-    @HasOne(() => Type, 'phoneId')
-    type!: Type | null
+    declare id: number
+    declare userId: number
+    declare number: string
+    declare type: Type | null
   }
 
   class Type extends Model {
     static entity = 'types'
 
-    @AttrField() id!: number
-    @AttrField() phoneId!: number
-    @StringField('') name!: string
+    static fields() {
+      return {
+        id: createAttrField(this),
+        phoneId: createAttrField(this),
+        name: createStringField(this, ''),
+      }
+    }
+
+    declare id: number
+    declare phoneId: number
+    declare name: string
   }
 
   it('can add constraints to the relationship query', () => {

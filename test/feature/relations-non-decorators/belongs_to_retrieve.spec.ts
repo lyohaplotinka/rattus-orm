@@ -4,7 +4,7 @@ import { createAttrField, createStringField } from '@/attributes/field-types'
 import { createBelongsToRelation } from '@/attributes/field-relations'
 import { Model } from '@/index'
 
-describe('feature/relations/belongs_to_retrieve', () => {
+describe('feature/relations-non-decorators/belongs_to_retrieve', () => {
   class User extends Model {
     static entity = 'users'
     
@@ -25,7 +25,7 @@ describe('feature/relations/belongs_to_retrieve', () => {
         id: createAttrField(this),
         userId: createAttrField(this),
         title: createStringField(this, ''),
-        author: createBelongsToRelation(this, () => User, 'userId'),
+        author: createBelongsToRelation(this, User, 'userId'),
       }
     }
 

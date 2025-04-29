@@ -1,26 +1,40 @@
 import { assertModel, createStore, fillState } from '@func-test/utils/Helpers'
 
-import { HasOne } from '@/attributes/field-relations'
-import { AttrField, StringField } from '@/attributes/field-types'
+import { createHasOneRelation } from '@/attributes/field-relations'
+import { createAttrField, createStringField } from '@/attributes/field-types'
 import { Model } from '@/index'
 
-describe('feature/relations/has_one_retrieve', () => {
+describe('feature/relations-non-decorators/has_one_retrieve', () => {
   class User extends Model {
     static entity = 'users'
 
-    @AttrField() id!: number
-    @StringField('') name!: string
+    public static fields() {
+      return {
+        id: createAttrField(this),
+        name: createStringField(this, ''),
+        phone: createHasOneRelation(this, Phone, 'userId'),
+      }
+    }
 
-    @HasOne(() => Phone, 'userId')
-    phone!: Phone | null
+    declare id: number
+    declare name: string
+    declare phone: Phone | null
   }
 
   class Phone extends Model {
     static entity = 'phones'
 
-    @AttrField() id!: number
-    @AttrField() userId!: number
-    @StringField('') number!: string
+    public static fields() {
+      return {
+        id: createAttrField(this),
+        userId: createAttrField(this),
+        number: createStringField(this, ''),
+      }
+    }
+
+    declare id: number
+    declare userId: number
+    declare number: string
   }
 
   it('can eager load has one relation', () => {

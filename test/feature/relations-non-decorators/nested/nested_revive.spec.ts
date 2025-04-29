@@ -1,41 +1,58 @@
 import { createStore, fillState } from '@func-test/utils/Helpers'
 
-import { BelongsTo, HasMany } from '@/attributes/field-relations'
-import { AttrField } from '@/attributes/field-types'
+import { createBelongsToRelation, createHasManyRelation } from '@/attributes/field-relations'
+import { createAttrField } from '@/attributes/field-types'
 import { Model } from '@/index'
 
-describe('feature/relations/nested/nested_revive', () => {
+describe('feature/relations-non-decorators/nested/nested_revive', () => {
   class User extends Model {
     static entity = 'users'
 
-    @AttrField() id!: number
+    public static fields() {
+      return {
+        id: createAttrField(this),
+        posts: createHasManyRelation(this, Post, 'userId'),
+      }
+    }
 
-    @HasMany(() => Post, 'userId')
-    posts!: Post[]
+    declare id: number
+    declare posts: Post[]
   }
 
   class Post extends Model {
     static entity = 'posts'
 
-    @AttrField() id!: number
-    @AttrField() userId!: number | null
+    public static fields() {
+      return {
+        id: createAttrField(this),
+        userId: createAttrField(this),
+        author: createBelongsToRelation(this, User, 'userId'),
+        comments: createHasManyRelation(this, Comment, 'postId'),
+      }
+    }
 
-    @BelongsTo(() => User, 'userId')
-    author!: User | null
-
-    @HasMany(() => Comment, 'postId')
-    comments!: Comment[]
+    declare id: number
+    declare userId: number | null
+    declare author: User | null
+    declare comments: Comment[]
   }
 
   class Comment extends Model {
     static entity = 'comments'
 
-    @AttrField() id!: number
-    @AttrField() postId!: number
-    @AttrField() userId!: number
+    public static fields() {
+      return {
+        id: createAttrField(this),
+        postId: createAttrField(this),
+        userId: createAttrField(this),
+        author: createBelongsToRelation(this, User, 'userId'),
+      }
+    }
 
-    @BelongsTo(() => User, 'userId')
-    author!: User | null
+    declare id: number
+    declare postId: number
+    declare userId: number
+    declare author: User | null
   }
 
   it('can revive a complex nested schema', () => {

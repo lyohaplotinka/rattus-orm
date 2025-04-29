@@ -1,11 +1,15 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
-import { HasMany } from '@/attributes/field-relations'
-import { AttrField, StringField, UidField } from '@/attributes/field-types'
+import { createHasManyRelation } from '@/attributes/field-relations'
+import {
+  createAttrField,
+  createStringField,
+  createUidField,
+} from '@/attributes/field-types'
 import { Model } from '@/index'
 import { mockUid } from '@func-test/utils/mock-uid'
 
-describe('feature/relations/has_many_insert_uid', () => {
+describe('feature/relations-non-decorators/has_many_insert_uid', () => {
   beforeEach(() => {
     Model.clearRegistries()
   })
@@ -14,19 +18,33 @@ describe('feature/relations/has_many_insert_uid', () => {
     class User extends Model {
       static entity = 'users'
 
-      @UidField() id!: string
-      @StringField('') name!: string
+      public static fields() {
+        return {
+          id: createUidField(this),
+          name: createStringField(this, ''),
+          posts: createHasManyRelation(this, Post, 'userId'),
+        }
+      }
 
-      @HasMany(() => Post, 'userId')
-      posts!: Post[]
+      declare id: string
+      declare name: string
+      declare posts: Post[]
     }
 
     class Post extends Model {
       static entity = 'posts'
 
-      @AttrField() id!: number
-      @AttrField() userId!: number
-      @StringField('') title!: string
+      public static fields() {
+        return {
+          id: createAttrField(this),
+          userId: createAttrField(this),
+          title: createStringField(this, ''),
+        }
+      }
+
+      declare id: number
+      declare userId: number
+      declare title: string
     }
 
     mockUid(['uid1'])
@@ -56,19 +74,34 @@ describe('feature/relations/has_many_insert_uid', () => {
     class User extends Model {
       static entity = 'users'
 
-      @UidField() id!: string
-      @StringField('') name!: string
 
-      @HasMany(() => Post, 'userId')
-      posts!: Post[]
+      public static fields() {
+        return {
+          id: createUidField(this),
+          name: createStringField(this, ''),
+          posts: createHasManyRelation(this, Post, 'userId'),
+        }
+      }
+
+      declare id: string
+      declare name: string
+      declare posts: Post[]
     }
 
     class Post extends Model {
       static entity = 'posts'
 
-      @AttrField() id!: number
-      @UidField() userId!: string
-      @StringField('') title!: string
+      public static fields() {
+        return {
+          id: createAttrField(this),
+          userId: createUidField(this),
+          title: createStringField(this, ''),
+        }
+      }
+
+      declare id: number
+      declare userId: string
+      declare title: string
     }
 
     mockUid(['uid1', 'uid2', 'uid3'])
@@ -94,3 +127,4 @@ describe('feature/relations/has_many_insert_uid', () => {
     })
   })
 })
+

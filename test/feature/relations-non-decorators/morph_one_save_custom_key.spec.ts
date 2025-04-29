@@ -1,10 +1,10 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
-import { MorphOne } from '@/attributes/field-relations'
-import { NumberField, StringField } from '@/attributes/field-types'
+import { createMorphOneRelation } from '@/attributes/field-relations'
+import { createNumberField, createStringField } from '@/attributes/field-types'
 import { Model } from '@/index'
 
-describe('feature/relations/morph_one_save_custom_key', () => {
+describe('feature/relations-non-decorators/morph_one_save_custom_key', () => {
   beforeEach(() => {
     Model.clearRegistries()
   })
@@ -13,10 +13,19 @@ describe('feature/relations/morph_one_save_custom_key', () => {
     class Image extends Model {
       static entity = 'images'
 
-      @NumberField(0) id!: number
-      @StringField('') url!: string
-      @StringField('') imageableId!: number
-      @StringField('') imageableType!: string
+      static fields() {
+        return {
+          id: createNumberField(this, 0),
+          url: createStringField(this, ''),
+          imageableId: createStringField(this, ''),
+          imageableType: createStringField(this, ''),
+        }
+      }
+
+      declare id: number
+      declare url: string
+      declare imageableId: number
+      declare imageableType: string
     }
 
     class User extends Model {
@@ -24,11 +33,17 @@ describe('feature/relations/morph_one_save_custom_key', () => {
 
       static primaryKey = 'userId'
 
-      @StringField('') userId!: string
-      @StringField('') name!: string
+      static fields() {
+        return {
+          userId: createStringField(this, ''),
+          name: createStringField(this, ''),
+          image: createMorphOneRelation(this, Image, 'imageableId', 'imageableType'),
+        }
+      }
 
-      @MorphOne(() => Image, 'imageableId', 'imageableType')
-      image!: Image | null
+      declare userId: string
+      declare name: string
+      declare image: Image | null
     }
 
     const store = createStore()
@@ -62,21 +77,37 @@ describe('feature/relations/morph_one_save_custom_key', () => {
     class Image extends Model {
       static entity = 'images'
 
-      @NumberField(0) id!: number
-      @StringField('') url!: string
-      @StringField('') imageableId!: string
-      @StringField('') imageableType!: string
+      static fields() {
+        return {
+          id: createNumberField(this, 0),
+          url: createStringField(this, ''),
+          imageableId: createStringField(this, ''),
+          imageableType: createStringField(this, ''),
+        }
+      }
+
+      declare id: number
+      declare url: string
+      declare imageableId: string
+      declare imageableType: string
     }
 
     class User extends Model {
       static entity = 'users'
 
-      @NumberField(0) id!: number
-      @StringField('') userId!: string
-      @StringField('') name!: string
+      static fields() {
+        return {
+          id: createNumberField(this, 0),
+          userId: createStringField(this, ''),
+          name: createStringField(this, ''),
+          image: createMorphOneRelation(this, Image, 'imageableId', 'imageableType', 'userId'),
+        }
+      }
 
-      @MorphOne(() => Image, 'imageableId', 'imageableType', 'userId')
-      image!: Image | null
+      declare id: number
+      declare userId: string
+      declare name: string
+      declare image: Image | null
     }
 
     const store = createStore()

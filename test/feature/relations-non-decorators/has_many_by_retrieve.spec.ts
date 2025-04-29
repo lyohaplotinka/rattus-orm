@@ -1,26 +1,40 @@
 import { assertInstanceOf, assertModel, createStore, fillState } from '@func-test/utils/Helpers'
 
-import { HasManyBy } from '@/attributes/field-relations'
-import { AttrField, StringField } from '@/attributes/field-types'
+import { createHasManyByRelation } from '@/attributes/field-relations'
+import { createAttrField, createStringField } from '@/attributes/field-types'
 import { Model } from '@/index'
 
-describe('feature/relations/has_many_by_retrieve', () => {
+describe('feature/relations-non-decorators/has_many_by_retrieve', () => {
   class Node extends Model {
     static entity = 'nodes'
 
-    @AttrField() id!: number
-    @StringField('') name!: string
+    public static fields() {
+      return {
+        id: createAttrField(this),
+        name: createStringField(this, ''),
+      }
+    }
+
+    declare id: number
+    declare name: string
   }
 
   class Cluster extends Model {
     static entity = 'clusters'
 
-    @AttrField() id!: number
-    @AttrField() nodeIds!: number[]
-    @StringField('') name!: string
+    public static fields() {
+      return {
+        id: createAttrField(this),
+        nodeIds: createAttrField(this),
+        name: createStringField(this, ''),
+        nodes: createHasManyByRelation(this, Node, 'nodeIds'),
+      }
+    }
 
-    @HasManyBy(() => Node, 'nodeIds')
-    nodes!: Node[]
+    declare id: number
+    declare nodeIds: number[]
+    declare name: string
+    declare nodes: Node[]
   }
 
   it('can eager load has many by relation', async () => {

@@ -1,10 +1,10 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
-import { BelongsTo } from '@/attributes/field-relations'
-import { AttrField, StringField } from '@/attributes/field-types'
+import { createBelongsToRelation } from '@/attributes/field-relations'
+import { createAttrField, createStringField } from '@/attributes/field-types'
 import { Model } from '@/index'
 
-describe('feature/relations/belongs_to_save_custome_key', () => {
+describe('feature/relations-non-decorators/belongs_to_save_custome_key', () => {
   beforeEach(() => {
     Model.clearRegistries()
   })
@@ -15,19 +15,33 @@ describe('feature/relations/belongs_to_save_custome_key', () => {
 
       static primaryKey = 'userId'
 
-      @AttrField() userId!: number
-      @StringField('') name!: string
+      public static fields() {
+        return {
+          userId: createAttrField(this),
+          name: createStringField(this, ''),
+        }
+      }
+
+      declare userId: number
+      declare name: string
     }
 
     class Post extends Model {
       static entity = 'posts'
 
-      @AttrField() id!: string
-      @AttrField() userId!: number | null
-      @StringField('') title!: string
+      public static fields() {
+        return {
+          id: createAttrField(this),
+          userId: createAttrField(this),
+          title: createStringField(this, ''),
+          author: createBelongsToRelation(this, User, 'userId'),
+        }
+      }
 
-      @BelongsTo(() => User, 'userId')
-      author!: User | null
+      declare id: string
+      declare userId: number | null
+      declare title: string
+      declare author: User | null
     }
 
     const store = createStore()
@@ -52,20 +66,35 @@ describe('feature/relations/belongs_to_save_custome_key', () => {
     class User extends Model {
       static entity = 'users'
 
-      @AttrField() id!: number
-      @AttrField() userId!: number
-      @StringField('') name!: string
+      public static fields() {
+        return {
+          id: createAttrField(this),
+          userId: createAttrField(this),
+          name: createStringField(this, ''),
+        }
+      }
+
+      declare id: number
+      declare userId: number
+      declare name: string
     }
 
     class Post extends Model {
       static entity = 'posts'
 
-      @AttrField() id!: string
-      @AttrField() userId!: number | null
-      @StringField('') title!: string
+      public static fields() {
+        return {
+          id: createAttrField(this),
+          userId: createAttrField(this),
+          title: createStringField(this, ''),
+          author: createBelongsToRelation(this, User, 'userId', 'userId'),
+        }
+      }
 
-      @BelongsTo(() => User, 'userId', 'userId')
-      author!: User | null
+      declare id: string
+      declare userId: number | null
+      declare title: string
+      declare author: User | null
     }
 
     const store = createStore()

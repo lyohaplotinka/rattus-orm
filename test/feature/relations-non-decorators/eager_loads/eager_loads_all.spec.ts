@@ -1,37 +1,58 @@
 import { assertInstanceOf, assertModel, createStore, fillState } from '@func-test/utils/Helpers'
 
-import { BelongsTo, HasMany } from '@/attributes/field-relations'
-import { AttrField, StringField } from '@/attributes/field-types'
+import { createBelongsToRelation, createHasManyRelation } from '@/attributes/field-relations'
+import { createAttrField, createStringField } from '@/attributes/field-types'
 import { Model } from '@/index'
 
-describe('feature/relations/eager_loads_all', () => {
+describe('feature/relations-non-decorators/eager_loads_all', () => {
   class User extends Model {
     static entity = 'users'
 
-    @AttrField() id!: number
-    @StringField('') name!: string
+    public static fields() {
+      return {
+        id: createAttrField(this),
+        name: createStringField(this, ''),
+      }
+    }
+
+    declare id: number
+    declare name: string
   }
 
   class Post extends Model {
     static entity = 'posts'
 
-    @AttrField() id!: number
-    @AttrField() userId!: number
-    @StringField('') title!: string
+    public static fields() {
+      return {
+        id: createAttrField(this),
+        userId: createAttrField(this),
+        title: createStringField(this, ''),
+        author: createBelongsToRelation(this, User, 'userId'),
+        comments: createHasManyRelation(this, Comment, 'postId'),
+      }
+    }
 
-    @BelongsTo(() => User, 'userId')
-    author!: User | null
-
-    @HasMany(() => Comment, 'postId')
-    comments!: Comment[]
+    declare id: number
+    declare userId: number
+    declare title: string
+    declare author: User | null
+    declare comments: Comment[]
   }
 
   class Comment extends Model {
     static entity = 'comments'
 
-    @AttrField() id!: number
-    @AttrField() postId!: number
-    @StringField('') content!: string
+    public static fields() {
+      return {
+        id: createAttrField(this),
+        postId: createAttrField(this),
+        content: createStringField(this, ''),
+      }
+    }
+
+    declare id: number
+    declare postId: number
+    declare content: string
   }
 
   it('eager loads all top level relations', () => {

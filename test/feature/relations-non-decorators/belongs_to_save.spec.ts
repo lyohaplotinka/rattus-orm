@@ -1,26 +1,41 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
-import { BelongsTo } from '@/attributes/field-relations'
-import { AttrField, StringField } from '@/attributes/field-types'
+import { createBelongsToRelation } from '@/attributes/field-relations'
+import { createAttrField, createStringField } from '@/attributes/field-types'
 import { Model } from '@/index'
 
-describe('feature/relations/belongs_to_save', () => {
+describe('feature/relations-non-decorators/belongs_to_save', () => {
   class User extends Model {
     static entity = 'users'
 
-    @AttrField() id!: number
-    @StringField('') name!: string
+    public static fields() {
+      return {
+        id: createAttrField(this),
+        name: createStringField(this, ''),
+      }
+    }
+
+    declare id: number
+    declare name: string
   }
 
   class Post extends Model {
     static entity = 'posts'
 
-    @AttrField() id!: number
-    @AttrField() userId!: number | null
-    @StringField('') title!: string
 
-    @BelongsTo(() => User, 'userId')
-    author!: User | null
+    public static fields() {
+      return {
+        id: createAttrField(this),
+        userId: createAttrField(this),
+        title: createStringField(this, ''),
+        author: createBelongsToRelation(this, User, 'userId'),
+      }
+    }
+
+    declare id: number
+    declare userId: number | null
+    declare title: string
+    declare author: User | null
   }
 
   it('inserts a record to the store with "belongs to" relation', () => {

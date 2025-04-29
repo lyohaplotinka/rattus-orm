@@ -1,27 +1,42 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
-import { MorphOne } from '@/attributes/field-relations'
-import { NumberField, StringField } from '@/attributes/field-types'
+import { createMorphOneRelation } from '@/attributes/field-relations'
+import { createAttrField, createStringField } from '@/attributes/field-types'
 import { Model } from '@/index'
 
-describe('feature/relations/morph_one_save', () => {
+describe('feature/relations-non-decorators/morph_one_save', () => {
   class Image extends Model {
     static entity = 'images'
 
-    @NumberField(0) id!: number
-    @StringField('') url!: string
-    @NumberField(0) imageableId!: number
-    @StringField('') imageableType!: string
+    public static fields() {
+      return {
+        id: createAttrField(this),
+        url: createStringField(this, ''),
+        imageableId: createAttrField(this),
+        imageableType: createStringField(this, ''),
+      }
+    }
+
+    declare id: number
+    declare url: string
+    declare imageableId: number
+    declare imageableType: string
   }
 
   class User extends Model {
     static entity = 'users'
 
-    @NumberField(0) id!: number
-    @StringField('') name!: string
+    public static fields() {
+      return {
+        id: createAttrField(this),
+        name: createStringField(this, ''),
+        image: createMorphOneRelation(this, Image, 'imageableId', 'imageableType'),
+      }
+    }
 
-    @MorphOne(() => Image, 'imageableId', 'imageableType')
-    image!: Image | null
+    declare id: number
+    declare name: string
+    declare image: Image | null
   }
 
   it('inserts a record to the store with "morph one" relation', () => {

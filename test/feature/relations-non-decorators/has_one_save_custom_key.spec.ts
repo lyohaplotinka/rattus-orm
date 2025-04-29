@@ -1,10 +1,10 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
-import { HasOne } from '@/attributes/field-relations'
-import { AttrField, StringField } from '@/attributes/field-types'
+import { createHasOneRelation } from '@/attributes/field-relations'
+import { createAttrField, createStringField } from '@/attributes/field-types'
 import { Model } from '@/index'
 
-describe('feature/relations/has_one_save_custom_key', () => {
+describe('feature/relations-non-decorators/has_one_save_custom_key', () => {
   beforeEach(() => {
     Model.clearRegistries()
   })
@@ -15,19 +15,33 @@ describe('feature/relations/has_one_save_custom_key', () => {
 
       static primaryKey = 'userId'
 
-      @AttrField() userId!: string
-      @StringField('') name!: string
+      public static fields() {
+        return {
+          userId: createAttrField(this),
+          name: createStringField(this, ''),
+          phone: createHasOneRelation(this, Phone, 'userId'),
+        }
+      }
 
-      @HasOne(() => Phone, 'userId')
-      phone!: Phone | null
+      declare userId: string
+      declare name: string
+      declare phone: Phone | null
     }
 
     class Phone extends Model {
       static entity = 'phones'
 
-      @AttrField() id!: number
-      @AttrField() userId!: string
-      @StringField('') number!: string
+      public static fields() {
+        return {
+          id: createAttrField(this),
+          userId: createAttrField(this),
+          number: createStringField(this, ''),
+        }
+      }
+
+      declare id: number
+      declare userId: string
+      declare number: string
     }
 
     const store = createStore()
@@ -55,20 +69,35 @@ describe('feature/relations/has_one_save_custom_key', () => {
     class User extends Model {
       static entity = 'users'
 
-      @AttrField() id!: number
-      @AttrField() userId!: string
-      @StringField('') name!: string
+      public static fields() {
+        return {
+          id: createAttrField(this),
+          userId: createAttrField(this),
+          name: createStringField(this, ''),
+          phone: createHasOneRelation(this, Phone, 'userId', 'userId'),
+        }
+      }
 
-      @HasOne(() => Phone, 'userId', 'userId')
-      phone!: Phone | null
+      declare id: number
+      declare userId: string
+      declare name: string
+      declare phone: Phone | null
     }
 
     class Phone extends Model {
       static entity = 'phones'
 
-      @AttrField() id!: number
-      @AttrField() userId!: string
-      @StringField('') number!: string
+      public static fields() {
+        return {
+          id: createAttrField(this),
+          userId: createAttrField(this),
+          number: createStringField(this, ''),
+        }
+      }
+
+      declare id: number
+      declare userId: string
+      declare number: string
     }
 
     const store = createStore()

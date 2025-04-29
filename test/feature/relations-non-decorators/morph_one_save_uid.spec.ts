@@ -1,11 +1,11 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
-import { MorphOne } from '@/attributes/field-relations'
-import { NumberField, StringField, UidField } from '@/attributes/field-types'
+import { createMorphOneRelation } from '@/attributes/field-relations'
+import { createAttrField, createStringField, createUidField } from '@/attributes/field-types'
 import { Model } from '@/index'
 import { mockUid } from '@func-test/utils/mock-uid'
 
-describe('feature/relations/morph_one_save_uid', () => {
+describe('feature/relations-non-decorators/morph_one_save_uid', () => {
   beforeEach(() => {
     Model.clearRegistries()
   })
@@ -14,20 +14,35 @@ describe('feature/relations/morph_one_save_uid', () => {
     class Image extends Model {
       static entity = 'images'
 
-      @NumberField(0) id!: number
-      @StringField('') url!: string
-      @UidField() imageableId!: string
-      @StringField('') imageableType!: string
+      public static fields() {
+        return {
+          id: createAttrField(this, 0),
+          url: createStringField(this, ''),
+          imageableId: createUidField(this),
+          imageableType: createStringField(this, ''),
+        }
+      }
+
+      declare id: number
+      declare url: string
+      declare imageableId: string
+      declare imageableType: string
     }
 
     class User extends Model {
       static entity = 'users'
 
-      @UidField() id!: string
-      @StringField('') name!: string
+      public static fields() {
+        return {
+          id: createUidField(this),
+          name: createStringField(this, ''),
+          image: createMorphOneRelation(this, Image, 'imageableId', 'imageableType'),
+        }
+      }
 
-      @MorphOne(() => Image, 'imageableId', 'imageableType')
-      image!: Image | null
+      declare id: string
+      declare name: string
+      declare image: Image | null
     }
 
     mockUid(['uid1'])
@@ -62,20 +77,35 @@ describe('feature/relations/morph_one_save_uid', () => {
     class Image extends Model {
       static entity = 'images'
 
-      @UidField() id!: string
-      @StringField('') url!: string
-      @UidField() imageableId!: string
-      @StringField('') imageableType!: string
+      public static fields() {
+        return {
+          id: createUidField(this),
+          url: createStringField(this, ''),
+          imageableId: createUidField(this),
+          imageableType: createStringField(this, ''),
+        }
+      }
+
+      declare id: string
+      declare url: string
+      declare imageableId: string
+      declare imageableType: string
     }
 
     class User extends Model {
       static entity = 'users'
 
-      @UidField() id!: string
-      @StringField('') name!: string
+      public static fields() {
+        return {
+          id: createUidField(this),
+          name: createStringField(this, ''),
+          image: createMorphOneRelation(this, Image, 'imageableId', 'imageableType'),
+        }
+      }
 
-      @MorphOne(() => Image, 'imageableId', 'imageableType')
-      image!: Image | null
+      declare id: string
+      declare name: string
+      declare image: Image | null
     }
 
     mockUid(['uid1', 'uid2'])
@@ -109,19 +139,33 @@ describe('feature/relations/morph_one_save_uid', () => {
       static entity = 'images'
       static primaryKey = ['imageableId', 'imageableType']
 
-      @StringField('') url!: string
-      @UidField() imageableId!: number
-      @StringField('') imageableType!: string
+      public static fields() {
+        return {
+          url: createStringField(this, ''),
+          imageableId: createUidField(this),
+          imageableType: createStringField(this, ''),
+        }
+      }
+
+      declare url: string
+      declare imageableId: number
+      declare imageableType: string
     }
 
     class User extends Model {
       static entity = 'users'
 
-      @UidField() id!: string
-      @StringField('') name!: string
+      public static fields() {
+        return {
+          id: createUidField(this),
+          name: createStringField(this, ''),
+          image: createMorphOneRelation(this, Image, 'imageableId', 'imageableType'),
+        }
+      }
 
-      @MorphOne(() => Image, 'imageableId', 'imageableType')
-      image!: Image | null
+      declare id: string
+      declare name: string
+      declare image: Image | null
     }
 
     mockUid(['uid1', 'uid2'])

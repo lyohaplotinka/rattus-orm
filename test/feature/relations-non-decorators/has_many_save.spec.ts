@@ -1,26 +1,40 @@
 import { assertState, createStore, fillState } from '@func-test/utils/Helpers'
 
-import { HasMany } from '@/attributes/field-relations'
-import { NumberField, StringField } from '@/attributes/field-types'
+import { createHasManyRelation } from '@/attributes/field-relations'
+import { createAttrField, createStringField } from '@/attributes/field-types'
 import { Model } from '@/index'
 
-describe('feature/relations/has_many_save', () => {
+describe('feature/relations-non-decorators/has_many_save', () => {
   class User extends Model {
     static entity = 'users'
 
-    @NumberField(0) id!: number
-    @StringField('') name!: string
+    public static fields() {
+      return {
+        id: createAttrField(this),
+        name: createStringField(this, ''),
+        posts: createHasManyRelation(this, Post, 'userId'),
+      }
+    }
 
-    @HasMany(() => Post, 'userId')
-    posts!: Post[]
+    declare id: number
+    declare name: string
+    declare posts: Post[]
   }
 
   class Post extends Model {
     static entity = 'posts'
 
-    @NumberField(0) id!: number
-    @NumberField(0) userId!: number
-    @StringField('') title!: string
+    public static fields() {
+      return {
+        id: createAttrField(this),
+        userId: createAttrField(this),
+        title: createStringField(this, ''),
+      }
+    }
+
+    declare id: number
+    declare userId: number
+    declare title: string
   }
 
   it('saves a model to the store with "has many" relation', () => {

@@ -1,26 +1,40 @@
 import { assertModels, createStore, fillState } from '@func-test/utils/Helpers'
 
-import { HasMany } from '@/attributes/field-relations'
-import { AttrField, StringField } from '@/attributes/field-types'
+import { createHasManyRelation } from '@/attributes/field-relations'
+import { createAttrField, createStringField } from '@/attributes/field-types'
 import { Model } from '@/index'
 
-describe('feature/relations/lazy_loads/lazy_eager_load', () => {
+describe('feature/relations-non-decorators/lazy_loads/lazy_eager_load', () => {
   class User extends Model {
     static entity = 'users'
 
-    @AttrField() id!: number
-    @StringField('') name!: string
+    public static fields() {
+      return {
+        id: createAttrField(this),
+        name: createStringField(this, ''),
+        posts: createHasManyRelation(this, Post, 'userId'),
+      }
+    }
 
-    @HasMany(() => Post, 'userId')
-    posts!: Post[]
+    declare id: number
+    declare name: string
+    declare posts: Post[]
   }
 
   class Post extends Model {
     static entity = 'posts'
 
-    @AttrField() id!: number
-    @AttrField() userId!: number
-    @StringField('') title!: string
+    public static fields() {
+      return {
+        id: createAttrField(this),
+        userId: createAttrField(this),
+        title: createStringField(this, ''),
+      }
+    }
+
+    declare id: number
+    declare userId: number
+    declare title: string
   }
 
   it('can lazy eager load relations', async () => {

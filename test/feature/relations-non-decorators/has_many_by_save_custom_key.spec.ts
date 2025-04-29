@@ -1,10 +1,10 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
-import { HasManyBy } from '@/attributes/field-relations'
-import { AttrField, StringField } from '@/attributes/field-types'
+import { createHasManyByRelation } from '@/attributes/field-relations'
+import { createAttrField, createStringField } from '@/attributes/field-types'
 import { Model } from '@/index'
 
-describe('feature/relations/has_many_by_save_custom_key', () => {
+describe('feature/relations-non-decorators/has_many_by_save_custom_key', () => {
   beforeEach(() => {
     Model.clearRegistries()
   })
@@ -13,8 +13,15 @@ describe('feature/relations/has_many_by_save_custom_key', () => {
     class Node extends Model {
       static entity = 'nodes'
 
-      @AttrField() id!: number
-      @StringField('') name!: string
+      public static fields() {
+        return {
+          id: createAttrField(this),
+          name: createStringField(this, ''),
+        }
+      }
+
+      declare id: number
+      declare name: string
     }
 
     class Cluster extends Model {
@@ -22,12 +29,19 @@ describe('feature/relations/has_many_by_save_custom_key', () => {
 
       static primaryKey = 'clusterId'
 
-      @AttrField() clusterId!: number
-      @AttrField() nodeIds!: number[]
-      @StringField('') name!: string
+      public static fields() {
+        return {
+          clusterId: createAttrField(this),
+          nodeIds: createAttrField(this),
+          name: createStringField(this, ''),
+          nodes: createHasManyByRelation(this, Node, 'nodeIds'),
+        }
+      }
 
-      @HasManyBy(() => Node, 'nodeIds')
-      nodes!: Node[]
+      declare clusterId: number
+      declare nodeIds: number[]
+      declare name: string
+      declare nodes: Node[]
     }
 
     const store = createStore()
@@ -56,20 +70,35 @@ describe('feature/relations/has_many_by_save_custom_key', () => {
     class Node extends Model {
       static entity = 'nodes'
 
-      @AttrField() id!: number
-      @AttrField() nodeId!: number
-      @StringField('') name!: string
+      public static fields() {
+        return {
+          id: createAttrField(this),
+          nodeId: createAttrField(this),
+          name: createStringField(this, ''),
+        }
+      }
+
+      declare id: number
+      declare nodeId: number
+      declare name: string
     }
 
     class Cluster extends Model {
       static entity = 'clusters'
 
-      @AttrField() id!: number
-      @AttrField() nodeIds!: number[]
-      @StringField('') name!: string
+      public static fields() {
+        return {
+          id: createAttrField(this),
+          nodeIds: createAttrField(this),
+          name: createStringField(this, ''),
+          nodes: createHasManyByRelation(this, Node, 'nodeIds', 'nodeId'),
+        }
+      }
 
-      @HasManyBy(() => Node, 'nodeIds', 'nodeId')
-      nodes!: Node[]
+      declare id: number
+      declare nodeIds: number[]
+      declare name: string
+      declare nodes: Node[]
     }
 
     const store = createStore()

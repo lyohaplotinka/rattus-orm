@@ -2,7 +2,7 @@ import { assertState, createStore } from '@func-test/utils/Helpers'
 
 import User from './_fixtures/circular_relations_user'
 
-describe('feature/relations/mitigations/circular_relations', () => {
+describe('feature/relations-non-decorators/mitigations/circular_relations', () => {
   test('models can have circular relations', () => {
     const store = createStore()
 
