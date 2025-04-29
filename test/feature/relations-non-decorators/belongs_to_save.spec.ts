@@ -10,8 +10,8 @@ describe('feature/relations-non-decorators/belongs_to_save', () => {
 
     public static fields() {
       return {
-        id: createAttrField(this),
-        name: createStringField(this, ''),
+        id: createAttrField(),
+        name: createStringField(''),
       }
     }
 
@@ -25,9 +25,9 @@ describe('feature/relations-non-decorators/belongs_to_save', () => {
 
     public static fields() {
       return {
-        id: createAttrField(this),
-        userId: createAttrField(this),
-        title: createStringField(this, ''),
+        id: createAttrField(),
+        userId: createAttrField(),
+        title: createStringField(''),
         author: createBelongsToRelation(this, User, 'userId'),
       }
     }

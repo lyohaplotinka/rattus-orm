@@ -16,8 +16,8 @@ describe('feature/relations-non-decorators/has_many_by_insert_uid', () => {
 
       public static fields() {
         return {
-          id: createAttrField(this),
-          name: createStringField(this, ''),
+          id: createAttrField(),
+          name: createStringField(''),
         }
       }
 
@@ -30,9 +30,9 @@ describe('feature/relations-non-decorators/has_many_by_insert_uid', () => {
 
       public static fields() {
         return {
-          id: createUidField(this),
-          nodeIds: createAttrField(this),
-          name: createStringField(this, ''),
+          id: createUidField(),
+          nodeIds: createAttrField(),
+          name: createStringField(''),
           nodes: createHasManyByRelation(this, Node, 'nodeIds'),
         }
       }
@@ -73,8 +73,8 @@ describe('feature/relations-non-decorators/has_many_by_insert_uid', () => {
 
       public static fields() {
         return {
-          id: createUidField(this),
-          name: createStringField(this, ''),
+          id: createUidField(),
+          name: createStringField(''),
         }
       }
 
@@ -87,9 +87,9 @@ describe('feature/relations-non-decorators/has_many_by_insert_uid', () => {
 
       public static fields() {
         return {
-          id: createUidField(this),
-          nodeIds: createAttrField(this),
-          name: createStringField(this, ''),
+          id: createUidField(),
+          nodeIds: createAttrField(),
+          name: createStringField(''),
           nodes: createHasManyByRelation(this, Node, 'nodeIds'),
         }
       }

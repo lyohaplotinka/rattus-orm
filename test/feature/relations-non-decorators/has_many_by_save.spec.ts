@@ -10,8 +10,8 @@ describe('feature/relations-non-decorators/has_many_by_save', () => {
 
     public static fields() {
       return {
-        id: createAttrField(this),
-        name: createStringField(this, ''),
+        id: createAttrField(),
+        name: createStringField(''),
       }
     }
 
@@ -24,9 +24,9 @@ describe('feature/relations-non-decorators/has_many_by_save', () => {
 
     public static fields() {
       return {
-        id: createAttrField(this),
-        nodeIds: createAttrField(this),
-        name: createStringField(this, ''),
+        id: createAttrField(),
+        nodeIds: createAttrField(),
+        name: createStringField(''),
         nodes: createHasManyByRelation(this, Node, 'nodeIds'),
       }
     }

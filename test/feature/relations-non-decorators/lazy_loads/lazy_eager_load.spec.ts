@@ -10,8 +10,8 @@ describe('feature/relations-non-decorators/lazy_loads/lazy_eager_load', () => {
 
     public static fields() {
       return {
-        id: createAttrField(this),
-        name: createStringField(this, ''),
+        id: createAttrField(),
+        name: createStringField(''),
         posts: createHasManyRelation(this, Post, 'userId'),
       }
     }
@@ -26,9 +26,9 @@ describe('feature/relations-non-decorators/lazy_loads/lazy_eager_load', () => {
 
     public static fields() {
       return {
-        id: createAttrField(this),
-        userId: createAttrField(this),
-        title: createStringField(this, ''),
+        id: createAttrField(),
+        userId: createAttrField(),
+        title: createStringField(''),
       }
     }
 

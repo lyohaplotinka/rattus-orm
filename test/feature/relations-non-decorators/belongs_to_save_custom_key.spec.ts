@@ -17,8 +17,8 @@ describe('feature/relations-non-decorators/belongs_to_save_custome_key', () => {
 
       public static fields() {
         return {
-          userId: createAttrField(this),
-          name: createStringField(this, ''),
+          userId: createAttrField(),
+          name: createStringField(''),
         }
       }
 
@@ -31,9 +31,9 @@ describe('feature/relations-non-decorators/belongs_to_save_custome_key', () => {
 
       public static fields() {
         return {
-          id: createAttrField(this),
-          userId: createAttrField(this),
-          title: createStringField(this, ''),
+          id: createAttrField(),
+          userId: createAttrField(),
+          title: createStringField(''),
           author: createBelongsToRelation(this, User, 'userId'),
         }
       }
@@ -68,9 +68,9 @@ describe('feature/relations-non-decorators/belongs_to_save_custome_key', () => {
 
       public static fields() {
         return {
-          id: createAttrField(this),
-          userId: createAttrField(this),
-          name: createStringField(this, ''),
+          id: createAttrField(),
+          userId: createAttrField(),
+          name: createStringField(''),
         }
       }
 
@@ -84,9 +84,9 @@ describe('feature/relations-non-decorators/belongs_to_save_custome_key', () => {
 
       public static fields() {
         return {
-          id: createAttrField(this),
-          userId: createAttrField(this),
-          title: createStringField(this, ''),
+          id: createAttrField(),
+          userId: createAttrField(),
+          title: createStringField(''),
           author: createBelongsToRelation(this, User, 'userId', 'userId'),
         }
       }

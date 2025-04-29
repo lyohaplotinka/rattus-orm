@@ -20,8 +20,8 @@ describe('feature/relations-non-decorators/has_many_insert_uid', () => {
 
       public static fields() {
         return {
-          id: createUidField(this),
-          name: createStringField(this, ''),
+          id: createUidField(),
+          name: createStringField(''),
           posts: createHasManyRelation(this, Post, 'userId'),
         }
       }
@@ -36,9 +36,9 @@ describe('feature/relations-non-decorators/has_many_insert_uid', () => {
 
       public static fields() {
         return {
-          id: createAttrField(this),
-          userId: createAttrField(this),
-          title: createStringField(this, ''),
+          id: createAttrField(),
+          userId: createAttrField(),
+          title: createStringField(''),
         }
       }
 
@@ -77,8 +77,8 @@ describe('feature/relations-non-decorators/has_many_insert_uid', () => {
 
       public static fields() {
         return {
-          id: createUidField(this),
-          name: createStringField(this, ''),
+          id: createUidField(),
+          name: createStringField(''),
           posts: createHasManyRelation(this, Post, 'userId'),
         }
       }
@@ -93,9 +93,9 @@ describe('feature/relations-non-decorators/has_many_insert_uid', () => {
 
       public static fields() {
         return {
-          id: createAttrField(this),
-          userId: createUidField(this),
-          title: createStringField(this, ''),
+          id: createAttrField(),
+          userId: createUidField(),
+          title: createStringField(''),
         }
       }
 

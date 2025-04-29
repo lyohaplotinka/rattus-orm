@@ -15,10 +15,10 @@ describe('feature/relations-non-decorators/morph_to_save_custom_key', () => {
 
       public static fields() {
         return {
-          id: createNumberField(this, 0),
-          url: createStringField(this, ''),
-          imageableId: createAttrField(this),
-          imageableType: createAttrField(this),
+          id: createNumberField(0),
+          url: createStringField(''),
+          imageableId: createAttrField(),
+          imageableType: createAttrField(),
           imageable: createMorphToRelation(this, [User], 'imageableId', 'imageableType'),
         }
       }
@@ -37,8 +37,8 @@ describe('feature/relations-non-decorators/morph_to_save_custom_key', () => {
 
       public static fields() {
         return {
-          userId: createNumberField(this, 0),
-          name: createStringField(this, ''),
+          userId: createNumberField(0),
+          name: createStringField(''),
         }
       }
 
@@ -74,10 +74,10 @@ describe('feature/relations-non-decorators/morph_to_save_custom_key', () => {
 
       public static fields() {
         return {
-          id: createNumberField(this, 0),
-          url: createStringField(this, ''),
-          imageableId: createAttrField(this),
-          imageableType: createAttrField(this),
+          id: createNumberField(0),
+          url: createStringField(''),
+          imageableId: createAttrField(),
+          imageableType: createAttrField(),
           imageable: createMorphToRelation(
             this,
             [User],
@@ -100,9 +100,9 @@ describe('feature/relations-non-decorators/morph_to_save_custom_key', () => {
 
       public static fields() {
         return {
-          id: createNumberField(this, 0),
-          imageableId: createAttrField(this),
-          name: createStringField(this, ''),
+          id: createNumberField(0),
+          imageableId: createAttrField(),
+          name: createStringField(''),
         }
       }
 

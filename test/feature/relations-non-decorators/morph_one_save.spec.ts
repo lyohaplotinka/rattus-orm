@@ -10,10 +10,10 @@ describe('feature/relations-non-decorators/morph_one_save', () => {
 
     public static fields() {
       return {
-        id: createAttrField(this),
-        url: createStringField(this, ''),
-        imageableId: createAttrField(this),
-        imageableType: createStringField(this, ''),
+        id: createAttrField(),
+        url: createStringField(''),
+        imageableId: createAttrField(),
+        imageableType: createStringField(''),
       }
     }
 
@@ -28,8 +28,8 @@ describe('feature/relations-non-decorators/morph_one_save', () => {
 
     public static fields() {
       return {
-        id: createAttrField(this),
-        name: createStringField(this, ''),
+        id: createAttrField(),
+        name: createStringField(''),
         image: createMorphOneRelation(this, Image, 'imageableId', 'imageableType'),
       }
     }

@@ -16,8 +16,8 @@ describe('feature/relations-non-decorators/has_one_save_uid', () => {
 
       public static fields() {
         return {
-          id: createUidField(this),
-          name: createStringField(this, ''),
+          id: createUidField(),
+          name: createStringField(''),
           phone: createHasOneRelation(this, Phone, 'userId'),
         }
       }
@@ -32,9 +32,9 @@ describe('feature/relations-non-decorators/has_one_save_uid', () => {
 
       public static fields() {
         return {
-          id: createAttrField(this),
-          userId: createAttrField(this),
-          number: createStringField(this, ''),
+          id: createAttrField(),
+          userId: createAttrField(),
+          number: createStringField(''),
         }
       }
 
@@ -71,8 +71,8 @@ describe('feature/relations-non-decorators/has_one_save_uid', () => {
 
       public static fields() {
         return {
-          id: createUidField(this),
-          name: createStringField(this, ''),
+          id: createUidField(),
+          name: createStringField(''),
           phone: createHasOneRelation(this, Phone, 'userId'),
         }
       }
@@ -87,9 +87,9 @@ describe('feature/relations-non-decorators/has_one_save_uid', () => {
 
       public static fields() {
         return {
-          id: createUidField(this),
-          userId: createUidField(this),
-          number: createStringField(this, ''),
+          id: createUidField(),
+          userId: createUidField(),
+          number: createStringField(''),
         }
       }
 
@@ -125,8 +125,8 @@ describe('feature/relations-non-decorators/has_one_save_uid', () => {
 
       public static fields() {
         return {
-          id: createUidField(this),
-          name: createStringField(this, ''),
+          id: createUidField(),
+          name: createStringField(''),
           phone: createHasOneRelation(this, Phone, 'userId'),
         }
       }
@@ -143,8 +143,8 @@ describe('feature/relations-non-decorators/has_one_save_uid', () => {
 
       public static fields() {
         return {
-          userId: createUidField(this),
-          number: createStringField(this, ''),
+          userId: createUidField(),
+          number: createStringField(''),
         }
       }
 

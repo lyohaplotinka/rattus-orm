@@ -15,8 +15,8 @@ describe('feature/relations-non-decorators/has_many_by_save_custom_key', () => {
 
       public static fields() {
         return {
-          id: createAttrField(this),
-          name: createStringField(this, ''),
+          id: createAttrField(),
+          name: createStringField(''),
         }
       }
 
@@ -31,9 +31,9 @@ describe('feature/relations-non-decorators/has_many_by_save_custom_key', () => {
 
       public static fields() {
         return {
-          clusterId: createAttrField(this),
-          nodeIds: createAttrField(this),
-          name: createStringField(this, ''),
+          clusterId: createAttrField(),
+          nodeIds: createAttrField(),
+          name: createStringField(''),
           nodes: createHasManyByRelation(this, Node, 'nodeIds'),
         }
       }
@@ -72,9 +72,9 @@ describe('feature/relations-non-decorators/has_many_by_save_custom_key', () => {
 
       public static fields() {
         return {
-          id: createAttrField(this),
-          nodeId: createAttrField(this),
-          name: createStringField(this, ''),
+          id: createAttrField(),
+          nodeId: createAttrField(),
+          name: createStringField(''),
         }
       }
 
@@ -88,9 +88,9 @@ describe('feature/relations-non-decorators/has_many_by_save_custom_key', () => {
 
       public static fields() {
         return {
-          id: createAttrField(this),
-          nodeIds: createAttrField(this),
-          name: createStringField(this, ''),
+          id: createAttrField(),
+          nodeIds: createAttrField(),
+          name: createStringField(''),
           nodes: createHasManyByRelation(this, Node, 'nodeIds', 'nodeId'),
         }
       }
