@@ -33,7 +33,7 @@ describe('feature/relations-non-decorators/belongs_to_save_uid', () => {
           id: createUidField(),
           userId: createAttrField(),
           title: createStringField(''),
-          author: createBelongsToRelation(User, 'userId'),
+          author: createBelongsToRelation(() => User, 'userId'),
         }
       }
 
@@ -85,7 +85,7 @@ describe('feature/relations-non-decorators/belongs_to_save_uid', () => {
           id: createUidField(),
           userId: createAttrField(),
           title: createStringField(''),
-          author: createBelongsToRelation(User, 'userId'),
+          author: createBelongsToRelation(() => User, 'userId'),
         }
       }
 

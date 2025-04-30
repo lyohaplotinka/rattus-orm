@@ -1,11 +1,7 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
 import { createHasManyRelation } from '@/attributes/field-relations'
-import {
-  createAttrField,
-  createStringField,
-  createUidField,
-} from '@/attributes/field-types'
+import { createAttrField, createStringField, createUidField } from '@/attributes/field-types'
 import { Model } from '@/index'
 import { mockUid } from '@func-test/utils/mock-uid'
 
@@ -22,7 +18,7 @@ describe('feature/relations-non-decorators/has_many_insert_uid', () => {
         return {
           id: createUidField(),
           name: createStringField(''),
-          posts: createHasManyRelation(this, Post, 'userId'),
+          posts: createHasManyRelation(this, () => Post, 'userId'),
         }
       }
 
@@ -74,12 +70,11 @@ describe('feature/relations-non-decorators/has_many_insert_uid', () => {
     class User extends Model {
       static entity = 'users'
 
-
       public static fields() {
         return {
           id: createUidField(),
           name: createStringField(''),
-          posts: createHasManyRelation(this, Post, 'userId'),
+          posts: createHasManyRelation(this, () => Post, 'userId'),
         }
       }
 
@@ -127,4 +122,3 @@ describe('feature/relations-non-decorators/has_many_insert_uid', () => {
     })
   })
 })
-

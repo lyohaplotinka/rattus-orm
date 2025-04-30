@@ -27,7 +27,7 @@ describe('feature/relations-non-decorators/belongs_to_save', () => {
         id: createAttrField(),
         userId: createAttrField(),
         title: createStringField(''),
-        author: createBelongsToRelation(User, 'userId'),
+        author: createBelongsToRelation(() => User, 'userId'),
       }
     }
 

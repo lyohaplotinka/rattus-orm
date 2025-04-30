@@ -19,7 +19,7 @@ describe('feature/relations-non-decorators/has_many_save_custom_key', () => {
         return {
           userId: createAttrField(),
           name: createStringField(''),
-          posts: createHasManyRelation(this, Post, 'userId'),
+          posts: createHasManyRelation(this, () => Post, 'userId'),
         }
       }
 
@@ -75,7 +75,7 @@ describe('feature/relations-non-decorators/has_many_save_custom_key', () => {
           id: createAttrField(),
           userId: createAttrField(),
           name: createStringField(''),
-          posts: createHasManyRelation(this, Post, 'userId', 'userId'),
+          posts: createHasManyRelation(this, () => Post, 'userId', 'userId'),
         }
       }
 

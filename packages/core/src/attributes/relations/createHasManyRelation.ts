@@ -4,11 +4,17 @@ import { HasMany } from './classes/has-many'
 
 export const createHasManyRelation = (
   modelConstructor: ModelConstructor<any>,
-  related: ModelConstructor<any>,
+  related: () => ModelConstructor<any>,
   foreignKey: string,
   localKey?: string,
 ) => {
-  const model = modelConstructor.newRawInstance()
-
-  return new HasMany(model, related.newRawInstance(), foreignKey, localKey ?? model.$getLocalKey())
+  return () => {
+    const model = modelConstructor.newRawInstance()
+    return new HasMany(
+      model,
+      related().newRawInstance(),
+      foreignKey,
+      localKey ?? model.$getLocalKey(),
+    )
+  }
 }

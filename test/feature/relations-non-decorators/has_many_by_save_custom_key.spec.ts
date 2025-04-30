@@ -34,7 +34,7 @@ describe('feature/relations-non-decorators/has_many_by_save_custom_key', () => {
           clusterId: createAttrField(),
           nodeIds: createAttrField(),
           name: createStringField(''),
-          nodes: createHasManyByRelation(Node, 'nodeIds'),
+          nodes: createHasManyByRelation(() => Node, 'nodeIds'),
         }
       }
 
@@ -91,7 +91,7 @@ describe('feature/relations-non-decorators/has_many_by_save_custom_key', () => {
           id: createAttrField(),
           nodeIds: createAttrField(),
           name: createStringField(''),
-          nodes: createHasManyByRelation(Node, 'nodeIds', 'nodeId'),
+          nodes: createHasManyByRelation(() => Node, 'nodeIds', 'nodeId'),
         }
       }
 
