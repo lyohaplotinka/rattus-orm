@@ -12,7 +12,6 @@ export function HasOne(
 ): PropertyDecorator {
   return (target, propertyKey) => {
     const self = target.$self()
-
-    self.setRegistry(propertyKey, () => createHasOneRelation(self, related(), foreignKey, localKey))
+    self.setRegistry(propertyKey, createHasOneRelation(related, foreignKey, localKey))
   }
 }

@@ -19,7 +19,7 @@ describe('feature/relations-non-decorators/has_one_save_custom_key', () => {
         return {
           userId: createAttrField(),
           name: createStringField(''),
-          phone: createHasOneRelation(this, Phone, 'userId'),
+          phone: createHasOneRelation(() => Phone, 'userId'),
         }
       }
 
@@ -74,7 +74,7 @@ describe('feature/relations-non-decorators/has_one_save_custom_key', () => {
           id: createAttrField(),
           userId: createAttrField(),
           name: createStringField(''),
-          phone: createHasOneRelation(this, Phone, 'userId', 'userId'),
+          phone: createHasOneRelation(() => Phone, 'userId', 'userId'),
         }
       }
 

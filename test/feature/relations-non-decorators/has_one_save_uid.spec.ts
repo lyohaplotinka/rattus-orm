@@ -18,7 +18,7 @@ describe('feature/relations-non-decorators/has_one_save_uid', () => {
         return {
           id: createUidField(),
           name: createStringField(''),
-          phone: createHasOneRelation(this, Phone, 'userId'),
+          phone: createHasOneRelation(() => Phone, 'userId'),
         }
       }
 
@@ -73,7 +73,7 @@ describe('feature/relations-non-decorators/has_one_save_uid', () => {
         return {
           id: createUidField(),
           name: createStringField(''),
-          phone: createHasOneRelation(this, Phone, 'userId'),
+          phone: createHasOneRelation(() => Phone, 'userId'),
         }
       }
 
@@ -127,7 +127,7 @@ describe('feature/relations-non-decorators/has_one_save_uid', () => {
         return {
           id: createUidField(),
           name: createStringField(''),
-          phone: createHasOneRelation(this, Phone, 'userId'),
+          phone: createHasOneRelation(() => Phone, 'userId'),
         }
       }
 

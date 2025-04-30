@@ -12,7 +12,7 @@ describe('feature/relations-non-decorators/has_one_retrieve', () => {
       return {
         id: createAttrField(),
         name: createStringField(''),
-        phone: createHasOneRelation(this, Phone, 'userId'),
+        phone: createHasOneRelation(() => Phone, 'userId'),
       }
     }
 
