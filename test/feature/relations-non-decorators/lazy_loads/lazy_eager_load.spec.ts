@@ -12,7 +12,7 @@ describe('feature/relations-non-decorators/lazy_loads/lazy_eager_load', () => {
       return {
         id: createAttrField(),
         name: createStringField(''),
-        posts: createHasManyRelation(this, Post, 'userId'),
+        posts: createHasManyRelation(() => Post, 'userId'),
       }
     }
 

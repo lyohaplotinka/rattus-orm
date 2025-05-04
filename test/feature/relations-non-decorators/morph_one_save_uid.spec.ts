@@ -36,7 +36,7 @@ describe('feature/relations-non-decorators/morph_one_save_uid', () => {
         return {
           id: createUidField(),
           name: createStringField(''),
-          image: createMorphOneRelation(Image, 'imageableId', 'imageableType'),
+          image: createMorphOneRelation(() => Image, 'imageableId', 'imageableType'),
         }
       }
 
@@ -99,7 +99,7 @@ describe('feature/relations-non-decorators/morph_one_save_uid', () => {
         return {
           id: createUidField(),
           name: createStringField(''),
-          image: createMorphOneRelation(Image, 'imageableId', 'imageableType'),
+          image: createMorphOneRelation(() => Image, 'imageableId', 'imageableType'),
         }
       }
 
@@ -159,7 +159,7 @@ describe('feature/relations-non-decorators/morph_one_save_uid', () => {
         return {
           id: createUidField(),
           name: createStringField(''),
-          image: createMorphOneRelation(Image, 'imageableId', 'imageableType'),
+          image: createMorphOneRelation(() => Image, 'imageableId', 'imageableType'),
         }
       }
 

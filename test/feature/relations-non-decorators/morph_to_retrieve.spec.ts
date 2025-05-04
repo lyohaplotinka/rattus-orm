@@ -15,7 +15,7 @@ describe('feature/relations-non-decorators/morph_to_retrieve', () => {
         url: createStringField(''),
         imageableId: createAttrField(),
         imageableType: createAttrField(),
-        imageable: createMorphToRelation(this, [User, Post], 'imageableId', 'imageableType'),
+        imageable: createMorphToRelation(() => [User, Post], 'imageableId', 'imageableType'),
       }
     }
 

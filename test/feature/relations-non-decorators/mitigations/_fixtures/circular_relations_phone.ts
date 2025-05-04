@@ -11,7 +11,7 @@ export default class Phone extends Model {
     return {
       id: createAttrField(),
       userId: createAttrField(),
-      author: createBelongsToRelation(this, User, 'userId'),
+      author: createBelongsToRelation(() => User, 'userId'),
     }
   }
 

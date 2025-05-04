@@ -27,8 +27,8 @@ describe('feature/relations-non-decorators/eager_loads_all', () => {
         id: createAttrField(),
         userId: createAttrField(),
         title: createStringField(''),
-        author: createBelongsToRelation(this, User, 'userId'),
-        comments: createHasManyRelation(this, Comment, 'postId'),
+        author: createBelongsToRelation(() => User, 'userId'),
+        comments: createHasManyRelation(() => Comment, 'postId'),
       }
     }
 

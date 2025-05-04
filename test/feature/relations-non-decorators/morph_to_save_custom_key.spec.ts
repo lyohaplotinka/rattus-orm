@@ -19,7 +19,7 @@ describe('feature/relations-non-decorators/morph_to_save_custom_key', () => {
           url: createStringField(''),
           imageableId: createAttrField(),
           imageableType: createAttrField(),
-          imageable: createMorphToRelation(this, [User], 'imageableId', 'imageableType'),
+          imageable: createMorphToRelation(() => [User], 'imageableId', 'imageableType'),
         }
       }
 
@@ -79,8 +79,7 @@ describe('feature/relations-non-decorators/morph_to_save_custom_key', () => {
           imageableId: createAttrField(),
           imageableType: createAttrField(),
           imageable: createMorphToRelation(
-            this,
-            [User],
+            () => [User],
             'imageableId',
             'imageableType',
             'imageableId',

@@ -13,7 +13,7 @@ describe('feature/relations-non-decorators/constraints/constraints', () => {
       return {
         id: createAttrField(),
         name: createStringField(''),
-        phone: createHasOneRelation(this, Phone, 'userId'),
+        phone: createHasOneRelation(() => Phone, 'userId'),
       }
     }
 
@@ -30,7 +30,7 @@ describe('feature/relations-non-decorators/constraints/constraints', () => {
         id: createAttrField(),
         userId: createAttrField(),
         number: createStringField(''),
-        type: createHasOneRelation(this, Type, 'phoneId'),
+        type: createHasOneRelation(() => Type, 'phoneId'),
       }
     }
 

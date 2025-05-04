@@ -18,7 +18,7 @@ describe('feature/relations-non-decorators/has_many_insert_uid', () => {
         return {
           id: createUidField(),
           name: createStringField(''),
-          posts: createHasManyRelation(this, () => Post, 'userId'),
+          posts: createHasManyRelation(() => Post, 'userId'),
         }
       }
 
@@ -74,7 +74,7 @@ describe('feature/relations-non-decorators/has_many_insert_uid', () => {
         return {
           id: createUidField(),
           name: createStringField(''),
-          posts: createHasManyRelation(this, () => Post, 'userId'),
+          posts: createHasManyRelation(() => Post, 'userId'),
         }
       }
 

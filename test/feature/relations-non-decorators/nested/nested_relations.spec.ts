@@ -12,7 +12,7 @@ describe('feature/relations-non-decorators/nested/nested_relations', () => {
       return {
         id: createAttrField(),
         name: createStringField(''),
-        followers: createHasManyRelation(this, Follower, 'userId'),
+        followers: createHasManyRelation(() => Follower, 'userId'),
       }
     }
 
@@ -43,7 +43,7 @@ describe('feature/relations-non-decorators/nested/nested_relations', () => {
         id: createAttrField(),
         userId: createAttrField(),
         title: createStringField(''),
-        author: createBelongsToRelation(this, User, 'userId'),
+        author: createBelongsToRelation(() => User, 'userId'),
       }
     }
 

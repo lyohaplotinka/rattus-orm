@@ -11,7 +11,7 @@ describe('feature/relations-non-decorators/nested/nested_revive', () => {
     public static fields() {
       return {
         id: createAttrField(),
-        posts: createHasManyRelation(this, Post, 'userId'),
+        posts: createHasManyRelation(() => Post, 'userId'),
       }
     }
 
@@ -26,8 +26,8 @@ describe('feature/relations-non-decorators/nested/nested_revive', () => {
       return {
         id: createAttrField(),
         userId: createAttrField(),
-        author: createBelongsToRelation(this, User, 'userId'),
-        comments: createHasManyRelation(this, Comment, 'postId'),
+        author: createBelongsToRelation(() => User, 'userId'),
+        comments: createHasManyRelation(() => Comment, 'postId'),
       }
     }
 
@@ -45,7 +45,7 @@ describe('feature/relations-non-decorators/nested/nested_revive', () => {
         id: createAttrField(),
         postId: createAttrField(),
         userId: createAttrField(),
-        author: createBelongsToRelation(this, User, 'userId'),
+        author: createBelongsToRelation(() => User, 'userId'),
       }
     }
 

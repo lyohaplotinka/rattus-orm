@@ -12,7 +12,7 @@ describe('feature/relations-non-decorators/has_many_save', () => {
       return {
         id: createAttrField(),
         name: createStringField(''),
-        posts: createHasManyRelation(this, () => Post, 'userId'),
+        posts: createHasManyRelation(() => Post, 'userId'),
       }
     }
 

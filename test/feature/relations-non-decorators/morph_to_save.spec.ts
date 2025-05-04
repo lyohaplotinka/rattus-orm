@@ -14,7 +14,7 @@ describe('feature/relations-non-decorators/morph_to_save', () => {
         url: createStringField(''),
         imageableId: createAttrField(),
         imageableType: createAttrField(),
-        imageable: createMorphToRelation(this, [User], 'imageableId', 'imageableType'),
+        imageable: createMorphToRelation(() => [User], 'imageableId', 'imageableType'),
       }
     }
 
