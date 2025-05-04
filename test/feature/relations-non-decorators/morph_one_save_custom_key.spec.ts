@@ -37,7 +37,7 @@ describe('feature/relations-non-decorators/morph_one_save_custom_key', () => {
         return {
           userId: createStringField(''),
           name: createStringField(''),
-          image: createMorphOneRelation(this, Image, 'imageableId', 'imageableType'),
+          image: createMorphOneRelation(Image, 'imageableId', 'imageableType'),
         }
       }
 
@@ -100,7 +100,7 @@ describe('feature/relations-non-decorators/morph_one_save_custom_key', () => {
           id: createNumberField(0),
           userId: createStringField(''),
           name: createStringField(''),
-          image: createMorphOneRelation(this, Image, 'imageableId', 'imageableType', 'userId'),
+          image: createMorphOneRelation(Image, 'imageableId', 'imageableType', 'userId'),
         }
       }
 

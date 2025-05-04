@@ -13,7 +13,6 @@ export function MorphOne(
 ): PropertyDecorator {
   return (target, propertyKey) => {
     const self = target.$self()
-
-    self.setRegistry(propertyKey, () => createMorphOneRelation(self, related(), id, type, localKey))
+    self.setRegistry(propertyKey, createMorphOneRelation(related(), id, type, localKey))
   }
 }

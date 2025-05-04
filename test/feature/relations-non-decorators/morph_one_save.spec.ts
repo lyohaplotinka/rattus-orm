@@ -30,7 +30,7 @@ describe('feature/relations-non-decorators/morph_one_save', () => {
       return {
         id: createAttrField(),
         name: createStringField(''),
-        image: createMorphOneRelation(this, Image, 'imageableId', 'imageableType'),
+        image: createMorphOneRelation(Image, 'imageableId', 'imageableType'),
       }
     }
 
