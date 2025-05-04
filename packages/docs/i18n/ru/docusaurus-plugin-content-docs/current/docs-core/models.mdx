@@ -51,9 +51,9 @@ TypeScript и декораторами.
 
             static fields () {
                 return {
-                    id: createUidField(this),
-                    name: createStringField(this, ''),
-                    age: createNumberField(this, 0)
+                    id: createUidField(),
+                    name: createStringField(''),
+                    age: createNumberField(0)
                 }
             }
         }
