@@ -17,9 +17,9 @@ describe('feature/relations-non-decorators/has_many_save_custom_key', () => {
 
       public static fields() {
         return {
-          userId: createAttrField(this),
-          name: createStringField(this, ''),
-          posts: createHasManyRelation(this, Post, 'userId'),
+          userId: createAttrField(),
+          name: createStringField(''),
+          posts: createHasManyRelation(() => Post, 'userId'),
         }
       }
 
@@ -33,9 +33,9 @@ describe('feature/relations-non-decorators/has_many_save_custom_key', () => {
 
       public static fields() {
         return {
-          id: createAttrField(this),
-          userId: createAttrField(this),
-          title: createStringField(this, ''),
+          id: createAttrField(),
+          userId: createAttrField(),
+          title: createStringField(''),
         }
       }
 
@@ -72,10 +72,10 @@ describe('feature/relations-non-decorators/has_many_save_custom_key', () => {
 
       public static fields() {
         return {
-          id: createAttrField(this),
-          userId: createAttrField(this),
-          name: createStringField(this, ''),
-          posts: createHasManyRelation(this, Post, 'userId', 'userId'),
+          id: createAttrField(),
+          userId: createAttrField(),
+          name: createStringField(''),
+          posts: createHasManyRelation(() => Post, 'userId', 'userId'),
         }
       }
 
@@ -90,9 +90,9 @@ describe('feature/relations-non-decorators/has_many_save_custom_key', () => {
 
       public static fields() {
         return {
-          id: createAttrField(this),
-          userId: createAttrField(this),
-          title: createStringField(this, ''),
+          id: createAttrField(),
+          userId: createAttrField(),
+          title: createStringField(''),
         }
       }
 

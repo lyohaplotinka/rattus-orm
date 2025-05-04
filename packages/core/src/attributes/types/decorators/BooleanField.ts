@@ -8,13 +8,6 @@ export function BooleanField(value: boolean | null, options: TypeOptions = {}): 
   return (target, propertyKey) => {
     const self = target.$self()
 
-    self.setRegistry(propertyKey, () => {
-      const attr = createBooleanField(self, value)
-      if (options.nullable) {
-        attr.nullable()
-      }
-
-      return attr
-    })
+    self.setRegistry(propertyKey, createBooleanField(value, options.nullable))
   }
 }

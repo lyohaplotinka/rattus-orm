@@ -10,8 +10,8 @@ describe('feature/relations-non-decorators/has_many_by_retrieve', () => {
 
     public static fields() {
       return {
-        id: createAttrField(this),
-        name: createStringField(this, ''),
+        id: createAttrField(),
+        name: createStringField(''),
       }
     }
 
@@ -24,10 +24,10 @@ describe('feature/relations-non-decorators/has_many_by_retrieve', () => {
 
     public static fields() {
       return {
-        id: createAttrField(this),
-        nodeIds: createAttrField(this),
-        name: createStringField(this, ''),
-        nodes: createHasManyByRelation(this, Node, 'nodeIds'),
+        id: createAttrField(),
+        nodeIds: createAttrField(),
+        name: createStringField(''),
+        nodes: createHasManyByRelation(() => Node, 'nodeIds'),
       }
     }
 

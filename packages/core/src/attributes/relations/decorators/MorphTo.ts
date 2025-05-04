@@ -13,7 +13,6 @@ export function MorphTo(
 ): PropertyDecorator {
   return (target, propertyKey) => {
     const self = target.$self()
-
-    self.setRegistry(propertyKey, () => createMorphToRelation(self, related(), id, type, ownerKey))
+    self.setRegistry(propertyKey, createMorphToRelation(related, id, type, ownerKey))
   }
 }

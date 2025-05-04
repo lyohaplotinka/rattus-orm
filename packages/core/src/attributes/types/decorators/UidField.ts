@@ -8,6 +8,6 @@ export function UidField(): PropertyDecorator {
   return (target, propertyKey) => {
     const self = target.$self()
 
-    self.setRegistry(propertyKey, () => createUidField(self))
+    self.setRegistry(propertyKey, createUidField())
   }
 }

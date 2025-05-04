@@ -8,14 +8,6 @@ export function NumberField(value: number | null, options: TypeOptions = {}): Pr
   return (target, propertyKey) => {
     const self = target.$self()
 
-    self.setRegistry(propertyKey, () => {
-      const attr = createNumberField(self, value)
-
-      if (options.nullable) {
-        attr.nullable()
-      }
-
-      return attr
-    })
+    self.setRegistry(propertyKey, createNumberField(value, options.nullable))
   }
 }

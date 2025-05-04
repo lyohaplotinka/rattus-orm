@@ -15,10 +15,10 @@ describe('feature/relations-non-decorators/morph_one_save_custom_key', () => {
 
       static fields() {
         return {
-          id: createNumberField(this, 0),
-          url: createStringField(this, ''),
-          imageableId: createStringField(this, ''),
-          imageableType: createStringField(this, ''),
+          id: createNumberField(0),
+          url: createStringField(''),
+          imageableId: createStringField(''),
+          imageableType: createStringField(''),
         }
       }
 
@@ -35,9 +35,9 @@ describe('feature/relations-non-decorators/morph_one_save_custom_key', () => {
 
       static fields() {
         return {
-          userId: createStringField(this, ''),
-          name: createStringField(this, ''),
-          image: createMorphOneRelation(this, Image, 'imageableId', 'imageableType'),
+          userId: createStringField(''),
+          name: createStringField(''),
+          image: createMorphOneRelation(() => Image, 'imageableId', 'imageableType'),
         }
       }
 
@@ -79,10 +79,10 @@ describe('feature/relations-non-decorators/morph_one_save_custom_key', () => {
 
       static fields() {
         return {
-          id: createNumberField(this, 0),
-          url: createStringField(this, ''),
-          imageableId: createStringField(this, ''),
-          imageableType: createStringField(this, ''),
+          id: createNumberField(0),
+          url: createStringField(''),
+          imageableId: createStringField(''),
+          imageableType: createStringField(''),
         }
       }
 
@@ -97,10 +97,10 @@ describe('feature/relations-non-decorators/morph_one_save_custom_key', () => {
 
       static fields() {
         return {
-          id: createNumberField(this, 0),
-          userId: createStringField(this, ''),
-          name: createStringField(this, ''),
-          image: createMorphOneRelation(this, Image, 'imageableId', 'imageableType', 'userId'),
+          id: createNumberField(0),
+          userId: createStringField(''),
+          name: createStringField(''),
+          image: createMorphOneRelation(() => Image, 'imageableId', 'imageableType', 'userId'),
         }
       }
 

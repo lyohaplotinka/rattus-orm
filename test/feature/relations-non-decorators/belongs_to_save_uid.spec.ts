@@ -9,7 +9,6 @@ describe('feature/relations-non-decorators/belongs_to_save_uid', () => {
   beforeEach(() => {
     Model.clearRegistries()
   })
-  
 
   it('inserts "belongs to" relation with parent having "uid" field as the primary key', () => {
     class User extends Model {
@@ -17,8 +16,8 @@ describe('feature/relations-non-decorators/belongs_to_save_uid', () => {
 
       public static fields() {
         return {
-          id: createAttrField(this),
-          name: createStringField(this, ''),
+          id: createAttrField(),
+          name: createStringField(''),
         }
       }
 
@@ -31,10 +30,10 @@ describe('feature/relations-non-decorators/belongs_to_save_uid', () => {
 
       public static fields() {
         return {
-          id: createUidField(this),
-          userId: createAttrField(this),
-          title: createStringField(this, ''),
-          author: createBelongsToRelation(this, User, 'userId'),
+          id: createUidField(),
+          userId: createAttrField(),
+          title: createStringField(''),
+          author: createBelongsToRelation(() => User, 'userId'),
         }
       }
 
@@ -69,8 +68,8 @@ describe('feature/relations-non-decorators/belongs_to_save_uid', () => {
 
       public static fields() {
         return {
-          id: createUidField(this),
-          name: createStringField(this, ''),
+          id: createUidField(),
+          name: createStringField(''),
         }
       }
 
@@ -83,10 +82,10 @@ describe('feature/relations-non-decorators/belongs_to_save_uid', () => {
 
       public static fields() {
         return {
-          id: createUidField(this),
-          userId: createAttrField(this),
-          title: createStringField(this, ''),
-          author: createBelongsToRelation(this, User, 'userId'),
+          id: createUidField(),
+          userId: createAttrField(),
+          title: createStringField(''),
+          author: createBelongsToRelation(() => User, 'userId'),
         }
       }
 

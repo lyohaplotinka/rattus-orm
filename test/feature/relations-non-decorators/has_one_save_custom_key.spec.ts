@@ -17,9 +17,9 @@ describe('feature/relations-non-decorators/has_one_save_custom_key', () => {
 
       public static fields() {
         return {
-          userId: createAttrField(this),
-          name: createStringField(this, ''),
-          phone: createHasOneRelation(this, Phone, 'userId'),
+          userId: createAttrField(),
+          name: createStringField(''),
+          phone: createHasOneRelation(() => Phone, 'userId'),
         }
       }
 
@@ -33,9 +33,9 @@ describe('feature/relations-non-decorators/has_one_save_custom_key', () => {
 
       public static fields() {
         return {
-          id: createAttrField(this),
-          userId: createAttrField(this),
-          number: createStringField(this, ''),
+          id: createAttrField(),
+          userId: createAttrField(),
+          number: createStringField(''),
         }
       }
 
@@ -71,10 +71,10 @@ describe('feature/relations-non-decorators/has_one_save_custom_key', () => {
 
       public static fields() {
         return {
-          id: createAttrField(this),
-          userId: createAttrField(this),
-          name: createStringField(this, ''),
-          phone: createHasOneRelation(this, Phone, 'userId', 'userId'),
+          id: createAttrField(),
+          userId: createAttrField(),
+          name: createStringField(''),
+          phone: createHasOneRelation(() => Phone, 'userId', 'userId'),
         }
       }
 
@@ -89,9 +89,9 @@ describe('feature/relations-non-decorators/has_one_save_custom_key', () => {
 
       public static fields() {
         return {
-          id: createAttrField(this),
-          userId: createAttrField(this),
-          number: createStringField(this, ''),
+          id: createAttrField(),
+          userId: createAttrField(),
+          number: createStringField(''),
         }
       }
 

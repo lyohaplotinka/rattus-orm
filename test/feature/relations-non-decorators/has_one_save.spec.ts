@@ -10,9 +10,9 @@ describe('feature/relations-non-decorators/has_one_save', () => {
 
     public static fields() {
       return {
-        id: createAttrField(this),
-        name: createStringField(this, ''),
-        phone: createHasOneRelation(this, Phone, 'userId'),
+        id: createAttrField(),
+        name: createStringField(''),
+        phone: createHasOneRelation(() => Phone, 'userId'),
       }
     }
 
@@ -26,9 +26,9 @@ describe('feature/relations-non-decorators/has_one_save', () => {
 
     public static fields() {
       return {
-        id: createAttrField(this),
-        userId: createAttrField(this),
-        number: createStringField(this, ''),
+        id: createAttrField(),
+        userId: createAttrField(),
+        number: createStringField(''),
       }
     }
 

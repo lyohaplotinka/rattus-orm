@@ -10,9 +10,9 @@ describe('feature/relations-non-decorators/has_many_retrieve', () => {
 
     public static fields() {
       return {
-        id: createAttrField(this),
-        name: createStringField(this, ''),
-        posts: createHasManyRelation(this, Post, 'userId'),
+        id: createAttrField(),
+        name: createStringField(''),
+        posts: createHasManyRelation(() => Post, 'userId'),
       }
     }
 
@@ -26,9 +26,9 @@ describe('feature/relations-non-decorators/has_many_retrieve', () => {
 
     public static fields() {
       return {
-        id: createAttrField(this),
-        userId: createAttrField(this),
-        title: createStringField(this, ''),
+        id: createAttrField(),
+        userId: createAttrField(),
+        title: createStringField(''),
       }
     }
 

@@ -10,8 +10,8 @@ describe('feature/relations-non-decorators/eager_loads_all', () => {
 
     public static fields() {
       return {
-        id: createAttrField(this),
-        name: createStringField(this, ''),
+        id: createAttrField(),
+        name: createStringField(''),
       }
     }
 
@@ -24,11 +24,11 @@ describe('feature/relations-non-decorators/eager_loads_all', () => {
 
     public static fields() {
       return {
-        id: createAttrField(this),
-        userId: createAttrField(this),
-        title: createStringField(this, ''),
-        author: createBelongsToRelation(this, User, 'userId'),
-        comments: createHasManyRelation(this, Comment, 'postId'),
+        id: createAttrField(),
+        userId: createAttrField(),
+        title: createStringField(''),
+        author: createBelongsToRelation(() => User, 'userId'),
+        comments: createHasManyRelation(() => Comment, 'postId'),
       }
     }
 
@@ -44,9 +44,9 @@ describe('feature/relations-non-decorators/eager_loads_all', () => {
 
     public static fields() {
       return {
-        id: createAttrField(this),
-        postId: createAttrField(this),
-        content: createStringField(this, ''),
+        id: createAttrField(),
+        postId: createAttrField(),
+        content: createStringField(''),
       }
     }
 

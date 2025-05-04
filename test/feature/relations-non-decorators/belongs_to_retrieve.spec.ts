@@ -7,11 +7,11 @@ import { Model } from '@/index'
 describe('feature/relations-non-decorators/belongs_to_retrieve', () => {
   class User extends Model {
     static entity = 'users'
-    
+
     public static fields() {
       return {
-        id: createAttrField(this),
-        name: createStringField(this, '')
+        id: createAttrField(),
+        name: createStringField(''),
       }
     }
   }
@@ -19,13 +19,12 @@ describe('feature/relations-non-decorators/belongs_to_retrieve', () => {
   class Post extends Model {
     static entity = 'posts'
 
-
     public static fields() {
       return {
-        id: createAttrField(this),
-        userId: createAttrField(this),
-        title: createStringField(this, ''),
-        author: createBelongsToRelation(this, User, 'userId'),
+        id: createAttrField(),
+        userId: createAttrField(),
+        title: createStringField(''),
+        author: createBelongsToRelation(() => User, 'userId'),
       }
     }
 

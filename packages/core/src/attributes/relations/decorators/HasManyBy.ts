@@ -12,9 +12,6 @@ export function HasManyBy(
 ): PropertyDecorator {
   return (target, propertyKey) => {
     const self = target.$self()
-
-    self.setRegistry(propertyKey, () =>
-      createHasManyByRelation(self, related(), foreignKey, ownerKey),
-    )
+    self.setRegistry(propertyKey, createHasManyByRelation(related, foreignKey, ownerKey))
   }
 }

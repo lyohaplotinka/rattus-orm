@@ -8,14 +8,6 @@ export function StringField(value: string | null, options: TypeOptions = {}): Pr
   return (target, propertyKey) => {
     const self = target.$self()
 
-    self.setRegistry(propertyKey, () => {
-      const attr = createStringField(self, value)
-
-      if (options.nullable) {
-        attr.nullable()
-      }
-
-      return attr
-    })
+    self.setRegistry(propertyKey, createStringField(value, options.nullable))
   }
 }

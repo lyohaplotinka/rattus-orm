@@ -9,8 +9,8 @@ export default class User extends Model {
 
   public static fields() {
     return {
-      id: createAttrField(this),
-      phone: createHasOneRelation(this, Phone, 'userId'),
+      id: createAttrField(),
+      phone: createHasOneRelation(() => Phone, 'userId'),
     }
   }
 

@@ -1,11 +1,7 @@
 import { assertState, createStore } from '@func-test/utils/Helpers'
 
 import { createHasManyRelation } from '@/attributes/field-relations'
-import {
-  createAttrField,
-  createStringField,
-  createUidField,
-} from '@/attributes/field-types'
+import { createAttrField, createStringField, createUidField } from '@/attributes/field-types'
 import { Model } from '@/index'
 import { mockUid } from '@func-test/utils/mock-uid'
 
@@ -20,9 +16,9 @@ describe('feature/relations-non-decorators/has_many_insert_uid', () => {
 
       public static fields() {
         return {
-          id: createUidField(this),
-          name: createStringField(this, ''),
-          posts: createHasManyRelation(this, Post, 'userId'),
+          id: createUidField(),
+          name: createStringField(''),
+          posts: createHasManyRelation(() => Post, 'userId'),
         }
       }
 
@@ -36,9 +32,9 @@ describe('feature/relations-non-decorators/has_many_insert_uid', () => {
 
       public static fields() {
         return {
-          id: createAttrField(this),
-          userId: createAttrField(this),
-          title: createStringField(this, ''),
+          id: createAttrField(),
+          userId: createAttrField(),
+          title: createStringField(''),
         }
       }
 
@@ -74,12 +70,11 @@ describe('feature/relations-non-decorators/has_many_insert_uid', () => {
     class User extends Model {
       static entity = 'users'
 
-
       public static fields() {
         return {
-          id: createUidField(this),
-          name: createStringField(this, ''),
-          posts: createHasManyRelation(this, Post, 'userId'),
+          id: createUidField(),
+          name: createStringField(''),
+          posts: createHasManyRelation(() => Post, 'userId'),
         }
       }
 
@@ -93,9 +88,9 @@ describe('feature/relations-non-decorators/has_many_insert_uid', () => {
 
       public static fields() {
         return {
-          id: createAttrField(this),
-          userId: createUidField(this),
-          title: createStringField(this, ''),
+          id: createAttrField(),
+          userId: createUidField(),
+          title: createStringField(''),
         }
       }
 
@@ -127,4 +122,3 @@ describe('feature/relations-non-decorators/has_many_insert_uid', () => {
     })
   })
 })
-

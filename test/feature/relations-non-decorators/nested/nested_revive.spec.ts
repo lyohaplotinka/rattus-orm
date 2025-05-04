@@ -10,8 +10,8 @@ describe('feature/relations-non-decorators/nested/nested_revive', () => {
 
     public static fields() {
       return {
-        id: createAttrField(this),
-        posts: createHasManyRelation(this, Post, 'userId'),
+        id: createAttrField(),
+        posts: createHasManyRelation(() => Post, 'userId'),
       }
     }
 
@@ -24,10 +24,10 @@ describe('feature/relations-non-decorators/nested/nested_revive', () => {
 
     public static fields() {
       return {
-        id: createAttrField(this),
-        userId: createAttrField(this),
-        author: createBelongsToRelation(this, User, 'userId'),
-        comments: createHasManyRelation(this, Comment, 'postId'),
+        id: createAttrField(),
+        userId: createAttrField(),
+        author: createBelongsToRelation(() => User, 'userId'),
+        comments: createHasManyRelation(() => Comment, 'postId'),
       }
     }
 
@@ -42,10 +42,10 @@ describe('feature/relations-non-decorators/nested/nested_revive', () => {
 
     public static fields() {
       return {
-        id: createAttrField(this),
-        postId: createAttrField(this),
-        userId: createAttrField(this),
-        author: createBelongsToRelation(this, User, 'userId'),
+        id: createAttrField(),
+        postId: createAttrField(),
+        userId: createAttrField(),
+        author: createBelongsToRelation(() => User, 'userId'),
       }
     }
 

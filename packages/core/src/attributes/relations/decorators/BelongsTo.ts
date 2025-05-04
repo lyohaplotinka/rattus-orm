@@ -12,9 +12,6 @@ export function BelongsTo(
 ): PropertyDecorator {
   return (target, propertyKey) => {
     const self = target.$self()
-
-    self.setRegistry(propertyKey, () =>
-      createBelongsToRelation(self, related(), foreignKey, ownerKey),
-    )
+    self.setRegistry(propertyKey, createBelongsToRelation(related, foreignKey, ownerKey))
   }
 }

@@ -10,11 +10,11 @@ describe('feature/relations-non-decorators/morph_to_save', () => {
 
     public static fields() {
       return {
-        id: createNumberField(this, 0),
-        url: createStringField(this, ''),
-        imageableId: createAttrField(this),
-        imageableType: createAttrField(this),
-        imageable: createMorphToRelation(this, [User], 'imageableId', 'imageableType'),
+        id: createNumberField(0),
+        url: createStringField(''),
+        imageableId: createAttrField(),
+        imageableType: createAttrField(),
+        imageable: createMorphToRelation(() => [User], 'imageableId', 'imageableType'),
       }
     }
 
@@ -30,8 +30,8 @@ describe('feature/relations-non-decorators/morph_to_save', () => {
 
     public static fields() {
       return {
-        id: createNumberField(this, 0),
-        name: createStringField(this, ''),
+        id: createNumberField(0),
+        name: createStringField(''),
       }
     }
 

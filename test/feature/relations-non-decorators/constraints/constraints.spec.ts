@@ -11,9 +11,9 @@ describe('feature/relations-non-decorators/constraints/constraints', () => {
 
     static fields() {
       return {
-        id: createAttrField(this),
-        name: createStringField(this, ''),
-        phone: createHasOneRelation(this, Phone, 'userId'),
+        id: createAttrField(),
+        name: createStringField(''),
+        phone: createHasOneRelation(() => Phone, 'userId'),
       }
     }
 
@@ -27,10 +27,10 @@ describe('feature/relations-non-decorators/constraints/constraints', () => {
 
     static fields() {
       return {
-        id: createAttrField(this),
-        userId: createAttrField(this),
-        number: createStringField(this, ''),
-        type: createHasOneRelation(this, Type, 'phoneId'),
+        id: createAttrField(),
+        userId: createAttrField(),
+        number: createStringField(''),
+        type: createHasOneRelation(() => Type, 'phoneId'),
       }
     }
 
@@ -45,9 +45,9 @@ describe('feature/relations-non-decorators/constraints/constraints', () => {
 
     static fields() {
       return {
-        id: createAttrField(this),
-        phoneId: createAttrField(this),
-        name: createStringField(this, ''),
+        id: createAttrField(),
+        phoneId: createAttrField(),
+        name: createStringField(''),
       }
     }
 

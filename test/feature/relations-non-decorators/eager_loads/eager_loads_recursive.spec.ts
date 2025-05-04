@@ -10,9 +10,9 @@ describe('feature/relations-non-decorators/eager_loads_recursive', () => {
 
     public static fields() {
       return {
-        id: createAttrField(this),
-        name: createStringField(this, ''),
-        phone: createHasOneRelation(this, Phone, 'userId'),
+        id: createAttrField(),
+        name: createStringField(''),
+        phone: createHasOneRelation(() => Phone, 'userId'),
       }
     }
 
@@ -26,10 +26,10 @@ describe('feature/relations-non-decorators/eager_loads_recursive', () => {
 
     public static fields() {
       return {
-        id: createAttrField(this),
-        userId: createAttrField(this),
-        number: createStringField(this, ''),
-        user: createBelongsToRelation(this, User, 'userId'),
+        id: createAttrField(),
+        userId: createAttrField(),
+        number: createStringField(''),
+        user: createBelongsToRelation(() => User, 'userId'),
       }
     }
 

@@ -11,11 +11,11 @@ describe('feature/relations-non-decorators/morph_to_retrieve', () => {
 
     public static fields() {
       return {
-        id: createAttrField(this, 0),
-        url: createStringField(this, ''),
-        imageableId: createAttrField(this),
-        imageableType: createAttrField(this),
-        imageable: createMorphToRelation(this, [User, Post], 'imageableId', 'imageableType'),
+        id: createAttrField(0),
+        url: createStringField(''),
+        imageableId: createAttrField(),
+        imageableType: createAttrField(),
+        imageable: createMorphToRelation(() => [User, Post], 'imageableId', 'imageableType'),
       }
     }
 
@@ -31,8 +31,8 @@ describe('feature/relations-non-decorators/morph_to_retrieve', () => {
 
     public static fields() {
       return {
-        id: createAttrField(this, 0),
-        name: createStringField(this, ''),
+        id: createAttrField(0),
+        name: createStringField(''),
       }
     }
 
@@ -45,8 +45,8 @@ describe('feature/relations-non-decorators/morph_to_retrieve', () => {
 
     public static fields() {
       return {
-        id: createAttrField(this, 0),
-        title: createStringField(this, ''),
+        id: createAttrField(0),
+        title: createStringField(''),
       }
     }
 

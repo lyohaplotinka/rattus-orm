@@ -13,11 +13,11 @@ describe('unit/model/Model_Fields', () => {
 
       static fields() {
         return {
-          id: createAttrField(this, null),
-          str: createStringField(this, ''),
-          num: createNumberField(this, 0),
-          bool: createBooleanField(this, false),
-          date: createDateField(this, new Date()),
+          id: createAttrField(null),
+          str: createStringField(''),
+          num: createNumberField(0),
+          bool: createBooleanField(false),
+          date: createDateField(new Date()),
         }
       }
 

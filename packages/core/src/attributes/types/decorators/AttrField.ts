@@ -8,6 +8,6 @@ export function AttrField(value?: any): PropertyDecorator {
   return (target, propertyKey) => {
     const self = target.$self()
 
-    self.setRegistry(propertyKey, () => createAttrField(self, value))
+    self.setRegistry(propertyKey, createAttrField(value))
   }
 }
