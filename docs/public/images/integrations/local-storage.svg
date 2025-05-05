@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 735 734" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter x="-16.1%" y="-13.7%" width="132.2%" height="127.5%" filterUnits="objectBoundingBox" id="filter-1">
+      <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"/>
+      <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"/>
+      <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"/>
+      <feMerge>
+        <feMergeNode in="shadowMatrixOuter1"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter x="-21.8%" y="-18.6%" width="143.5%" height="137.2%" filterUnits="objectBoundingBox" id="filter-3">
+      <feMorphology radius="2.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"/>
+      <feOffset dx="0" dy="0" in="shadowSpreadOuter1" result="shadowOffsetOuter1"/>
+      <feGaussianBlur stdDeviation="25" in="shadowOffsetOuter1" result="shadowBlurOuter1"/>
+      <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"/>
+    </filter>
+  </defs>
+  <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+    <g id="storage-svgrepo-com" transform="translate(34, 34)" stroke="#ef8a5f" stroke-width="66.6666667">
+      <path d="M 0 102.564103 C 0 102.564103 55.5555557 0 333.333333 0 C 611.11111 0 666.666667 102.564103 666.666667 102.564103 L 666.666667 564.102563 C 666.666667 564.102563 611.11111 666.666667 333.333333 666.666667 C 55.5555557 666.666667 0 564.102563 0 564.102563 L 0 102.564103 Z" id="Shape"/>
+      <path d="M 0 166.666667 C 0 166.666667 111.111111 266.666667 333.333333 266.666667 C 555.555557 266.666667 666.666667 166.666667 666.666667 166.666667" id="Shape"/>
+      <path d="M 0 366.666667 C 0 366.666667 111.111111 466.666667 333.333333 466.666667 C 555.555557 466.666667 666.666667 366.666667 666.666667 366.666667" id="Shape"/>
+    </g>
+    <g id="html-5-svgrepo-com" filter="url(#filter-1)" transform="translate(177, 146)" fill-rule="nonzero">
+      <g id="Path">
+        <polygon points="31.75 396.428571 0 0 381 0 349.25 396.428571 190.5 444" fill="black" fill-opacity="1" filter="url(#filter-3)"/>
+        <polygon points="31.75 396.428571 0 0 381 0 349.25 396.428571 190.5 444" fill="#E44D26"/>
+      </g>
+      <polygon id="Path" fill="#F16529" points="349 31 190 31 190 420 317.2 380.306122"/>
+      <polygon id="Path" fill="#FFFFFF" points="86.8709677 230.416667 71 80 317 80 309.064516 127.5 118.612903 127.5 126.548387 182.916667 301.129032 182.916667 285.258065 333.333333 190.032258 365 94.8064516 333.333333 86.8709677 254.166667 134.483871 254.166667 142.419355 293.75 190.032258 309.583333 237.645161 293.75 245.580645 230.416667"/>
+    </g>
+  </g>
+</svg>

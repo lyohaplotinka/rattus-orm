@@ -33,7 +33,11 @@
     "build:scripts": "cd ./scripts/src && tsup",
     "build:docs": "yarn generate-api && yarn workspace docs run build",
     "generate-api": "node ./scripts/built/docsBuilder.mjs",
-    "local:prepare": "npx simple-git-hooks && yarn build:scripts && yarn workspace @rattus-orm/core run build"
+    "local:prepare": "npx simple-git-hooks && yarn build:scripts && yarn workspace @rattus-orm/core run build",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs",
+    "predocs:dev": "typedoc --out ./docs/public/api/"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
@@ -58,7 +62,11 @@
     "tslib": "^2.8.1",
     "tsup": "^8.4.0",
     "type-fest": "^4.34.1",
+    "typedoc": "^0.28.4",
+    "typedoc-plugin-markdown": "^4.6.3",
+    "typedoc-vitepress-theme": "^1.1.2",
     "typescript": "^5.7.3",
+    "vitepress": "^1.6.3",
     "vitest": "^3.1.1"
   },
   "resolutions": {
