@@ -3,6 +3,7 @@ import { h } from 'vue'
 import type { Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 import './style.css'
+// @ts-ignore
 import Home from './layouts/Home.vue'
 
 export default {
