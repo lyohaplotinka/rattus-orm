@@ -3,6 +3,7 @@ import { h } from 'vue'
 import type { Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 import './style.css'
+import { enhanceAppWithTabs } from 'vitepress-plugin-tabs/client'
 // @ts-ignore
 import Home from './layouts/Home.vue'
 
@@ -14,6 +15,7 @@ export default {
     })
   },
   enhanceApp: ({ app }) => {
+    enhanceAppWithTabs(app)
     app.component('custom-home', Home)
   },
 } satisfies Theme

@@ -12,10 +12,10 @@ hero:
   actions:
     - theme: brand
       text: Documentation
-      link: /markdown-examples
+      link: /intro
     - theme: alt
       text: Demo
-      link: /api-examples
+      link: https://stackblitz.com/edit/vitejs-vite-uvhvpx?embed=1&file=src%2Fmodels%2FUser.ts
 
 threeLibsTitle: ORM experience for any state management
 seeDocs: See docs
@@ -97,7 +97,7 @@ features:
     icon:
       src: /images/features/vuex-orm-based.svg
       alt: Community experience
-    details: "Based on the Vuex ORM Next codebase, taking into account the experience of the entire community."
+    details: "Based on the <a target='_blank' href='https://next.vuex-orm.org/' style='text-decoration: underline dashed'>Vuex ORM Next</a> codebase, taking into account the experience of the entire community."
   - title: Organized storage
     icon:
       src: /images/features/organized-storage.svg

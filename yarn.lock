@@ -22756,6 +22756,7 @@ __metadata:
     typedoc-vitepress-theme: "npm:^1.1.2"
     typescript: "npm:^5.7.3"
     vitepress: "npm:^1.6.3"
+    vitepress-plugin-tabs: "npm:^0.7.1"
     vitest: "npm:^3.1.1"
   languageName: unknown
   linkType: soft
@@ -27053,6 +27054,16 @@ __metadata:
     vite:
       optional: true
   checksum: 10c0/067644463538b4aa52b3d3a5541051ccabda0099a427fa06b37d4df57a0092475f6881fdff987d0456dbf6a01a983e03996e1aed26db8060be5bf8a28a3ec9e8
+  languageName: node
+  linkType: hard
+
+"vitepress-plugin-tabs@npm:^0.7.1":
+  version: 0.7.1
+  resolution: "vitepress-plugin-tabs@npm:0.7.1"
+  peerDependencies:
+    vitepress: ^1.0.0
+    vue: ^3.5.0
+  checksum: 10c0/964d8d9705d213a9b3fcd2ebf2f77e0e216d01a05e52da9a7e684ed0a282f77e5e739ed78d2adf061cfa3dbe4bc5089e3af3eb979e1178ed4236bf5d688cf553
   languageName: node
   linkType: hard
 

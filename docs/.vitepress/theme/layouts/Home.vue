@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { VPHomeFeatures, VPHomeHero, VPHomeContent, VPFeatures } from 'vitepress/theme'
+import { VPHomeFeatures, VPHomeHero, VPHomeContent } from 'vitepress/theme'
 import { Content, useData } from 'vitepress'
 import RtIntegrations from '../components/RtIntegrations.vue'
 

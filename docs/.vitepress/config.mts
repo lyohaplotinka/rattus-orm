@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress'
+import { tabsMarkdownPlugin } from 'vitepress-plugin-tabs'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -15,7 +16,7 @@ export default defineConfig({
       themeConfig: {
         nav: [
           { text: 'Главная', link: '/' },
-          { text: 'Документация', link: '/markdown-examples' },
+          { text: 'Документация', link: '/intro' },
         ],
       },
     },
@@ -24,10 +25,29 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Examples', link: '/markdown-examples' },
+      { text: 'Docs', link: '/intro' },
     ],
 
     sidebar: [
+      {
+        text: 'Intro',
+        link: '/intro',
+      },
+      {
+        text: 'Core package',
+        collapsed: true,
+        items: [
+          { text: 'Getting started', link: '/core/getting-started' },
+          { text: 'Data provider', link: '/core/data-provider' },
+          { text: 'Database', link: '/core/database' },
+          { text: 'Models', link: '/core/models' },
+          { text: 'Relationships', link: '/core/relationships' },
+          { text: 'Repository', link: '/core/repository' },
+          { text: 'Events', link: '/core/events' },
+          { text: 'Plugins', link: '/core/plugins' },
+          { text: 'API', link: '/api/index.html', target: '_blank' },
+        ],
+      },
       {
         text: 'Examples',
         items: [
@@ -38,5 +58,10 @@ export default defineConfig({
     ],
 
     socialLinks: [{ icon: 'github', link: 'https://github.com/vuejs/vitepress' }],
+  },
+  markdown: {
+    config(md) {
+      md.use(tabsMarkdownPlugin)
+    },
   },
 })

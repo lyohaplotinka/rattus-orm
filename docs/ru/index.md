@@ -12,10 +12,10 @@ hero:
   actions:
     - theme: brand
       text: Документация
-      link: /markdown-examples
+      link: ./intro
     - theme: alt
       text: Демо
-      link: /api-examples
+      link: https://stackblitz.com/edit/vitejs-vite-uvhvpx?embed=1&file=src%2Fmodels%2FUser.ts
 
 threeLibsTitle: Опыт использования ORM для любой библиотеки управления состоянием
 seeDocs: Подробнее
@@ -97,7 +97,7 @@ features:
     icon:
       src: /images/features/vuex-orm-based.svg
       alt: Community experience
-    details: "Основано на кодовой базе Vuex ORM Next учитывая опыт разработки целым сообществом."
+    details: "Основано на кодовой базе <a target='_blank' href='https://next.vuex-orm.org/' style='text-decoration: underline dashed'>Vuex ORM Next</a> учитывая опыт разработки целым сообществом."
   - title: Порядок в хранилище
     icon:
       src: /images/features/organized-storage.svg
