@@ -7,7 +7,7 @@ hero:
   name: "Rattus ORM"
   text: "ORM for your JS/TS apps"
   image: 
-    src: /logo.svg
+    src: ./logo.svg
     alt: Rattus ORM
   actions:
     - theme: brand

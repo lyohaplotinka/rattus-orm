@@ -1,5 +1,6 @@
 import { defineConfig } from 'vitepress'
-import { tabsMarkdownPlugin } from 'vitepress-plugin-tabs'
+import { I18n } from './i18n'
+import { getCorePackageSidebar } from './sidebars'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -18,6 +19,13 @@ export default defineConfig({
           { text: 'Главная', link: '/' },
           { text: 'Документация', link: '/intro' },
         ],
+        sidebar: [
+          {
+            text: 'Интро',
+            link: '/ru/intro',
+          },
+          getCorePackageSidebar('ru'),
+        ],
       },
     },
   },
@@ -33,35 +41,22 @@ export default defineConfig({
         text: 'Intro',
         link: '/intro',
       },
+      getCorePackageSidebar('en'),
       {
-        text: 'Core package',
+        text: I18n.en.integrations.title,
         collapsed: true,
         items: [
-          { text: 'Getting started', link: '/core/getting-started' },
-          { text: 'Data provider', link: '/core/data-provider' },
-          { text: 'Database', link: '/core/database' },
-          { text: 'Models', link: '/core/models' },
-          { text: 'Relationships', link: '/core/relationships' },
-          { text: 'Repository', link: '/core/repository' },
-          { text: 'Events', link: '/core/events' },
-          { text: 'Plugins', link: '/core/plugins' },
-          { text: 'API', link: '/api/index.html', target: '_blank' },
-        ],
-      },
-      {
-        text: 'Examples',
-        items: [
-          { text: 'Markdown Examples', link: '/markdown-examples' },
-          { text: 'Runtime API Examples', link: '/api-examples' },
+          {
+            text: I18n.en.integrations.vuex.title,
+            collapsed: true,
+            items: [
+              { text: I18n.en.integrations.vuex.gettingStarted, link: '/vuex/getting-started' },
+            ],
+          },
         ],
       },
     ],
 
     socialLinks: [{ icon: 'github', link: 'https://github.com/vuejs/vitepress' }],
-  },
-  markdown: {
-    config(md) {
-      md.use(tabsMarkdownPlugin)
-    },
   },
 })

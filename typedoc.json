@@ -1,12 +1,7 @@
 {
   "$schema": "https://typedoc.org/schema.json",
   "entryPoints": [
-    "./packages/core/src/database/database.ts",
-    "./packages/core/src/context/rattus-context.ts",
-    "./packages/core/src/data/types.ts",
-    "./packages/core/src/model/Model.ts",
-    "./packages/core/src/query/query.ts",
-    "./packages/core/src/repository/repository.ts"
+    "./packages/core/src/index.ts"
   ],
   "readme": "none"
 }

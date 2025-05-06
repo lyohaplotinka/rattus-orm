@@ -1,0 +1,237 @@
+---
+sidebar_position: 4
+---
+
+# Модель
+
+## Основное
+
+:::info Инфо
+Эта часть документации написана по следам `vuex-orm-next`.
+Однако, Rattus ORM более ориентирован на работу с
+TypeScript и декораторами.
+:::
+
+Модели — это определение схемы данных, которая будет
+обрабатываться Rattus ORM. Вы можете определить любое
+количество моделей в зависимости от ваших потребностей.
+
+Чтобы определить модель, создайте класс, наследующий
+класс `Model`:
+
+::: code-group
+
+```ts [TypeScript]
+import { Model } from '@rattus-orm/core'
+import { StringField, UidField, NumberField } from '@rattus-orm/core/field-types'
+
+export class User extends Model {
+    public static entity = 'user'
+
+    @UidField()
+    public id: string
+
+    @StringField('')
+    public name: string
+
+    @NumberField(0)
+    public age: number
+}
+```
+
+```js [JavaScript]
+import { Model } from '@rattus-orm/core'
+import { createUidField, createStringField, createNumberField } from '@rattus-orm/core/field-types'
+
+export class User extends Model {
+  static entity = 'user'
+
+  static fields () {
+    return {
+      id: createUidField(),
+      name: createStringField(''),
+      age: createNumberField(0)
+    }
+  }
+}
+```
+:::
+
+Статическое свойство `entity` является именем "таблицы" в
+нашей базе данных. Все модули в хранилище будут созданы
+базой данных и дата-провайдером автоматически.
+
+## Решение проблем с TypeScript и Vite
+Если вы используете TypeScript с Vite, убедитесь, что в вашем `tsconfig.json` есть такие настройки:
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    // ...
+    "useDefineForClassFields": true,
+    "experimentalDecorators": true
+  }
+}
+```
+
+Также вы можете столкнуться с проблемой отсутствия данных в моделях. В этом случае стоит использовать
+следующий синтаксис:
+```typescript
+class User extends Model {
+  public static entity = 'users'
+
+  @StringField('')
+  // public id: string - может не сработать,
+  // все поля модели могут быть "null"
+  declare id: string
+```
+
+Если вы получаете сообщение об ошибке от ESBuild в режиме разработки, например: `[ERROR] Decorators are not valid here`, убедитесь, что
+esbuild настроен на ваш tsconfig в `vite.config.mts`:
+```typescript title="vite.config.mts"
+import { defineConfig } from 'vite';
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  optimizeDeps: {
+    esbuildOptions: {
+      tsconfig: 'tsconfig.json',
+    },
+  },
+});
+```
+
+## Типы полей
+
+#### Общий тип
+
+Используйте декоратор `@AttrField(value)` (или функцию `createAttrField`) для определения наиболее
+общего поля. Аргументом является значение поля по
+умолчанию, которое будет использоваться при создании
+новых данных, если поле отсутствует.
+
+```typescript
+export class User extends Model {
+    public static entity = 'user'
+
+    @AttrField(null)
+    public anyField: any
+}
+```
+
+#### Примитивные типы
+Вы можете использовать атрибуты примитивного типа:
+`@StringField('')`, `@NumberField(0)` или `@BooleanFeild(false)`
+(для JS - `createStringField`, `createNumberField`, и `createBooleanField`).
+Эти атрибуты по умолчанию обеспечивают приведение, которое
+преобразует данное значение в указанный тип.
+Например, `'0'` преобразуется в `0`, а `1`, в `true`.
+Как и в случае с `createAttrField`, аргументом является
+значение по умолчанию.
+
+```typescript
+export class User extends Model {
+    public static entity = 'user'
+
+    @StringField('')
+    public name: string
+
+    @NumberField(0)
+    public age: number
+
+    @BooleanField(true)
+    public isAwesome: boolean
+}
+```
+
+:::warning Внимание
+Rattus ORM не будет **валидировать** значения, попадающие
+в поля. Вместо этого будет выполнено **приведение** типов.
+Строка `John Doe`, попавшая в поле Boolean, преобразуется
+в `true`.
+:::
+
+Вы можете отключить приведение типов для конкретной модели. Для этого
+ей нужно объявить публичное статическое свойство `dataTypeCasting` и
+установить его значение в `false`. В таком случае, даже если поле
+помечено декоратором `@BooleanField`, а на вход в модель попадает единица --
+она не будет преобразована в `true`, а останется единицей.
+Валидации также не будет. Если вам нужно валидировать значения, предлагаем
+рассмотреть [плагин Zod Validate](/docs/plugins/docs-plugin-zod-validate/getting-started).
+
+```typescript
+export class User extends Model {
+    public static entity = 'user'
+    // приведение типов полей отключено
+    public static dataTypeCasting = false
+
+    @StringField('')
+    public name: string
+
+    @NumberField(0)
+    public age: number
+
+    @BooleanField(true)
+    public isAwesome: boolean
+}
+```
+
+#### UID тип
+`@UidField()`  (или `createUidField` в JS) генерирует уникальный
+идентификатор, если значение для этого поля отсутствует.
+
+```typescript
+export class User extends Model {
+    public static entity = 'user'
+
+    @UidField()
+    public id: string
+}
+```
+По умолчанию будет создан UUID v4. Если вам нужен другой
+алгоритм, вы можете передать коллбэк, который сгененрирует
+ID:
+
+```typescript
+export class User extends Model {
+    public static entity = 'user'
+
+    @UidField(() => myIdGenerator())
+    public id: string
+}
+```
+
+#### Даты
+Начиная с версии 0.3.0 доступен тип Date. Он преобразует
+входящую строку или число в экземпляр класса Date. Если
+дата получается невалидной, будет установлено значение
+с нулевой датой (`new Date(0)`). По умолчанию тип не принимает
+null, но его можно сделать nullable при помощи настройки.
+```typescript
+export class User extends Model {
+    public static entity = 'user'
+
+    @DateField(null, { nullable: true })
+    public createdAt: Date
+}
+```
+
+## Primary key
+Rattus ORM предполагает, что у каждой сущности есть
+первичный ключ `id`. Если он отличается, вы можете
+указать, на какой ключ стоит обращать внимание:
+```typescript
+export class User extends Model {
+    public static entity = 'user'
+    public static primaryKey = 'myId'
+
+    // Также можно указать массив
+    public static primaryKey = ['myId', 'otherId']
+
+    @UidField(() => myIdGenerator())
+    public myId: string
+}
+```
+
+Если в переданных данных не будет ключа, Rattus ORM
+сгенерирует его автоматически при вставке данных.
+

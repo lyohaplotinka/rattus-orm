@@ -15,9 +15,9 @@ of models as per your needs.
 To define a model, create a class that inherits
 from the `Model` class:
 
-:::tabs
-== TypeScript
-```typescript title="src/data/User.ts"
+::: code-group
+
+```ts [TypeScript]
 import { Model } from '@rattus-orm/core'
 import { StringField, UidField, NumberField } from '@rattus-orm/core/field-types'
 
@@ -34,8 +34,8 @@ export class User extends Model {
     public age: number
 }
 ```
-== JavaScript
-```javascript title="src/data/User.js"
+
+```js [JavaScript]
 import { Model } from '@rattus-orm/core'
 import { createUidField, createStringField, createNumberField } from '@rattus-orm/core/field-types'
 
