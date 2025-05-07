@@ -1,3 +1,7 @@
+---
+sidebar_position: 4
+---
+
 # Relationships
 
 All relationships between models fully replicate the relationships from

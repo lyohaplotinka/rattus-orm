@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # Data Provider
 
 A Data Provider establishes the connection between a specific storage system and ORM. Generally, it is a class that implements the following interface:
