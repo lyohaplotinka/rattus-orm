@@ -1,5 +1,4 @@
 import { defineConfig } from 'vitepress'
-import { getCorePackageSidebar } from './sidebars'
 import { getSidebars } from './sidebar/getSidebars'
 import { resolve } from 'node:path'
 
@@ -25,7 +24,10 @@ export default defineConfig({
             text: 'Интро',
             link: '/ru/intro',
           },
-          getCorePackageSidebar('ru'),
+          ...(await getSidebars({
+            rootDir: resolve(__dirname, '../'),
+            docDirs: ['ru/core', 'ru/integrations'],
+          })),
         ],
       },
     },
@@ -44,30 +46,8 @@ export default defineConfig({
       },
       ...(await getSidebars({
         rootDir: resolve(__dirname, '../'),
-        docDirs: ['core'],
+        docDirs: ['core', 'integrations'],
       })),
-      {
-        text: 'Integrations',
-        collapsed: true,
-        items: await getSidebars({
-          rootDir: resolve(__dirname, '../'),
-          docDirs: ['integrations/docs-vuex'],
-        }),
-      },
-      // getCorePackageSidebar('en'),
-      // {
-      //   text: I18n.en.integrations.title,
-      //   collapsed: true,
-      //   items: [
-      //     {
-      //       text: I18n.en.integrations.vuex.title,
-      //       collapsed: true,
-      //       items: [
-      //         { text: I18n.en.integrations.vuex.gettingStarted, link: '/vuex/getting-started' },
-      //       ],
-      //     },
-      //   ],
-      // },
     ],
 
     socialLinks: [{ icon: 'github', link: 'https://github.com/vuejs/vitepress' }],
