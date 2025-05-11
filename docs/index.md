@@ -39,8 +39,8 @@ integrations:
     package: "@rattus-orm/react-mobx"
     icon: /images/integrations/mobx.svg
     text: React + MobX integration
-    docs: /
-    demo: /
+    docs: /integrations/docs-react-mobx/getting-started
+    demo: "https://stackblitz.com/edit/vitejs-vite-y4vza6?embed=1&file=src%2Fmodels%2FUser.ts"
   - title: React Redux
     package: "@rattus-orm/react-redux"
     icon: /images/integrations/redux.svg
