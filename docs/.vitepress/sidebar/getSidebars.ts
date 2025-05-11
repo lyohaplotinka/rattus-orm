@@ -1,5 +1,4 @@
-import { existsSync } from 'node:fs'
-import { readdir, readFile } from 'node:fs/promises'
+import { existsSync, readFileSync, readdirSync } from 'node:fs'
 import { join, extname, basename, resolve, relative } from 'node:path'
 import fm from 'front-matter'
 import { DefaultTheme } from 'vitepress'
@@ -23,10 +22,10 @@ type GroupData = {
 type SidebarItemWithPos = DefaultTheme.SidebarItem &
   Pick<ArticleFontMatterAttributes, 'sidebar_position'>
 
-async function findMarkdownFiles(dir: string): Promise<{ files: string[]; subdirs: string[] }> {
+function findMarkdownFiles(dir: string): { files: string[]; subdirs: string[] } {
   const files: string[] = []
   const subdirs: string[] = []
-  const entries = await readdir(dir, { withFileTypes: true })
+  const entries = readdirSync(dir, { withFileTypes: true })
 
   for (const entry of entries) {
     const path = join(dir, entry.name)
@@ -41,14 +40,11 @@ async function findMarkdownFiles(dir: string): Promise<{ files: string[]; subdir
   return { files, subdirs }
 }
 
-async function markdownFilesToArticles(
-  files: string[],
-  rootDir: string,
-): Promise<DefaultTheme.SidebarItem[]> {
+function markdownFilesToArticles(files: string[], rootDir: string): DefaultTheme.SidebarItem[] {
   const articles: SidebarItemWithPos[] = []
 
   for (const filePath of files) {
-    const content = await readFile(filePath, 'utf-8')
+    const content = readFileSync(filePath, 'utf-8')
     const { attributes, body } = fm<ArticleFontMatterAttributes>(content)
 
     const title = attributes.title || body.split('\n')[0].replace(/#+\s+/g, '').trim()
@@ -69,12 +65,12 @@ async function markdownFilesToArticles(
   return articles
 }
 
-async function readGroup(directory: string): Promise<GroupData | null> {
+function readGroup(directory: string): GroupData | null {
   const groupFilePath = resolve(directory, '_group.json')
   if (!existsSync(groupFilePath)) {
     return null
   }
-  const content = await readFile(groupFilePath, 'utf-8')
+  const content = readFileSync(groupFilePath, 'utf-8')
   return JSON.parse(content)
 }
 
@@ -93,12 +89,12 @@ const sortByPosition = (items: DefaultTheme.SidebarItem[]): DefaultTheme.Sidebar
     })
 }
 
-export async function getSidebars({ rootDir, docDirs }: SidebarsGetterParams) {
+export function getSidebars({ rootDir, docDirs }: SidebarsGetterParams) {
   const resultArticles: SidebarItemWithPos[] = []
   for (const directory of docDirs.map((dir) => resolve(rootDir, dir))) {
-    const group = await readGroup(directory)
-    const { files, subdirs } = await findMarkdownFiles(directory)
-    const articles = await markdownFilesToArticles(files, rootDir)
+    const group = readGroup(directory)
+    const { files, subdirs } = findMarkdownFiles(directory)
+    const articles = markdownFilesToArticles(files, rootDir)
 
     if (group) {
       const item: SidebarItemWithPos = {
@@ -108,7 +104,7 @@ export async function getSidebars({ rootDir, docDirs }: SidebarsGetterParams) {
         sidebar_position: group.sidebarPosition ?? 0,
       }
       if (subdirs.length) {
-        const subItems = await getSidebars({ rootDir, docDirs: subdirs })
+        const subItems = getSidebars({ rootDir, docDirs: subdirs })
         item.items = [...(item.items ?? []), ...subItems]
       }
       resultArticles.push(item)

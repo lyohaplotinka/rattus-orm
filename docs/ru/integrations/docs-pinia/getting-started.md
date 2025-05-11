@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 title: "Введение"
+liveDemoUrl: "https://stackblitz.com/edit/vitejs-vite-gheh5j?embed=1&file=src%2Fmodels%2FUser.ts"
 ---
 # Интеграция с Pinia
 `@rattus-orm/pinia` – это Data Provider, связывающий хранилище
@@ -12,3 +13,4 @@ title: "Введение"
 3. плагин для Vue, настраивающий связь ORM с Pinia.
 
 ### Пример
+<RtLiveDemo />

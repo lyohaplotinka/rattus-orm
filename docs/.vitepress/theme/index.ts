@@ -5,6 +5,8 @@ import DefaultTheme from 'vitepress/theme'
 import './style.css'
 // @ts-ignore
 import Home from './layouts/Home.vue'
+// @ts-ignore
+import RtLiveDemo from '../../components/RtLiveDemo.vue'
 
 export default {
   extends: DefaultTheme,
@@ -15,5 +17,6 @@ export default {
   },
   enhanceApp: ({ app }) => {
     app.component('custom-home', Home)
+    app.component('RtLiveDemo', RtLiveDemo)
   },
 } satisfies Theme

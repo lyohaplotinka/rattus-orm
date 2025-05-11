@@ -24,10 +24,10 @@ export default defineConfig({
             text: 'Интро',
             link: '/ru/intro',
           },
-          ...(await getSidebars({
+          ...getSidebars({
             rootDir: resolve(__dirname, '../'),
             docDirs: ['ru/core', 'ru/integrations'],
-          })),
+          }),
         ],
       },
     },
@@ -44,10 +44,10 @@ export default defineConfig({
         text: 'Intro',
         link: '/intro',
       },
-      ...(await getSidebars({
+      ...getSidebars({
         rootDir: resolve(__dirname, '../'),
         docDirs: ['core', 'integrations'],
-      })),
+      }),
     ],
 
     socialLinks: [{ icon: 'github', link: 'https://github.com/vuejs/vitepress' }],

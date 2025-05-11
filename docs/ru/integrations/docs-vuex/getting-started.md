@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 title: "Введение"
+liveDemoUrl: "https://stackblitz.com/edit/vitejs-vite-uvhvpx?embed=1&file=src%2Fmodels%2FUser.ts"
 ---
 # Интеграция с Vuex
 `@rattus-orm/vuex` – это Data Provider, связывающий хранилище
@@ -12,3 +13,4 @@ title: "Введение"
 3. плагин для Vuex.
 
 ### Пример
+<RtLiveDemo />

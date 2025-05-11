@@ -27,14 +27,14 @@ integrations:
     package: "@rattus-orm/vuex"
     icon: /images/integrations/vuex.svg
     text: Vue + Vuex integration
-    docs: /
-    demo: /
+    docs: /integrations/docs-vuex/getting-started
+    demo: "https://stackblitz.com/edit/vitejs-vite-uvhvpx?embed=1&file=src%2Fmodels%2FUser.ts"
   - title: Pinia
     package: "@rattus-orm/pinia"
     icon: /images/integrations/pinia.svg
     text: Vue + Pinia integration
-    docs: /
-    demo: /
+    docs: /integrations/docs-pinia/getting-started
+    demo: "https://stackblitz.com/edit/vitejs-vite-gheh5j?embed=1&file=src%2Fmodels%2FUser.ts"
   - title: React MobX
     package: "@rattus-orm/react-mobx"
     icon: /images/integrations/mobx.svg
