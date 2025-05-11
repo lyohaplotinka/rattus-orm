@@ -27,20 +27,20 @@ integrations:
     package: "@rattus-orm/vuex"
     icon: /images/integrations/vuex.svg
     text: Rattus для Vue + Vuex
-    docs: /
-    demo: /
+    docs: /ru/integrations/docs-vuex/getting-started
+    demo: "https://stackblitz.com/edit/vitejs-vite-uvhvpx?embed=1&file=src%2Fmodels%2FUser.ts"
   - title: Pinia
     package: "@rattus-orm/pinia"
     icon: /images/integrations/pinia.svg
     text: Rattus для Vue + Pinia
-    docs: /
-    demo: /
+    docs: /ru/integrations/docs-pinia/getting-started
+    demo: "https://stackblitz.com/edit/vitejs-vite-gheh5j?embed=1&file=src%2Fmodels%2FUser.ts"
   - title: React MobX
     package: "@rattus-orm/react-mobx"
     icon: /images/integrations/mobx.svg
     text: Rattus для React + MobX
-    docs: /
-    demo: /
+    docs: /ru/integrations/docs-react-mobx/getting-started
+    demo: "https://stackblitz.com/edit/vitejs-vite-y4vza6?embed=1&file=src%2Fmodels%2FUser.ts"
   - title: React Redux
     package: "@rattus-orm/react-redux"
     icon: /images/integrations/redux.svg
